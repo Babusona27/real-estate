@@ -1,8 +1,16 @@
-//import 
 const express = require("express");
+const connectToMongoDB = require("./db/dbConfig");
+
+const route = require("./routes/CategoryRoute");
+
+// coonect to mongodb
+connectToMongoDB();
+
 const app = express();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+app.use(express.json());
 
+app.use("/realEstate/api", route);
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.listen(4000, () => {
+  console.log("Server is running on port 4000");
+});
