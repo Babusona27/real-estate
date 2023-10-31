@@ -1,12 +1,12 @@
 const express = require("express");
 const connectToMongoDB = require("./db/dbConfig");
+const route = require("./routes/Route");
+const app = express();
 
-const route = require("./routes/CategoryRoute");
 
 // coonect to mongodb
 connectToMongoDB();
 
-const app = express();
 app.use(express.json());
 
 app.use("/realEstate/api", route);
