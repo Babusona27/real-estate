@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const PropertySchema = new mongoose.Schema({
-  name: {
+  property_name: {
     type: String,
   },
   type: {
@@ -10,17 +10,14 @@ const PropertySchema = new mongoose.Schema({
   category_id: {
     type: mongoose.Schema.Types.ObjectId,
   },
-  country: {
-    type: String,
+  country_id: {
+    type: mongoose.Schema.Types.ObjectId,
   },
-  state: {
-    type: String,
+  state_id: {
+    type: mongoose.Schema.Types.ObjectId,
   },
-  city: {
-    type: String,
-  },
-  zip_code: {
-    type: Number,
+  city_id: {
+    type: mongoose.Schema.Types.ObjectId,
   },
   latitude: {
     type: Number,
@@ -43,6 +40,9 @@ const PropertySchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  price: {
+    type:Number,
+  }
 });
 
 module.exports = mongoose.model("Property", PropertySchema);

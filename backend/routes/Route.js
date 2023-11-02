@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const { validateRequest } = require("../middleware/PropertyMiddleware");
 const {
-  getCategory,
+  getCategories,
   createCategory,
   updateCategory,
   deleteCategory,
@@ -13,34 +14,53 @@ const {
   updateProperty,
   deleteProperty,
 } = require("../controllers/PropertyController");
-const { validateRequest } = require("../middleware/PropertyMiddleware");
+const {
+  getCountries,
+  createCountry,
+  updateCountry,
+  deleteCountry,
+} = require("../controllers/CountryController");
+const {
+  getStates,
+  createState,
+  updateState,
+  deleteState,
+} = require("../controllers/StateController");
+const {
+  getCities,
+  createCity,
+  updateCity,
+  deleteCity,
+} = require("../controllers/CityController");
 
 // ******************All CATEGORY ROUTE*********************
-
-// get all categories route
-router.get("/getcategory", getCategory);
-
-// post category route
+router.get("/getcategories", getCategories);
 router.post("/createcategory", createCategory);
-
-// update category route
 router.put("/updatecategory/:id", updateCategory);
-
-// delete category route
 router.delete("/deletecategory/:id", deleteCategory);
 
 // ******************All PROPERTY ROUTE*********************
-
-// get all properties route
 router.get("/getproperties", getProperties);
-
-// post property route
 router.post("/createproperty", validateRequest, createProperty);
-
-// update property route
 router.put("/updateproperty/:id", updateProperty);
-
-// delete property route
 router.delete("/deleteproperty/:id", deleteProperty);
+
+// ******************All COUNTRY ROUTE*********************
+router.get("/getcountries", getCountries);
+router.post("/createcountry", createCountry);
+router.put("/updatecountry/:id", updateCountry);
+router.delete("/deletecountry/:id", deleteCountry);
+
+// ******************All STATE ROUTE*********************
+router.get("/getstates", getStates);
+router.post("/createstate", createState);
+router.put("/updatestate/:id", updateState);
+router.delete("/deletestate/:id", deleteState);
+
+// ******************All CITY ROUTE*********************
+router.get("/getcities", getCities);
+router.post("/createcity", createCity);
+router.put("/updatecity/:id", updateCity);
+router.delete("/deletecity/:id", deleteCity);
 
 module.exports = router;

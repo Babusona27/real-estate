@@ -1,38 +1,28 @@
 const Joi = require("joi");
 
 const schema = Joi.object({
-  name: Joi.string().required().messages({
+  property_name: Joi.string().required().messages({
     "string.base": "property name must be a string",
     "string.empty": "property name cannot be empty",
     "any.required": "property name is required",
   }),
-  type: Joi.string().required().messages({
-    "string.base": "type must be a string",
-    "string.empty": "type cannot be empty",
-    "any.required": "type is required",
-  }),
   category_id: Joi.string().required().messages({
     "any.required": "category_id is required",
   }),
-  country: Joi.string().required().messages({
-    "string.base": "country must be a string",
-    "string.empty": "country cannot be empty",
-    "any.required": "country is required",
+  country_id: Joi.string().required().messages({
+    "string.base": "country_id must be a string",
+    "string.empty": "country_id cannot be empty",
+    "any.required": "country_id is required",
   }),
-  state: Joi.string().required().messages({
-    "string.base": "state must be a string",
-    "string.empty": "state cannot be empty",
-    "any.required": "state is required",
+  state_id: Joi.string().required().messages({
+    "string.base": "state_id must be a string",
+    "string.empty": "state_id cannot be empty",
+    "any.required": "state_id required",
   }),
-  city: Joi.string().required().messages({
-    "string.base": "city must be a string",
-    "string.empty": "city cannot be empty",
-    "any.required": "city is required",
-  }),
-  zip_code: Joi.number().integer().required().messages({
-    "number.base": "zip_code must be a number",
-    "number.integer": "zip_code must be an integer",
-    "any.required": "zip_code is required",
+  city_id: Joi.string().required().messages({
+    "string.base": "city_id must be a string",
+    "string.empty": "city_id cannot be empty",
+    "any.required": "city_id is required",
   }),
   latitude: Joi.number().required().messages({
     "number.base": "latitude must be a number",
@@ -65,6 +55,11 @@ const schema = Joi.object({
     "string.base": "description must be a string",
     "string.empty": "description cannot be empty",
     "any.required": "description is required",
+  }),
+  price: Joi.number().integer().required().messages({
+    "string.base": "price must be a string",
+    "string.empty": "price cannot be empty",
+    "any.required": "price is required",
   }),
 });
 
