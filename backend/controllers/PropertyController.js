@@ -15,7 +15,7 @@ async function getProperties(req, res) {
       filter.type = req.query.type;
     }
     if (req.query.category) {
-      filter["category_details.name"] = req.query.category;
+      filter["category_details.category_name"] = req.query.category;
     }
     if (req.query.country) {
       filter["country_details.country_name"] = req.query.country;
@@ -35,13 +35,21 @@ async function getProperties(req, res) {
     if (req.query.bath) {
       filter.bath = parseInt(req.query.bath);
     }
-   if (req.query.parking === "true") {
-     filter.parking = true;
-   } else if (req.query.parking === "false") {
-     filter.parking = false;
-   }
-    if (req.query.price) {
-      filter.price = parseFloat(req.query.price);
+    if (req.query.parking === "true") {
+      filter.parking = true;
+    } else if (req.query.parking === "false") {
+      filter.parking = false;
+    }
+    if (req.query.price_from && req.query.price_to) {
+      const priceFrom = parseFloat(req.query.price_from);
+      const priceTo = parseFloat(req.query.price_to);
+      filter.price = { $gte: priceFrom, $lte: priceTo };
+    } else if (req.query.price_from) {
+      const priceFrom = parseFloat(req.query.price_from);
+      filter.price = { $gte: priceFrom };
+    } else if (req.query.price_to) {
+      const priceTo = parseFloat(req.query.price_to);
+      filter.price = { $lte: priceTo };
     }
 
     const properties = await PropertySchema.aggregate([
