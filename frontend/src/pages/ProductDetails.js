@@ -1,27 +1,39 @@
-import { Box } from '@mui/material';
-import React from 'react'
+import { Box, Container } from "@mui/material";
+import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 // import styled from '@emotion/styled';
-import BannerSlider from '../components/BannerSlider';
+import BannerSlider from "../components/BannerSlider";
+import PropertyDetailsLeftbar from "../components/PropertyDetailsLeftbar";
+import PropertyDetailsRightbar from "../components/PropertyDetailsRightbar";
 
 const ProductDetails = () => {
   return (
     <>
-    <Box>
-    <Header/>
-   </Box>
-   <Box>
-    <BannerSlider/>
-   </Box>
-   <Box>
-    <Footer/>
-   </Box>
-    </>
-   
+      <Box>
+        <Header />
+      </Box>
+      <Box>
+        <BannerSlider />
+      </Box>
+      <Container maxWidth="xl" sx={{ height: "100%", padding:"40px 0px", backgroundColor:"#eaf7f4" }}>
+        <Box
+          sx={{
+            display: { xs: "grid", sm: "grid", md: "flex", lg: "flex" },
+            justifyContent: "space-between",
+          }}
+        >
+          <PropertyDetailsLeftbar />
+          <PropertyDetailsRightbar />
+        </Box>
+      </Container>
 
-  )
-}
+      <Box>
+        <Footer />
+      </Box>
+    </>
+  );
+};
 // const Banner = styled(Box)(({ theme }) => ({
 //   display: "flex",
 //   justifyContent: "space-between",
