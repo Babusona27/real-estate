@@ -5,7 +5,7 @@ const path = require("path");
 // GET METHOD WITH AGGREGATION CODE
 async function getProperties(req, res) {
   try {
-    const limit = parseInt(req.query.limit) || 5;
+    const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
 
     // Define an empty filter object to hold the filtering criteria

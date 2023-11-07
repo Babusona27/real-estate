@@ -68,6 +68,7 @@ const schema = Joi.object({
     "string.empty": "price cannot be empty",
     "any.required": "price is required",
   }),
+  // images_arr: Joi.string(),
 });
 
 module.exports = { schema };

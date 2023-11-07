@@ -32,7 +32,7 @@ router.delete("/deletecategory/:id", deleteCategory);
 // ******************All PROPERTY ROUTE*********************
 router.get("/getproperties", getProperties);
 router.get("/propertydetails/:id", getProperty);
-router.post("/createproperty", createProperty);
+router.post("/createproperty", validateRequest, createProperty);
 router.put("/updateproperty/:id", updateProperty);
 router.delete("/deleteproperty/:id", deleteProperty);
 
