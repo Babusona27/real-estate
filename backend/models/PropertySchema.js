@@ -7,17 +7,17 @@ const PropertySchema = new mongoose.Schema({
   type: {
     type: String,
   },
-  category_id: {
-    type: mongoose.Schema.Types.ObjectId,
+  category: {
+    type: String,
   },
-  country_id: {
-    type: mongoose.Schema.Types.ObjectId,
+  country: {
+    type: String,
   },
-  state_id: {
-    type: mongoose.Schema.Types.ObjectId,
+  state: {
+    type: String,
   },
-  city_id: {
-    type: mongoose.Schema.Types.ObjectId,
+  city: {
+    type: String,
   },
   latitude: {
     type: Number,
@@ -41,8 +41,9 @@ const PropertySchema = new mongoose.Schema({
     type: String,
   },
   price: {
-    type:Number,
-  }
+    type: Number,
+  },
+  images: [{ type: String }],
 });
 
 module.exports = mongoose.model("Property", PropertySchema);
