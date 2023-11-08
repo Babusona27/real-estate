@@ -16,10 +16,10 @@ const ProductDetails = () => {
       <Box>
         <BannerSlider />
       </Box>
-      <Container maxWidth="xl" sx={{ height: "100%", padding:"40px 0px", backgroundColor:"#eaf7f4" }}>
+      <Container maxWidth="xl" sx={{ height: "100%", padding:{xs:"40px 10px",sm:"40px 10px",md:"40px 10px",lg:"40px 0px"}, backgroundColor:"#eaf7f4" }}>
         <Box
           sx={{
-            display: { xs: "grid", sm: "grid", md: "flex", lg: "flex" },
+            display: { xs: "block", sm: "block", md: "flex", lg: "flex" },
             justifyContent: "space-between",
           }}
         >

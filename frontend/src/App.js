@@ -7,6 +7,7 @@ import {
   Routes,
   // Navigate,
 } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         {/* <AllProperties /> */}
         <Router>
           <Routes>
-            <Route path="/" element={<AllProperties />} />
+            <Route path="/" element={<Home />} />
             <Route path="/Properties" element={<AllProperties />} />
             <Route path="/ProductDetails" element={<ProductDetails />} />
           </Routes>

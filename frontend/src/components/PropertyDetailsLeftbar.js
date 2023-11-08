@@ -42,7 +42,7 @@ const PropertyDetailsLeftbar = () => {
           sx={{
             display: "grid",
             gap: "30px 15px",
-            gridTemplateColumns:{ xs: "repeat(2, 1fr)", sm:"repeat(2, 1fr)", lg: "repeat(4, 1fr)" },
+            gridTemplateColumns:{ xs: "repeat(2, 1fr)", sm:"repeat(3, 1fr)", lg: "repeat(4, 1fr)" },
             alignItems: "center",
           }}
         >
