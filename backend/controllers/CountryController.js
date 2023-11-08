@@ -1,7 +1,7 @@
 const CountrySchema = require("../models/CountrySchema");
 
 // GET METHOD
-async function getCountries(req, res) {
+async function GetCountry(req, res) {
   try {
     const countries = await CountrySchema.find();
 
@@ -20,86 +20,68 @@ async function getCountries(req, res) {
 }
 
 // POST METHOD
-async function createCountry(req, res) {
-  const { country_name } = req.body;
-
+async function CreateCountry(req, res) {
   try {
-    const country = new CountrySchema({ country_name });
-
-    await country.save();
-
-    res.status(201).json({
-      status: true,
-      message: "Country created successfully",
-      data: country,
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: false,
-      message: err.message,
-      data: null,
-    });
+    const newCountry = await CountrySchema.create(req.body);
+    res
+      .status(201)
+      .json({ message: "Country created successfully", data: newCountry });
+  } catch (error) {
+    // console.error(error);
+    res
+      .status(500)
+      .json({ message: "Failed to create a country", error: error.message });
   }
 }
 
 // PUT METHOD
-async function updateCountry(req, res) {
-  const { id } = req.params;
-  const { country_name } = req.body;
-
+async function UpdateCountry(req, res) {
+  const countryId = parseInt(req.params.countryId);
   try {
-    const country = await CountrySchema.findByIdAndUpdate(id, { country_name });
-
-    if (!country) {
-      return res
-        .status(404)
-        .json({ status: false, message: "Country not found", data: null });
+    const updatedCountry = await CountrySchema.findByIdAndUpdate(
+      countryId,
+      req.body
+    );
+    if (updatedCountry) {
+      res.json({
+        message: "Country updated successfully",
+        data: updatedCountry,
+      });
+    } else {
+      res.status(404).json({ message: "Country not found." });
     }
-
-    res.status(200).json({
-      status: true,
-      message: "Country update successful",
-      data: country,
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: false,
-      message: "Failed to update country",
-      data: null,
-    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Failed to update Country", error: error.message });
   }
 }
 
 // DELETE METHOD
-async function deleteCountry(req, res) {
-  const { id } = req.params;
-
+async function DeleteCountry(req, res) {
+  const countryId = parseInt(req.params.countryId);
   try {
-    const country = await CountrySchema.findByIdAndDelete(id);
-
-    if (!country) {
-      return res
-        .status(404)
-        .json({ status: false, message: "country not found" });
+    const deletedCountry = await CountrySchema.findByIdAndDelete(countryId);
+    if (deletedCountry) {
+      res.json({
+        message: "Country deleted successfully",
+        data: deletedCountry,
+      });
+    } else {
+      res.status(404).json({ message: "Country not found." });
     }
-
-    res.status(200).json({
-      status: true,
-      message: "country deleted successfully",
-      data: country,
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: false,
-      message: "Failed to delete country",
-      data: null,
-    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete Country", error: error.message });
   }
 }
 
 module.exports = {
-  getCountries,
-  createCountry,
-  updateCountry,
-  deleteCountry,
+  GetCountry,
+  CreateCountry,
+  UpdateCountry,
+  DeleteCountry,
 };

@@ -1,10 +1,11 @@
 const PropertySchema = require("../models/PropertySchema");
-const CategorySchema = require("../models/CategorySchema");
+const fs = require("fs");
+const path = require("path");
 
 // GET METHOD WITH AGGREGATION CODE
 async function getProperties(req, res) {
   try {
-    const limit = parseInt(req.query.limit) || 5;
+    const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
 
     // Define an empty filter object to hold the filtering criteria
@@ -15,16 +16,16 @@ async function getProperties(req, res) {
       filter.type = req.query.type;
     }
     if (req.query.category) {
-      filter["category_details.category_name"] = req.query.category;
+      filter.category = req.query.category;
     }
     if (req.query.country) {
-      filter["country_details.country_name"] = req.query.country;
+      filter.country = req.query.country;
     }
     if (req.query.state) {
-      filter["state_details.state_name"] = req.query.state;
+      filter.state = req.query.state;
     }
     if (req.query.city) {
-      filter["city_details.city_name"] = req.query.city;
+      filter.city = req.query.city;
     }
     if (req.query.sqft) {
       filter.sqft = parseInt(req.query.sqft);
@@ -52,49 +53,9 @@ async function getProperties(req, res) {
       filter.price = { $lte: priceTo };
     }
 
-    const properties = await PropertySchema.aggregate([
-      {
-        $lookup: {
-          from: "categories",
-          localField: "category_id",
-          foreignField: "_id",
-          as: "category_details",
-        },
-      },
-      {
-        $lookup: {
-          from: "countries",
-          localField: "country_id",
-          foreignField: "_id",
-          as: "country_details",
-        },
-      },
-      {
-        $lookup: {
-          from: "states",
-          localField: "state_id",
-          foreignField: "_id",
-          as: "state_details",
-        },
-      },
-      {
-        $lookup: {
-          from: "cities",
-          localField: "city_id",
-          foreignField: "_id",
-          as: "city_details",
-        },
-      },
-      {
-        $match: filter, // Apply the filtering criteria
-      },
-      {
-        $skip: offset,
-      },
-      {
-        $limit: limit,
-      },
-    ]);
+    const properties = await PropertySchema.find(filter) // Apply the filtering criteria
+      .skip(offset)
+      .limit(limit);
 
     res.json({
       status: true,
@@ -110,14 +71,33 @@ async function getProperties(req, res) {
   }
 }
 
+async function getProperty(req, res) {
+  const propertyId = req.params.id;
+  try {
+    const property = await PropertySchema.findById(propertyId);
+    if (property) {
+      res.json({ status: "success", data: property });
+    } else {
+      res.status(404).json({ status: "error", message: "Property not found" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      data: error.message,
+    });
+  }
+}
+
 // POST METHOD
 async function createProperty(req, res) {
   const {
     property_name,
-    category_id,
-    country_id,
-    state_id,
-    city_id,
+    type,
+    category,
+    country,
+    state,
+    city,
     latitude,
     longitude,
     sqft,
@@ -126,43 +106,48 @@ async function createProperty(req, res) {
     parking,
     description,
     price,
+    images_arr,
   } = req.body;
 
-  try {
-    let category = await CategorySchema.findOne({ _id: category_id });
-    if (category) {
-      let type = category.type;
-      const property = new PropertySchema({
-        property_name,
-        type,
-        category_id,
-        country_id,
-        state_id,
-        city_id,
-        latitude,
-        longitude,
-        sqft,
-        bedroom,
-        bath,
-        parking,
-        description,
-        price,
-      });
+  var images = [];
 
-      await property.save();
-      res.status(201).json({
-        status: true,
-        message: "Property created successfully",
-        data: property,
-      });
-    } else {
-      res.status(500).json({
-        status: false,
-        message: "category not found.",
-        data: null,
-      });
+  try {
+    const rootPath = process.cwd();
+    for (const image of images_arr) {
+      const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+      const filename = `property_image_${Date.now()}.jpg`;
+      const filePath = path.join(rootPath, "PropertyImages", filename);
+      // const filePath = path.join(__dirname, "PropertyImages", filename);
+      fs.writeFileSync(filePath, base64Data, "base64");
+      images.push(filePath);
     }
+    // console.log("images - ", images);
+
+    const property = new PropertySchema({
+      property_name,
+      type,
+      category,
+      country,
+      state,
+      city,
+      latitude,
+      longitude,
+      sqft,
+      bedroom,
+      bath,
+      parking,
+      description,
+      price,
+      images,
+    });
+    await property.save();
+    res.status(201).json({
+      status: true,
+      message: "Property created successfully",
+      data: property,
+    });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       status: false,
       message: err.message,
@@ -176,10 +161,11 @@ async function updateProperty(req, res) {
   const { id } = req.params;
   const {
     property_name,
-    category_id,
-    country_id,
-    state_id,
-    city_id,
+    category,
+    type,
+    country,
+    state,
+    city,
     latitude,
     longitude,
     sqft,
@@ -189,13 +175,15 @@ async function updateProperty(req, res) {
     description,
     price,
   } = req.body;
+
   try {
     const property = await PropertySchema.findByIdAndUpdate(id, {
       property_name,
-      category_id,
-      country_id,
-      state_id,
-      city_id,
+      type,
+      category,
+      country,
+      state,
+      city,
       latitude,
       longitude,
       sqft,
@@ -250,4 +238,5 @@ module.exports = {
   createProperty,
   updateProperty,
   deleteProperty,
+  getProperty,
 };

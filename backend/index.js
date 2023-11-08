@@ -3,12 +3,10 @@ const connectToMongoDB = require("./db/dbConfig");
 const route = require("./routes/Route");
 const app = express();
 
-
 // coonect to mongodb
 connectToMongoDB();
 
-app.use(express.json());
-
+app.use(express.json({ limit: "50mb" }));
 app.use("/realEstate/api", route);
 
 app.listen(4000, () => {
