@@ -20,14 +20,9 @@ function App() {
         {/* <AllProperties /> */}
         <Router>
           <Routes>
-            <Route
-              path="/"
-              element={<AllProperties />}
-            />
-            <Route
-              path="/ProductDetails"
-              element={<ProductDetails />}
-            />
+            <Route path="/" element={<AllProperties />} />
+            <Route path="/Properties" element={<AllProperties />} />
+            <Route path="/ProductDetails" element={<ProductDetails />} />
           </Routes>
         </Router>
       </Stack>
