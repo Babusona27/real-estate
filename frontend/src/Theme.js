@@ -12,6 +12,8 @@ import { createTheme } from '@mui/material/styles';
       lightGrey:"#878c9f",
       LightVlue2:"#EAF7F4",
       LightWhite:"#fbfbfb",
+    Roboto:"'Roboto', sans-serif !important;",
+    
     },
     secondary: {
       light: '#ff7961',

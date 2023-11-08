@@ -41,7 +41,7 @@ const BannerSlider = () => {
     }
   return (
     <Box sx={{
-        height:"650px",
+        height:{xs:"300px", sm:"300px", md:"450px", lg:"650px"},
         position:"relative"
     }} className="banner_slider">
     <OwlCarousel className='owl-theme' {...option}>
@@ -66,9 +66,9 @@ const BannerSlider = () => {
     position:"absolute",
     bottom:"0%",
     left:"0",
-    padding:"20px 50px",
+    padding:{ xs:"20px 20px",  sm:"20px 20px", lg:"20px 50px"},
     height:"40%",
-    width:"65%",
+    width:{ xs:"100%",  sm:"100%", lg:"65%"},
     zIndex:"1",
 }} className="banner_content">
 <ul class="catagory_box">
@@ -83,9 +83,9 @@ const BannerSlider = () => {
               </Span>
 </ul>
 <Typography variant='h4'sx={{
-    fontSize:"28px",
+    fontSize:{ xs:"20px",  sm:"20px", lg:"28px"},
     fontWeight:"600",
-lineHeight:"42px",
+lineHeight:{ xs:"28px",  sm:"28px", lg:"42px"},
 color:theme.palette.primary.white,
 margin:"20px 0px",
 }}>Full Sea View | Loft Type | Soon to be Available – Mamsha Al Saadiyat</Typography>
@@ -95,13 +95,20 @@ margin:"20px 0px",
     gap:"25px"
 }}>
     <Box sx={{
+        display:{ xs:"grid",  sm:"grid", lg:"flex"},
+        alignItems:"center",
+        gap:"7px"
+    }}>
+        <Box sx={{
         display:"flex",
         alignItems:"center",
-        gap:"10px"
+        justifyContent:{ xs:"center",  sm:"center", lg:"start"},
     }}>
         <LocationOnIcon sx={{
             color:theme.palette.primary.logoColor,
         }}/>
+        </Box>
+       
         <Typography variant='span'sx={{
     fontSize:"15px",
     fontWeight:"400",
@@ -110,13 +117,20 @@ color:theme.palette.primary.white,
 }}>Saadiyat Island</Typography>
     </Box>
     <Box sx={{
+             display:{ xs:"grid",  sm:"grid", lg:"flex"},
+        alignItems:"center",
+        gap:"7px",
+        textAlign:{xs:"center", sm:"center", lg:"left"}
+    }}>
+         <Box sx={{
         display:"flex",
         alignItems:"center",
-        gap:"7px"
+        justifyContent:{ xs:"center",  sm:"center", lg:"start"},
     }}>
         <WatchLaterIcon sx={{
             color:theme.palette.primary.logoColor,
         }}/>
+        </Box>
         <Typography variant='span'sx={{
     fontSize:"15px",
     fontWeight:"400",
@@ -125,13 +139,20 @@ color:theme.palette.primary.white,
 }}>Saadiyat Island</Typography>
     </Box>
     <Box sx={{
+         display:{ xs:"grid",  sm:"grid", lg:"flex"},
+        alignItems:"center",
+        gap:"7px"
+    }}>
+          <Box sx={{
         display:"flex",
         alignItems:"center",
-        gap:"10px"
+        justifyContent:{ xs:"center",  sm:"center", lg:"start"},
     }}>
-        <VisibilityIcon sx={{
+          <VisibilityIcon sx={{
             color:theme.palette.primary.logoColor,
         }}/>
+    </Box>
+      
         <Typography variant='span'sx={{
     fontSize:"15px",
     fontWeight:"400",

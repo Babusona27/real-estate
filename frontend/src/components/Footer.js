@@ -24,7 +24,7 @@ const Footer = () => {
       sx={{
         backgroundColor: theme.palette.primary.LightWhite,
         padding: { xs: "30px 0px", md: "30px 0px", lg:"50px 0px"},
-        marginTop:"50px"
+        marginTop:"0px"
       }}
     >
       <Container maxWidth="xl" sx={{ height: "100%" }}>

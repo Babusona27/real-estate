@@ -5,7 +5,6 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-    font-family: 'Ubuntu', sans-serif;
     /* transition:all ease-in-out 0.3s !important ; */
 }
 :root{
@@ -19,16 +18,21 @@ body {
 	width: 100%;
 	height: 100%;
 	overflow-x: hidden;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu', sans-serif !important;
    
 }
-h1, h2, h3, h4, h5, h6, p,span, button{
-    font-family: 'Ubuntu', sans-serif !important;
+h1, h2, h3, h4, h5, h6,span, button{
+    font-family: 'Ubuntu', sans-serif !important ;
 }
 img{
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+}
+ul, li{
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
 }
 a{
     text-decoration: none;
@@ -49,11 +53,11 @@ input:focus, Select:focus {
 	box-shadow: none;
 	border: none ;
 }
-.css-wo8zht-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: rgb(221 221 221 / 87%) !important;
+.MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #2793a659!important;
 }
-.css-wo8zht-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-	border-color: rgb(221 221 221 / 87%) !important;
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+	border-color: #2793a659!important;
     border-width: 1px !important;
 }
 .css-yf8vq0-MuiSelect-nativeInput {
@@ -107,6 +111,7 @@ button.filter_btn:hover {
     background:  var(--green);
     color:  var(--white);
 }
+
 .css-ix145h-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
     color:  var(--green) !important;
 }
@@ -219,4 +224,46 @@ ul.catagory_box {
     width: 100%;
     background: linear-gradient(0deg, rgba(0,0,0,0.8127626050420168) 6%, rgba(255,255,255,0) 100%);
     z-index: 1;
+}
+.details_icon_list li:hover button.filter_btn {
+    background:  var(--green);
+    color:  var(--white);
+}
+p.para {
+    margin-bottom: 20px;
+}
+h3.details_list_heading {
+    font-family: 'Roboto', sans-serif !important; 
+}
+ul.details_lists {
+    display: grid;
+    gap: 10px;
+    align-items: center;
+    margin-top: 25px;
+}
+.map_box img {
+    height: 300px;
+    object-fit: cover !important;
+}
+.getInTouch_avtar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid #dadada;
+    float: left;
+    padding: 5px;
+}
+.customBtnStyle.new_btn {
+    border-radius: 30px;
+    height: 41px;
+}
+.customBtnStyle.new_btn::before{
+    transform: translateX(-105%);
+}
+.customBtnStyle.new_btn::after{
+    transform: translateX(105%);
+}
+.customBtnStyle.new_btn:hover:before {
+    transform: translateX(0);
+    transition: transform 350ms ease;
 }
