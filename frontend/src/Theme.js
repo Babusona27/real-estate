@@ -13,7 +13,7 @@ import { createTheme } from '@mui/material/styles';
       LightVlue2:"#EAF7F4",
       LightWhite:"#fbfbfb",
     Roboto:"'Roboto', sans-serif !important;",
-    
+    BGColor:"#c7e6f4"
     },
     secondary: {
       light: '#ff7961',

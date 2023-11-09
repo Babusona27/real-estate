@@ -56,12 +56,31 @@ const Navbar = () => {
   // const toggleMenu = () => {
   //   setIsActive(!isActive);
   // };
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const theme = useTheme();
   return (
-    <AppBar
-      position="sticky"
+    <Box>
+   <AppBar className={` ${isScrolled ? 'stickyHeader' : ''}`}
+    
       sx={{
+        position:"absolute",
         backgroundColor: theme.palette.primary.LightWhite,
         height: "88px",
         boxShadow: "0 5px 10px 0 rgb(87 101 128 / 12%)",
@@ -296,6 +315,8 @@ const Navbar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    </Box>
+ 
   );
 };
 

@@ -313,6 +313,74 @@ ul.details_lists {
     transform: translateX(0);
     transition: transform 350ms ease;
 }
+header.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorPrimary.MuiAppBar-positionFixed.stickyHeader.mui-fixed.css-1gniafo-MuiPaper-root-MuiAppBar-root{
+	background: #fff;
+	box-shadow: 0px 5px 10px rgba(129, 129, 129, 0.5);
+	animation-name: animatenav;
+	animation-duration: 1s;
+	animation-fill-mode: both;
+	transition: 0.5s all ease-in-out;
+	position: fixed;
+	height: 75px;
+}
+@keyframes animatenav {
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(0, -100%, 0);
+		-moz-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: none;
+		-moz-transform: none;
+		transform: none;
+	}
+}
+.css-1usjlna-MuiContainer-root {
+    background-color: transparent !important;
+}
+.banner_sec:before {
+    content: "";
+    background-color: #1d293e;
+    opacity: .6;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+.tab_box .MuiTabs-flexContainer.MuiTabs-centered.css-1wf8b0h-MuiTabs-flexContainer {
+	gap: 10px;
+}
+.tab_box .active_tab  {
+    background-color: var(--blue);
+    border-color: var(--blue);
+    color: #fff !important;
+}
+.tab_box .tabBtn{
+	position: relative;
+} 
+.tab_box .tabBtn::before {
+    background-color: var(--blue);
+    content: "";
+    height: 20px;
+    margin-left: 5px;
+    position: absolute;
+    top: 10px;
+    width: 20px;
+    transform: rotate(45deg);
+    transition: 0.5s all;
+    z-index: -1;
+}
+.tab_box .tabBtn.active_tab::before{
+	top: 38px;
+}
+.tab_box .MuiTabs-scroller.MuiTabs-fixed.css-jpln7h-MuiTabs-scroller, .tab_box  {
+    overflow: visible !important;
+}
+
 
 /* ======================================== */
 
@@ -561,3 +629,4 @@ display: block;
 	}
 
 }
+
