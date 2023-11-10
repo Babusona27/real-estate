@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   FormControl,
   InputLabel,
@@ -7,6 +8,7 @@ import {
   Select,
   Tab,
   Tabs,
+  TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -15,8 +17,8 @@ import Footer from "../components/Footer";
 import theme from "../Theme";
 
 const TabPanel = ({ children, value, index }) => (
-  <div role="tabpanel" hidden={value !== index}>
-    {value === index && <Box p={3}>{children}</Box>}
+<div className={`tab-panel ${value === index ? 'active' : ''}`}>
+    {value === index && <Box padding={"20px 0px"}>{children}</Box>}
   </div>
 );
 
@@ -25,7 +27,6 @@ const Home = () => {
   const [value2, setVal1] = React.useState("");
   const [value3, setVal2] = React.useState("");
   const [value4, setVal3] = React.useState("");
-
   const handleChange1 = (event) => {
     setVal(event.target.value);
   };
@@ -38,6 +39,7 @@ const Home = () => {
   const handleChange4 = (event) => {
     setVal3(event.target.value);
   };
+
 
   // ===============select box
 
@@ -131,7 +133,7 @@ const Home = () => {
                     fontWeight: "500",
                     overflow: "visible",
                   }}
-                  label="Tab 1"
+                  label="Buy"
                   className={`tabBtn ${value === 0 ? "active_tab" : ""}`}
                 />
                 <Tab
@@ -146,7 +148,7 @@ const Home = () => {
                     fontWeight: "500",
                     overflow: "visible",
                   }}
-                  label="Tab 2"
+                  label="Rent"
                   className={`tabBtn ${value === 1 ? "active_tab" : ""}`}
                 />
               </Tabs>
@@ -156,42 +158,172 @@ const Home = () => {
                   className={"tab_cont"}
                   sx={{
                     backgroundColor: theme.palette.primary.white,
-                    padding: "30px 20px",
+                    padding: "20px 20px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    gap:"20px",
                     position: "relative",
                     zIndex: "5",
                     borderRadius: "10px",
                   }}
                 >
-                  <Box component={"span"}></Box>
-                   <Typography variant="h6">Content for Tab 2</Typography>
-                  <p>This is the content for Tab 2.</p>
+        <TextField className="form_input1"  fullWidth  id="outlined-basic" label="Enter keyword..." variant="outlined" />
+        <Box sx={{width:"100%"}}>
+          <FormControl className="form_input1" fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
+            <InputLabel id="demo-controlled-open-select-label">Property Type</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              value={value1}
+              label="Property Type"
+              onChange={handleChange1}
+            >
+              <MenuItem value={1}>Property Type </MenuItem>
+              <MenuItem value={2}>Sale</MenuItem>
+              <MenuItem value={3}>Rent</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <TextField className="form_input1" fullWidth  id="outlined-basic" label="Location" variant="outlined" />
+        <Box sx={{width:"100%"}}>
+          <FormControl className="form_input1" fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
+            <InputLabel id="demo-controlled-open-select-label">Property Type</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+            
+              value={value2}
+              label="Property Type"
+              onChange={handleChange2}
+            >
+              <MenuItem value={1}>Property Type </MenuItem>
+              <MenuItem value={2}>Sale</MenuItem>
+              <MenuItem value={3}>Rent</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Button sx={{width:"100%",
+       backgroundColor:theme.palette.primary.logoColor, 
+       height:"45px",
+       fontSize:"14px",
+       fontWeight:"600",
+       lineHeight:"1.2px",
+       boxShadow:"0 7px 18px 0 rgba(29, 142, 162, 0.32)",
+        color:theme.palette.primary.white, 
+        "&:hover": 
+        { backgroundColor:"#00a376"
+         },
+         }}>Search</Button>
                 </Box>
               </TabPanel>
 
               <TabPanel value={value} index={1}>
-                <Box
+              <Box
                   className={"tab_cont"}
                   sx={{
                     backgroundColor: theme.palette.primary.white,
-                    padding: "30px 20px",
+                    padding: "20px 20px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    gap:"20px",
                     position: "relative",
                     zIndex: "5",
                     borderRadius: "10px",
                   }}
                 >
-                  <Typography variant="h6">Content for Tab 2</Typography>
-                  <p>This is the content for Tab 2.</p>
+        <TextField className="form_input1"  fullWidth  id="outlined-basic" label="Enter keyword..." variant="outlined" />
+        <Box sx={{width:"100%"}}>
+          <FormControl className="form_input1" fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
+            <InputLabel id="demo-controlled-open-select-label">Property Type</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              value={value3}
+              label="Property Type"
+              onChange={handleChange3}
+            >
+              <MenuItem value={1}>Property Type </MenuItem>
+              <MenuItem value={2}>Sale</MenuItem>
+              <MenuItem value={3}>Rent</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <TextField className="form_input1" fullWidth  id="outlined-basic" label="Location" variant="outlined" />
+        <Box sx={{width:"100%"}}>
+          <FormControl className="form_input1" fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
+            <InputLabel id="demo-controlled-open-select-label">Property Type</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+            
+              value={value4}
+              label="Property Type"
+              onChange={handleChange4}
+            >
+              <MenuItem value={1}>Property Type </MenuItem>
+              <MenuItem value={2}>Sale</MenuItem>
+              <MenuItem value={3}>Rent</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Button sx={{width:"100%",
+       backgroundColor:theme.palette.primary.logoColor, 
+       height:"45px",
+       fontSize:"14px",
+       fontWeight:"600",
+       lineHeight:"1.2px",
+       boxShadow:"0 7px 18px 0 rgba(29, 142, 162, 0.32)",
+        color:theme.palette.primary.white, 
+        "&:hover": 
+        { backgroundColor:"#00a376"
+         },
+         }}>Search</Button>
                 </Box>
               </TabPanel>
             </Box>
           </Box>
         </Container>
+      </Box>
+      <Box className="featured_section"
+      component={"section"}
+      sx={{
+        padding:"50px 0px",
+        backgroundColor: theme.palette.primary.BGColor,
+      }}
+      >
+<Container
+ maxWidth="xl"
+ sx={{
+   height: "100%",
+   padding: {
+     xs: "0px 10px",
+     sm: "0px 10px",
+     md: "0px 10px",
+     lg: "0px 24px",
+   },
+ }}>
+
+<Box className={"heading"} sx={{
+ textAlign:"center",
+ marginBottom:"25px"
+}}>
+  <Typography variant="h4" component={"h2"}
+   sx={{
+fontSize:"28px",
+fontWeight:"500",
+lineHeight:"32px",
+marginBottom:"10px"
+
+  }}>Featured Properties</Typography>
+  <Typography component={"p"} sx={{
+fontSize:"14px",
+}}>Handpicked properties by our team.</Typography>
+
+</Box>
+
+</Container>
       </Box>
       <Box>
         <Footer />

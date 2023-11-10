@@ -375,13 +375,33 @@ header.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation4.MuiAppBar-root.MuiAp
     z-index: -1;
 }
 .tab_box .tabBtn.active_tab::before{
-	top: 38px;
+	top: 35px;
 }
 .tab_box .MuiTabs-scroller.MuiTabs-fixed.css-jpln7h-MuiTabs-scroller, .tab_box  {
     overflow: visible !important;
 }
+.form_input1 input#outlined-basic, .form_input1 div#demo-controlled-open-select {
+    height: 25px;
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+.form_input1 label {
+    font-size: 14px;
+    line-height: 1;
+    top: -1px;
 
-
+}
+.tab-panel {
+    opacity: 0;
+    transition: opacity .25s ease-in-out;
+}
+.tab-panel.active{
+	opacity: 1;
+}
 /* ======================================== */
 
 .nav-menu {
