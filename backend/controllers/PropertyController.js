@@ -107,21 +107,40 @@ async function createProperty(req, res) {
     description,
     price,
     images_arr,
+    floor_images,
+    inspection_agencies,
+    neighborhood_information,
+    seller,
+    reviews,
+    property_status,
+    posted_on,
   } = req.body;
 
   var images = [];
+  var floor_plan_images = [];
 
   try {
+    // images
     const rootPath = process.cwd();
     for (const image of images_arr) {
       const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
       const filename = `property_image_${Date.now()}.jpg`;
       const filePath = path.join(rootPath, "PropertyImages", filename);
-      // const filePath = path.join(__dirname, "PropertyImages", filename);
       fs.writeFileSync(filePath, base64Data, "base64");
       images.push(filePath);
     }
     // console.log("images - ", images);
+
+    // Floor Images
+    const rootPathFloorImage = process.cwd();
+    for (const image of floor_images) {
+      const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+      const filename = `floor_image_${Date.now()}.jpg`;
+      const filePath = path.join(rootPathFloorImage, "FloorImages", filename);
+      fs.writeFileSync(filePath, base64Data, "base64");
+      floor_plan_images.push(filePath);
+    }
+    // console.log("Floor images - ", images);
 
     const property = new PropertySchema({
       property_name,
@@ -139,6 +158,13 @@ async function createProperty(req, res) {
       description,
       price,
       images,
+      floor_plan_images,
+      inspection_agencies,
+      neighborhood_information,
+      seller,
+      reviews,
+      property_status,
+      posted_on,
     });
     await property.save();
     res.status(201).json({
@@ -174,9 +200,23 @@ async function updateProperty(req, res) {
     parking,
     description,
     price,
+    images_arr,
   } = req.body;
 
+  var images = [];
+
   try {
+    const rootPath = process.cwd();
+    for (const image of images_arr) {
+      const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+      const filename = `property_image_${Date.now()}.jpg`;
+      const filePath = path.join(rootPath, "PropertyImages", filename);
+      // const filePath = path.join(__dirname, "PropertyImages", filename);
+      fs.writeFileSync(filePath, base64Data, "base64");
+      images.push(filePath);
+    }
+    // console.log("images - ", images);
+
     const property = await PropertySchema.findByIdAndUpdate(id, {
       property_name,
       type,
@@ -192,6 +232,7 @@ async function updateProperty(req, res) {
       parking,
       description,
       price,
+      images,
     });
     res.json({
       status: true,
@@ -233,10 +274,48 @@ async function deleteProperty(req, res) {
   }
 }
 
+async function deleteImages(req, res) {
+  const propertyId = req.params.id;
+  const imageIndex = parseInt(req.params.imageIndex);
+
+  try {
+    const property = await PropertySchema.findById(propertyId);
+
+    if (!property) {
+      return res.status(404).send("Property not found");
+    }
+
+    // Check if the imageIndex is within a valid range
+    if (imageIndex < 0 || imageIndex >= property.images.length) {
+      return res.status(400).send("Invalid image index");
+    }
+
+    // const adjustedIndex = imageIndex - 1;
+
+    const deletedImage = property.images[imageIndex];
+
+    // Splice the image from the images array using the imageIndex
+    property.images.splice(imageIndex, 1);
+
+    await property.save(); // Save the updated property document
+
+    res
+      .status(200)
+      .json({ message: "Image deleted successfully", deletedImage });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Error deleting image from property",
+      message: error.message,
+    });
+  }
+}
+
 module.exports = {
   getProperties,
+  getProperty,
   createProperty,
   updateProperty,
   deleteProperty,
-  getProperty,
+  deleteImages,
 };
