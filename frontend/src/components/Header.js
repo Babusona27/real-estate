@@ -121,45 +121,24 @@ const Navbar = () => {
                   <li className="menu-item">
                     <a className="nav-link">home</a>
                   </li>
-                  <li className="menu-item menu-item-has-children">
-                    <a className="nav-link">
-                      menus <i className="plus"></i>
-                    </a>
-                    <ul className="sub-menu">
-                      <li className="menu-item">
-                        <a className="nav-link">tasty burger</a>
-                      </li>
-                      <li className="menu-item">
-                        <a className="nav-link">tasty pizza</a>
-                      </li>
-                      <li className="menu-item">
-                        <a className="nav-link">cold ice-cream</a>
-                      </li>
-                      <li className="menu-item">
-                        <a className="nav-link">cold drinks</a>
-                      </li>
-                      <li className="menu-item">
-                        <a className="nav-link">tasty sweets</a>
-                      </li>
-                      <li className="menu-item">
-                        <a className="nav-link">healthy breakfast</a>
-                      </li>
-                    </ul>
+                  <li className="menu-item">
+                    <a className="nav-link">About Us</a>
                   </li>
                   <li className="menu-item">
-                    <a className="nav-link">About</a>
+                    <a className="nav-link">Properties</a>
                   </li>
-                  <li  className="menu-item menu-item-has-children">
+                  <li className="menu-item menu-item-has-children">
                     <a className="nav-link">
-                      shop <i className="plus"></i>
+                     Pages <i className="plus"></i>
                     </a>
                     <ul className="sub-menu">
                       <li className="menu-item">
-                        <a className="nav-link">Our Products</a>
+                        <a className="nav-link">Login</a>
                       </li>
                       <li className="menu-item">
-                        <a className="nav-link">Product Details</a>
+                        <a className="nav-link">Register</a>
                       </li>
+                      
                     </ul>
                   </li>
                   <li className="menu-item">
