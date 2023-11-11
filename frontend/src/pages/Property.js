@@ -4,16 +4,43 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import PropertyPost from '../components/PropertyPost';
 import { useSearchParams } from 'react-router-dom';
+import { GetApiFetch } from "../common/CommonFunction";
+import { GET_PROPERTIES_API } from "../common/urls";
 
 const Property = () => {
   const [searchParams] = useSearchParams();
+  const [properties, setProperties] = useState([]);
   // if(searchParams.get('param1') != undefined){
   //   console.log('param1', searchParams.get('param1'));
   // }
   // console.log('searchParams', searchParams);
+  const _getProperties = () => {
+    let params = '?';
+    console.log('params', params)
+    GetApiFetch(GET_PROPERTIES_API, params)
+      .then(([status, response]) => {
+        if (status == 200) {
+          // console.log(response);
+          if(response.status){
+            setProperties(response.data);
+            console.log(response);
+          }else{
+            console.log(response);
+          }
+          
+
+        } else {
+          console.log('Something went wrong');
+        }
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+
+      });
+  }
   useEffect(() => {
-    
-  });
+    _getProperties()
+  },[searchParams]);
   return (
     <Box flex={4} p={{ xs: '0px', md: '15px' }} m={0}>
     <HeaderArea>

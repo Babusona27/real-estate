@@ -2,7 +2,9 @@ const express = require("express");
 const connectToMongoDB = require("./db/dbConfig");
 const route = require("./routes/Route");
 const app = express();
+const cors = require('cors');
 
+app.use(cors());
 // coonect to mongodb
 connectToMongoDB();
 
