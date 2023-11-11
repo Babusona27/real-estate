@@ -8,8 +8,9 @@ import theme from "../Theme";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { IMAGE_BASE_URL } from "../common/urls";
 
-const BannerSlider = () => {
+const BannerSlider = ({ProductDetails}) => {
   const option = {
     items: 1,
     loop: true,
@@ -48,18 +49,13 @@ const BannerSlider = () => {
       className="banner_slider"
     >
       <OwlCarousel className="owl-theme" {...option}>
-        <div class="item">
-          <img src="./assets/images/R4.jpg" />
+        {ProductDetails.images.map((item, key) => (
+          <div class="item">
+          <img src={IMAGE_BASE_URL+item} />
         </div>
-        <div class="item">
-          <img src="./assets/images/R3.jpg" />
-        </div>
-        <div class="item">
-          <img src="./assets/images/R2.jpg" />
-        </div>
-        <div class="item">
-          <img src="./assets/images/R1.jpg" />
-        </div>
+        ))}
+        
+        
       </OwlCarousel>
       <Box
         sx={{
