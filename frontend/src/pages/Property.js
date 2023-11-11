@@ -1,10 +1,19 @@
+import { useState, useEffect } from "react";
 import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import PropertyPost from '../components/PropertyPost';
-
+import { useSearchParams } from 'react-router-dom';
 
 const Property = () => {
+  const [searchParams] = useSearchParams();
+  // if(searchParams.get('param1') != undefined){
+  //   console.log('param1', searchParams.get('param1'));
+  // }
+  // console.log('searchParams', searchParams);
+  useEffect(() => {
+    
+  });
   return (
     <Box flex={4} p={{ xs: '0px', md: '15px' }} m={0}>
     <HeaderArea>

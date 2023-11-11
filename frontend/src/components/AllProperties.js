@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import React from "react";
 import PropertyLeftBar from "./PropertyLeftBar";
@@ -6,6 +7,10 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const AllProperties = () => {
+  
+  useEffect(() => {
+    
+  });
   return (
     <Box sx={{
       backgroundColor:"#eaf7f4" ,

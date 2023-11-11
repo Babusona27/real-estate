@@ -24,9 +24,11 @@ import TuneIcon from "@mui/icons-material/Tune";
 import Checkbox from "@mui/material/Checkbox";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import LetestPosts from "./LetestPosts";
+import { useNavigate } from 'react-router-dom';
 
 
 const PropertyLeftBar = () => {
+  const navigate = useNavigate();
   const [val, setVal] = React.useState("");
   const [val1, setVal1] = React.useState("");
   const [val2, setVal2] = React.useState("");
@@ -64,7 +66,13 @@ const PropertyLeftBar = () => {
   const handleChangeNew = (event, newValue) => {
     setRange(newValue);
   };
-
+  const changeRoute = () => {
+    // Navigate to a new route
+    // navigate('/new-route');
+  
+    // Navigate to a route with query parameters
+    navigate('/Properties?param1=value1&param2=value2');
+  };
 
 
   return (
@@ -299,7 +307,8 @@ const PropertyLeftBar = () => {
         "&:hover": 
         { backgroundColor:"#00a376"
          },
-         }}>Find Property</Button>
+         }}
+         onClick={changeRoute}>Find Property</Button>
       <Button sx={{width:"32%",
        backgroundColor:theme.palette.primary.white, 
        color:theme.palette.primary.logoColor, 
