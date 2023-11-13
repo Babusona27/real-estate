@@ -20,6 +20,7 @@ import SingleBedIcon from '@mui/icons-material/SingleBed';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import { Link, useNavigate } from "react-router-dom";
+import { IMAGE_BASE_URL } from "../common/urls";
 
 
 const PropertyPost = ({ propertyDetails }) => {
@@ -53,7 +54,7 @@ const PropertyPost = ({ propertyDetails }) => {
               <CardMedia
                 component="img"
                 height="200"
-                image="./assets/images/R1.jpg"
+                image={propertyDetails.images.length > 0 ? IMAGE_BASE_URL+propertyDetails.images[0] : "./assets/images/R1.jpg"}
                 alt="green iguana"
                 sx={{
                   height: "250px"
