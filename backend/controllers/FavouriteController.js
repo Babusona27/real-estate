@@ -11,7 +11,7 @@ async function addToFavorite(req, res) {
     const user = await UserSchema.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ status: false, message: "User not found" });
     }
 
     const existingFavorite = user.favorite_properties.find(
@@ -22,7 +22,11 @@ async function addToFavorite(req, res) {
     );
 
     if (existingFavorite) {
-      return res.status(400).json({ error: "Property already in favorites" });
+      return res.status(400).json({
+        status: false,
+        message: "Property already in favorites",
+        existingFavorite,
+      });
     }
 
     // Add the new favorite property to the user's favorites
@@ -35,10 +39,15 @@ async function addToFavorite(req, res) {
     // Save the updated user document
     await user.save();
 
-    res.status(200).json({ message: "Property added to favorites" });
+    res.status(200).json({
+      status: true,
+      message: "Property added to favorites",
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to add property to favorites" });
+    res
+      .status(500)
+      .json({ status: false, message: "Failed to add property to favorites" });
   }
 }
 
@@ -58,7 +67,9 @@ async function deleteFavorite(req, res) {
       propertyIndex < 0 ||
       propertyIndex >= property.favorite_properties.length
     ) {
-      return res.status(400).send("Invalid image index");
+      return res
+        .status(400)
+        .json({ status: false, message: "Invalid image index" });
     }
 
     // const adjustedIndex = imageIndex - 1;
@@ -70,13 +81,16 @@ async function deleteFavorite(req, res) {
 
     await property.save(); // Save the updated property document
 
-    res
-      .status(200)
-      .json({ message: "Image deleted successfully", deletedImage });
+    res.status(200).json({
+      status: true,
+      message: "Image deleted successfully",
+      deletedImage,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      error: "Error deleting image from property",
+      status: false,
+      message: "Error deleting image from property",
       message: error.message,
     });
   }
@@ -119,13 +133,17 @@ async function myFavorites(req, res) {
     // console.log(user);
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ status: false, message: "User not found" });
     }
 
     // Retrieve the favorite_properties directly
     const favoriteProperties = user.favorite_properties;
 
-    res.status(200).json(favoriteProperties);
+    res.status(200).json({
+      status: true,
+      message: "user favorites properties",
+      favoriteProperties,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

@@ -8,13 +8,13 @@ function authenticate(req, res, next) {
   //   console.log("Received token:", token);
 
   if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({ status: false, message: "Unauthorized" });
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      console.log(err);
-      return res.status(401).json({ error: "Unauthorized" });
+      // console.log(err);
+      return res.status(401).json({ sattus: false, message: "Unauthorized" });
     }
     req.user = decoded;
     // console.log("**********", decoded);
