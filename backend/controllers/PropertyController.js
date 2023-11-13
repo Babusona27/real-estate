@@ -125,9 +125,10 @@ async function createProperty(req, res) {
     for (const image of images_arr) {
       const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
       const filename = `property_image_${Date.now()}.jpg`;
-      const filePath = path.join(rootPath, "PropertyImages", filename);
+      const relativePath = path.join("PropertyImages", filename);
+      const filePath = path.join(rootPath, "uploads", relativePath);
       fs.writeFileSync(filePath, base64Data, "base64");
-      images.push(filePath);
+      images.push(relativePath);
     }
     // console.log("images - ", images);
 
@@ -136,9 +137,10 @@ async function createProperty(req, res) {
     for (const image of floor_images) {
       const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
       const filename = `floor_image_${Date.now()}.jpg`;
-      const filePath = path.join(rootPathFloorImage, "FloorImages", filename);
+      const relativePath = path.join("FloorImages", filename);
+      const filePath = path.join(rootPathFloorImage, "uploads", relativePath);
       fs.writeFileSync(filePath, base64Data, "base64");
-      floor_plan_images.push(filePath);
+      floor_plan_images.push(relativePath);
     }
     // console.log("Floor images - ", images);
 
