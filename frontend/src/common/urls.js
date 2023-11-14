@@ -12,3 +12,5 @@ export const POST_SHOP_PAGE_API = '/shopPage';
 export const GET_PRODUCT_DETAILS_API = '/productDetailWeb';
 export const GET_PRODUCT_DETAILS_PAGE_API = '/propertydetails/';
 export const GET_ALL_COUNTRIES_API = '/country';
+export const POST_REGISTER_API = '/Userregister';
+export const POST_LOGIN_API = '/Userlogin';

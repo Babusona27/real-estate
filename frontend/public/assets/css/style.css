@@ -67,7 +67,7 @@ body {
     font-family: 'Ubuntu', sans-serif !important;
    
 }
-h1, h2, h3, h4, h5, h6,span, button{
+h1, h2, h3, h4, h5, h6,span, button, label{
     font-family: 'Ubuntu', sans-serif !important ;
 }
 img{
@@ -677,4 +677,24 @@ line-height: 1 !important;
 }
 .chenk_sgn span{
     padding: 0 !important;
+}
+.upload_outline {
+	border: 0.5px solid #c4c4c4 !important;
+    color: #666666 !important;
+	font-weight: 400 !important;
+    font-size: 15px !important;
+    text-transform: capitalize !important;
+	line-height: 0 !important;
+	opacity: 0.9 !important;
+}
+.upload_outline:hover {
+	background-color: transparent !important;
+	border-color: #b4d9e0 !important;
+	color: var(--green) !important;
+}
+.radio_btn .css-pckumx-MuiButtonBase-root-MuiRadio-root.Mui-checked {
+	color: var(--green)!important;
+}
+.css-o28p1q-MuiFormLabel-root.Mui-focused {
+	color: var(--green) !important;
 }
