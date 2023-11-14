@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 const InspectionAgenciesSchema = new mongoose.Schema({
   agency_name: String,
-  agency_image: String,
+  agency_image: {
+    type: String,
+    default: null,
+  },
 });
 
 const NeighborhoodInformationSchema = new mongoose.Schema({
@@ -15,7 +19,10 @@ const NeighborhoodInformationSchema = new mongoose.Schema({
 const SellerSchema = new mongoose.Schema({
   seller_id: String,
   seller_name: String,
-  user_profile_image: String,
+  user_profile_image: {
+    type: String,
+    default: null,
+  },
 });
 
 const ReviewSchema = new mongoose.Schema({
@@ -26,8 +33,11 @@ const ReviewSchema = new mongoose.Schema({
   },
   review: String,
   user_name: String,
-  user_profile_image: String,
-  user_id: String,
+  user_profile_image: {
+    type: String,
+    default: null,
+  },
+  user_id: mongoose.Schema.Types.ObjectId,
 });
 
 const PropertySchema = new mongoose.Schema({
@@ -52,7 +62,7 @@ const PropertySchema = new mongoose.Schema({
   floor_plan_images: [String],
   inspection_agencies: [InspectionAgenciesSchema],
   neighborhood_information: [NeighborhoodInformationSchema],
-  seller: [SellerSchema],
+  seller: SellerSchema,
   reviews: [ReviewSchema],
   property_status: {
     type: String,
@@ -60,8 +70,8 @@ const PropertySchema = new mongoose.Schema({
     // default: "active",
   },
   posted_on: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => moment().format("DD-MM-YYYY HH:mm:ss"),
   },
 });
 

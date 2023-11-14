@@ -18,7 +18,29 @@ async function Userregister(req, res) {
   } = req.body;
 
   try {
+    // Check if the email is already registered
+    const existingEmail = await UserSchema.findOne({ user_email });
+    if (existingEmail) {
+      return res.status(400).json({
+        status: false,
+        message: "Email is already registered. Please use a different email.",
+      });
+    }
+
+    // Check if the phone number is already registered
+    const existingPhone = await UserSchema.findOne({ user_phone });
+    if (existingPhone) {
+      return res.status(400).json({
+        status: false,
+        message:
+          "Phone number is already registered. Please use a different phone number.",
+      });
+    }
+
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user instance
     const newUser = new UserSchema({
       user_name,
       user_image,
@@ -29,14 +51,19 @@ async function Userregister(req, res) {
       user_address,
       password: hashedPassword,
     });
+
+    // Save the new user to the database
     await newUser.save();
+
+    // Send a success response
     res.status(201).json({
       status: true,
       message: "User registered successfully",
       data: newUser,
     });
   } catch (error) {
-    res.status(500).json({ status: false, message: "Registration failed" });
+    console.error(error);
+    res.status(500).json({ status: false, message: error.message });
   }
 }
 
@@ -71,11 +98,17 @@ async function Userlogin(req, res) {
     const token = jwt.sign(payload, secretKey, {
       expiresIn: "24h",
     });
-
-    res.json({ status: true, message: "User Login Successfull", token });
+    const data = {
+      token: token,
+      user_name: user.user_name,
+      user_image: user.user_image,
+      user_type: user.user_type,
+      seller_type: user.seller_type,
+    };
+    res.json({ status: true, message: "User Login Successfull", data: data });
   } catch (error) {
     // console.error(error);
-    res.status(500).json({ status: false, message: "Login failed" });
+    res.status(500).json({ status: false, message: error.message });
   }
 }
 
