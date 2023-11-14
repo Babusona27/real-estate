@@ -118,12 +118,11 @@ const PropertyLeftBar = () => {
               onClose={handleClose}
               onOpen={handleOpen}
               value={val}
-    label="Property Type"
+              label="Property Type"
               onChange={handleChange1}
             >
-              <MenuItem value={1}>Property Type </MenuItem>
-              <MenuItem value={2}>Sale</MenuItem>
-              <MenuItem value={3}>Rent</MenuItem>
+              <MenuItem value='sale'>Sale</MenuItem>
+              <MenuItem value='rent'>Rent</MenuItem>
             </Select>
           </FormControl>
         </Box>

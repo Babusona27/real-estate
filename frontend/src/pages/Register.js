@@ -22,22 +22,28 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Checkbox from "@mui/material/Checkbox";
-import { GET_ALL_COUNTRIES_API } from "../common/urls";
-import { GetApiFetch } from "../common/CommonFunction";
-
+import { GET_ALL_COUNTRIES_API, POST_REGISTER_API } from "../common/urls";
+import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userDetails } from '../redux/reducers/UserReducer';
 const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [type, setType] = useState('');
   const [sellerType, setSellerType] = useState('');
+  const [street, setStreet] = useState('');
   const [country, setCountry] = useState('');
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
-  const [countriesData, setCountriesData] = useState('');
-  
+  const [countriesData, setCountriesData] = useState([]);
+
 
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
@@ -85,8 +91,6 @@ const Register = () => {
     setIsLoading(true)
     GetApiFetch(GET_ALL_COUNTRIES_API)
       .then(([status, response]) => {
-        
-    console.log('_getCountry',response.data);
         if (status == 200) {
           if (response.data) {
             setCountriesData(response.data);
@@ -102,9 +106,49 @@ const Register = () => {
         setIsLoading(false)
       });
   }
+  const countryChange = (event) => {
+    const selectedCountry = event.target.value;
+    setCountry(selectedCountry);
+    setState('');
+    setCity('');
+  };
+  const stateChange = (event) => {
+    const selectedState = event.target.value;
+    setState(selectedState);
+    setCity('');
+  };
+  const handleSignUp = async () => {
+    const formData = JSON.stringify({
+      user_name: name,
+      user_type: type,
+      seller_type: sellerType,
+      user_phone: phone,
+      user_email: email,
+      user_address: {
+        street: street,
+        city: city,
+        state: state,
+        postal_code: postalCode,
+        country: country
+      },
+      password: password
+    });
+    PostApiFetch(POST_REGISTER_API, formData)
+      .then(([status, response]) => {
+        if (status == 201) {
+          if (response.status) {
+            navigate('/Login');
+          }
+        } else {
+          console.log('Something went wrong');
+        }
+      })
+      .catch(error => console.log(error))
+      .finally(() => { });
+  }
   useEffect(() => {
     _getCountry()
-  },[]);
+  }, []);
   return (
     <>
       <Box>
@@ -301,10 +345,11 @@ const Register = () => {
                     required
                     label="Full Name"
                     variant="outlined"
-                    error={emailError}
                     helperText={emailError ? 'Enter a valid email' : ''}
                     value={name}
-                    onChange={handleEmailChange}
+                    onChange={(event) => {
+                      setName(event.target.value);
+                    }}
                   />
                   <TextField
                     fullWidth
@@ -316,6 +361,18 @@ const Register = () => {
                     helperText={emailError ? 'Enter a valid email' : ''}
                     value={email}
                     onChange={handleEmailChange}
+                  />
+                  <TextField
+                    fullWidth
+                    id="outlined-adornment-phone"
+                    label="Phone Number"
+                    variant="outlined"
+                    type="tel"
+                    // helperText={emailError ? 'Enter a valid email' : ''}
+                    value={phone}
+                    onChange={(event) => {
+                      setPhone(event.target.value);
+                    }}
                   />
                   <FormControl fullWidth>
                     <InputLabel id="outlined-adornment-user-type-label">User Type</InputLabel>
@@ -332,7 +389,7 @@ const Register = () => {
                       <MenuItem value='seller'>Seller</MenuItem>
                     </Select>
                   </FormControl>
-                  
+
                   <FormControl fullWidth>
                     <InputLabel id="outlined-adornment-user-seller-type-label">Seller Type</InputLabel>
                     <Select
@@ -349,6 +406,17 @@ const Register = () => {
                     </Select>
                   </FormControl>
 
+                  <TextField
+                    fullWidth
+                    id="outlined-adornment-address"
+                    label="Address"
+                    variant="outlined"
+                    value={street}
+                    onChange={(event) => {
+                      setStreet(event.target.value);
+                    }}
+                  />
+
                   <FormControl fullWidth>
                     <InputLabel id="outlined-adornment-user-country-label">Country</InputLabel>
                     <Select
@@ -356,11 +424,13 @@ const Register = () => {
                       id="outlined-adornment-user-country"
                       value={country}
                       label="Country"
-                      onChange={(event) => {
-                        setCountry(event.target.value);
-                      }}
+                      onChange={countryChange}
                     >
-                      <MenuItem value=''>India</MenuItem>
+                      {countriesData.map((countr) => (
+                        <MenuItem key={countr._id} value={countr.country_name}>
+                          {countr.country_name}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                   <FormControl fullWidth>
@@ -370,11 +440,16 @@ const Register = () => {
                       id="outlined-adornment-user-state"
                       value={state}
                       label="state"
-                      onChange={(event) => {
-                        setState(event.target.value);
-                      }}
+                      onChange={stateChange}
                     >
-                      <MenuItem value=''>India</MenuItem>
+                      {country &&
+                        countriesData
+                          .find((c) => c.country_name === country)
+                          ?.states.map((state) => (
+                            <MenuItem key={state._id} value={state.state_name}>
+                              {state.state_name}
+                            </MenuItem>
+                          ))}
                     </Select>
                   </FormControl>
                   <FormControl fullWidth>
@@ -388,7 +463,16 @@ const Register = () => {
                         setCity(event.target.value);
                       }}
                     >
-                      <MenuItem value=''>India</MenuItem>
+                      {country &&
+                        state &&
+                        countriesData
+                          .find((c) => c.country_name === country)
+                          ?.states.find((s) => s.state_name === state)
+                          ?.cities.map((city) => (
+                            <MenuItem key={city._id} value={city.city_name}>
+                              {city.city_name}
+                            </MenuItem>
+                          ))}
                     </Select>
                   </FormControl>
                   <TextField
@@ -465,7 +549,7 @@ const Register = () => {
                     {
                       backgroundColor: "#00a376"
                     },
-                  }}>Sign Up</Button>
+                  }} onClick={handleSignUp}>Sign Up</Button>
                 </Box>
                 <Box>
                   <Typography> Already have an account? <a href="">Sign In</a></Typography>

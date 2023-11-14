@@ -21,6 +21,8 @@ const {
   deleteProperty,
   getProperty,
   deleteImages,
+  getSellerProperty,
+  reviewSubmit,
 } = require("../controllers/PropertyController");
 
 const {
@@ -55,6 +57,17 @@ router.post(
 );
 router.put("/updateproperty/:id", authenticate, checkSeller, updateProperty);
 router.delete("/deleteproperty/:id", authenticate, checkSeller, deleteProperty);
+
+// ******************REVIEWS ROUTE*********************
+router.post(
+  "/reviewsubmit/:propertyId",
+  authenticate,
+  checkBuyer,
+  reviewSubmit
+);
+
+// ******************GET SELLER ALL PROPERTY*********************
+router.get("/myproperties", authenticate, checkSeller, getSellerProperty);
 
 // ******************DELETE IMAGE ROUTE********
 router.delete("/deleteimages/:id/:imageIndex", deleteImages);
