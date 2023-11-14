@@ -10,10 +10,10 @@ import { GET_PROPERTIES_API } from "../common/urls";
 const Property = () => {
   const [searchParams] = useSearchParams();
   const [properties, setProperties] = useState([]);
-  // if(searchParams.get('param1') != undefined){
-  //   console.log('param1', searchParams.get('param1'));
-  // }
-  // console.log('searchParams', searchParams);
+  if(searchParams.get('param1') != undefined){
+    console.log('param1', searchParams.get('param1'));
+  }
+  console.log('searchParams', searchParams);
   const _getProperties = () => {
     let params = '?';
     console.log('params', params)
@@ -27,8 +27,6 @@ const Property = () => {
           } else {
             console.log(response);
           }
-
-
         } else {
           console.log('Something went wrong');
         }
