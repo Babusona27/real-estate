@@ -50,11 +50,11 @@ const SellerProfile = () => {
                 <Header />
             </Box>
 
-            <Box 
-            sx={{ 
-                display:"flex",
-                justifyContent: "center"
-             }}
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center"
+                }}
             >
                 <Box
                     sx={{
@@ -63,26 +63,55 @@ const SellerProfile = () => {
                         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                         padding: "50px",
                         margin: "150px 0 75px",
-                        borderRadius: "10px"
+                        borderRadius: "10px",
+                        display: "flex",
+                        gap: "30px"
                     }}
                 >
-                    {/* <Typography
+
+                    <Box
+                        component="img"
                         sx={{
-                            fontWeight: "500",
-                            fontSize: {
-                                xs: "20px",
-                                sm: "20px",
-                                md: "28px",
-                                lg: "28px",
-                            },
-                            textAlign: "center",
+                            maxHeight: { xs: 150, md: 167 },
+                            maxWidth: { xs: 150, md: 167 },
+                            borderRadius: "100%",
+                            objectFit: "cover"
                         }}
-                        variant="h4"
-                        component={"h3"}
-                    >
-                        Create Listing
-                    </Typography> */}
-                    <img className="logo" src="./assets/images/user-img.jpg" />
+                        alt="The house from the offer."
+                        src="./assets/images/user-img.jpg"
+                    />
+                    <Box>
+                        <Typography
+                            sx={{
+                                fontWeight: "500",
+                                fontSize: {
+                                    xs: "20px",
+                                    sm: "20px",
+                                    md: "28px",
+                                    lg: "28px",
+                                },
+                            }}
+                            variant="h4"
+                            component={"h3"}
+                        >
+                            Create Listing
+                        </Typography>
+                        <Typography
+                            sx={{
+                                fontWeight: "500",
+                                fontSize: {
+                                    xs: "20px",
+                                    sm: "20px",
+                                    md: "28px",
+                                    lg: "28px",
+                                },
+                            }}
+                            variant="h4"
+                            component={"h3"}
+                        >
+                            Create Listing
+                        </Typography>
+                    </Box>
                 </Box>
             </Box>
 
