@@ -12,8 +12,8 @@ import { useParams } from 'react-router-dom';
 import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL } from "../common/urls";
 import { GetApiFetch } from "../common/CommonFunction";
 
-const PropertyDetailsLeftbar = ({ProductDetails}) => {
-  
+const PropertyDetailsLeftbar = ({propertyDetails}) => {
+  console.log('PropertyDetailsLeftbar -- ',propertyDetails);
   
   return (
     <Box
@@ -93,7 +93,7 @@ const PropertyDetailsLeftbar = ({ProductDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{ProductDetails._id}</Typography>
+                variant="span" >{propertyDetails._id}</Typography>
 
             </Box>
 
@@ -140,7 +140,7 @@ const PropertyDetailsLeftbar = ({ProductDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{ProductDetails.parking ? 'Yes' : 'No'}</Typography>
+                variant="span" >{propertyDetails.parking ? 'Yes' : 'No'}</Typography>
 
             </Box>
 
@@ -187,7 +187,7 @@ const PropertyDetailsLeftbar = ({ProductDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{ProductDetails.bedroom}</Typography>
+                variant="span" >{propertyDetails.bedroom}</Typography>
 
             </Box>
 
@@ -234,7 +234,7 @@ const PropertyDetailsLeftbar = ({ProductDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{ProductDetails.bath} </Typography>
+                variant="span" >{propertyDetails.bath} </Typography>
 
             </Box>
 
@@ -281,7 +281,7 @@ const PropertyDetailsLeftbar = ({ProductDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{ProductDetails.sqft}</Typography>
+                variant="span" >{propertyDetails.sqft}</Typography>
 
             </Box>
 
@@ -328,7 +328,7 @@ const PropertyDetailsLeftbar = ({ProductDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{ProductDetails.state}</Typography>
+                variant="span" >{propertyDetails.state}</Typography>
 
             </Box>
 
@@ -367,7 +367,7 @@ const PropertyDetailsLeftbar = ({ProductDetails}) => {
           }}
           component={"p"}
         >
-          {ProductDetails.property_name} | Loft Type | Soon to be Available
+          {propertyDetails.property_name} | Loft Type | Soon to be Available
         </Typography>
         <Typography
           sx={{

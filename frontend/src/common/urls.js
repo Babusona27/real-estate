@@ -11,3 +11,4 @@ export const GET_PROPERTIES_API = '/getproperties';
 export const POST_SHOP_PAGE_API = '/shopPage';
 export const GET_PRODUCT_DETAILS_API = '/productDetailWeb';
 export const GET_PRODUCT_DETAILS_PAGE_API = '/propertydetails/';
+export const GET_ALL_COUNTRIES_API = '/country';

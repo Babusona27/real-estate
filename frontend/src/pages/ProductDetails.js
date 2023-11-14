@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React,{ useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -12,21 +12,22 @@ import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL } from "../common/urls";
 import { GetApiFetch } from "../common/CommonFunction";
 
 const ProductDetails = () => {
-  const [ProductDetails, setProductDetails] = useState([]);
+  const [propertyDetails, setPropertyDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const idParams = useParams()
   console.log("idParams=>", idParams)
   const _getPropertiesDetails = () => {
     setIsLoading(true)
-    let params = ''
+    let params = '';
     GetApiFetch(GET_PRODUCT_DETAILS_PAGE_API + idParams.id)
       .then(([status, response]) => {
+        
+    // console.log('_getPropertiesDetails',response.data.images);
         if (status == 200) {
-          // console.log(response);
-          if (response.status) {
-            setProductDetails(response.data);
-            console.log(response);
+          if (response.data) {
+            setPropertyDetails(response.data);
+            console.log(response.data.property_name);
           } else {
             console.log(response);
           }
@@ -36,22 +37,24 @@ const ProductDetails = () => {
       })
       .catch(error => console.log(error))
       .finally(() => {
+        // setTimeout(()=>{setIsLoading(false)}, 6000);
         setIsLoading(false)
       });
   }
   useEffect(() => {
-    // _getPropertiesDetails()
-  });
+    _getPropertiesDetails()
+  },[]);
   if(isLoading){
-    return (<></>)
+    return (<>Loading </>)
   }else{
     return (
       <>
         <Box>
           <Header />
         </Box>
+        
         <Box>
-          <BannerSlider ProductDetails={ProductDetails}/>
+          <BannerSlider propertyDetails={propertyDetails}/>
         </Box>
         <Container maxWidth="xl" sx={{ height: "100%", padding:{xs:"40px 10px",sm:"40px 10px",md:"40px 10px",lg:"40px 0px"}, backgroundColor:"#eaf7f4" }}>
           <Box
@@ -60,11 +63,21 @@ const ProductDetails = () => {
               justifyContent: "space-between",
             }}
           >
-            <PropertyDetailsLeftbar ProductDetails={ProductDetails}/>
+            <PropertyDetailsLeftbar propertyDetails={propertyDetails}/>
             <PropertyDetailsRightbar />
           </Box>
         </Container>
-  
+          {/* <Typography
+              variant="span"
+              sx={{
+                fontSize: "15px",
+                fontWeight: "400",
+                fontFamily: "'Roboto',sans-serif !important",
+              }}
+            >
+              {propertyDetails.property_name}
+            </Typography> */}
+        
         <Box>
           <Footer />
         </Box>
