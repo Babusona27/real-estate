@@ -14,9 +14,10 @@ import AddNewProperty from "./pages/AddNewProperty";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
 import { store, persistor } from './redux/store';
+import SellerProfile from "./pages/SellerProfile"
+
 function App() {
   return (
-
     <Stack
     //   direction="row"
     // justifyContent="space-between"
@@ -34,6 +35,7 @@ function App() {
               <Route path="/Properties" element={<AllProperties />} />
               <Route path="/ProductDetails/:id" element={<ProductDetails />} />
               <Route path="/AddNewProperty" element={<AddNewProperty />} />
+              <Route path="/SellerProfile" element={<SellerProfile />} />
 
             </Routes>
           </Router>
