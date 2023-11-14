@@ -76,14 +76,18 @@ async function getProperty(req, res) {
   try {
     const property = await PropertySchema.findById(propertyId);
     if (property) {
-      res.json({ status: "success", data: property });
-    } else {
-      res.status(404).json({ status: "error", message: "Property not found" });
+      res.json({
+        status: true,
+        message: "Property Fetched successfully",
+        data: property,
+      });
     }
+    // No need for else block; if property is not found, the code below will execute.
+    res.status(404).json({ status: false, message: "Property not found" });
   } catch (error) {
     res.status(500).json({
-      status: "error",
-      message: "Internal server error",
+      status: false,
+      message: "Error fetching property",
       data: error.message,
     });
   }
@@ -284,12 +288,16 @@ async function deleteImages(req, res) {
     const property = await PropertySchema.findById(propertyId);
 
     if (!property) {
-      return res.status(404).send("Property not found");
+      return res
+        .status(404)
+        .json({ status: false, message: "Property not found" });
     }
 
     // Check if the imageIndex is within a valid range
     if (imageIndex < 0 || imageIndex >= property.images.length) {
-      return res.status(400).send("Invalid image index");
+      return res
+        .status(400)
+        .json({ status: false, message: "Invalid image index" });
     }
 
     // const adjustedIndex = imageIndex - 1;
@@ -301,13 +309,16 @@ async function deleteImages(req, res) {
 
     await property.save(); // Save the updated property document
 
-    res
-      .status(200)
-      .json({ message: "Image deleted successfully", deletedImage });
+    res.status(200).json({
+      status: true,
+      message: "Image deleted successfully",
+      deletedImage,
+    });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     res.status(500).json({
-      error: "Error deleting image from property",
+      status: false,
+      message: "Error deleting image from property",
       message: error.message,
     });
   }

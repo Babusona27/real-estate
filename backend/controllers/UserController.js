@@ -32,11 +32,11 @@ async function Userregister(req, res) {
     await newUser.save();
     res.status(201).json({
       status: true,
-      data: newUser,
       message: "User registered successfully",
+      data: newUser,
     });
   } catch (error) {
-    res.status(500).json({ error: "Registration failed" });
+    res.status(500).json({ status: false, message: "Registration failed" });
   }
 }
 
@@ -48,13 +48,17 @@ async function Userlogin(req, res) {
     const user = await UserSchema.findOne({ user_email });
 
     if (!user) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ status: false, message: "Invalid email or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ status: false, message: "Invalid email or password" });
     }
 
     // Create a JWT token with user information in the payload
@@ -62,16 +66,16 @@ async function Userlogin(req, res) {
       user_id: user._id,
       user_type: user.user_type,
     };
-    console.log("from usercontroller", payload);
+    // console.log("from usercontroller", payload);
 
     const token = jwt.sign(payload, secretKey, {
       expiresIn: "24h",
     });
 
-    res.json({ message: "User Login Successfull", token });
+    res.json({ status: true, message: "User Login Successfull", token });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Login failed" });
+    // console.error(error);
+    res.status(500).json({ status: false, message: "Login failed" });
   }
 }
 
