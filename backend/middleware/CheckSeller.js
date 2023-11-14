@@ -6,9 +6,10 @@ const checkSeller = (req, res, next) => {
     next();
   } else {
     // User is not a seller, respond with an error
-    res
-      .status(403)
-      .json({ error: "Only sellers are allowed to create properties." });
+    res.status(403).json({
+      status: false,
+      message: "Only sellers are allowed to create properties.",
+    });
   }
 };
 
