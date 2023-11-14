@@ -3,10 +3,9 @@ import { BASE_URL } from "./urls";
 export const PostApiFetch = async (URL, formData) => {
   return await fetch(BASE_URL + URL, {
     method: "POST",
-    // headers: {
-    //   Accept: 'application/json',
-    //     'Content-Type': 'multipart/form-data',
-    // },
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: formData,
   }).then((response) => {
     const statusCode = response.status;
