@@ -11,6 +11,7 @@ import {
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import AddNewProperty from "./pages/AddNewProperty";
+import SellerProfile from "./pages/SellerProfile"
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/Properties" element={<AllProperties />} />
             <Route path="/ProductDetails/:id" element={<ProductDetails />} />
             <Route path="/AddNewProperty" element={<AddNewProperty />} />
+            <Route path="/SellerProfile" element={<SellerProfile />} />
 
           </Routes>
         </Router>
