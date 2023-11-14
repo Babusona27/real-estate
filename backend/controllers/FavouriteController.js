@@ -163,10 +163,12 @@ async function sendAppointmentRequest(req, res) {
 
   try {
     await appointmentRequest.save();
-    res.status(200).json({ message: "Appointment request sent successfully" });
+    res
+      .status(200)
+      .json({ status: true, message: "Appointment request sent successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ status: false, message: error.message });
   }
 }
 

@@ -70,7 +70,12 @@ router.delete(
 router.get("/myFavorites/:user_id", authenticate, checkBuyer, myFavorites);
 
 // ********************APPOINTMENT REQUEST ROUTE******************************
-router.post("/sendAppointmentRequest", authenticate, sendAppointmentRequest);
+router.post(
+  "/sendAppointmentRequest",
+  authenticate,
+  checkBuyer,
+  sendAppointmentRequest
+);
 
 // ********************USER ROUTE******************************
 router.post("/Userregister", Userregister);
