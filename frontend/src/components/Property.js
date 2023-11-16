@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material'
 import React from 'react'
-import PropertyPost from '../components/PropertyPost';
+import PropertyPost from './PropertyPost';
 import { useSearchParams } from 'react-router-dom';
 import { GetApiFetch } from "../common/CommonFunction";
 import { GET_PROPERTIES_API } from "../common/urls";

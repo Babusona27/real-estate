@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Box, Container } from "@mui/material";
 import React from "react";
-import PropertyLeftBar from "./PropertyLeftBar";
-import Property from "../pages/Property";
+import PropertyLeftBar from "../components/PropertyLeftBar";
+import Property from "../components/Property";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
