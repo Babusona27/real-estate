@@ -1,6 +1,7 @@
 const UserSchema = require("../models/UserSchema");
 const AppointmentRequestSchema = require("../models/AppointmentRequestSchema");
 
+// ADD NEW FAVORITE PROPERTY (POST METHOD)
 async function addToFavorite(req, res) {
   const { property_id, property_name, property_image } = req.body;
 
@@ -51,6 +52,7 @@ async function addToFavorite(req, res) {
   }
 }
 
+// DELETE FAVORITE PROPERTY BY INDEX (DELETE METHOD)
 async function deleteFavorite(req, res) {
   const userId = req.params.id;
   const propertyIndex = parseInt(req.params.propertyIndex);
@@ -84,7 +86,7 @@ async function deleteFavorite(req, res) {
     res.status(200).json({
       status: true,
       message: "Image deleted successfully",
-      deletedImage,
+      data: deletedImage,
     });
   } catch (error) {
     console.error(error);
@@ -124,6 +126,7 @@ async function deleteFavorite(req, res) {
 //   }
 // }
 
+// GET MY FAVORITE LIST (GET METHOD)
 async function myFavorites(req, res) {
   const { user_id } = req.params;
 
@@ -150,6 +153,7 @@ async function myFavorites(req, res) {
   }
 }
 
+// CREATE NEW APPOINTMENT REQUEST (POST METHOD)
 async function sendAppointmentRequest(req, res) {
   const { user_id, property_id, seller_id } = req.body;
 
@@ -163,13 +167,11 @@ async function sendAppointmentRequest(req, res) {
 
   try {
     await appointmentRequest.save();
-    res
-      .status(200)
-      .json({
-        status: true,
-        message: "Appointment request sent successfully",
-        data: appointmentRequest,
-      });
+    res.status(200).json({
+      status: true,
+      message: "Appointment request sent successfully",
+      data: appointmentRequest,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: false, message: error.message });

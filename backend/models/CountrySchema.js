@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// CITY SCHEMA
 const CitySchema = new mongoose.Schema({
   city_name: {
     type: String,
@@ -7,6 +8,7 @@ const CitySchema = new mongoose.Schema({
   },
 });
 
+// STATE SCHEMA
 const StateSchema = new mongoose.Schema({
   state_name: {
     type: String,
@@ -18,6 +20,7 @@ const StateSchema = new mongoose.Schema({
   },
 });
 
+// COUNTRY SCHEMA
 const CountrySchema = new mongoose.Schema({
   country_name: {
     type: String,

@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
 
-// Define the Appointment Requests Schema
+// APPOINTMENT REQUESTS SCHEMA
 const AppointmentRequestSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId, // Reference to the User model
@@ -18,11 +17,7 @@ const AppointmentRequestSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "Seller ID is required."],
   },
-  // date_of_request: Date,
-  date_of_request: {
-    type: String,
-    default: () => moment().format("DD-MM-YYYY HH:mm:ss"),
-  },
+  date_of_request: Date,
 });
 
 module.exports = mongoose.model("AppointmentRequest", AppointmentRequestSchema);

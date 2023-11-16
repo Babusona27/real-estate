@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// USER ADDRESS SCHEMA
 const UserAddressSchema = new mongoose.Schema({
   street: {
     type: String,
@@ -23,6 +24,7 @@ const UserAddressSchema = new mongoose.Schema({
   },
 });
 
+// FAVORITE PROPERTY SCHEMA
 const FavoritePropertySchema = new mongoose.Schema({
   property_id: String,
   property_name: String,
@@ -32,6 +34,7 @@ const FavoritePropertySchema = new mongoose.Schema({
   }, // You mentioned that this should be the path to the first image
 });
 
+// USER SCHEMA
 const UserSchema = new mongoose.Schema({
   user_name: {
     type: String,

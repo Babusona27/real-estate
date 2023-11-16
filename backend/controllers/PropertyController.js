@@ -94,7 +94,7 @@ async function getProperty(req, res) {
   }
 }
 
-// CREATE PROPERTY (POST METHOD)
+// CREATE NEW PROPERTY (POST METHOD)
 async function createProperty(req, res) {
   const {
     property_name,
@@ -326,7 +326,7 @@ async function deleteImages(req, res) {
   }
 }
 
-// GET SELLER PROPERTY
+// GET SELLER ALL PROPERTY (GET METHOD)
 async function getSellerProperty(req, res) {
   try {
     const filter = {};
@@ -346,7 +346,11 @@ async function getSellerProperty(req, res) {
       });
     }
 
-    res.status(200).json(sellerProperties);
+    res.status(200).json({
+      status: true,
+      message: "seller all property fetched succefull",
+      data: sellerProperties,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: true, message: "Internal server error" });

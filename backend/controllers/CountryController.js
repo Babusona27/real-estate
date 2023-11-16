@@ -1,6 +1,6 @@
 const CountrySchema = require("../models/CountrySchema");
 
-// GET METHOD
+// GET ALL COUNTRIES (GET METHOD)
 async function GetCountry(req, res) {
   try {
     const countries = await CountrySchema.find();
@@ -19,7 +19,7 @@ async function GetCountry(req, res) {
   }
 }
 
-// POST METHOD
+// CREATE NEW COUNTRY (POST METHOD)
 async function CreateCountry(req, res) {
   try {
     const newCountry = await CountrySchema.create(req.body);
@@ -34,7 +34,7 @@ async function CreateCountry(req, res) {
   }
 }
 
-// PUT METHOD
+// UPDATE COUNTRY (PUT METHOD)
 async function UpdateCountry(req, res) {
   const countryId = parseInt(req.params.countryId);
   try {
@@ -58,7 +58,7 @@ async function UpdateCountry(req, res) {
   }
 }
 
-// DELETE METHOD
+// DELETE COUNTRY (DELETE METHOD)
 async function DeleteCountry(req, res) {
   const countryId = parseInt(req.params.countryId);
   try {
