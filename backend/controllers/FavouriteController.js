@@ -98,34 +98,6 @@ async function deleteFavorite(req, res) {
   }
 }
 
-// async function myFavorites(req, res) {
-//   const { user_id } = req.params;
-
-//   try {
-//     // Find the user by _id
-//     const user = await UserSchema.findById(user_id);
-
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     // Extract the property_ids from the user's favorite_properties
-//     const propertyIds = user.favorite_properties.map(
-//       (favorite) => favorite.property_id
-//     );
-
-//     // Find the properties based on the property_ids
-//     const favoritePropertyDetails = await PropertySchema.find({
-//       _id: { $in: propertyIds },
-//     });
-
-//     res.status(200).json(favoritePropertyDetails);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// }
-
 // GET MY FAVORITE LIST (GET METHOD)
 async function myFavorites(req, res) {
   const { user_id } = req.params;
