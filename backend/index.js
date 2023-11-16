@@ -15,7 +15,6 @@ app.use(express.static(publicFolderPath));
 app.use(express.json({ limit: "50mb" }));
 app.use("/realEstate/api", route);
 
-
 app.listen(4000, () => {
   console.log("Server is running on port 4000");
 });

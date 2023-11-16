@@ -1,4 +1,3 @@
-const { log } = require("console");
 const PropertySchema = require("../models/PropertySchema");
 const fs = require("fs");
 const path = require("path");
@@ -83,10 +82,12 @@ async function getProperty(req, res) {
         message: "Property Fetched successfully",
         data: property,
       });
+    } else {
+      // Send a 404 response only if the property is not found
+      res.status(404).json({ status: false, message: "Property not found" });
     }
-    // No need for else block; if property is not found, the code below will execute.
-    res.status(404).json({ status: false, message: "Property not found" });
   } catch (error) {
+    // Send a 500 response in case of an error
     res.status(500).json({
       status: false,
       message: "Error fetching property",
@@ -381,7 +382,6 @@ async function getSellerProperty(req, res) {
     if (req.query.sellerId) {
       filter["seller.seller_id"] = req.query.sellerId;
     }
-
     // Find properties where the seller ID matches
     const sellerProperties = await PropertySchema.find(filter);
 

@@ -20,12 +20,12 @@ const NeighborhoodInformationSchema = new mongoose.Schema({
 // SELLER SCHEMA
 const SellerSchema = new mongoose.Schema({
   seller_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: [true, "seller id is required"],
   },
   seller_name: {
     type: String,
-    required: [true, "seller name is required"],
+    required: [true, "seller id is required"],
   },
   user_profile_image: {
     type: String,
