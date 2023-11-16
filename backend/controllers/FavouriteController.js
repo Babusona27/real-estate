@@ -165,7 +165,11 @@ async function sendAppointmentRequest(req, res) {
     await appointmentRequest.save();
     res
       .status(200)
-      .json({ status: true, message: "Appointment request sent successfully" });
+      .json({
+        status: true,
+        message: "Appointment request sent successfully",
+        data: appointmentRequest,
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: false, message: error.message });

@@ -2,7 +2,7 @@ const PropertySchema = require("../models/PropertySchema");
 const fs = require("fs");
 const path = require("path");
 
-// GET METHOD WITH AGGREGATION CODE
+// GET ALL PROPERTIES (GET METHOD)
 async function getProperties(req, res) {
   try {
     const limit = parseInt(req.query.limit) || 10;
@@ -71,6 +71,7 @@ async function getProperties(req, res) {
   }
 }
 
+// GET ONLY SINGLE PROPERTY (GET METHOD)
 async function getProperty(req, res) {
   const propertyId = req.params.id;
   try {
@@ -93,7 +94,7 @@ async function getProperty(req, res) {
   }
 }
 
-// POST METHOD
+// CREATE PROPERTY (POST METHOD)
 async function createProperty(req, res) {
   const {
     property_name,
@@ -188,7 +189,7 @@ async function createProperty(req, res) {
   }
 }
 
-// PUT METHOD
+// UPDATE PROPERTY (PUT METHOD)
 async function updateProperty(req, res) {
   const { id } = req.params;
   const {
@@ -254,7 +255,7 @@ async function updateProperty(req, res) {
   }
 }
 
-// DELETE METHOD
+// DELETE PROPERTY (DELETE METHOD)
 async function deleteProperty(req, res) {
   const { id } = req.params;
   try {
@@ -280,6 +281,7 @@ async function deleteProperty(req, res) {
   }
 }
 
+// DELETE IMAGES BY INDEX (DELETE METHOD)
 async function deleteImages(req, res) {
   const propertyId = req.params.id;
   const imageIndex = parseInt(req.params.imageIndex);
@@ -324,6 +326,74 @@ async function deleteImages(req, res) {
   }
 }
 
+// GET SELLER PROPERTY
+async function getSellerProperty(req, res) {
+  try {
+    const filter = {};
+
+    // Include the seller ID filter if available in the request parameters
+    if (req.query.sellerId) {
+      filter["seller.seller_id"] = req.query.sellerId;
+    }
+
+    // Find properties where the seller ID matches
+    const sellerProperties = await PropertySchema.find(filter);
+
+    if (!sellerProperties || sellerProperties.length === 0) {
+      return res.status(404).json({
+        status: false,
+        message: "Properties not found for the specified seller",
+      });
+    }
+
+    res.status(200).json(sellerProperties);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: true, message: "Internal server error" });
+  }
+}
+
+// REVIEW SUBMIT BY USER (POST METHOD)
+async function reviewSubmit(req, res) {
+  try {
+    const propertyId = req.params.propertyId;
+    const { rating, review, user_name, user_profile_image, user_id } = req.body;
+
+    // Find the property by ID
+    const property = await PropertySchema.findById(propertyId);
+
+    if (!property) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Property not found" });
+    }
+
+    // Create a new review
+    const newReview = {
+      rating,
+      review,
+      user_name,
+      user_profile_image,
+      user_id,
+    };
+
+    // Add the review to the property's reviews array
+    property.reviews.push(newReview);
+
+    // Save the property with the new review
+    await property.save();
+
+    res.status(201).json({
+      status: true,
+      message: "Review submitted successfully",
+      data: newReview,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, message: "Internal server error" });
+  }
+}
+
 module.exports = {
   getProperties,
   getProperty,
@@ -331,4 +401,6 @@ module.exports = {
   updateProperty,
   deleteProperty,
   deleteImages,
+  getSellerProperty,
+  reviewSubmit,
 };
