@@ -19,8 +19,14 @@ const NeighborhoodInformationSchema = new mongoose.Schema({
 
 // SELLER SCHEMA
 const SellerSchema = new mongoose.Schema({
-  seller_id: String,
-  seller_name: String,
+  seller_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, "seller id is required"],
+  },
+  seller_name: {
+    type: String,
+    required: [true, "seller name is required"],
+  },
   user_profile_image: {
     type: String,
     default: null,
@@ -71,7 +77,7 @@ const PropertySchema = new mongoose.Schema({
   property_status: {
     type: String,
     enum: ["active", "inactive", "sold"],
-    // default: "active",
+    default: "active",
   },
   posted_on: Date,
 });
