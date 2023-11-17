@@ -14,11 +14,12 @@ import { createTheme } from '@mui/material/styles';
       LightWhite:"#fbfbfb",
     Roboto:"'Roboto', sans-serif !important;",
     BGColor:"#c7e6f4",
+    LightGreen:"rgb(0 193 148 / 16%)",
     },
     secondary: {
       light: '#212529bf',
       main: '#f44336',
-      dark: '#ba000d',
+      dark: '#111',
       btnBg:"#f5f5f5",
       grey:"#999",
       contrastText: '#000',

@@ -18,7 +18,7 @@ const ProductDetails = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const params = useParams();
   useEffect(() => {
-    / get properties  /
+    /* get properties  */
     const getPropertiesDetails = async () => {
       await axios
         .get(GET_PRODUCT_DETAILS_PAGE_API+params.id)
@@ -31,7 +31,7 @@ const ProductDetails = () => {
           console.log(err);
         });
     };
-    / get properties  /
+    /* get properties  */
     getPropertiesDetails();
   }, []);
 
