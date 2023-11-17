@@ -1,6 +1,7 @@
 const UserSchema = require("../models/UserSchema");
 const AppointmentRequestSchema = require("../models/AppointmentRequestSchema");
 
+// ADD NEW FAVORITE PROPERTY (POST METHOD)
 async function addToFavorite(req, res) {
   const { property_id, property_name, property_image } = req.body;
 
@@ -51,6 +52,7 @@ async function addToFavorite(req, res) {
   }
 }
 
+// DELETE FAVORITE PROPERTY BY INDEX (DELETE METHOD)
 async function deleteFavorite(req, res) {
   const userId = req.params.id;
   const propertyIndex = parseInt(req.params.propertyIndex);
@@ -84,7 +86,7 @@ async function deleteFavorite(req, res) {
     res.status(200).json({
       status: true,
       message: "Image deleted successfully",
-      deletedImage,
+      data: deletedImage,
     });
   } catch (error) {
     console.error(error);
@@ -96,34 +98,7 @@ async function deleteFavorite(req, res) {
   }
 }
 
-// async function myFavorites(req, res) {
-//   const { user_id } = req.params;
-
-//   try {
-//     // Find the user by _id
-//     const user = await UserSchema.findById(user_id);
-
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     // Extract the property_ids from the user's favorite_properties
-//     const propertyIds = user.favorite_properties.map(
-//       (favorite) => favorite.property_id
-//     );
-
-//     // Find the properties based on the property_ids
-//     const favoritePropertyDetails = await PropertySchema.find({
-//       _id: { $in: propertyIds },
-//     });
-
-//     res.status(200).json(favoritePropertyDetails);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// }
-
+// GET MY FAVORITE LIST (GET METHOD)
 async function myFavorites(req, res) {
   const { user_id } = req.params;
 
@@ -150,6 +125,7 @@ async function myFavorites(req, res) {
   }
 }
 
+// CREATE NEW APPOINTMENT REQUEST (POST METHOD)
 async function sendAppointmentRequest(req, res) {
   const { user_id, property_id, seller_id } = req.body;
 
@@ -163,13 +139,11 @@ async function sendAppointmentRequest(req, res) {
 
   try {
     await appointmentRequest.save();
-    res
-      .status(200)
-      .json({
-        status: true,
-        message: "Appointment request sent successfully",
-        data: appointmentRequest,
-      });
+    res.status(200).json({
+      status: true,
+      message: "Appointment request sent successfully",
+      data: appointmentRequest,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: false, message: error.message });

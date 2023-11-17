@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// USER ADDRESS SCHEMA
 const UserAddressSchema = new mongoose.Schema({
   street: {
     type: String,
@@ -23,15 +24,23 @@ const UserAddressSchema = new mongoose.Schema({
   },
 });
 
+// FAVORITE PROPERTY SCHEMA
 const FavoritePropertySchema = new mongoose.Schema({
-  property_id: String,
-  property_name: String,
+  property_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, "Property Id is Required"],
+  },
+  property_name: {
+    type: String,
+    required: [true, "Property name is Required"],
+  },
   property_image: {
     type: String,
     default: null,
-  }, // You mentioned that this should be the path to the first image
+  },
 });
 
+// USER SCHEMA
 const UserSchema = new mongoose.Schema({
   user_name: {
     type: String,
@@ -44,7 +53,7 @@ const UserSchema = new mongoose.Schema({
   user_type: {
     type: String,
     enum: ["seller", "buyer"],
-    required: true,
+    required: [true, "User Type is required"],
   },
   seller_type: {
     type: String,

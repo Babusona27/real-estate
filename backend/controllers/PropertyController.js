@@ -82,10 +82,12 @@ async function getProperty(req, res) {
         message: "Property Fetched successfully",
         data: property,
       });
+    } else {
+      // Send a 404 response only if the property is not found
+      res.status(404).json({ status: false, message: "Property not found" });
     }
-    // No need for else block; if property is not found, the code below will execute.
-    res.status(404).json({ status: false, message: "Property not found" });
   } catch (error) {
+    // Send a 500 response in case of an error
     res.status(500).json({
       status: false,
       message: "Error fetching property",
@@ -94,7 +96,7 @@ async function getProperty(req, res) {
   }
 }
 
-// CREATE PROPERTY (POST METHOD)
+// CREATE NEW PROPERTY (POST METHOD)
 async function createProperty(req, res) {
   const {
     property_name,
@@ -208,23 +210,47 @@ async function updateProperty(req, res) {
     description,
     price,
     images_arr,
+    floor_images,
+    inspection_agencies,
+    neighborhood_information,
+    seller,
+    reviews,
+    property_status,
+    posted_on,
   } = req.body;
 
   var images = [];
+  var floor_plan_images = [];
 
   try {
-    const rootPath = process.cwd();
-    for (const image of images_arr) {
-      const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
-      const filename = `property_image_${Date.now()}.jpg`;
-      const filePath = path.join(rootPath, "PropertyImages", filename);
-      // const filePath = path.join(__dirname, "PropertyImages", filename);
-      fs.writeFileSync(filePath, base64Data, "base64");
-      images.push(filePath);
+    // Handle images_arr
+    if (images_arr && Array.isArray(images_arr)) {
+      const rootPath = process.cwd();
+      for (const image of images_arr) {
+        const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+        const filename = `property_image_${Date.now()}.jpg`;
+        const relativePath = path.join("PropertyImages", filename);
+        const filePath = path.join(rootPath, "uploads", relativePath);
+        fs.writeFileSync(filePath, base64Data, "base64");
+        images.push(relativePath);
+      }
     }
-    // console.log("images - ", images);
 
-    const property = await PropertySchema.findByIdAndUpdate(id, {
+    // Handle floor_images
+    if (floor_images && Array.isArray(floor_images)) {
+      const rootPathFloorImage = process.cwd();
+      for (const image of floor_images) {
+        const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+        const filename = `floor_image_${Date.now()}.jpg`;
+        const relativePath = path.join("FloorImages", filename);
+        const filePath = path.join(rootPathFloorImage, "uploads", relativePath);
+        fs.writeFileSync(filePath, base64Data, "base64");
+        floor_plan_images.push(relativePath);
+      }
+    }
+
+    // Construct the update object
+    const updateObject = {
       property_name,
       type,
       category,
@@ -239,14 +265,35 @@ async function updateProperty(req, res) {
       parking,
       description,
       price,
-      images,
+      inspection_agencies,
+      neighborhood_information,
+      seller,
+      reviews,
+      property_status,
+      posted_on,
+    };
+
+    // Add images and floor_plan_images only if they are provided
+    if (images.length > 0) {
+      updateObject.images = images;
+    }
+
+    if (floor_plan_images.length > 0) {
+      updateObject.floor_plan_images = floor_plan_images;
+    }
+
+    // Update the property in the database
+    const property = await PropertySchema.findByIdAndUpdate(id, updateObject, {
+      new: true, // Return the modified document rather than the original
     });
+
     res.json({
       status: true,
       message: "Property updated successfully",
       data: property,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: false,
       message: "Failed to update property",
@@ -326,7 +373,7 @@ async function deleteImages(req, res) {
   }
 }
 
-// GET SELLER PROPERTY
+// GET SELLER ALL PROPERTY (GET METHOD)
 async function getSellerProperty(req, res) {
   try {
     const filter = {};
@@ -335,7 +382,6 @@ async function getSellerProperty(req, res) {
     if (req.query.sellerId) {
       filter["seller.seller_id"] = req.query.sellerId;
     }
-
     // Find properties where the seller ID matches
     const sellerProperties = await PropertySchema.find(filter);
 
@@ -346,7 +392,11 @@ async function getSellerProperty(req, res) {
       });
     }
 
-    res.status(200).json(sellerProperties);
+    res.status(200).json({
+      status: true,
+      message: "seller all property fetched succefull",
+      data: sellerProperties,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: true, message: "Internal server error" });

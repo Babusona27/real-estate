@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const secretKey = process.env.SECRET_KEY;
 
-// User Registration
+// NEW USER REGISTRATION (POST METHOD)
 async function Userregister(req, res) {
   const {
     user_name,
@@ -67,7 +67,7 @@ async function Userregister(req, res) {
   }
 }
 
-// User Login
+// USER LOGIN (POST METHOD)
 async function Userlogin(req, res) {
   const { user_email, password } = req.body;
 
@@ -98,6 +98,7 @@ async function Userlogin(req, res) {
     const token = jwt.sign(payload, secretKey, {
       expiresIn: "24h",
     });
+    
     const data = {
       token: token,
       user_name: user.user_name,
@@ -105,6 +106,7 @@ async function Userlogin(req, res) {
       user_type: user.user_type,
       seller_type: user.seller_type,
     };
+
     res.json({ status: true, message: "User Login Successfull", data: data });
   } catch (error) {
     // console.error(error);

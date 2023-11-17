@@ -1,5 +1,5 @@
 import { Box, Container, Stack } from "@mui/material";
-import AllProperties from "./components/AllProperties";
+import AllProperties from "./pages/AllProperties";
 import ProductDetails from "./pages/ProductDetails";
 import Login from "./pages/Login";
 import {

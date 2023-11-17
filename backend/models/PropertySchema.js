@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
 
+// INSPECTION AGENCIES SCHEMA
 const InspectionAgenciesSchema = new mongoose.Schema({
   agency_name: String,
   agency_image: {
@@ -9,6 +9,7 @@ const InspectionAgenciesSchema = new mongoose.Schema({
   },
 });
 
+// NEIGHBORHOOD INFORMATION SCHEMA
 const NeighborhoodInformationSchema = new mongoose.Schema({
   info: String,
   schools: String,
@@ -16,15 +17,23 @@ const NeighborhoodInformationSchema = new mongoose.Schema({
   nearby_amenities: String,
 });
 
+// SELLER SCHEMA
 const SellerSchema = new mongoose.Schema({
-  seller_id: String,
-  seller_name: String,
+  seller_id: {
+    type: String,
+    required: [true, "seller id is required"],
+  },
+  seller_name: {
+    type: String,
+    required: [true, "seller id is required"],
+  },
   user_profile_image: {
     type: String,
     default: null,
   },
 });
 
+// REVIEW SCHEMA
 const ReviewSchema = new mongoose.Schema({
   rating: {
     type: Number,
@@ -40,6 +49,7 @@ const ReviewSchema = new mongoose.Schema({
   user_id: mongoose.Schema.Types.ObjectId,
 });
 
+// PROPERTY SCHEMA
 const PropertySchema = new mongoose.Schema({
   property_name: String,
   type: {
@@ -67,12 +77,9 @@ const PropertySchema = new mongoose.Schema({
   property_status: {
     type: String,
     enum: ["active", "inactive", "sold"],
-    // default: "active",
+    default: "active",
   },
-  posted_on: {
-    type: String,
-    default: () => moment().format("DD-MM-YYYY HH:mm:ss"),
-  },
+  posted_on: Date,
 });
 
 module.exports = mongoose.model("Property", PropertySchema);
