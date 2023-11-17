@@ -96,6 +96,7 @@ const PropertyLeftBar = () => {
           console.log(err);
         });
     }
+    
     getcategories();
   }, [])
 

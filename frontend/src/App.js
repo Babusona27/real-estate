@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import AboutUs from "./pages/AboutUs";
 import Blog from "./pages/Blog";
 import ContactUs from "./pages/ContactUs";
+import TermsConditions from "./pages/TermsConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import {
   BrowserRouter as Router,
@@ -43,6 +45,9 @@ function App() {
               <Route path="/AboutUs" element={<AboutUs />} />
               <Route path="/Blog" element={<Blog />} />
               <Route path="/ContactUs" element={<ContactUs />} />
+              <Route path="/TermsConditions" element={<TermsConditions />} />
+              <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+
 
 
 

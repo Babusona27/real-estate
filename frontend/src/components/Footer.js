@@ -16,7 +16,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CallIcon from '@mui/icons-material/Call';
 import MailIcon from '@mui/icons-material/Mail';
-
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -159,7 +159,7 @@ const Footer = () => {
                     fontFamily: "'Roboto', sans-serif !important",
                     fontSize:"16px",
                     fontWeight:"500",
-                }}>About Us</Typography>
+                }}><Link to="/AboutUs">About Us</Link></Typography>
               </ListItem>
               <ListItem sx={{
                   display: "block",
@@ -177,7 +177,7 @@ const Footer = () => {
                       fontFamily: "'Roboto', sans-serif !important",
                       fontSize:"16px",
                       fontWeight:"500",
-                }}>Blog & Articles</Typography>
+                }}><Link to="/Blog">Blog & Articles</Link></Typography>
               </ListItem>
               <ListItem sx={{
                   display: "block",
@@ -231,7 +231,7 @@ const Footer = () => {
                    fontFamily: "'Roboto', sans-serif !important",
                    fontSize:"16px",
                    fontWeight:"500",
-                }}>Contact Us</Typography>
+                }}><Link to="/ContactUs" className="nav-link">Contact us</Link></Typography>
               </ListItem>
 
             </List>
