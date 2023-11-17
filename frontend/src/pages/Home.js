@@ -93,6 +93,7 @@ const Home = () => {
       <Box>
         <Header />
       </Box>
+      {/* banner section  */}
       <Box
         component={"div"}
         className="banner_sec"
