@@ -12,6 +12,7 @@ import { setPropertyList } from "../redux/reducers/PropertyListReducer";
 
 const AllProperties = () => {
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     /* get properties  */

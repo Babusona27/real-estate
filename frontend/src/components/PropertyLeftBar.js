@@ -18,14 +18,15 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import theme from "../Theme";
 import TuneIcon from "@mui/icons-material/Tune";
 import Checkbox from "@mui/material/Checkbox";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import LetestPosts from "./LetestPosts";
 import { useNavigate } from 'react-router-dom';
-
+import { GET_ALL_CATEGORY } from "../common/urls";
+import axios from "axios";
 
 const PropertyLeftBar = () => {
   const navigate = useNavigate();
@@ -35,9 +36,14 @@ const PropertyLeftBar = () => {
   const [val3, setVal3] = React.useState("");
   const [val4, setVal4] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [category, setCategory] = useState(false);
+  const [propertyType, setPropertyType] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleChange1 = (event) => {
     setVal(event.target.value);
+    // setPropertyType(type);
+    // setSelectedCategory("");
   };
   const handleChange2 = (event) => {
     setVal1(event.target.value);
@@ -69,15 +75,34 @@ const PropertyLeftBar = () => {
   const changeRoute = () => {
     // Navigate to a new route
     // navigate('/new-route');
-  
+
     // Navigate to a route with query parameters
     navigate('/Properties?param1=value1&param2=value2');
   };
+ 
+  useEffect(() => {
+    // Get Category 
+    const getcategories = async () => {
+      await axios
+        .get(GET_ALL_CATEGORY)
+        .then((response) => {
+          if (response.data.status) {
+            // console.log("response-->", response.data.data);
+            setCategory( response.data.data)
+          }
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    getcategories();
+  }, [])
 
 
   return (
     <Box flex={2} paddingLeft={{ xs: '0px', md: '15px' }} paddingRight={{ xs: '0px', md: '15px' }}>
-      <Box sx={{ padding: "25px 30px 30px", background: theme.palette.primary.white, boxShadow:"0 4px 18px 0 rgba(194, 200, 213, 0.3)", borderRadius:"6px", marginBottom:"30px" }}>
+      <Box sx={{ padding: "25px 30px 30px", background: theme.palette.primary.white, boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)", borderRadius: "6px", marginBottom: "30px" }}>
         <Typography
           sx={{
             fontSize: "22px",
@@ -90,7 +115,7 @@ const PropertyLeftBar = () => {
         >
           Advanced Search
         </Typography>
-        <Box marginBottom={"25px"}>
+        {/* <Box marginBottom={"25px"}>
           <Input
             className="form_input"
             fullWidth
@@ -107,7 +132,8 @@ const PropertyLeftBar = () => {
             placeholder="What are you looking for?"
             variant="soft"
           />
-        </Box>
+        </Box> */}
+          {/* category type section */}
         <Box sx={{ marginBottom: "25px" }}>
           <FormControl fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
             <InputLabel id="demo-controlled-open-select-label">Property Type</InputLabel>
@@ -119,39 +145,48 @@ const PropertyLeftBar = () => {
               onOpen={handleOpen}
               value={val}
               label="Property Type"
-              onChange={handleChange1 }
+              onChange={handleChange1}
             >
-              <MenuItem value='sale'>Sale</MenuItem>
-              <MenuItem value='rent'>Rent</MenuItem>
+             { category && category.map((item, key) => ( 
+              <MenuItem value={item.type} key={item.type}>{item.type}</MenuItem>
+              ))}
+              {/* <MenuItem value='sale'>Sale</MenuItem>
+              <MenuItem value='rent'>Rent</MenuItem> */}
             </Select>
           </FormControl>
         </Box>
+        {/* category section */}
+
         <Box sx={{ marginBottom: "25px" }}>
           <FormControl fullWidth>
-          <InputLabel htmlFor="grouped-select">All Categories</InputLabel>
-          <Select 
-            id="grouped-select"
-            value={val1}
-            label="All Categories"
-            onChange={handleChange2}>
+            <InputLabel htmlFor="grouped-select">All Categories</InputLabel>
+            <Select
+              id="grouped-select"
+              value={val1}
+              label="All Categories"
+              onChange={handleChange2}>
+
               <MenuItem value={"Category1"}>All Categories</MenuItem>
-              <ListSubheader>Category 1</ListSubheader>
+              {category && category.map((item, key) => (
+                <MenuItem value={item.category_name} key={item.category_name} >{item.category_name}</MenuItem>
+              ))}
+              {/* <ListSubheader>Category 1</ListSubheader>
               <MenuItem value={"Category2"}>Option 1</MenuItem>
               <MenuItem value={"Category3"}>Option 2</MenuItem>
               <ListSubheader>Category 2</ListSubheader>
               <MenuItem value={"Category4"}>Option 3</MenuItem>
-              <MenuItem value={"Category5"}>Option 4</MenuItem>
+              <MenuItem value={"Category5"}>Option 4</MenuItem> */}
             </Select>
           </FormControl>
         </Box>
         <Box sx={{ marginBottom: "25px" }}>
           <FormControl fullWidth>
-          <InputLabel htmlFor="grouped-select">All Cities</InputLabel>
-          <Select 
-            id="grouped-select"
-            value={val2}
-            label="All Cities"
-            onChange={handleChange3}>
+            <InputLabel htmlFor="grouped-select">All Cities</InputLabel>
+            <Select
+              id="grouped-select"
+              value={val2}
+              label="All Cities"
+              onChange={handleChange3}>
               <MenuItem value={"city1"}>All Cities</MenuItem>
               <ListSubheader>Category 1</ListSubheader>
               <MenuItem value={"city2"}>Option 1</MenuItem>
@@ -162,7 +197,7 @@ const PropertyLeftBar = () => {
             </Select>
           </FormControl>
         </Box>
-    
+
         <Box sx={{ marginBottom: "25px" }}>
           <Box
             sx={{
@@ -265,12 +300,12 @@ const PropertyLeftBar = () => {
         </Box>
         <Box sx={{ marginBottom: "25px" }}>
           <FormControl fullWidth>
-          <InputLabel htmlFor="grouped-select">Bedroom</InputLabel>
-            <Select 
-            id="grouped-select"
-            value={val3}
-            label="Bedroom"
-            onChange={handleChange4}>
+            <InputLabel htmlFor="grouped-select">Bedroom</InputLabel>
+            <Select
+              id="grouped-select"
+              value={val3}
+              label="Bedroom"
+              onChange={handleChange4}>
               <MenuItem value={"bed1"}> 1</MenuItem>
               <MenuItem value={"bed2"}> 2</MenuItem>
               <MenuItem value={"bed3"}> 3</MenuItem>
@@ -285,11 +320,11 @@ const PropertyLeftBar = () => {
         <Box sx={{ marginBottom: "25px" }}>
           <FormControl fullWidth>
             <InputLabel htmlFor="grouped-select">Bath</InputLabel>
-            <Select 
-            id="grouped-select"
-            value={val4}
-            label="Bath"
-            onChange={handleChange5}
+            <Select
+              id="grouped-select"
+              value={val4}
+              label="Bath"
+              onChange={handleChange5}
             >
               <MenuItem value={"Bath1"}> 1</MenuItem>
               <MenuItem value={"Bath2"}> 2</MenuItem>
@@ -298,32 +333,36 @@ const PropertyLeftBar = () => {
             </Select>
           </FormControl>
         </Box>
-<Box fullWidth sx={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
-      <Button sx={{width:"65%",
-       backgroundColor:theme.palette.primary.logoColor, 
-       height:"45px",
-        color:theme.palette.primary.white, 
-        "&:hover": 
-        { backgroundColor:"#00a376"
-         },
-         }}
-         onClick={changeRoute}>Find Property</Button>
-      <Button sx={{width:"32%",
-       backgroundColor:theme.palette.primary.white, 
-       color:theme.palette.primary.logoColor, 
-       border:"2px solid #1d8ea2",
-        height:"45px",
-        "&:hover": 
-        { backgroundColor:theme.palette.primary.logoColor,
-        color:theme.palette.primary.white,
-         },
-        }}>
-      <AutorenewIcon/>
-        <Typography variant="span">Reset</Typography>
-      </Button>
-</Box>
+        <Box fullWidth sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Button sx={{
+            width: "65%",
+            backgroundColor: theme.palette.primary.logoColor,
+            height: "45px",
+            color: theme.palette.primary.white,
+            "&:hover":
+            {
+              backgroundColor: "#00a376"
+            },
+          }}
+            onClick={changeRoute}>Find Property</Button>
+          <Button sx={{
+            width: "32%",
+            backgroundColor: theme.palette.primary.white,
+            color: theme.palette.primary.logoColor,
+            border: "2px solid #1d8ea2",
+            height: "45px",
+            "&:hover":
+            {
+              backgroundColor: theme.palette.primary.logoColor,
+              color: theme.palette.primary.white,
+            },
+          }}>
+            <AutorenewIcon />
+            <Typography variant="span">Reset</Typography>
+          </Button>
+        </Box>
       </Box>
-      <Box sx={{ padding: "25px 30px 30px", background: theme.palette.primary.white, boxShadow:"0 4px 18px 0 rgba(194, 200, 213, 0.3)", borderRadius:"6px", marginBottom:"30px" }}>
+      <Box sx={{ padding: "25px 30px 30px", background: theme.palette.primary.white, boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)", borderRadius: "6px", marginBottom: "30px" }}>
         <Typography
           sx={{
             fontSize: "22px",
@@ -333,7 +372,7 @@ const PropertyLeftBar = () => {
             fontWeight: "500",
           }} variant="h6" >Latest Listings
         </Typography>
- <LetestPosts/>
+        <LetestPosts />
       </Box>
     </Box>
   );

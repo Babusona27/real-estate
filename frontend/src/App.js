@@ -2,6 +2,10 @@ import { Box, Container, Stack } from "@mui/material";
 import AllProperties from "./pages/AllProperties";
 import ProductDetails from "./pages/ProductDetails";
 import Login from "./pages/Login";
+import AboutUs from "./pages/AboutUs";
+import Blog from "./pages/Blog";
+import ContactUs from "./pages/ContactUs";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -36,6 +40,12 @@ function App() {
               <Route path="/ProductDetails/:id" element={<ProductDetails />} />
               <Route path="/AddNewProperty" element={<AddNewProperty />} />
               <Route path="/SellerProfile" element={<SellerProfile />} />
+              <Route path="/AboutUs" element={<AboutUs />} />
+              <Route path="/Blog" element={<Blog />} />
+              <Route path="/ContactUs" element={<ContactUs />} />
+
+
+
 
             </Routes>
           </Router>

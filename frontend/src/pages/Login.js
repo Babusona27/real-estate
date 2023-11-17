@@ -27,6 +27,8 @@ import { PostApiFetch } from "../common/CommonFunction";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userDetails } from '../redux/reducers/UserReducer';
+import { Link } from "react-router-dom";
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -308,7 +310,7 @@ const Login = () => {
                   }} onClick={handleSignIn}>Sign in</Button>
                 </Box>
                 <Box>
-                  <Typography> Don't have an account? <a href="">Sign Up</a></Typography>
+                  <Typography> Don't have an account? <Link to="/Register">Register</Link></Typography>
                   <Typography>Remind <a href="">Password </a></Typography>
 
                 </Box>
