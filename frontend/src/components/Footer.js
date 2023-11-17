@@ -22,7 +22,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        backgroundColor: theme.palette.primary.LightWhite,
+        backgroundColor: theme.palette.secondary.dark,
         padding: { xs: "30px 0px", md: "30px 0px", lg:"50px 0px"},
         marginTop:"0px"
       }}
@@ -54,10 +54,12 @@ const Footer = () => {
               sx={{
                 fontSize: "14px",
                 fontWeight: "400",
-                color: theme.palette.secondary.contrastText,
-              
+                lineHeight:"20px",
+                color:theme.palette.primary.lightGrey,
+                marginTop:"20px",
               }}
               variant="p"
+              component={"p"}
             >
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy

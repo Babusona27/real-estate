@@ -763,3 +763,16 @@ a.cities_box:hover .overlay{
 a.cities_box:hover .cities_content_box{
 	bottom: 0;
 }
+img.img_color{
+	transition: all .3s ease;
+	filter: invert(53%) sepia(75%) saturate(2108%) hue-rotate(128deg) brightness(96%) contrast(101%);
+}
+.choose_box:hover img.img_color{
+	filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(317deg) brightness(103%) contrast(102%);
+}
+.choose_icon_box{
+	transition: all .3s ease;	
+}
+.choose_box:hover .choose_icon_box{
+	background: var(--green);
+}

@@ -40,34 +40,7 @@ const TabPanel = ({ children, value, index }) => (
   </div>
 );
 
-// slider
-// const newSlider = {
-//   items: 3,
-//   loop: true,
-//   autoplay: false,
-//   autoplayTimeout: 4000,
-//   nav: true,
-//   navText: [
-//     '<i class="fa-solid fa-angle-left"></i>',
-//     '<i class="fa-solid fa-angle-right"></i>',
-//   ],
-//   dots: false,
-//   margin: 20,
-//   responsive: {
-//     1180: {
-//       items: 3,
-//     },
-//     724: {
-//       items: 3,
-//     },
-//     500: {
-//       items: 2,
-//     },
-//     370: {
-//       items: 1,
-//     },
-//   },
-// };
+
 
 const newSlider = {
   loop: false,
@@ -75,17 +48,13 @@ const newSlider = {
   autoplayTimeout: 4000,
   nav: false,
   margin: 20,
-  navText: [
-    '<i class="fa-solid fa-angle-left"></i>',
-    '<i class="fa-solid fa-angle-right"></i>',
-  ],
   dots: true,
   responsive: {
     0: {
       items: 1,
     },
     600: {
-      items: 3,
+      items: 2,
     },
     1000: {
       items: 3,
@@ -132,7 +101,13 @@ const Home = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "50%",
-          minHeight: "100vh",
+          minHeight: {
+            xs:"130vh",
+            sm:"50vh",
+            md:"100vh",
+            lg:"100vh",
+            xl:"100vh",
+          },
           position: "relative",
         }}
       >
@@ -155,7 +130,12 @@ const Home = () => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "70%",
+              width:{
+                xs:"95%",
+                sm:"95%",
+                md:"75%",
+                lg:"75%",
+              },
               height: "auto",
               textAlign: "center",
             }}
@@ -230,7 +210,12 @@ const Home = () => {
                   sx={{
                     backgroundColor: theme.palette.primary.white,
                     padding: "20px 20px",
-                    display: "flex",
+                    display: {
+                      xs:"block",
+                      sm:"flex",
+                      md:"flex",
+                      lg:"flex",
+                    },
                     justifyContent: "space-between",
                     alignItems: "center",
                     gap: "20px",
@@ -245,8 +230,23 @@ const Home = () => {
                     id="outlined-basic"
                     label="Enter keyword..."
                     variant="outlined"
+                    sx={{
+                      marginBottom:{
+                        xs:"20px",
+                        sm:"0px",
+                        md:"0px",
+                        lg:"0px",
+                        xl:"0px",
+                      }
+                    }}
                   />
-                  <Box sx={{ width: "100%" }}>
+                  <Box sx={{ width: "100%",  marginBottom:{
+                        xs:"20px",
+                        sm:"0px",
+                        md:"0px",
+                        lg:"0px",
+                        xl:"0px",
+                      } }}>
                     <FormControl
                       className="form_input1"
                       fullWidth
@@ -274,29 +274,16 @@ const Home = () => {
                     id="outlined-basic"
                     label="Location"
                     variant="outlined"
+                    sx={{ width: "100%", marginBottom:{
+                      xs:"20px",
+                      sm:"0px",
+                      md:"0px",
+                      lg:"0px",
+                      xl:"0px",
+                    } }}
                   />
-                  <Box sx={{ width: "100%" }}>
-                    <FormControl
-                      className="form_input1"
-                      fullWidth
-                      sx={{ color: theme.palette.primary.lightGrey }}
-                    >
-                      <InputLabel id="demo-controlled-open-select-label">
-                        Property Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={value2}
-                        label="Property Type"
-                        onChange={handleChange2}
-                      >
-                        <MenuItem value={1}>Property Type </MenuItem>
-                        <MenuItem value={2}>Sale</MenuItem>
-                        <MenuItem value={3}>Rent</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
+
+
                   <Button
                     sx={{
                       width: "100%",
@@ -316,12 +303,17 @@ const Home = () => {
               </TabPanel>
 
               <TabPanel value={value} index={1}>
-                <Box
+              <Box
                   className={"tab_cont"}
                   sx={{
                     backgroundColor: theme.palette.primary.white,
                     padding: "20px 20px",
-                    display: "flex",
+                    display: {
+                      xs:"block",
+                      sm:"flex",
+                      md:"flex",
+                      lg:"flex",
+                    },
                     justifyContent: "space-between",
                     alignItems: "center",
                     gap: "20px",
@@ -336,8 +328,23 @@ const Home = () => {
                     id="outlined-basic"
                     label="Enter keyword..."
                     variant="outlined"
+                    sx={{
+                      marginBottom:{
+                        xs:"20px",
+                        sm:"0px",
+                        md:"0px",
+                        lg:"0px",
+                        xl:"0px",
+                      }
+                    }}
                   />
-                  <Box sx={{ width: "100%" }}>
+                  <Box sx={{ width: "100%",  marginBottom:{
+                        xs:"20px",
+                        sm:"0px",
+                        md:"0px",
+                        lg:"0px",
+                        xl:"0px",
+                      } }}>
                     <FormControl
                       className="form_input1"
                       fullWidth
@@ -349,9 +356,9 @@ const Home = () => {
                       <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
-                        value={value3}
+                        value={value1}
                         label="Property Type"
-                        onChange={handleChange3}
+                        onChange={handleChange1}
                       >
                         <MenuItem value={1}>Property Type </MenuItem>
                         <MenuItem value={2}>Sale</MenuItem>
@@ -365,29 +372,15 @@ const Home = () => {
                     id="outlined-basic"
                     label="Location"
                     variant="outlined"
+                    sx={{ width: "100%", marginBottom:{
+                      xs:"20px",
+                      sm:"0px",
+                      md:"0px",
+                      lg:"0px",
+                      xl:"0px",
+                    } }}
                   />
-                  <Box sx={{ width: "100%" }}>
-                    <FormControl
-                      className="form_input1"
-                      fullWidth
-                      sx={{ color: theme.palette.primary.lightGrey }}
-                    >
-                      <InputLabel id="demo-controlled-open-select-label">
-                        Property Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={value4}
-                        label="Property Type"
-                        onChange={handleChange4}
-                      >
-                        <MenuItem value={1}>Property Type </MenuItem>
-                        <MenuItem value={2}>Sale</MenuItem>
-                        <MenuItem value={3}>Rent</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
+                 
                   <Button
                     sx={{
                       width: "100%",
@@ -458,17 +451,7 @@ const Home = () => {
               Handpicked properties by our team.
             </Typography>
           </Box>
-          <Box
-          // sx={{
-          //   margin: {
-          //     xs: "0px 0px",
-          //     sm: "0px 0px",
-          //     md: "0px 70px",
-          //     lg: "0px 70px",
-          //     xl: "0px 70px",
-          //   },
-          // }}
-          >
+          <Box>
             <OwlCarousel className="owl-theme" {...newSlider}>
               {/* need to be chenge property_items  */}
               <div class="property_item">
@@ -2152,7 +2135,7 @@ const Home = () => {
       </Box>
       {/* Find Properties in These Cities */}
       <Box
-        className="featured_section"
+        className="find_properties_section"
         component={"section"}
         sx={{
           padding: "50px 0px",
@@ -2201,23 +2184,36 @@ const Home = () => {
           </Box>
           <Box
             sx={{
-              display: "flex",
+              display: {
+                xs:"flex",
+                sm:"flex",
+                md:"flex",
+                lg:"flex",
+                xl:"flex",
+              },
               justifyContent: "space-between",
               alignItems: "center",
-              gap:"30px"
+              gap:"30px",
+              flexWrap:"wrap",
+              padding:"15px 0px",
             }}
           >
             <Box
               sx={{
-                flex: "1",
-                // backgroundImage:"url(./assets/images/R5.jpg)",
-                // backgroundPosition:"center",
-                // backgroundSize:"cover",
-                // backgroundRepeat:"no-repeat",
+                flex:  {
+                  xs:"100%",
+                  sm:"1",
+                  md:"1",
+                  lg:"1",
+                  xl:"1",
+                },
                 minHeight:"300px",
                 borderRadius:"20px",
                 position:"relative",
                 overflow:"hidden",
+                "&:hover":{
+                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                }
               }}
               className={"cities_box"}
               component={"a"}
@@ -2230,7 +2226,7 @@ const Home = () => {
                   height:"100%",
                   width:"100%",
                   objectFit:"cover"
-              }} component={"img"} src="./assets/images/R3.jpg"/>
+              }} component={"img"} src="./assets/images/R6.jpg"/>
              <Box  sx={{
                position:"absolute",
                bottom:"0",
@@ -2250,10 +2246,10 @@ width:"100%",
              }} 
              className={"cities_content_box"}>
              <Typography sx={{
-fontSize:"28px",
+fontSize:"24px",
 color:theme.palette.primary.white,
 fontWeight:"500",
-lineHeight:"35px",
+lineHeight:"30px",
 textAlign:"center",
              }}
               component={"h3"}>Miami</Typography>
@@ -2269,15 +2265,20 @@ textAlign:"center",
             </Box>
             <Box
               sx={{
-                flex: "2",
-                // backgroundImage:"url(./assets/images/R4.jpg)",
-                // backgroundPosition:"center",
-                // backgroundSize:"cover",
-                // backgroundRepeat:"no-repeat",
+                flex:  {
+                  xs:"100%",
+                  sm:"2",
+                  md:"2",
+                  lg:"2",
+                  xl:"2",
+                },
                 minHeight:"300px",
                 borderRadius:"20px",
                 position:"relative",
-                overflow:"hidden"
+                overflow:"hidden",
+                "&:hover":{
+                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                }
               }}
               className={"cities_box"}
               component={"a"}
@@ -2290,7 +2291,7 @@ textAlign:"center",
                   height:"100%",
                   width:"100%",
                   objectFit:"cover"
-              }} component={"img"} src="./assets/images/R1.jpg"/>
+              }} component={"img"} src="./assets/images/R4.jpg"/>
              <Box  sx={{
                position:"absolute",
                bottom:"0",
@@ -2310,27 +2311,644 @@ width:"100%",
              }} 
              className={"cities_content_box"}>
              <Typography sx={{
-fontSize:"28px",
+fontSize:"24px",
 color:theme.palette.primary.white,
 fontWeight:"500",
-lineHeight:"35px",
+lineHeight:"30px",
 textAlign:"center",
              }}
-              component={"h3"}>Miami</Typography>
+              component={"h3"}>New York</Typography>
              <Typography sx={{
 fontSize:"18px",
 color:theme.palette.primary.white,
 fontWeight:"500",
 lineHeight:"35px",
 textAlign:"center",
-             }} component={"h4"}>24 properties</Typography>
+             }} component={"h4"}>48 properties</Typography>
+             </Box>
+   
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              display: {
+                xs:"flex",
+                sm:"flex",
+                md:"flex",
+                lg:"flex",
+                xl:"flex",
+              },
+              flexDirection:"row-reverse",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap:"30px",
+              flexWrap:"wrap",
+              padding:"15px 0px",
+            }}
+          >
+            <Box
+              sx={{
+                flex:  {
+                  xs:"100%",
+                  sm:"1",
+                  md:"1",
+                  lg:"1",
+                  xl:"1",
+                },
+                minHeight:"300px",
+                borderRadius:"20px",
+                position:"relative",
+                overflow:"hidden",
+                "&:hover":{
+                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                }
+              }}
+              className={"cities_box"}
+              component={"a"}
+              href="#"
+            >
+                 <Box className={"city_img"} sx={{
+                  position:"absolute",
+                  bottom:"0",
+                  left:"0",
+                  height:"100%",
+                  width:"100%",
+                  objectFit:"cover"
+              }} component={"img"} src="./assets/images/R9.jpg"/>
+             <Box  sx={{
+               position:"absolute",
+               bottom:"0",
+               left:"0",
+               height:"100%",
+               width:"100%",
+               background:"rgb(0,0,0,30%)",
+               opacity:"0"
+              }} className={"overlay"}></Box>
+             <Box sx={{
+position:"absolute",
+bottom:"-50%",
+left:"0",
+height:"30%",
+width:"100%",
+
+             }} 
+             className={"cities_content_box"}>
+             <Typography sx={{
+fontSize:"24px",
+color:theme.palette.primary.white,
+fontWeight:"500",
+lineHeight:"30px",
+textAlign:"center",
+             }}
+              component={"h3"}>Florida</Typography>
+             <Typography sx={{
+fontSize:"18px",
+color:theme.palette.primary.white,
+fontWeight:"500",
+lineHeight:"35px",
+textAlign:"center",
+             }} component={"h4"}>35 properties</Typography>
+             </Box>
+   
+            </Box>
+            <Box
+              sx={{
+                flex:  {
+                  xs:"100%",
+                  sm:"2",
+                  md:"2",
+                  lg:"2",
+                  xl:"2",
+                },
+                minHeight:"300px",
+                borderRadius:"20px",
+                position:"relative",
+                overflow:"hidden",
+                "&:hover":{
+                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                }
+              }}
+              className={"cities_box"}
+              component={"a"}
+              href="#"
+            >
+              <Box className={"city_img"} sx={{
+                  position:"absolute",
+                  bottom:"0",
+                  left:"0",
+                  height:"100%",
+                  width:"100%",
+                  objectFit:"cover"
+              }} component={"img"} src="./assets/images/R8.jpg"/>
+             <Box  sx={{
+               position:"absolute",
+               bottom:"0",
+               left:"0",
+               height:"100%",
+               width:"100%",
+               background:"rgb(0,0,0,30%)",
+               opacity:"0"
+              }} className={"overlay"}></Box>
+             <Box sx={{
+position:"absolute",
+bottom:"-50%",
+left:"0",
+height:"30%",
+width:"100%",
+
+             }} 
+             className={"cities_content_box"}>
+             <Typography sx={{
+fontSize:"24px",
+color:theme.palette.primary.white,
+fontWeight:"500",
+lineHeight:"30px",
+textAlign:"center",
+             }}
+              component={"h3"}>Los Angeles</Typography>
+             <Typography sx={{
+fontSize:"18px",
+color:theme.palette.primary.white,
+fontWeight:"500",
+lineHeight:"35px",
+textAlign:"center",
+             }} component={"h4"}>18 properties</Typography>
              </Box>
    
             </Box>
 
+         
+          
+
+
           </Box>
         </Container>
       </Box>
+      {/* Why Choose Us */}
+      <Box
+        className="why_choose_us_section"
+        component={"section"}
+        sx={{
+          padding: "50px 0px",
+          backgroundColor: theme.palette.primary.BGColor,
+        }}
+      >
+        <Container
+          maxWidth="xl"
+          sx={{
+            height: "100%",
+            padding: {
+              xs: "0px 10px",
+              sm: "0px 10px",
+              md: "0px 10px",
+              lg: "0px 24px",
+            },
+          }}
+        >
+          <Box
+            className={"heading"}
+            sx={{
+              textAlign: "center",
+              marginBottom: "50px",
+            }}
+          >
+            <Typography
+              variant="h4"
+              component={"h2"}
+              sx={{
+                fontSize: "28px",
+                fontWeight: "500",
+                lineHeight: "32px",
+                marginBottom: "10px",
+              }}
+            >
+              Why Choose Us
+            </Typography>
+            <Typography
+              component={"p"}
+              sx={{
+                fontSize: "14px",
+              }}
+            >
+              We provide full service at every step.
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display:  {
+                xs:"grid",
+                sm:"flex",
+                md:"flex",
+                lg:"flex",
+                xl:"flex",
+              },
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap:"30px"
+            }}
+          >
+<Box className={"choose_box"} sx={{
+    backgroundColor: theme.palette.primary.white,
+  padding:"30px",
+borderRadius:"10px",
+transition:"all .3s ease",
+textAlign:"center",
+display:"flex",
+flexDirection:"column",
+justifyContent:"space-between",
+alignItems:"center",
+gap:"25px",
+minHeight:"250px",
+"&:hover":{
+  boxShadow:"0 0 50px 0 rgba(19,19,28,.12)"
+}
+}} flex={1}>
+<Box sx={{
+  height:"70px",
+  width:"70px",
+  borderRadius:"100%",
+  padding:"20px",
+  background:theme.palette.primary.LightGreen,
+  display:"flex",
+  justifyContent:"center",
+  alignItems:"center",
+}} className={"choose_icon_box"}>
+<Box className={"img_color"} component={"img"} src="./assets/images/trust.png"/>
+</Box>
+<Box className={"box_details"}>
+<Typography sx={{
+  fontSize:"24px",
+  fontWeight:"500",
+  lineHeight:"30px",
+  marginBottom:"25px",
+}} component={"h3"}>Trusted By Thousands</Typography>
+<Typography sx={{
+  fontSize:"14px",
+
+  fontWeight:"400",
+  lineHeight:"20px",
+}} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
+
+</Box>
+</Box>
+<Box className={"choose_box"} sx={{
+    backgroundColor: theme.palette.primary.white,
+  padding:"30px",
+borderRadius:"10px",
+transition:"all .3s ease",
+textAlign:"center",
+display:"flex",
+flexDirection:"column",
+justifyContent:"space-between",
+alignItems:"center",
+gap:"25px",
+minHeight:"250px",
+"&:hover":{
+  boxShadow:"0 0 50px 0 rgba(19,19,28,.12)"
+}
+}} flex={1}>
+<Box sx={{
+  height:"70px",
+  width:"70px",
+  borderRadius:"100%",
+  padding:"20px",
+  background:theme.palette.primary.LightGreen,
+  display:"flex",
+  justifyContent:"center",
+  alignItems:"center",
+}} className={"choose_icon_box"}>
+<Box className={"img_color"} component={"img"} src="./assets/images/home.png"/>
+</Box>
+<Box className={"box_details"}>
+<Typography sx={{
+  fontSize:"24px",
+  fontWeight:"500",
+  lineHeight:"30px",
+  marginBottom:"25px",
+}} component={"h3"}>Wide Renge Of Properties</Typography>
+<Typography sx={{
+  fontSize:"14px",
+
+  fontWeight:"400",
+  lineHeight:"20px",
+}} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
+
+</Box>
+</Box>
+<Box className={"choose_box"} sx={{
+    backgroundColor: theme.palette.primary.white,
+  padding:"30px",
+borderRadius:"10px",
+transition:"all .3s ease",
+textAlign:"center",
+display:"flex",
+flexDirection:"column",
+justifyContent:"space-between",
+alignItems:"center",
+gap:"25px",
+minHeight:"250px",
+"&:hover":{
+  boxShadow:"0 0 50px 0 rgba(19,19,28,.12)"
+}
+}} flex={1}>
+<Box sx={{
+  height:"70px",
+  width:"70px",
+  borderRadius:"100%",
+  padding:"20px",
+  background:theme.palette.primary.LightGreen,
+  display:"flex",
+  justifyContent:"center",
+  alignItems:"center",
+}} className={"choose_icon_box"}>
+<Box className={"img_color"} component={"img"} src="./assets/images/budget.png"/>
+</Box>
+<Box className={"box_details"}>
+<Typography sx={{
+  fontSize:"24px",
+  fontWeight:"500",
+  lineHeight:"30px",
+  marginBottom:"25px",
+}} component={"h3"}>Financing Made Easy</Typography>
+<Typography sx={{
+  fontSize:"14px",
+
+  fontWeight:"400",
+  lineHeight:"20px",
+}} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
+
+</Box>
+</Box>
+
+          </Box>
+        </Container>
+      </Box>
+
+{/* our partner  */}
+<Box
+        className="partner_section"
+        component={"section"}
+        sx={{
+          padding: "50px 0px",
+          backgroundColor: theme.palette.primary.white,
+        }}
+      >
+        <Container
+          maxWidth="xl"
+          sx={{
+            height: "100%",
+            padding: {
+              xs: "0px 10px",
+              sm: "0px 10px",
+              md: "0px 10px",
+              lg: "0px 24px",
+            },
+          }}
+        >
+          <Box
+            className={"heading"}
+            sx={{
+              textAlign: "center",
+              marginBottom: "50px",
+            }}
+          >
+            <Typography
+              variant="h4"
+              component={"h2"}
+              sx={{
+                fontSize: "28px",
+                fontWeight: "500",
+                lineHeight: "32px",
+                marginBottom: "10px",
+              }}
+            >
+          Our Partners
+            </Typography>
+            <Typography
+              component={"p"}
+              sx={{
+                fontSize: "14px",
+              }}
+            >
+              We only work with the best companies around the globe
+            </Typography>
+          </Box>
+          <Box sx={{
+            display:{
+              xs:"grid",
+              sm:"flex",
+              md:"flex",
+              lg:"flex",
+              xl:"flex",
+            },
+justifyContent:"space-around",
+            gap:"15px"
+          }}>
+          <Box sx={{
+            height:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            width:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            objectFit:"contain",
+            textAlign:"center"
+          }} component={"img"} src="./assets/images/logos/logo1.png"/>
+          <Box sx={{
+             height:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            width:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            objectFit:"contain",
+            textAlign:"center"
+          }} component={"img"} src="./assets/images/logos/logo2.png"/>
+          <Box sx={{
+             height:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            width:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            objectFit:"contain",
+            textAlign:"center"
+          }} component={"img"} src="./assets/images/logos/logo5.png"/>
+          <Box sx={{
+             height:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            width:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            objectFit:"contain",
+            textAlign:"center"
+          }} component={"img"} src="./assets/images/logos/logo2.png"/>
+          <Box sx={{
+             height:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            width:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            objectFit:"contain",
+            textAlign:"center"
+          }} component={"img"} src="./assets/images/logos/logo1.png"/>
+          <Box sx={{
+             height:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            width:{
+              xs:"130px",
+              sm:"100px",
+              md:"150px",
+              lg:"150px",
+              xl:"150px",
+            },
+            objectFit:"contain",
+            textAlign:"center"
+          }} component={"img"} src="./assets/images/logos/logo5.png"/>
+          </Box>
+         
+        </Container>
+      </Box>
+
+      <Box
+        className="partner_section"
+        component={"section"}
+        sx={{
+          padding: "50px 0px",
+          backgroundColor: theme.palette.primary.Green,
+        }}
+      >
+        <Container
+          maxWidth="xl"
+          sx={{
+            height: "100%",
+            padding: {
+              xs: "0px 10px",
+              sm: "0px 10px",
+              md: "0px 10px",
+              lg: "0px 24px",
+            },
+          }}
+        >
+          <Box sx={{
+            display:{
+              xs:"grid",
+              sm:"flex",
+              md:"flex",
+              lg:"flex",
+              xl:"flex",
+            },
+justifyContent:"space-between",
+            gap:"15px"
+          }}>
+  <Box
+            className={"heading"}
+            sx={{
+              textAlign: "left",
+         
+            }}
+          >
+            <Typography
+              variant="h4"
+              component={"h2"}
+              sx={{
+                fontSize: "30px",
+                fontWeight: "500",
+                lineHeight: "32px",
+                marginBottom: "10px",
+                color:theme.palette.primary.white,
+              }}
+            >
+       Become a Real Estate Agent
+            </Typography>
+            <Typography
+              component={"p"}
+              sx={{
+                fontSize: "14px",
+                color:theme.palette.primary.white,
+              }}
+            >
+             We only work with the best companies around the globe
+            </Typography>
+          </Box>
+          <Button className="customBtnStyle"
+                    sx={{
+                      fontFamily: "'Roboto', sans-serif !important",
+                      backgroundColor: "#dceeea",
+                      color: theme.palette.primary.logoColor,
+                      padding: "8px 22px",
+                      fontSize: "18px",
+                      minHeight:"50px",
+                      height:"50px",
+                      lineHeight: "18px",
+                      fontWeight: "500",
+                      border: "none",
+                      overflow: "hidden",
+                      position: "relative",
+                      boxShadow: "none",
+                      zIndex: "1",
+                      textTransform: "capitalize",
+                      "&:hover": {
+                        backgroundColor: theme.palette.primary.logoColor,
+                        color: theme.palette.primary.white,
+                        boxShadow: "none",
+                      }
+                    }} variant="contained">Register Now</Button>
+          </Box>
+        
+        
+         
+        </Container>
+      </Box>
+
       <Box>
         <Footer />
       </Box>
