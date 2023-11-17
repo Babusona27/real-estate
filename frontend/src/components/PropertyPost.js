@@ -344,7 +344,8 @@ const Listings = styled(Box)(({ theme }) => ({
   alignItems: "center",
   position: "absolute",
   bottom: "-45%",
-  right: "20px",
+  left:"auto",
+  right: "50px",
   opacity: "0",
   transition: "0.3s ease-in-out"
 }));

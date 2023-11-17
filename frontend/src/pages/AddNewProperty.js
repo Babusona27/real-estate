@@ -76,7 +76,12 @@ const AddNewProperty = () => {
                     <Box>
                         <Box
                             sx={{
-                                padding: "70px 0px",
+                                padding: {
+                                    xs: "70px 0px 20px",
+                                    sm: "70px 0px 30px",
+                                    md: "70px 0px 30px",
+                                    lg: "70px 0px",
+                                },
                                 textAlign: "center",
                             }}
                         >
@@ -429,7 +434,8 @@ const AddNewProperty = () => {
                                                 xs: "5px",
                                                 sm: "5px",
                                                 md: "10px",
-                                                lg: "30px",
+                                                lg: "10px",
+                                                xl:"30px",
                                             }
                                         }}
                                     >
@@ -442,7 +448,14 @@ const AddNewProperty = () => {
                                             name="radio-buttons-group"
                                             row
                                             sx={{
-                                                gap: "30px"
+                                                gap:
+                                                {
+                                                    xs: "5px",
+                                                    sm: "5px",
+                                                    md: "10px",
+                                                    lg: "10px",
+                                                    xl:"30px",
+                                                }
                                             }}
                                         >
                                             <FormControlLabel value="Yes" control={<Radio />} label="Yes" className="radio_btn" />

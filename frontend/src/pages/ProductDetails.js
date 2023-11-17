@@ -58,11 +58,10 @@ const ProductDetails = () => {
         </Box>
         <Container maxWidth="xl" sx={{ height: "100%", padding:{xs:"40px 10px",sm:"40px 10px",md:"40px 10px",lg:"40px 0px"}, backgroundColor:"#eaf7f4" }}>
           <Box
-            sx={{
+          sx={{
               display: { xs: "block", sm: "block", md: "flex", lg: "flex" },
               justifyContent: "space-between",
-            }}
-          >
+            }} >
             <PropertyDetailsLeftbar propertyDetails={propertyDetails}/>
             <PropertyDetailsRightbar />
           </Box>

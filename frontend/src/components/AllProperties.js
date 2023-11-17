@@ -14,6 +14,12 @@ const AllProperties = () => {
   return (
     <Box sx={{
       backgroundColor:"#eaf7f4" ,
+      padding: {
+        xs: "70px 0px 20px",
+        sm: "70px 0px 30px",
+        md: "70px 0px 30px",
+        lg: "70px 0px",
+    },
     }}>
       <Header />
       <Box>

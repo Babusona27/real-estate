@@ -698,3 +698,68 @@ line-height: 1 !important;
 .css-o28p1q-MuiFormLabel-root.Mui-focused {
 	color: var(--green) !important;
 }
+.css-19kzrtu {
+    padding: 24px 0px !important;
+}
+.scroll_tabbar  .MuiTabs-flexContainer.css-heg063-MuiTabs-flexContainer {
+    width: 100%;
+    overflow-x: scroll;
+}
+.scroll_tabbar  .MuiTabs-flexContainer.css-heg063-MuiTabs-flexContainer::-webkit-scrollbar {
+	width: 10px;
+	height: 5px;
+  }
+  button.owl-dot span {
+    position: relative;
+	height: 15px !important;
+	width: 15px !important;
+	border-radius: 100%;
+background: #888;
+}
+button.owl-dot span::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    transform:scale(0);
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    background-color: #00c194;
+	transition: 0.5s all ;
+}
+
+button.owl-dot span::after {
+    position: absolute;
+	content: "";
+	top: 5px;
+	left: 5px;
+	transform: scale(0);
+	height: 5px;
+	width: 5px;
+	border-radius: 100%;
+	background-color: #fff;
+	transition: 0.5s all ;
+}
+button.owl-dot.active span::after{
+	transform: scale(1.1);
+}
+button.owl-dot.active span::before{
+	transform: scale(1.1);
+}
+button.owl-dot.active span{
+	background: transparent !important;
+}
+a.cities_box, img.city_img, .overlay, .cities_content_box{
+transition: all .6s ease;
+}
+a.cities_box:hover img.city_img {
+    transform: scale(1.1) rotate(-1deg);
+	filter: blur(2px);
+}
+a.cities_box:hover .overlay{
+	opacity: 1;
+}
+a.cities_box:hover .cities_content_box{
+	bottom: 0;
+}
