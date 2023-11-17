@@ -11,9 +11,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useParams } from 'react-router-dom';
 import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL } from "../common/urls";
 import { GetApiFetch } from "../common/CommonFunction";
-
-const PropertyDetailsLeftbar = ({propertyDetails}) => {
-  console.log('PropertyDetailsLeftbar -- ',propertyDetails);
+import { useSelector } from "react-redux";
+const PropertyDetailsLeftbar = () => {
+  const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   
   return (
     <Box
@@ -93,7 +93,7 @@ const PropertyDetailsLeftbar = ({propertyDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails._id}</Typography>
+                variant="span" >{propertyDetails && propertyDetails._id}</Typography>
 
             </Box>
 
@@ -140,7 +140,7 @@ const PropertyDetailsLeftbar = ({propertyDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails.parking ? 'Yes' : 'No'}</Typography>
+                variant="span" >{propertyDetails && propertyDetails.parking ? 'Yes' : 'No'}</Typography>
 
             </Box>
 
@@ -187,7 +187,7 @@ const PropertyDetailsLeftbar = ({propertyDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails.bedroom}</Typography>
+                variant="span" >{propertyDetails && propertyDetails.bedroom}</Typography>
 
             </Box>
 
@@ -234,7 +234,7 @@ const PropertyDetailsLeftbar = ({propertyDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails.bath} </Typography>
+                variant="span" >{propertyDetails && propertyDetails.bath} </Typography>
 
             </Box>
 
@@ -281,7 +281,7 @@ const PropertyDetailsLeftbar = ({propertyDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails.sqft}</Typography>
+                variant="span" >{propertyDetails && propertyDetails.sqft}</Typography>
 
             </Box>
 
@@ -328,7 +328,7 @@ const PropertyDetailsLeftbar = ({propertyDetails}) => {
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails.state}</Typography>
+                variant="span" >{propertyDetails && propertyDetails.state}</Typography>
 
             </Box>
 
@@ -367,7 +367,7 @@ const PropertyDetailsLeftbar = ({propertyDetails}) => {
           }}
           component={"p"}
         >
-          {propertyDetails.property_name} | Loft Type | Soon to be Available
+          {propertyDetails && propertyDetails.property_name} | Loft Type | Soon to be Available
         </Typography>
         <Typography
           sx={{

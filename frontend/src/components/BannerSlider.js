@@ -9,9 +9,11 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { IMAGE_BASE_URL } from "../common/urls";
+import { useSelector } from "react-redux";
 
-const BannerSlider = ({propertyDetails}) => {
-  console.log('BannerSlider -- ',propertyDetails);
+
+const BannerSlider = () => {
+  const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const option = {
     items: 1,
     loop: true,
@@ -50,7 +52,7 @@ const BannerSlider = ({propertyDetails}) => {
       className="banner_slider"
     >
       <OwlCarousel className="owl-theme" {...option}>
-        {propertyDetails.images.map((item, key) => (
+        {propertyDetails && propertyDetails.images.map((item, key) => (
           <div class="item">
           <img src={IMAGE_BASE_URL+item} />
         </div>
