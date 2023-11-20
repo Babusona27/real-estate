@@ -1,3 +1,4 @@
+const { log } = require("console");
 const PropertySchema = require("../models/PropertySchema");
 const fs = require("fs");
 const path = require("path");
@@ -150,6 +151,11 @@ async function createProperty(req, res) {
       floor_plan_images.push(relativePath);
     }
     // console.log("Floor images - ", images);
+    createSlug = property_name.replace(/\s+/g, "-").toLowerCase();
+    checkslug = await PropertySchema.findOne({ slug: createSlug });
+    if (checkslug) {
+      createSlug = createSlug + "-" + sqft;
+    }
 
     const property = new PropertySchema({
       property_name,
@@ -174,6 +180,7 @@ async function createProperty(req, res) {
       reviews,
       property_status,
       posted_on,
+      slug: createSlug,
     });
     await property.save();
     res.status(201).json({

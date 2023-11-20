@@ -80,6 +80,7 @@ const PropertySchema = new mongoose.Schema({
     default: "active",
   },
   posted_on: Date,
+  slug: String,
 });
 
 module.exports = mongoose.model("Property", PropertySchema);
