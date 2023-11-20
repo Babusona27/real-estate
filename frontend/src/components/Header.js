@@ -20,7 +20,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import CloseIcon from '@mui/icons-material/Close';
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isNavOpen, setNavOpen] = useState(false);
@@ -221,52 +221,54 @@ const Navbar = () => {
                     </StyledBadge>
                   </IconButton>
                 </Tooltip>
-                <Button
-                  sx={{
-                    borderRadius: "30px",
-                    display: { xs: "none", sm: "none", lg: "flex" },
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "0px",
-                    padding: "0px",
-                    color: "#fff",
-                    overflow: "hidden",
-                    height: "45px",
-                    backgroundColor: theme.palette.primary.logoColor,
-                    transition: "background-color 0.3s",
-                    "&:hover": {
-                      backgroundColor: theme.palette.primary.logoColor,
-                    },
-                  }}
-                  variant="contained"
-                >
-                  <Box
+                <Link to="/AgentLogIn">
+                  <Button
                     sx={{
-                      display: "flex",
+                      borderRadius: "30px",
+                      display: { xs: "none", sm: "none", lg: "flex" },
                       alignItems: "center",
-                      height: "100%",
-                      width: "30px",
-                      paddingLeft: "10px",
-                      backgroundColor: "#00000026",
-                      color: theme.palette.primary.white,
+                      justifyContent: "space-between",
+                      gap: "0px",
+                      padding: "0px",
+                      color: "#fff",
+                      overflow: "hidden",
+                      height: "45px",
+                      backgroundColor: theme.palette.primary.logoColor,
+                      transition: "background-color 0.3s",
+                      "&:hover": {
+                        backgroundColor: theme.palette.primary.logoColor,
+                      },
                     }}
+                    variant="contained"
                   >
-                    <AddIcon />
-                  </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        height: "100%",
+                        width: "30px",
+                        paddingLeft: "10px",
+                        backgroundColor: "#00000026",
+                        color: theme.palette.primary.white,
+                      }}
+                    >
+                      <AddIcon />
+                    </Box>
 
-                  <Typography
-                    sx={{
-                      padding: "0px 22px 0px 15px",
-                      color: theme.palette.primary.white,
-                      fontSize: "15px",
-                      fontWeight: "500",
-                      lineHeight: "42px",
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    List Your Property
-                  </Typography>
-                </Button>
+                    <Typography
+                      sx={{
+                        padding: "0px 22px 0px 15px",
+                        color: theme.palette.primary.white,
+                        fontSize: "15px",
+                        fontWeight: "500",
+                        lineHeight: "42px",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      List Your Property
+                    </Typography>
+                  </Button>
+                </Link>
                 <Button
                   sx={{
                     borderRadius: "30px",

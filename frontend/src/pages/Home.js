@@ -18,7 +18,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 // import PropertyPost from "../components/PropertyPost";
@@ -33,6 +33,11 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { setPropertyList } from "../redux/reducers/PropertyListReducer";
+import { GetApiFetch } from "../common/CommonFunction";
+import { GET_PROPERTIES_API } from "../common/urls";
+import axios from "axios";
 
 const TabPanel = ({ children, value, index }) => (
   <div className={`tab-panel ${value === index ? "active" : ""}`}>
@@ -63,6 +68,10 @@ const newSlider = {
 };
 
 const Home = () => {
+  const propertyList = useSelector(state => state.PropertyListReducer.value);
+  // const userData = useSelector(state => state.UserReducer.value);
+  // console.log("propertyList", propertyList);
+  const dispatch = useDispatch();
   const [value1, setVal] = React.useState("");
   const [value2, setVal1] = React.useState("");
   const [value3, setVal2] = React.useState("");
@@ -87,6 +96,24 @@ const Home = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  useEffect(() => {
+    /* get properties  */
+    const getProperties = async () => {
+      await axios
+        .get(GET_PROPERTIES_API)
+        .then((res) => {
+          if (res.data.status) {
+            // console.log(res.data.data);
+            dispatch(setPropertyList(res.data.data));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    /* get properties  */
+    getProperties();
+  }, []);
 
   return (
     <>
@@ -103,11 +130,11 @@ const Home = () => {
           backgroundSize: "cover",
           backgroundPosition: "50%",
           minHeight: {
-            xs:"130vh",
-            sm:"50vh",
-            md:"100vh",
-            lg:"100vh",
-            xl:"100vh",
+            xs: "130vh",
+            sm: "50vh",
+            md: "100vh",
+            lg: "100vh",
+            xl: "100vh",
           },
           position: "relative",
         }}
@@ -131,11 +158,11 @@ const Home = () => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width:{
-                xs:"95%",
-                sm:"95%",
-                md:"75%",
-                lg:"75%",
+              width: {
+                xs: "95%",
+                sm: "95%",
+                md: "75%",
+                lg: "75%",
               },
               height: "auto",
               textAlign: "center",
@@ -212,10 +239,10 @@ const Home = () => {
                     backgroundColor: theme.palette.primary.white,
                     padding: "20px 20px",
                     display: {
-                      xs:"block",
-                      sm:"flex",
-                      md:"flex",
-                      lg:"flex",
+                      xs: "block",
+                      sm: "flex",
+                      md: "flex",
+                      lg: "flex",
                     },
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -232,22 +259,24 @@ const Home = () => {
                     label="Enter keyword..."
                     variant="outlined"
                     sx={{
-                      marginBottom:{
-                        xs:"20px",
-                        sm:"0px",
-                        md:"0px",
-                        lg:"0px",
-                        xl:"0px",
+                      marginBottom: {
+                        xs: "20px",
+                        sm: "0px",
+                        md: "0px",
+                        lg: "0px",
+                        xl: "0px",
                       }
                     }}
                   />
-                  <Box sx={{ width: "100%",  marginBottom:{
-                        xs:"20px",
-                        sm:"0px",
-                        md:"0px",
-                        lg:"0px",
-                        xl:"0px",
-                      } }}>
+                  <Box sx={{
+                    width: "100%", marginBottom: {
+                      xs: "20px",
+                      sm: "0px",
+                      md: "0px",
+                      lg: "0px",
+                      xl: "0px",
+                    }
+                  }}>
                     <FormControl
                       className="form_input1"
                       fullWidth
@@ -275,13 +304,15 @@ const Home = () => {
                     id="outlined-basic"
                     label="Location"
                     variant="outlined"
-                    sx={{ width: "100%", marginBottom:{
-                      xs:"20px",
-                      sm:"0px",
-                      md:"0px",
-                      lg:"0px",
-                      xl:"0px",
-                    } }}
+                    sx={{
+                      width: "100%", marginBottom: {
+                        xs: "20px",
+                        sm: "0px",
+                        md: "0px",
+                        lg: "0px",
+                        xl: "0px",
+                      }
+                    }}
                   />
 
 
@@ -304,16 +335,16 @@ const Home = () => {
               </TabPanel>
 
               <TabPanel value={value} index={1}>
-              <Box
+                <Box
                   className={"tab_cont"}
                   sx={{
                     backgroundColor: theme.palette.primary.white,
                     padding: "20px 20px",
                     display: {
-                      xs:"block",
-                      sm:"flex",
-                      md:"flex",
-                      lg:"flex",
+                      xs: "block",
+                      sm: "flex",
+                      md: "flex",
+                      lg: "flex",
                     },
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -330,22 +361,24 @@ const Home = () => {
                     label="Enter keyword..."
                     variant="outlined"
                     sx={{
-                      marginBottom:{
-                        xs:"20px",
-                        sm:"0px",
-                        md:"0px",
-                        lg:"0px",
-                        xl:"0px",
+                      marginBottom: {
+                        xs: "20px",
+                        sm: "0px",
+                        md: "0px",
+                        lg: "0px",
+                        xl: "0px",
                       }
                     }}
                   />
-                  <Box sx={{ width: "100%",  marginBottom:{
-                        xs:"20px",
-                        sm:"0px",
-                        md:"0px",
-                        lg:"0px",
-                        xl:"0px",
-                      } }}>
+                  <Box sx={{
+                    width: "100%", marginBottom: {
+                      xs: "20px",
+                      sm: "0px",
+                      md: "0px",
+                      lg: "0px",
+                      xl: "0px",
+                    }
+                  }}>
                     <FormControl
                       className="form_input1"
                       fullWidth
@@ -373,15 +406,17 @@ const Home = () => {
                     id="outlined-basic"
                     label="Location"
                     variant="outlined"
-                    sx={{ width: "100%", marginBottom:{
-                      xs:"20px",
-                      sm:"0px",
-                      md:"0px",
-                      lg:"0px",
-                      xl:"0px",
-                    } }}
+                    sx={{
+                      width: "100%", marginBottom: {
+                        xs: "20px",
+                        sm: "0px",
+                        md: "0px",
+                        lg: "0px",
+                        xl: "0px",
+                      }
+                    }}
                   />
-                 
+
                   <Button
                     sx={{
                       width: "100%",
@@ -455,8 +490,9 @@ const Home = () => {
           <Box>
             <OwlCarousel className="owl-theme" {...newSlider}>
               {/* need to be chenge property_items  */}
-              <div class="property_item">
-                {/* need to chenge  item  */}
+              {propertyList && propertyList.map((item, key) => (
+                <div class="property_item">
+                  {/* {console.log("item", item)} */}
                 <Box>
                   <Card
                     className="post_card"
@@ -513,7 +549,7 @@ const Home = () => {
                             }}
                             variant="h6"
                           >
-                            15000
+                           {item.price}
                           </Typography>
                           <Listings className="listings">
                             <IconButton
@@ -587,7 +623,7 @@ const Home = () => {
                             </IconButton>
                           </Listings>
                         </BottomBar>
-                        <Rent>Apartment for Rent</Rent>
+                        <Rent>{item.category}</Rent>
                       </Box>
                       <CardContent
                         sx={{
@@ -620,7 +656,7 @@ const Home = () => {
                             variant="h5"
                             component="h4"
                           >
-                            Full Sea View For Rent
+                           {item.property_name}
                           </Typography>
                           <FlexBox>
                             <List
@@ -790,1346 +826,7 @@ const Home = () => {
                   </Card>
                 </Box>
               </div>
-              <div class="property_item">
-                {/* need to chenge  item  */}
-                <Box>
-                  <Card
-                    className="post_card"
-                    sx={{
-                      width: "100%",
-                      border: "1px solid #e9e7d",
-                      boxShadow: "0 4px 18px 0 rgb(194 200 213 / 0%)",
-                      "&:hover": {
-                        boxShadow: "0 11px 35px 0 rgba(0, 0, 0, .1)",
-                      },
-                    }}
-                  >
-                    <CardActionArea>
-                      <Box sx={{ position: "relative" }}>
-                        <Catagorys>
-                          <Span
-                            bgcolor={"#ff9642"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Featured
-                          </Span>
-                          <Span
-                            bgcolor={"#17a2b8 "}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Top
-                          </Span>
-                          <Span
-                            bgcolor={"#5f40fb"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Bump Up
-                          </Span>
-                        </Catagorys>
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image={"./assets/images/R1.jpg"}
-                          alt="green iguana"
-                          sx={{
-                            height: "250px",
-                          }}
-                        />
-                        <BottomBar>
-                          <Typography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: "600",
-                              textShadow: "0.5px 0.5px #000000",
-                              color: theme.palette.primary.white,
-                            }}
-                            variant="h6"
-                          >
-                            15000
-                          </Typography>
-                          <Listings className="listings">
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <FavoriteBorderIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <CompareArrowsIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                borderRadius: "3px",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <SavedSearchIcon />
-                            </IconButton>
-                          </Listings>
-                        </BottomBar>
-                        <Rent>Apartment for Rent</Rent>
-                      </Box>
-                      <CardContent
-                        sx={{
-                          paddingLeft: "0px",
-                          paddingRight: "0px",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                            paddingBottom: "10px",
-                            marginBottom: "10px",
-                            borderBottom: "1px solid #e1e1e1",
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              display: "-webkit-box",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              WebkitLineClamp: "1",
-                              WebkitBoxOrient: "vertical",
-                              fontSize: "22px",
-                              fontWeight: "500",
-                              lineHeight: "32px",
-                              marginBottom: "15px",
-                            }}
-                            gutterBottom
-                            variant="h5"
-                            component="h4"
-                          >
-                            Full Sea View For Rent
-                          </Typography>
-                          <FlexBox>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <SingleBedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                2
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <BathtubOutlinedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                4
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <ZoomOutMapIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                1437
-                              </Typography>
-                            </List>
-                          </FlexBox>
-                        </Box>
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                          }}
-                        >
-                          <FlexBox>
-                            <UserBox>
-                              <Avatar
-                                sx={{ width: "36px", height: "36px" }}
-                                src="./assets/images/avtar/avatar.png"
-                              />
-                              <Typography
-                                sx={{
-                                  display: "-webkit-box",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  WebkitLineClamp: "1",
-                                  WebkitBoxOrient: "vertical",
-                                  fontFamily: "'Roboto', sans-serif !important",
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                              >
-                                suraj
-                              </Typography>
-                            </UserBox>
-                            <Button
-                              className="customBtnStyle"
-                              sx={{
-                                fontFamily: "'Roboto', sans-serif !important",
-                                backgroundColor: "#dceeea",
-                                color: theme.palette.primary.logoColor,
-                                padding: "8px 22px",
-                                fontSize: "14px",
-                                lineHeight: "18px",
-                                fontWeight: "500",
-                                border: "none",
-                                overflow: "hidden",
-                                position: "relative",
-                                boxShadow: "none",
-                                zIndex: "1",
-                                textTransform: "capitalize",
-                                "&:hover": {
-                                  backgroundColor:
-                                    theme.palette.primary.logoColor,
-                                  color: theme.palette.primary.white,
-                                  boxShadow: "none",
-                                },
-                              }}
-                              variant="contained"
-                            >
-                              Details
-                            </Button>
-                          </FlexBox>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Box>
-              </div>
-              <div class="property_item">
-                {/* need to chenge  item  */}
-                <Box>
-                  <Card
-                    className="post_card"
-                    sx={{
-                      width: "100%",
-                      border: "1px solid #e9e7d",
-                      boxShadow: "0 4px 18px 0 rgb(194 200 213 / 0%)",
-                      "&:hover": {
-                        boxShadow: "0 11px 35px 0 rgba(0, 0, 0, .1)",
-                      },
-                    }}
-                  >
-                    <CardActionArea>
-                      <Box sx={{ position: "relative" }}>
-                        <Catagorys>
-                          <Span
-                            bgcolor={"#ff9642"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Featured
-                          </Span>
-                          <Span
-                            bgcolor={"#17a2b8 "}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Top
-                          </Span>
-                          <Span
-                            bgcolor={"#5f40fb"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Bump Up
-                          </Span>
-                        </Catagorys>
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image={"./assets/images/R1.jpg"}
-                          alt="green iguana"
-                          sx={{
-                            height: "250px",
-                          }}
-                        />
-                        <BottomBar>
-                          <Typography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: "600",
-                              textShadow: "0.5px 0.5px #000000",
-                              color: theme.palette.primary.white,
-                            }}
-                            variant="h6"
-                          >
-                            15000
-                          </Typography>
-                          <Listings className="listings">
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <FavoriteBorderIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <CompareArrowsIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                borderRadius: "3px",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <SavedSearchIcon />
-                            </IconButton>
-                          </Listings>
-                        </BottomBar>
-                        <Rent>Apartment for Rent</Rent>
-                      </Box>
-                      <CardContent
-                        sx={{
-                          paddingLeft: "0px",
-                          paddingRight: "0px",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                            paddingBottom: "10px",
-                            marginBottom: "10px",
-                            borderBottom: "1px solid #e1e1e1",
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              display: "-webkit-box",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              WebkitLineClamp: "1",
-                              WebkitBoxOrient: "vertical",
-                              fontSize: "22px",
-                              fontWeight: "500",
-                              lineHeight: "32px",
-                              marginBottom: "15px",
-                            }}
-                            gutterBottom
-                            variant="h5"
-                            component="h4"
-                          >
-                            Full Sea View For Rent
-                          </Typography>
-                          <FlexBox>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <SingleBedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                2
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <BathtubOutlinedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                4
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <ZoomOutMapIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                1437
-                              </Typography>
-                            </List>
-                          </FlexBox>
-                        </Box>
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                          }}
-                        >
-                          <FlexBox>
-                            <UserBox>
-                              <Avatar
-                                sx={{ width: "36px", height: "36px" }}
-                                src="./assets/images/avtar/avatar.png"
-                              />
-                              <Typography
-                                sx={{
-                                  display: "-webkit-box",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  WebkitLineClamp: "1",
-                                  WebkitBoxOrient: "vertical",
-                                  fontFamily: "'Roboto', sans-serif !important",
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                              >
-                                suraj
-                              </Typography>
-                            </UserBox>
-                            <Button
-                              className="customBtnStyle"
-                              sx={{
-                                fontFamily: "'Roboto', sans-serif !important",
-                                backgroundColor: "#dceeea",
-                                color: theme.palette.primary.logoColor,
-                                padding: "8px 22px",
-                                fontSize: "14px",
-                                lineHeight: "18px",
-                                fontWeight: "500",
-                                border: "none",
-                                overflow: "hidden",
-                                position: "relative",
-                                boxShadow: "none",
-                                zIndex: "1",
-                                textTransform: "capitalize",
-                                "&:hover": {
-                                  backgroundColor:
-                                    theme.palette.primary.logoColor,
-                                  color: theme.palette.primary.white,
-                                  boxShadow: "none",
-                                },
-                              }}
-                              variant="contained"
-                            >
-                              Details
-                            </Button>
-                          </FlexBox>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Box>
-              </div>
-              <div class="property_item">
-                {/* need to chenge  item  */}
-                <Box>
-                  <Card
-                    className="post_card"
-                    sx={{
-                      width: "100%",
-                      border: "1px solid #e9e7d",
-                      boxShadow: "0 4px 18px 0 rgb(194 200 213 / 0%)",
-                      "&:hover": {
-                        boxShadow: "0 11px 35px 0 rgba(0, 0, 0, .1)",
-                      },
-                    }}
-                  >
-                    <CardActionArea>
-                      <Box sx={{ position: "relative" }}>
-                        <Catagorys>
-                          <Span
-                            bgcolor={"#ff9642"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Featured
-                          </Span>
-                          <Span
-                            bgcolor={"#17a2b8 "}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Top
-                          </Span>
-                          <Span
-                            bgcolor={"#5f40fb"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Bump Up
-                          </Span>
-                        </Catagorys>
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image={"./assets/images/R1.jpg"}
-                          alt="green iguana"
-                          sx={{
-                            height: "250px",
-                          }}
-                        />
-                        <BottomBar>
-                          <Typography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: "600",
-                              textShadow: "0.5px 0.5px #000000",
-                              color: theme.palette.primary.white,
-                            }}
-                            variant="h6"
-                          >
-                            15000
-                          </Typography>
-                          <Listings className="listings">
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <FavoriteBorderIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <CompareArrowsIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                borderRadius: "3px",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <SavedSearchIcon />
-                            </IconButton>
-                          </Listings>
-                        </BottomBar>
-                        <Rent>Apartment for Rent</Rent>
-                      </Box>
-                      <CardContent
-                        sx={{
-                          paddingLeft: "0px",
-                          paddingRight: "0px",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                            paddingBottom: "10px",
-                            marginBottom: "10px",
-                            borderBottom: "1px solid #e1e1e1",
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              display: "-webkit-box",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              WebkitLineClamp: "1",
-                              WebkitBoxOrient: "vertical",
-                              fontSize: "22px",
-                              fontWeight: "500",
-                              lineHeight: "32px",
-                              marginBottom: "15px",
-                            }}
-                            gutterBottom
-                            variant="h5"
-                            component="h4"
-                          >
-                            Full Sea View For Rent
-                          </Typography>
-                          <FlexBox>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <SingleBedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                2
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <BathtubOutlinedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                4
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <ZoomOutMapIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                1437
-                              </Typography>
-                            </List>
-                          </FlexBox>
-                        </Box>
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                          }}
-                        >
-                          <FlexBox>
-                            <UserBox>
-                              <Avatar
-                                sx={{ width: "36px", height: "36px" }}
-                                src="./assets/images/avtar/avatar.png"
-                              />
-                              <Typography
-                                sx={{
-                                  display: "-webkit-box",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  WebkitLineClamp: "1",
-                                  WebkitBoxOrient: "vertical",
-                                  fontFamily: "'Roboto', sans-serif !important",
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                              >
-                                suraj
-                              </Typography>
-                            </UserBox>
-                            <Button
-                              className="customBtnStyle"
-                              sx={{
-                                fontFamily: "'Roboto', sans-serif !important",
-                                backgroundColor: "#dceeea",
-                                color: theme.palette.primary.logoColor,
-                                padding: "8px 22px",
-                                fontSize: "14px",
-                                lineHeight: "18px",
-                                fontWeight: "500",
-                                border: "none",
-                                overflow: "hidden",
-                                position: "relative",
-                                boxShadow: "none",
-                                zIndex: "1",
-                                textTransform: "capitalize",
-                                "&:hover": {
-                                  backgroundColor:
-                                    theme.palette.primary.logoColor,
-                                  color: theme.palette.primary.white,
-                                  boxShadow: "none",
-                                },
-                              }}
-                              variant="contained"
-                            >
-                              Details
-                            </Button>
-                          </FlexBox>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Box>
-              </div>
-              <div class="property_item">
-                {/* need to chenge  item  */}
-                <Box>
-                  <Card
-                    className="post_card"
-                    sx={{
-                      width: "100%",
-                      border: "1px solid #e9e7d",
-                      boxShadow: "0 4px 18px 0 rgb(194 200 213 / 0%)",
-                      "&:hover": {
-                        boxShadow: "0 11px 35px 0 rgba(0, 0, 0, .1)",
-                      },
-                    }}
-                  >
-                    <CardActionArea>
-                      <Box sx={{ position: "relative" }}>
-                        <Catagorys>
-                          <Span
-                            bgcolor={"#ff9642"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Featured
-                          </Span>
-                          <Span
-                            bgcolor={"#17a2b8 "}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Top
-                          </Span>
-                          <Span
-                            bgcolor={"#5f40fb"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Bump Up
-                          </Span>
-                        </Catagorys>
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image={"./assets/images/R1.jpg"}
-                          alt="green iguana"
-                          sx={{
-                            height: "250px",
-                          }}
-                        />
-                        <BottomBar>
-                          <Typography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: "600",
-                              textShadow: "0.5px 0.5px #000000",
-                              color: theme.palette.primary.white,
-                            }}
-                            variant="h6"
-                          >
-                            15000
-                          </Typography>
-                          <Listings className="listings">
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <FavoriteBorderIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <CompareArrowsIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                borderRadius: "3px",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <SavedSearchIcon />
-                            </IconButton>
-                          </Listings>
-                        </BottomBar>
-                        <Rent>Apartment for Rent</Rent>
-                      </Box>
-                      <CardContent
-                        sx={{
-                          paddingLeft: "0px",
-                          paddingRight: "0px",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                            paddingBottom: "10px",
-                            marginBottom: "10px",
-                            borderBottom: "1px solid #e1e1e1",
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              display: "-webkit-box",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              WebkitLineClamp: "1",
-                              WebkitBoxOrient: "vertical",
-                              fontSize: "22px",
-                              fontWeight: "500",
-                              lineHeight: "32px",
-                              marginBottom: "15px",
-                            }}
-                            gutterBottom
-                            variant="h5"
-                            component="h4"
-                          >
-                            Full Sea View For Rent
-                          </Typography>
-                          <FlexBox>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <SingleBedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                2
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <BathtubOutlinedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                4
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <ZoomOutMapIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                1437
-                              </Typography>
-                            </List>
-                          </FlexBox>
-                        </Box>
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                          }}
-                        >
-                          <FlexBox>
-                            <UserBox>
-                              <Avatar
-                                sx={{ width: "36px", height: "36px" }}
-                                src="./assets/images/avtar/avatar.png"
-                              />
-                              <Typography
-                                sx={{
-                                  display: "-webkit-box",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  WebkitLineClamp: "1",
-                                  WebkitBoxOrient: "vertical",
-                                  fontFamily: "'Roboto', sans-serif !important",
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                              >
-                                suraj
-                              </Typography>
-                            </UserBox>
-                            <Button
-                              className="customBtnStyle"
-                              sx={{
-                                fontFamily: "'Roboto', sans-serif !important",
-                                backgroundColor: "#dceeea",
-                                color: theme.palette.primary.logoColor,
-                                padding: "8px 22px",
-                                fontSize: "14px",
-                                lineHeight: "18px",
-                                fontWeight: "500",
-                                border: "none",
-                                overflow: "hidden",
-                                position: "relative",
-                                boxShadow: "none",
-                                zIndex: "1",
-                                textTransform: "capitalize",
-                                "&:hover": {
-                                  backgroundColor:
-                                    theme.palette.primary.logoColor,
-                                  color: theme.palette.primary.white,
-                                  boxShadow: "none",
-                                },
-                              }}
-                              variant="contained"
-                            >
-                              Details
-                            </Button>
-                          </FlexBox>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Box>
-              </div>
+              ))}
             </OwlCarousel>
           </Box>
         </Container>
@@ -2186,99 +883,34 @@ const Home = () => {
           <Box
             sx={{
               display: {
-                xs:"flex",
-                sm:"flex",
-                md:"flex",
-                lg:"flex",
-                xl:"flex",
+                xs: "flex",
+                sm: "flex",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
               },
               justifyContent: "space-between",
               alignItems: "center",
-              gap:"30px",
-              flexWrap:"wrap",
-              padding:"15px 0px",
+              gap: "30px",
+              flexWrap: "wrap",
+              padding: "15px 0px",
             }}
           >
             <Box
               sx={{
-                flex:  {
-                  xs:"100%",
-                  sm:"1",
-                  md:"1",
-                  lg:"1",
-                  xl:"1",
+                flex: {
+                  xs: "100%",
+                  sm: "1",
+                  md: "1",
+                  lg: "1",
+                  xl: "1",
                 },
-                minHeight:"300px",
-                borderRadius:"20px",
-                position:"relative",
-                overflow:"hidden",
-                "&:hover":{
-                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
-                }
-              }}
-              className={"cities_box"}
-              component={"a"}
-              href="#"
-            >
-                 <Box className={"city_img"} sx={{
-                  position:"absolute",
-                  bottom:"0",
-                  left:"0",
-                  height:"100%",
-                  width:"100%",
-                  objectFit:"cover"
-              }} component={"img"} src="./assets/images/R6.jpg"/>
-             <Box  sx={{
-               position:"absolute",
-               bottom:"0",
-               left:"0",
-               height:"100%",
-               width:"100%",
-               background:"rgb(0,0,0,30%)",
-               opacity:"0"
-              }} className={"overlay"}></Box>
-             <Box sx={{
-position:"absolute",
-bottom:"-50%",
-left:"0",
-height:"30%",
-width:"100%",
-
-             }} 
-             className={"cities_content_box"}>
-             <Typography sx={{
-fontSize:"24px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"30px",
-textAlign:"center",
-             }}
-              component={"h3"}>Miami</Typography>
-             <Typography sx={{
-fontSize:"18px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"35px",
-textAlign:"center",
-             }} component={"h4"}>24 properties</Typography>
-             </Box>
-   
-            </Box>
-            <Box
-              sx={{
-                flex:  {
-                  xs:"100%",
-                  sm:"2",
-                  md:"2",
-                  lg:"2",
-                  xl:"2",
-                },
-                minHeight:"300px",
-                borderRadius:"20px",
-                position:"relative",
-                overflow:"hidden",
-                "&:hover":{
-                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                minHeight: "300px",
+                borderRadius: "20px",
+                position: "relative",
+                overflow: "hidden",
+                "&:hover": {
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
                 }
               }}
               className={"cities_box"}
@@ -2286,148 +918,148 @@ textAlign:"center",
               href="#"
             >
               <Box className={"city_img"} sx={{
-                  position:"absolute",
-                  bottom:"0",
-                  left:"0",
-                  height:"100%",
-                  width:"100%",
-                  objectFit:"cover"
-              }} component={"img"} src="./assets/images/R4.jpg"/>
-             <Box  sx={{
-               position:"absolute",
-               bottom:"0",
-               left:"0",
-               height:"100%",
-               width:"100%",
-               background:"rgb(0,0,0,30%)",
-               opacity:"0"
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                objectFit: "cover"
+              }} component={"img"} src="./assets/images/R6.jpg" />
+              <Box sx={{
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                background: "rgb(0,0,0,30%)",
+                opacity: "0"
               }} className={"overlay"}></Box>
-             <Box sx={{
-position:"absolute",
-bottom:"-50%",
-left:"0",
-height:"30%",
-width:"100%",
+              <Box sx={{
+                position: "absolute",
+                bottom: "-50%",
+                left: "0",
+                height: "30%",
+                width: "100%",
 
-             }} 
-             className={"cities_content_box"}>
-             <Typography sx={{
-fontSize:"24px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"30px",
-textAlign:"center",
-             }}
-              component={"h3"}>New York</Typography>
-             <Typography sx={{
-fontSize:"18px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"35px",
-textAlign:"center",
-             }} component={"h4"}>48 properties</Typography>
-             </Box>
-   
+              }}
+                className={"cities_content_box"}>
+                <Typography sx={{
+                  fontSize: "24px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "30px",
+                  textAlign: "center",
+                }}
+                  component={"h3"}>Miami</Typography>
+                <Typography sx={{
+                  fontSize: "18px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "35px",
+                  textAlign: "center",
+                }} component={"h4"}>24 properties</Typography>
+              </Box>
+
+            </Box>
+            <Box
+              sx={{
+                flex: {
+                  xs: "100%",
+                  sm: "2",
+                  md: "2",
+                  lg: "2",
+                  xl: "2",
+                },
+                minHeight: "300px",
+                borderRadius: "20px",
+                position: "relative",
+                overflow: "hidden",
+                "&:hover": {
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                }
+              }}
+              className={"cities_box"}
+              component={"a"}
+              href="#"
+            >
+              <Box className={"city_img"} sx={{
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                objectFit: "cover"
+              }} component={"img"} src="./assets/images/R4.jpg" />
+              <Box sx={{
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                background: "rgb(0,0,0,30%)",
+                opacity: "0"
+              }} className={"overlay"}></Box>
+              <Box sx={{
+                position: "absolute",
+                bottom: "-50%",
+                left: "0",
+                height: "30%",
+                width: "100%",
+
+              }}
+                className={"cities_content_box"}>
+                <Typography sx={{
+                  fontSize: "24px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "30px",
+                  textAlign: "center",
+                }}
+                  component={"h3"}>New York</Typography>
+                <Typography sx={{
+                  fontSize: "18px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "35px",
+                  textAlign: "center",
+                }} component={"h4"}>48 properties</Typography>
+              </Box>
+
             </Box>
           </Box>
 
           <Box
             sx={{
               display: {
-                xs:"flex",
-                sm:"flex",
-                md:"flex",
-                lg:"flex",
-                xl:"flex",
+                xs: "flex",
+                sm: "flex",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
               },
-              flexDirection:"row-reverse",
+              flexDirection: "row-reverse",
               justifyContent: "space-between",
               alignItems: "center",
-              gap:"30px",
-              flexWrap:"wrap",
-              padding:"15px 0px",
+              gap: "30px",
+              flexWrap: "wrap",
+              padding: "15px 0px",
             }}
           >
             <Box
               sx={{
-                flex:  {
-                  xs:"100%",
-                  sm:"1",
-                  md:"1",
-                  lg:"1",
-                  xl:"1",
+                flex: {
+                  xs: "100%",
+                  sm: "1",
+                  md: "1",
+                  lg: "1",
+                  xl: "1",
                 },
-                minHeight:"300px",
-                borderRadius:"20px",
-                position:"relative",
-                overflow:"hidden",
-                "&:hover":{
-                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
-                }
-              }}
-              className={"cities_box"}
-              component={"a"}
-              href="#"
-            >
-                 <Box className={"city_img"} sx={{
-                  position:"absolute",
-                  bottom:"0",
-                  left:"0",
-                  height:"100%",
-                  width:"100%",
-                  objectFit:"cover"
-              }} component={"img"} src="./assets/images/R9.jpg"/>
-             <Box  sx={{
-               position:"absolute",
-               bottom:"0",
-               left:"0",
-               height:"100%",
-               width:"100%",
-               background:"rgb(0,0,0,30%)",
-               opacity:"0"
-              }} className={"overlay"}></Box>
-             <Box sx={{
-position:"absolute",
-bottom:"-50%",
-left:"0",
-height:"30%",
-width:"100%",
-
-             }} 
-             className={"cities_content_box"}>
-             <Typography sx={{
-fontSize:"24px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"30px",
-textAlign:"center",
-             }}
-              component={"h3"}>Florida</Typography>
-             <Typography sx={{
-fontSize:"18px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"35px",
-textAlign:"center",
-             }} component={"h4"}>35 properties</Typography>
-             </Box>
-   
-            </Box>
-            <Box
-              sx={{
-                flex:  {
-                  xs:"100%",
-                  sm:"2",
-                  md:"2",
-                  lg:"2",
-                  xl:"2",
-                },
-                minHeight:"300px",
-                borderRadius:"20px",
-                position:"relative",
-                overflow:"hidden",
-                "&:hover":{
-                  boxShadow:"3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                minHeight: "300px",
+                borderRadius: "20px",
+                position: "relative",
+                overflow: "hidden",
+                "&:hover": {
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
                 }
               }}
               className={"cities_box"}
@@ -2435,52 +1067,117 @@ textAlign:"center",
               href="#"
             >
               <Box className={"city_img"} sx={{
-                  position:"absolute",
-                  bottom:"0",
-                  left:"0",
-                  height:"100%",
-                  width:"100%",
-                  objectFit:"cover"
-              }} component={"img"} src="./assets/images/R8.jpg"/>
-             <Box  sx={{
-               position:"absolute",
-               bottom:"0",
-               left:"0",
-               height:"100%",
-               width:"100%",
-               background:"rgb(0,0,0,30%)",
-               opacity:"0"
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                objectFit: "cover"
+              }} component={"img"} src="./assets/images/R9.jpg" />
+              <Box sx={{
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                background: "rgb(0,0,0,30%)",
+                opacity: "0"
               }} className={"overlay"}></Box>
-             <Box sx={{
-position:"absolute",
-bottom:"-50%",
-left:"0",
-height:"30%",
-width:"100%",
+              <Box sx={{
+                position: "absolute",
+                bottom: "-50%",
+                left: "0",
+                height: "30%",
+                width: "100%",
 
-             }} 
-             className={"cities_content_box"}>
-             <Typography sx={{
-fontSize:"24px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"30px",
-textAlign:"center",
-             }}
-              component={"h3"}>Los Angeles</Typography>
-             <Typography sx={{
-fontSize:"18px",
-color:theme.palette.primary.white,
-fontWeight:"500",
-lineHeight:"35px",
-textAlign:"center",
-             }} component={"h4"}>18 properties</Typography>
-             </Box>
-   
+              }}
+                className={"cities_content_box"}>
+                <Typography sx={{
+                  fontSize: "24px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "30px",
+                  textAlign: "center",
+                }}
+                  component={"h3"}>Florida</Typography>
+                <Typography sx={{
+                  fontSize: "18px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "35px",
+                  textAlign: "center",
+                }} component={"h4"}>35 properties</Typography>
+              </Box>
+
+            </Box>
+            <Box
+              sx={{
+                flex: {
+                  xs: "100%",
+                  sm: "2",
+                  md: "2",
+                  lg: "2",
+                  xl: "2",
+                },
+                minHeight: "300px",
+                borderRadius: "20px",
+                position: "relative",
+                overflow: "hidden",
+                "&:hover": {
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
+                }
+              }}
+              className={"cities_box"}
+              component={"a"}
+              href="#"
+            >
+              <Box className={"city_img"} sx={{
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                objectFit: "cover"
+              }} component={"img"} src="./assets/images/R8.jpg" />
+              <Box sx={{
+                position: "absolute",
+                bottom: "0",
+                left: "0",
+                height: "100%",
+                width: "100%",
+                background: "rgb(0,0,0,30%)",
+                opacity: "0"
+              }} className={"overlay"}></Box>
+              <Box sx={{
+                position: "absolute",
+                bottom: "-50%",
+                left: "0",
+                height: "30%",
+                width: "100%",
+
+              }}
+                className={"cities_content_box"}>
+                <Typography sx={{
+                  fontSize: "24px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "30px",
+                  textAlign: "center",
+                }}
+                  component={"h3"}>Los Angeles</Typography>
+                <Typography sx={{
+                  fontSize: "18px",
+                  color: theme.palette.primary.white,
+                  fontWeight: "500",
+                  lineHeight: "35px",
+                  textAlign: "center",
+                }} component={"h4"}>18 properties</Typography>
+              </Box>
+
             </Box>
 
-         
-          
+
+
 
 
           </Box>
@@ -2537,157 +1234,157 @@ textAlign:"center",
           </Box>
           <Box
             sx={{
-              display:  {
-                xs:"grid",
-                sm:"flex",
-                md:"flex",
-                lg:"flex",
-                xl:"flex",
+              display: {
+                xs: "grid",
+                sm: "flex",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
               },
               justifyContent: "space-between",
               alignItems: "center",
-              gap:"30px"
+              gap: "30px"
             }}
           >
-<Box className={"choose_box"} sx={{
-    backgroundColor: theme.palette.primary.white,
-  padding:"30px",
-borderRadius:"10px",
-transition:"all .3s ease",
-textAlign:"center",
-display:"flex",
-flexDirection:"column",
-justifyContent:"space-between",
-alignItems:"center",
-gap:"25px",
-minHeight:"250px",
-"&:hover":{
-  boxShadow:"0 0 50px 0 rgba(19,19,28,.12)"
-}
-}} flex={1}>
-<Box sx={{
-  height:"70px",
-  width:"70px",
-  borderRadius:"100%",
-  padding:"20px",
-  background:theme.palette.primary.LightGreen,
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center",
-}} className={"choose_icon_box"}>
-<Box className={"img_color"} component={"img"} src="./assets/images/trust.png"/>
-</Box>
-<Box className={"box_details"}>
-<Typography sx={{
-  fontSize:"24px",
-  fontWeight:"500",
-  lineHeight:"30px",
-  marginBottom:"25px",
-}} component={"h3"}>Trusted By Thousands</Typography>
-<Typography sx={{
-  fontSize:"14px",
+            <Box className={"choose_box"} sx={{
+              backgroundColor: theme.palette.primary.white,
+              padding: "30px",
+              borderRadius: "10px",
+              transition: "all .3s ease",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "25px",
+              minHeight: "250px",
+              "&:hover": {
+                boxShadow: "0 0 50px 0 rgba(19,19,28,.12)"
+              }
+            }} flex={1}>
+              <Box sx={{
+                height: "70px",
+                width: "70px",
+                borderRadius: "100%",
+                padding: "20px",
+                background: theme.palette.primary.LightGreen,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }} className={"choose_icon_box"}>
+                <Box className={"img_color"} component={"img"} src="./assets/images/trust.png" />
+              </Box>
+              <Box className={"box_details"}>
+                <Typography sx={{
+                  fontSize: "24px",
+                  fontWeight: "500",
+                  lineHeight: "30px",
+                  marginBottom: "25px",
+                }} component={"h3"}>Trusted By Thousands</Typography>
+                <Typography sx={{
+                  fontSize: "14px",
 
-  fontWeight:"400",
-  lineHeight:"20px",
-}} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
+                  fontWeight: "400",
+                  lineHeight: "20px",
+                }} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
 
-</Box>
-</Box>
-<Box className={"choose_box"} sx={{
-    backgroundColor: theme.palette.primary.white,
-  padding:"30px",
-borderRadius:"10px",
-transition:"all .3s ease",
-textAlign:"center",
-display:"flex",
-flexDirection:"column",
-justifyContent:"space-between",
-alignItems:"center",
-gap:"25px",
-minHeight:"250px",
-"&:hover":{
-  boxShadow:"0 0 50px 0 rgba(19,19,28,.12)"
-}
-}} flex={1}>
-<Box sx={{
-  height:"70px",
-  width:"70px",
-  borderRadius:"100%",
-  padding:"20px",
-  background:theme.palette.primary.LightGreen,
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center",
-}} className={"choose_icon_box"}>
-<Box className={"img_color"} component={"img"} src="./assets/images/home.png"/>
-</Box>
-<Box className={"box_details"}>
-<Typography sx={{
-  fontSize:"24px",
-  fontWeight:"500",
-  lineHeight:"30px",
-  marginBottom:"25px",
-}} component={"h3"}>Wide Renge Of Properties</Typography>
-<Typography sx={{
-  fontSize:"14px",
+              </Box>
+            </Box>
+            <Box className={"choose_box"} sx={{
+              backgroundColor: theme.palette.primary.white,
+              padding: "30px",
+              borderRadius: "10px",
+              transition: "all .3s ease",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "25px",
+              minHeight: "250px",
+              "&:hover": {
+                boxShadow: "0 0 50px 0 rgba(19,19,28,.12)"
+              }
+            }} flex={1}>
+              <Box sx={{
+                height: "70px",
+                width: "70px",
+                borderRadius: "100%",
+                padding: "20px",
+                background: theme.palette.primary.LightGreen,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }} className={"choose_icon_box"}>
+                <Box className={"img_color"} component={"img"} src="./assets/images/home.png" />
+              </Box>
+              <Box className={"box_details"}>
+                <Typography sx={{
+                  fontSize: "24px",
+                  fontWeight: "500",
+                  lineHeight: "30px",
+                  marginBottom: "25px",
+                }} component={"h3"}>Wide Renge Of Properties</Typography>
+                <Typography sx={{
+                  fontSize: "14px",
 
-  fontWeight:"400",
-  lineHeight:"20px",
-}} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
+                  fontWeight: "400",
+                  lineHeight: "20px",
+                }} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
 
-</Box>
-</Box>
-<Box className={"choose_box"} sx={{
-    backgroundColor: theme.palette.primary.white,
-  padding:"30px",
-borderRadius:"10px",
-transition:"all .3s ease",
-textAlign:"center",
-display:"flex",
-flexDirection:"column",
-justifyContent:"space-between",
-alignItems:"center",
-gap:"25px",
-minHeight:"250px",
-"&:hover":{
-  boxShadow:"0 0 50px 0 rgba(19,19,28,.12)"
-}
-}} flex={1}>
-<Box sx={{
-  height:"70px",
-  width:"70px",
-  borderRadius:"100%",
-  padding:"20px",
-  background:theme.palette.primary.LightGreen,
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center",
-}} className={"choose_icon_box"}>
-<Box className={"img_color"} component={"img"} src="./assets/images/budget.png"/>
-</Box>
-<Box className={"box_details"}>
-<Typography sx={{
-  fontSize:"24px",
-  fontWeight:"500",
-  lineHeight:"30px",
-  marginBottom:"25px",
-}} component={"h3"}>Financing Made Easy</Typography>
-<Typography sx={{
-  fontSize:"14px",
+              </Box>
+            </Box>
+            <Box className={"choose_box"} sx={{
+              backgroundColor: theme.palette.primary.white,
+              padding: "30px",
+              borderRadius: "10px",
+              transition: "all .3s ease",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "25px",
+              minHeight: "250px",
+              "&:hover": {
+                boxShadow: "0 0 50px 0 rgba(19,19,28,.12)"
+              }
+            }} flex={1}>
+              <Box sx={{
+                height: "70px",
+                width: "70px",
+                borderRadius: "100%",
+                padding: "20px",
+                background: theme.palette.primary.LightGreen,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }} className={"choose_icon_box"}>
+                <Box className={"img_color"} component={"img"} src="./assets/images/budget.png" />
+              </Box>
+              <Box className={"box_details"}>
+                <Typography sx={{
+                  fontSize: "24px",
+                  fontWeight: "500",
+                  lineHeight: "30px",
+                  marginBottom: "25px",
+                }} component={"h3"}>Financing Made Easy</Typography>
+                <Typography sx={{
+                  fontSize: "14px",
 
-  fontWeight:"400",
-  lineHeight:"20px",
-}} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
+                  fontWeight: "400",
+                  lineHeight: "20px",
+                }} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
 
-</Box>
-</Box>
+              </Box>
+            </Box>
 
           </Box>
         </Container>
       </Box>
 
-{/* our partner  */}
-<Box
+      {/* our partner  */}
+      <Box
         className="partner_section"
         component={"section"}
         sx={{
@@ -2724,7 +1421,7 @@ minHeight:"250px",
                 marginBottom: "10px",
               }}
             >
-          Our Partners
+              Our Partners
             </Typography>
             <Typography
               component={"p"}
@@ -2736,126 +1433,126 @@ minHeight:"250px",
             </Typography>
           </Box>
           <Box sx={{
-            display:{
-              xs:"grid",
-              sm:"flex",
-              md:"flex",
-              lg:"flex",
-              xl:"flex",
+            display: {
+              xs: "grid",
+              sm: "flex",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
             },
-justifyContent:"space-around",
-            gap:"15px"
+            justifyContent: "space-around",
+            gap: "15px"
           }}>
-          <Box sx={{
-            height:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            width:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            objectFit:"contain",
-            textAlign:"center"
-          }} component={"img"} src="./assets/images/logos/logo1.png"/>
-          <Box sx={{
-             height:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            width:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            objectFit:"contain",
-            textAlign:"center"
-          }} component={"img"} src="./assets/images/logos/logo2.png"/>
-          <Box sx={{
-             height:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            width:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            objectFit:"contain",
-            textAlign:"center"
-          }} component={"img"} src="./assets/images/logos/logo5.png"/>
-          <Box sx={{
-             height:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            width:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            objectFit:"contain",
-            textAlign:"center"
-          }} component={"img"} src="./assets/images/logos/logo2.png"/>
-          <Box sx={{
-             height:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            width:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            objectFit:"contain",
-            textAlign:"center"
-          }} component={"img"} src="./assets/images/logos/logo1.png"/>
-          <Box sx={{
-             height:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            width:{
-              xs:"130px",
-              sm:"100px",
-              md:"150px",
-              lg:"150px",
-              xl:"150px",
-            },
-            objectFit:"contain",
-            textAlign:"center"
-          }} component={"img"} src="./assets/images/logos/logo5.png"/>
+            <Box sx={{
+              height: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              width: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              objectFit: "contain",
+              textAlign: "center"
+            }} component={"img"} src="./assets/images/logos/logo1.png" />
+            <Box sx={{
+              height: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              width: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              objectFit: "contain",
+              textAlign: "center"
+            }} component={"img"} src="./assets/images/logos/logo2.png" />
+            <Box sx={{
+              height: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              width: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              objectFit: "contain",
+              textAlign: "center"
+            }} component={"img"} src="./assets/images/logos/logo5.png" />
+            <Box sx={{
+              height: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              width: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              objectFit: "contain",
+              textAlign: "center"
+            }} component={"img"} src="./assets/images/logos/logo2.png" />
+            <Box sx={{
+              height: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              width: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              objectFit: "contain",
+              textAlign: "center"
+            }} component={"img"} src="./assets/images/logos/logo1.png" />
+            <Box sx={{
+              height: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              width: {
+                xs: "130px",
+                sm: "100px",
+                md: "150px",
+                lg: "150px",
+                xl: "150px",
+              },
+              objectFit: "contain",
+              textAlign: "center"
+            }} component={"img"} src="./assets/images/logos/logo5.png" />
           </Box>
-         
+
         </Container>
       </Box>
 
@@ -2880,73 +1577,73 @@ justifyContent:"space-around",
           }}
         >
           <Box sx={{
-            display:{
-              xs:"grid",
-              sm:"flex",
-              md:"flex",
-              lg:"flex",
-              xl:"flex",
+            display: {
+              xs: "grid",
+              sm: "flex",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
             },
-justifyContent:"space-between",
-            gap:"15px"
+            justifyContent: "space-between",
+            gap: "15px"
           }}>
-  <Box
-            className={"heading"}
-            sx={{
-              textAlign: "left",
-         
-            }}
-          >
-            <Typography
-              variant="h4"
-              component={"h2"}
+            <Box
+              className={"heading"}
               sx={{
-                fontSize: "30px",
+                textAlign: "left",
+
+              }}
+            >
+              <Typography
+                variant="h4"
+                component={"h2"}
+                sx={{
+                  fontSize: "30px",
+                  fontWeight: "500",
+                  lineHeight: "32px",
+                  marginBottom: "10px",
+                  color: theme.palette.primary.white,
+                }}
+              >
+                Become a Real Estate Agent
+              </Typography>
+              <Typography
+                component={"p"}
+                sx={{
+                  fontSize: "14px",
+                  color: theme.palette.primary.white,
+                }}
+              >
+                We only work with the best companies around the globe
+              </Typography>
+            </Box>
+            <Button className="customBtnStyle"
+              sx={{
+                fontFamily: "'Roboto', sans-serif !important",
+                backgroundColor: "#dceeea",
+                color: theme.palette.primary.logoColor,
+                padding: "8px 22px",
+                fontSize: "18px",
+                minHeight: "50px",
+                height: "50px",
+                lineHeight: "18px",
                 fontWeight: "500",
-                lineHeight: "32px",
-                marginBottom: "10px",
-                color:theme.palette.primary.white,
-              }}
-            >
-       Become a Real Estate Agent
-            </Typography>
-            <Typography
-              component={"p"}
-              sx={{
-                fontSize: "14px",
-                color:theme.palette.primary.white,
-              }}
-            >
-             We only work with the best companies around the globe
-            </Typography>
+                border: "none",
+                overflow: "hidden",
+                position: "relative",
+                boxShadow: "none",
+                zIndex: "1",
+                textTransform: "capitalize",
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.logoColor,
+                  color: theme.palette.primary.white,
+                  boxShadow: "none",
+                }
+              }} variant="contained">Register Now</Button>
           </Box>
-          <Button className="customBtnStyle"
-                    sx={{
-                      fontFamily: "'Roboto', sans-serif !important",
-                      backgroundColor: "#dceeea",
-                      color: theme.palette.primary.logoColor,
-                      padding: "8px 22px",
-                      fontSize: "18px",
-                      minHeight:"50px",
-                      height:"50px",
-                      lineHeight: "18px",
-                      fontWeight: "500",
-                      border: "none",
-                      overflow: "hidden",
-                      position: "relative",
-                      boxShadow: "none",
-                      zIndex: "1",
-                      textTransform: "capitalize",
-                      "&:hover": {
-                        backgroundColor: theme.palette.primary.logoColor,
-                        color: theme.palette.primary.white,
-                        boxShadow: "none",
-                      }
-                    }} variant="contained">Register Now</Button>
-          </Box>
-        
-        
-         
+
+
+
         </Container>
       </Box>
 
