@@ -36,6 +36,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -54,6 +55,7 @@ const Login = () => {
   };
 
   const handleSignIn = async () => {
+    setIsSubmitted(true);
     const formData = JSON.stringify({
       user_email: email,
       password: password
@@ -63,7 +65,7 @@ const Login = () => {
         if (status == 200) {
           if (response.status) {
             dispatch(userDetails(response));
-            navigate('/properties');
+            navigate('/');
           }
         } else {
           console.log('Something went wrong');
@@ -280,6 +282,11 @@ const Login = () => {
                     label="Password"
                     variant="outlined"
                     type={showPassword ? 'text' : 'password'}
+                    helperText={
+                      <span style={{ color: 'red' }}>
+                        {!password && isSubmitted ? 'Enter Password' : ''}
+                      </span>
+                    }
                     value={password}
                     onChange={handlePasswordChange}
                     InputProps={{

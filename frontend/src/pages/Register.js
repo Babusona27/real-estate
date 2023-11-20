@@ -13,6 +13,7 @@ import {
   Tabs,
   TextField,
   Typography,
+  FormHelperText
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
@@ -49,7 +50,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -118,14 +119,15 @@ const Register = () => {
     setCity('');
   };
   const handleSignUp = async () => {
+    setIsSubmitted(true);
     const formData = JSON.stringify({
       user_name: name,
       user_phone: phone,
       user_email: email,
-      user_address: street,
+      user_address: { street },
       password: password
     });
-    console.log("formData", formData,POST_REGISTER_API);
+    // console.log("formData", formData, POST_REGISTER_API);
     PostApiFetch(POST_REGISTER_API, formData)
       .then(([status, response]) => {
         console.log("response", response);
@@ -337,19 +339,28 @@ const Register = () => {
                     fullWidth
                     id="outlined-adornment-name"
                     required
-                    label="Full Name"
+                    label="full name"
                     variant="outlined"
-                    helperText={emailError ? 'Enter a valid email' : ''}
+                    helperText={
+                      <span style={{ color: 'red' }}>
+                        {!name && isSubmitted ? 'Enter a User Name' : ''}
+                      </span>
+                    }
                     value={name}
                     onChange={(event) => {
                       setName(event.target.value);
                     }}
                   />
+                  {/* {!name && (
+                    <FormHelperText style={{ color: 'red' }}>
+                      Enter a User Name
+                    </FormHelperText>
+                  )} */}
                   <TextField
                     fullWidth
                     id="outlined-adornment-email"
                     required
-                    label="Email"
+                    label="email"
                     variant="outlined"
                     error={emailError}
                     helperText={emailError ? 'Enter a valid email' : ''}
@@ -359,10 +370,15 @@ const Register = () => {
                   <TextField
                     fullWidth
                     id="outlined-adornment-phone"
-                    label="Phone Number"
+                    label="phone number"
                     variant="outlined"
                     type="tel"
                     // helperText={emailError ? 'Enter a valid email' : ''}
+                    helperText={
+                      <span style={{ color: 'red' }}>
+                        {!phone && isSubmitted ? 'Enter Phone number' : ''}
+                      </span>
+                    }
                     value={phone}
                     onChange={(event) => {
                       setPhone(event.target.value);
@@ -403,7 +419,7 @@ const Register = () => {
                   <TextField
                     fullWidth
                     id="outlined-adornment-address"
-                    label="Address"
+                    label="address"
                     variant="outlined"
                     value={street}
                     onChange={(event) => {
@@ -485,8 +501,13 @@ const Register = () => {
                   <TextField
                     fullWidth
                     id="outlined-password-input"
-                    label="Password"
+                    label="password"
                     type={showPassword ? 'text' : 'password'}
+                    helperText={
+                      <span style={{ color: 'red' }}>
+                        {!password && isSubmitted ? 'Enter Password' : ''}
+                      </span>
+                    }
                     value={password}
                     onChange={handlePasswordChange}
                     InputProps={{
@@ -502,8 +523,13 @@ const Register = () => {
                   <TextField
                     fullWidth
                     id="outlined-confirm-password-input"
-                    label="Confirm Password"
+                    label="confirm password"
                     type={showConfirmPassword ? 'text' : 'password'}
+                    helperText={
+                      <span style={{ color: 'red' }}>
+                        {!confirmPassword && isSubmitted ? 'Enter Confirm Password' : ''}
+                      </span>
+                    }
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
                     InputProps={{
