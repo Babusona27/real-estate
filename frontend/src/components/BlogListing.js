@@ -90,7 +90,9 @@ const BlogListing = () => {
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit 2020
         </Typography>
-        <Typography variant="body2">
+        <Typography sx={{
+            fontFamily:theme.palette.primary.Roboto,
+        }} variant="body2">
           Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Duis Mollis
           Et Sem Sed Sollicitudin. Donec Non Odio Neque. Aliquam Hendrerit
           Sollicitudin Purus, Quis Rutrum Mi Accumsan Nec. Quisque Bibendum Orci
