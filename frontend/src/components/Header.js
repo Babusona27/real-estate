@@ -21,8 +21,14 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logOut } from "../redux/reducers/UserReducer";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userData = useSelector(state => state.UserReducer.value);
+  console.log("userData", userData);
   const [isNavOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
@@ -153,8 +159,21 @@ const Navbar = () => {
 
                     </li>
                     <li className="menu-item">
-                      <Link to="/Login" className="nav-link">Login</Link>
+                      {/* <Link to="/Login" className="nav-link">Login</Link> */}
 
+                      {userData ? (
+                        <li className="menu-item" onClick={() => {
+                          dispatch(logOut())
+                          navigate('/Login')
+                        }}
+                        >
+                          <Link className="nav-link">Logout</Link>
+                        </li>
+                      ) : (
+                        <li className="menu-item">
+                          <Link to="/Login" className="nav-link">Login</Link>
+                        </li>
+                      )}
                     </li>
                   </ul>
                 </div>
@@ -305,7 +324,7 @@ const Navbar = () => {
           </Toolbar>
         </Container>
       </AppBar>
-    </Box>
+    </Box >
 
   );
 };
