@@ -374,7 +374,7 @@ const Register = () => {
                       setPhone(event.target.value);
                     }}
                   />
-                  <FormControl fullWidth>
+                  {/* <FormControl fullWidth>
                     <InputLabel id="outlined-adornment-user-type-label">User Type</InputLabel>
                     <Select
                       labelId="outlined-adornment-user-type-label"
@@ -404,7 +404,7 @@ const Register = () => {
                       <MenuItem value='owner'>Owner</MenuItem>
                       <MenuItem value='agent'>Agent</MenuItem>
                     </Select>
-                  </FormControl>
+                  </FormControl> */}
 
                   <TextField
                     fullWidth
@@ -417,7 +417,7 @@ const Register = () => {
                     }}
                   />
 
-                  <FormControl fullWidth>
+                  {/* <FormControl fullWidth>
                     <InputLabel id="outlined-adornment-user-country-label">Country</InputLabel>
                     <Select
                       labelId="outlined-adornment-user-country-label"
@@ -487,7 +487,7 @@ const Register = () => {
                     onChange={(event) => {
                       setPostalCode(event.target.value);
                     }}
-                  />
+                  /> */}
                   <TextField
                     fullWidth
                     id="outlined-password-input"
@@ -522,6 +522,7 @@ const Register = () => {
                       ),
                     }}
                   />
+
                   <Box sx={{
                     display: "flex",
                     justifyContent: "start",

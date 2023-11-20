@@ -195,7 +195,7 @@ const Footer = () => {
                     fontFamily: "'Roboto', sans-serif !important",
                     fontSize:"16px",
                     fontWeight:"500",
-                }}>Terms and Conditions</Typography>
+                }}><Link to="/TermsConditions">Terms and Conditions</Link></Typography>
               </ListItem>
               <ListItem sx={{
                   display: "block",
@@ -213,7 +213,8 @@ const Footer = () => {
                    fontFamily: "'Roboto', sans-serif !important",
                    fontSize:"16px",
                    fontWeight:"500",
-                }}>Privacy Policy</Typography>
+                }}><Link to="/PrivacyPolicy">Privacy Policy</Link></Typography>
+              
               </ListItem>
               <ListItem sx={{
                   display: "block",
