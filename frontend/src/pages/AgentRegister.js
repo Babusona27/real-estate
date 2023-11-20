@@ -13,21 +13,22 @@ import {
     Tabs,
     TextField,
     Typography,
-  } from "@mui/material";
-  import React, { useState, useEffect } from "react";
-  import Header from "../components/Header";
-  import Footer from "../components/Footer";
-  import theme from "../Theme";
-  import InputAdornment from '@mui/material/InputAdornment';
-  import Visibility from '@mui/icons-material/Visibility';
-  import VisibilityOff from '@mui/icons-material/VisibilityOff';
-  import Checkbox from "@mui/material/Checkbox";
-  import { GET_ALL_COUNTRIES_API, POST_REGISTER_API } from "../common/urls";
-  import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
-  import { useNavigate } from 'react-router-dom';
-  import { useDispatch, useSelector } from 'react-redux';
-  import { userDetails } from '../redux/reducers/UserReducer';
-  const AgentRegister = () => {
+    FormHelperText
+} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import theme from "../Theme";
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Checkbox from "@mui/material/Checkbox";
+import { GET_ALL_COUNTRIES_API, POST_REGISTER_API } from "../common/urls";
+import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userDetails } from '../redux/reducers/UserReducer';
+const AgentRegister = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -43,207 +44,208 @@ import {
     const [city, setCity] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [countriesData, setCountriesData] = useState([]);
-  
-  
+
+
     const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
-  
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
     const handleEmailChange = (e) => {
-      setEmail(e.target.value);
-  
-      // Check for a valid email format using a basic regex
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setEmailError(!emailRegex.test(e.target.value));
+        setEmail(e.target.value);
+
+        // Check for a valid email format using a basic regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setEmailError(!emailRegex.test(e.target.value));
     };
-  
+
     const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
+        setShowPassword(!showPassword);
     };
-  
+
     const [error, setError] = useState('');
-  
+
     const handlePasswordChange = (e) => {
-      setPassword(e.target.value);
+        setPassword(e.target.value);
     };
-  
+
     const handleConfirmPasswordChange = (e) => {
-      setConfirmPassword(e.target.value);
+        setConfirmPassword(e.target.value);
     };
     const handleShowPassword = () => {
-      setShowPassword((prevShowPassword) => !prevShowPassword);
+        setShowPassword((prevShowPassword) => !prevShowPassword);
     };
-  
+
     const handleShowConfirmPassword = () => {
-      setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+        setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     };
-  
+
     const validatePassword = () => {
-      if (password !== confirmPassword) {
-        setError('Passwords do not match');
-      } else {
-        setError('');
-      }
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+        } else {
+            setError('');
+        }
     };
     const _getCountry = () => {
-      setIsLoading(true)
-      GetApiFetch(GET_ALL_COUNTRIES_API)
-        .then(([status, response]) => {
-          if (status == 200) {
-            if (response.data) {
-              setCountriesData(response.data);
-            } else {
-              console.log(response);
-            }
-          } else {
-            console.log('Something went wrong');
-          }
-        })
-        .catch(error => console.log(error))
-        .finally(() => {
-          setIsLoading(false)
-        });
+        setIsLoading(true)
+        GetApiFetch(GET_ALL_COUNTRIES_API)
+            .then(([status, response]) => {
+                if (status == 200) {
+                    if (response.data) {
+                        setCountriesData(response.data);
+                    } else {
+                        console.log(response);
+                    }
+                } else {
+                    console.log('Something went wrong');
+                }
+            })
+            .catch(error => console.log(error))
+            .finally(() => {
+                setIsLoading(false)
+            });
     }
     const countryChange = (event) => {
-      const selectedCountry = event.target.value;
-      setCountry(selectedCountry);
-      setState('');
-      setCity('');
+        const selectedCountry = event.target.value;
+        setCountry(selectedCountry);
+        setState('');
+        setCity('');
     };
     const stateChange = (event) => {
-      const selectedState = event.target.value;
-      setState(selectedState);
-      setCity('');
+        const selectedState = event.target.value;
+        setState(selectedState);
+        setCity('');
     };
     const handleSignUp = async () => {
-      const formData = JSON.stringify({
-        user_name: name,
-        user_type: type,
-        seller_type: sellerType,
-        user_phone: phone,
-        user_email: email,
-        user_address: {
-          street: street,
-          city: city,
-          state: state,
-          postal_code: postalCode,
-          country: country
-        },
-        password: password
-      });
-      PostApiFetch(POST_REGISTER_API, formData)
-        .then(([status, response]) => {
-          if (status == 201) {
-            if (response.status) {
-              navigate('/Login');
-            }
-          } else {
-            console.log('Something went wrong');
-          }
-        })
-        .catch(error => console.log(error))
-        .finally(() => { });
+        setIsSubmitted(true);
+        const formData = JSON.stringify({
+            user_name: name,
+            user_type: type,
+            seller_type: sellerType,
+            user_phone: phone,
+            user_email: email,
+            user_address: {
+                street: street,
+                city: city,
+                state: state,
+                postal_code: postalCode,
+                country: country
+            },
+            password: password
+        });
+        PostApiFetch(POST_REGISTER_API, formData)
+            .then(([status, response]) => {
+                if (status == 201) {
+                    if (response.status) {
+                        navigate('/Login');
+                    }
+                } else {
+                    console.log('Something went wrong');
+                }
+            })
+            .catch(error => console.log(error))
+            .finally(() => { });
     }
     useEffect(() => {
-      _getCountry()
+        _getCountry()
     }, []);
     return (
-      <>
-        <Box>
-          <Header />
-        </Box>
-        <Box
-          component={"div"}
-          sx={{
-            padding: {
-              xs: "60px 0px 40px",
-              sm: "30px 0px",
-              md: "50px 0px",
-              lg: "50px 0px",
-            },
-  
-          }}
-        >
-          <Container
-            maxWidth="xl"
-            sx={{
-              // backgroundColor: theme.palette.primary.BGColor,
-              height: "100%",
-              padding: {
-                xs: "0px 10px",
-                sm: "0px 10px",
-                md: "0px 0px",
-  
-              },
-  
-            }}
-          >
-            <Box sx={{
-              padding: "50px 24px",
-              display: {
-                xs: "block",
-                sm: "block",
-                md: "flex",
-                lg: "flex"
-              },
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "30px"
-            }}>
-              <Box sx={{
-                textAlign: {
-                  xs: "center",
-                  sm: "center",
-                  md: "right",
-                  lg: "right"
-                },
-              }} flex={2}>
-                <Box sx={{
-                  height: "100%",
-                  width: {
-                    xs: "100%",
-                    sm: "100%",
-                    md: "70%",
-                    lg: "70%",
-                  },
-                  marginBottom: {
-                    xs: "50px",
-                    sm: "50px",
-                    md: "0",
-                    lg: "0",
-                  },
-                  objectFit: "contain",
-                }} className="login_image" src="./assets/images/login.png" component={"img"} />
-              </Box>
-              <Box flex={2}>
-                <Box sx={{
-                  width: {
-                    xs: "100%",
-                    sm: "100%",
-                    md: "70%",
-                    lg: "70%",
-                  },
-                  textAlign: "center"
-                }}>
-                  <Typography sx={{
-                    fontWeight: "500",
-                    marginBottom: "15px",
-                    fontSize: {
-                      xs: "24px",
-                      sm: "24px",
-                      md: "32px",
-                      lg: "32px",
+        <>
+            <Box>
+                <Header />
+            </Box>
+            <Box
+                component={"div"}
+                sx={{
+                    padding: {
+                        xs: "60px 0px 40px",
+                        sm: "30px 0px",
+                        md: "50px 0px",
+                        lg: "50px 0px",
                     },
-                  }} variant="h4" component={"h3"}>
-                    Sign into your <span className="lastword">account!</span>
-                  </Typography>
-                  <Typography sx={{
-                    color: theme.palette.secondary.light,
-                    marginBottom: "20px",
-                  }} component={"p"}>Nice to see you! Please log in with your account.</Typography>
-                  {/* <Box sx={{
+
+                }}
+            >
+                <Container
+                    maxWidth="xl"
+                    sx={{
+                        // backgroundColor: theme.palette.primary.BGColor,
+                        height: "100%",
+                        padding: {
+                            xs: "0px 10px",
+                            sm: "0px 10px",
+                            md: "0px 0px",
+
+                        },
+
+                    }}
+                >
+                    <Box sx={{
+                        padding: "50px 24px",
+                        display: {
+                            xs: "block",
+                            sm: "block",
+                            md: "flex",
+                            lg: "flex"
+                        },
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "30px"
+                    }}>
+                        <Box sx={{
+                            textAlign: {
+                                xs: "center",
+                                sm: "center",
+                                md: "right",
+                                lg: "right"
+                            },
+                        }} flex={2}>
+                            <Box sx={{
+                                height: "100%",
+                                width: {
+                                    xs: "100%",
+                                    sm: "100%",
+                                    md: "70%",
+                                    lg: "70%",
+                                },
+                                marginBottom: {
+                                    xs: "50px",
+                                    sm: "50px",
+                                    md: "0",
+                                    lg: "0",
+                                },
+                                objectFit: "contain",
+                            }} className="login_image" src="./assets/images/login.png" component={"img"} />
+                        </Box>
+                        <Box flex={2}>
+                            <Box sx={{
+                                width: {
+                                    xs: "100%",
+                                    sm: "100%",
+                                    md: "70%",
+                                    lg: "70%",
+                                },
+                                textAlign: "center"
+                            }}>
+                                <Typography sx={{
+                                    fontWeight: "500",
+                                    marginBottom: "15px",
+                                    fontSize: {
+                                        xs: "24px",
+                                        sm: "24px",
+                                        md: "32px",
+                                        lg: "32px",
+                                    },
+                                }} variant="h4" component={"h3"}>
+                                    Sign into your <span className="lastword">account!</span>
+                                </Typography>
+                                <Typography sx={{
+                                    color: theme.palette.secondary.light,
+                                    marginBottom: "20px",
+                                }} component={"p"}>Nice to see you! Please log in with your account.</Typography>
+                                {/* <Box sx={{
                     display: "flex",
                     gap: "20px",
                     alignItems: "center",
@@ -334,240 +336,285 @@ import {
                   }} flexItem>
                     Or 
                   </Divider> */}
-                  <Box sx={{
-                    display: "grid",
-                    gap: "15px",
-                    margin: "25px 0px"
-                  }} component={"form"}>
-                    <TextField
-                      fullWidth
-                      id="outlined-adornment-name"
-                      required
-                      label="Full Name"
-                      variant="outlined"
-                      helperText={emailError ? 'Enter a valid email' : ''}
-                      value={name}
-                      onChange={(event) => {
-                        setName(event.target.value);
-                      }}
-                    />
-                    <TextField
-                      fullWidth
-                      id="outlined-adornment-email"
-                      required
-                      label="Email"
-                      variant="outlined"
-                      error={emailError}
-                      helperText={emailError ? 'Enter a valid email' : ''}
-                      value={email}
-                      onChange={handleEmailChange}
-                    />
-                    <TextField
-                      fullWidth
-                      id="outlined-adornment-phone"
-                      label="Phone Number"
-                      variant="outlined"
-                      type="tel"
-                      // helperText={emailError ? 'Enter a valid email' : ''}
-                      value={phone}
-                      onChange={(event) => {
-                        setPhone(event.target.value);
-                      }}
-                    />
-                    <FormControl fullWidth>
-                      <InputLabel id="outlined-adornment-user-type-label">User Type</InputLabel>
-                      <Select
-                        labelId="outlined-adornment-user-type-label"
-                        id="outlined-adornment-user-type"
-                        value={type}
-                        label="User Type"
-                        onChange={(event) => {
-                          setType(event.target.value);
-                        }}
-                      >
-                        <MenuItem value='buyer'>Buyer</MenuItem>
-                        <MenuItem value='seller'>Seller</MenuItem>
-                      </Select>
-                    </FormControl>
-  
-                    <FormControl fullWidth>
-                      <InputLabel id="outlined-adornment-user-seller-type-label">Seller Type</InputLabel>
-                      <Select
-                        labelId="outlined-adornment-user-seller-type-label"
-                        id="outlined-adornment-user-seller-type"
-                        value={sellerType}
-                        label="Seller Type"
-                        onChange={(event) => {
-                          setSellerType(event.target.value);
-                        }}
-                      >
-                        <MenuItem value='owner'>Owner</MenuItem>
-                        <MenuItem value='agent'>Agent</MenuItem>
-                      </Select>
-                    </FormControl>
-  
-                    <TextField
-                      fullWidth
-                      id="outlined-adornment-address"
-                      label="Address"
-                      variant="outlined"
-                      value={street}
-                      onChange={(event) => {
-                        setStreet(event.target.value);
-                      }}
-                    />
-  
-                    <FormControl fullWidth>
-                      <InputLabel id="outlined-adornment-user-country-label">Country</InputLabel>
-                      <Select
-                        labelId="outlined-adornment-user-country-label"
-                        id="outlined-adornment-user-country"
-                        value={country}
-                        label="Country"
-                        onChange={countryChange}
-                      >
-                        {countriesData.map((countr) => (
-                          <MenuItem key={countr._id} value={countr.country_name}>
-                            {countr.country_name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
-                      <InputLabel id="outlined-adornment-user-state-label">State</InputLabel>
-                      <Select
-                        labelId="outlined-adornment-user-state-label"
-                        id="outlined-adornment-user-state"
-                        value={state}
-                        label="state"
-                        onChange={stateChange}
-                      >
-                        {country &&
-                          countriesData
-                            .find((c) => c.country_name === country)
-                            ?.states.map((state) => (
-                              <MenuItem key={state._id} value={state.state_name}>
-                                {state.state_name}
-                              </MenuItem>
-                            ))}
-                      </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
-                      <InputLabel id="outlined-adornment-user-city-label">City</InputLabel>
-                      <Select
-                        labelId="outlined-adornment-user-city-label"
-                        id="outlined-adornment-user-city"
-                        value={city}
-                        label="city"
-                        onChange={(event) => {
-                          setCity(event.target.value);
-                        }}
-                      >
-                        {country &&
-                          state &&
-                          countriesData
-                            .find((c) => c.country_name === country)
-                            ?.states.find((s) => s.state_name === state)
-                            ?.cities.map((city) => (
-                              <MenuItem key={city._id} value={city.city_name}>
-                                {city.city_name}
-                              </MenuItem>
-                            ))}
-                      </Select>
-                    </FormControl>
-                    <TextField
-                      fullWidth
-                      id="outlined-adornment-postal-code"
-                      required
-                      label="Postal Code"
-                      variant="outlined"
-                      // error={emailError}
-                      // helperText={emailError ? 'Enter a valid postal-code' : ''}
-                      value={postalCode}
-                      onChange={(event) => {
-                        setPostalCode(event.target.value);
-                      }}
-                    />
-                    <TextField
-                      fullWidth
-                      id="outlined-password-input"
-                      label="Password"
-                      type={showPassword ? 'text' : 'password'}
-                      value={password}
-                      onChange={handlePasswordChange}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton onClick={handleShowPassword}>
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                    <TextField
-                      fullWidth
-                      id="outlined-confirm-password-input"
-                      label="Confirm Password"
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      value={confirmPassword}
-                      onChange={handleConfirmPasswordChange}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton onClick={handleShowConfirmPassword}>
-                              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-  
-                    <Box sx={{
-                      display: "flex",
-                      justifyContent: "start",
-                      alignItems: "center",
-                      gap: "5px"
-                    }}>
-                      <FormControlLabel className="chenk_sgn" sx={{
-                        fontFamily: "Roboto,sans-serif !important",
-                        gap: "10px",
-                      }} control={<Checkbox />} label="By signing up, you agree to the " />
-                      <a className="terms" href="">terms of service</a>
+                                <Box sx={{
+                                    display: "grid",
+                                    gap: "15px",
+                                    margin: "25px 0px"
+                                }} component={"form"}>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-name"
+                                        required
+                                        label="full name"
+                                        variant="outlined"
+                                        //   helperText={emailError ? 'Enter a valid email' : ''}
+                                        helperText={
+                                            <span style={{ color: 'red' }}>
+                                                {!name && isSubmitted ? 'Enter a User Name' : ''}
+                                            </span>
+                                        }
+                                        value={name}
+                                        onChange={(event) => {
+                                            setName(event.target.value);
+                                        }}
+                                    />
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-email"
+                                        required
+                                        label="email"
+                                        variant="outlined"
+                                        error={emailError}
+                                        helperText={emailError ? 'Enter a valid email' : ''}
+                                        value={email}
+                                        onChange={handleEmailChange}
+                                    />
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-phone"
+                                        label="phone number"
+                                        variant="outlined"
+                                        type="tel"
+                                        // helperText={emailError ? 'Enter a valid email' : ''}
+                                        helperText={
+                                            <span style={{ color: 'red' }}>
+                                                {!phone && isSubmitted ? 'Enter Phone number' : ''}
+                                            </span>
+                                        }
+                                        value={phone}
+                                        onChange={(event) => {
+                                            setPhone(event.target.value);
+                                        }}
+                                    />
+                                    <FormControl fullWidth>
+                                        <InputLabel id="outlined-adornment-user-type-label">user type</InputLabel>
+                                        <Select
+                                            labelId="outlined-adornment-user-type-label"
+                                            id="outlined-adornment-user-type"
+                                            value={type}
+                                            label="User Type"
+                                            onChange={(event) => {
+                                                setType(event.target.value);
+                                            }}
+                                        >
+                                            <MenuItem value='buyer'>Buyer</MenuItem>
+                                            <MenuItem value='seller'>Seller</MenuItem>
+                                        </Select>
+                                        <FormHelperText style={{ color: 'red' }}>
+                                        {!type && isSubmitted ? 'Select User Type' : ''}
+                                        </FormHelperText>
+                                    </FormControl>
+
+                                    <FormControl fullWidth>
+                                        <InputLabel id="outlined-adornment-user-seller-type-label">seller type</InputLabel>
+                                        <Select
+                                            labelId="outlined-adornment-user-seller-type-label"
+                                            id="outlined-adornment-user-seller-type"
+                                            value={sellerType}
+                                            label="Seller Type"
+                                            onChange={(event) => {
+                                                setSellerType(event.target.value);
+                                            }}
+                                        >
+                                            <MenuItem value='owner'>Owner</MenuItem>
+                                            <MenuItem value='agent'>Agent</MenuItem>
+                                        </Select>
+                                        <FormHelperText style={{ color: 'red' }}>
+                                            {!sellerType && isSubmitted ? 'Select Seller Type' : ''}
+                                        </FormHelperText>
+                                    </FormControl>
+
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-address"
+                                        label="address"
+                                        variant="outlined"
+                                        helperText={
+                                            <span style={{ color: 'red' }}>
+                                                {!street && isSubmitted ? 'Enter Street Name' : ''}
+                                            </span>
+                                        }
+                                        value={street}
+                                        onChange={(event) => {
+                                            setStreet(event.target.value);
+                                        }}
+                                    />
+
+                                    <FormControl fullWidth>
+                                        <InputLabel id="outlined-adornment-user-country-label">country</InputLabel>
+                                        <Select
+                                            labelId="outlined-adornment-user-country-label"
+                                            id="outlined-adornment-user-country"
+                                            value={country}
+                                            label="country"
+                                            onChange={countryChange}
+                                        >
+                                            {countriesData.map((countr) => (
+                                                <MenuItem key={countr._id} value={countr.country_name}>
+                                                    {countr.country_name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        <FormHelperText style={{ color: 'red' }}>
+                                            {!country && isSubmitted ? 'Select Country' : ''}
+                                        </FormHelperText>
+                                    </FormControl>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="outlined-adornment-user-state-label">state</InputLabel>
+                                        <Select
+                                            labelId="outlined-adornment-user-state-label"
+                                            id="outlined-adornment-user-state"
+                                            value={state}
+                                            label="state"
+                                            onChange={stateChange}
+                                        >
+                                            {country &&
+                                                countriesData
+                                                    .find((c) => c.country_name === country)
+                                                    ?.states.map((state) => (
+                                                        <MenuItem key={state._id} value={state.state_name}>
+                                                            {state.state_name}
+                                                        </MenuItem>
+                                                    ))}
+                                        </Select>
+                                        <FormHelperText style={{ color: 'red' }}>
+                                            {!state && isSubmitted ? 'Select State' : ''}
+                                        </FormHelperText>
+                                    </FormControl>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="outlined-adornment-user-city-label">City</InputLabel>
+                                        <Select
+                                            labelId="outlined-adornment-user-city-label"
+                                            id="outlined-adornment-user-city"
+                                            value={city}
+                                            label="city"
+                                            onChange={(event) => {
+                                                setCity(event.target.value);
+                                            }}
+                                        >
+                                            {country &&
+                                                state &&
+                                                countriesData
+                                                    .find((c) => c.country_name === country)
+                                                    ?.states.find((s) => s.state_name === state)
+                                                    ?.cities.map((city) => (
+                                                        <MenuItem key={city._id} value={city.city_name}>
+                                                            {city.city_name}
+                                                        </MenuItem>
+                                                    ))}
+                                        </Select>
+                                        <FormHelperText style={{ color: 'red' }}>
+                                            {!city && isSubmitted ? 'Select City' : ''}
+                                        </FormHelperText>
+                                    </FormControl>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-adornment-postal-code"
+                                        required
+                                        label="Postal Code"
+                                        variant="outlined"
+                                        // error={emailError}
+                                        // helperText={emailError ? 'Enter a valid postal-code' : ''}
+                                        helperText={
+                                            <span style={{ color: 'red' }}>
+                                                {!postalCode && isSubmitted ? 'Enter Postal Code' : ''}
+                                            </span>
+                                        }
+                                        value={postalCode}
+                                        onChange={(event) => {
+                                            setPostalCode(event.target.value);
+                                        }}
+                                    />
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-password-input"
+                                        label="Password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        helperText={
+                                            <span style={{ color: 'red' }}>
+                                                {!password && isSubmitted ? 'Enter Password' : ''}
+                                            </span>
+                                        }
+                                        value={password}
+                                        onChange={handlePasswordChange}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleShowPassword}>
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-confirm-password-input"
+                                        label="Confirm Password"
+                                        type={showConfirmPassword ? 'text' : 'password'}
+                                        helperText={
+                                            <span style={{ color: 'red' }}>
+                                                {!confirmPassword && isSubmitted ? 'Enter Confirm Password' : ''}
+                                            </span>
+                                        }
+                                        value={confirmPassword}
+                                        onChange={handleConfirmPasswordChange}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleShowConfirmPassword}>
+                                                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+
+                                    <Box sx={{
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        alignItems: "center",
+                                        gap: "5px"
+                                    }}>
+                                        <FormControlLabel className="chenk_sgn" sx={{
+                                            fontFamily: "Roboto,sans-serif !important",
+                                            gap: "10px",
+                                        }} control={<Checkbox />} label="By signing up, you agree to the " />
+                                        <a className="terms" href="">terms of service</a>
+                                    </Box>
+
+                                    <Button sx={{
+                                        width: "100%",
+                                        backgroundColor: theme.palette.primary.logoColor,
+                                        height: "50px",
+                                        fontSize: "14px",
+                                        fontWeight: "600",
+                                        borderRadius: "12px",
+                                        lineHeight: "1.2px",
+                                        boxShadow: "0 7px 18px 0 rgba(29, 142, 162, 0.32)",
+                                        color: theme.palette.primary.white,
+                                        "&:hover":
+                                        {
+                                            backgroundColor: "#00a376"
+                                        },
+                                    }} onClick={handleSignUp}>Sign Up</Button>
+                                </Box>
+                                <Box>
+                                    <Typography> Already have an account? <a href="">Sign In</a></Typography>
+
+
+                                </Box>
+                            </Box>
+                        </Box>
                     </Box>
-  
-                    <Button sx={{
-                      width: "100%",
-                      backgroundColor: theme.palette.primary.logoColor,
-                      height: "50px",
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      borderRadius: "12px",
-                      lineHeight: "1.2px",
-                      boxShadow: "0 7px 18px 0 rgba(29, 142, 162, 0.32)",
-                      color: theme.palette.primary.white,
-                      "&:hover":
-                      {
-                        backgroundColor: "#00a376"
-                      },
-                    }} onClick={handleSignUp}>Sign Up</Button>
-                  </Box>
-                  <Box>
-                    <Typography> Already have an account? <a href="">Sign In</a></Typography>
-  
-  
-                  </Box>
-                </Box>
-              </Box>
+                </Container>
             </Box>
-          </Container>
-        </Box>
-  
-        <Box>
-          <Footer />
-        </Box>
-      </>
+
+            <Box>
+                <Footer />
+            </Box>
+        </>
     )
-  }
-  
-  export default AgentRegister
+}
+
+export default AgentRegister

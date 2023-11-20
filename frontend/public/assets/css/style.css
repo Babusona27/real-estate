@@ -196,7 +196,7 @@ label.MuiFormControlLabel-root.MuiFormControlLabel-label {
 }
 .customBtnStyle::before {
     /*   background: blue; */
-      transform: translateX(-100%);
+      transform: translateX(-110%);
       z-index: -1;
     }
     
@@ -207,7 +207,7 @@ label.MuiFormControlLabel-root.MuiFormControlLabel-label {
     
     .customBtnStyle::after {
        z-index: -1;
-      transform: translateX(100%);
+      transform: translateX(110%);
       transition: none;
       transition: transform 350ms ease;
     }
@@ -775,4 +775,25 @@ img.img_color{
 }
 .choose_box:hover .choose_icon_box{
 	background: var(--green);
+}
+.search_input_blg::before, .search_input_blg.Mui-focused::after{
+	display: none;
+}
+li.category_list:hover>a>svg>path {
+color: var(--blue);
+}
+li.category_list:hover>a>p{
+	color: var(--blue);
+}
+.listbtn:hover>p{
+padding-left: 30px;
+}
+
+.btn_list_active{
+	background-color: var(--blue) !important;
+	color: var(--white) !important;
+	box-shadow: inset 0px 0px 12px rgb(0 0 0 / 40%);
+}
+.btn_list_active>p{
+	padding-left: 30px;
 }
