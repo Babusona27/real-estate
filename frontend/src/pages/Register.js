@@ -13,6 +13,7 @@ import {
   Tabs,
   TextField,
   Typography,
+  FormHelperText
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
@@ -122,10 +123,10 @@ const Register = () => {
       user_name: name,
       user_phone: phone,
       user_email: email,
-      user_address: street,
+      user_address: { street },
       password: password
     });
-    console.log("formData", formData,POST_REGISTER_API);
+    console.log("formData", formData, POST_REGISTER_API);
     PostApiFetch(POST_REGISTER_API, formData)
       .then(([status, response]) => {
         console.log("response", response);
@@ -339,12 +340,17 @@ const Register = () => {
                     required
                     label="Full Name"
                     variant="outlined"
-                    helperText={emailError ? 'Enter a valid email' : ''}
+                    // helperText={!name ? 'Enter a User Name' : ''}
                     value={name}
                     onChange={(event) => {
                       setName(event.target.value);
                     }}
                   />
+                  {!name && (
+                    <FormHelperText style={{ color: 'red' }}>
+                      Enter a User Name
+                    </FormHelperText>
+                  )}
                   <TextField
                     fullWidth
                     id="outlined-adornment-email"
