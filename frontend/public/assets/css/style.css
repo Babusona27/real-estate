@@ -776,3 +776,12 @@ img.img_color{
 .choose_box:hover .choose_icon_box{
 	background: var(--green);
 }
+.search_input_blg::before, .search_input_blg.Mui-focused::after{
+	display: none;
+}
+li.category_list:hover>a>svg>path {
+color: var(--blue);
+}
+li.category_list:hover>a>p{
+	color: var(--blue);
+}

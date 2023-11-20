@@ -17,6 +17,8 @@ import {
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
+
 import theme from "../Theme";
 
 const AboutUs = () => {
@@ -25,9 +27,7 @@ const AboutUs = () => {
             <Box>
                 <Header />
             </Box>
-            <Box>
-                <Typography>About Us</Typography>
-            </Box>
+           <BreadcrumbsBanner/>
         </>
     )
 }

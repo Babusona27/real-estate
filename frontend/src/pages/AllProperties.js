@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
-import { Box, Container } from "@mui/material";
+import { Box, Breadcrumbs, Container, Typography } from "@mui/material";
 import React from "react";
 import PropertyLeftBar from "../components/PropertyLeftBar";
 import Property from "../components/Property";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import axios from "axios";
 import { GET_PROPERTIES_API } from "../common/urls";
 import { useDispatch, useSelector } from "react-redux";
 import { setPropertyList } from "../redux/reducers/PropertyListReducer";
+import HomeIcon from "@mui/icons-material/Home";
+import GrainIcon from "@mui/icons-material/Grain";
+import { Link } from "react-router-dom";
+import theme from "../Theme";
 
 const AllProperties = () => {
   const dispatch = useDispatch();
@@ -41,6 +46,10 @@ const AllProperties = () => {
       {/* Header */}
       <Header />
       {/* Header */}
+      <BreadcrumbsBanner/>
+            {/* banner section  */}
+ 
+      {/* blog area  */}
       <Box>
         <Container
           maxWidth="xl"
@@ -52,7 +61,7 @@ const AllProperties = () => {
               md: "40px 10px",
               lg: "40px 0px",
             },
-            backgroundColor: "#eaf7f4",
+            background:theme.palette.primary.LightVlue2,
           }}
         >
           <Box
