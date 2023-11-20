@@ -146,93 +146,89 @@ const Footer = () => {
               <ListItem sx={{
                   display: "block",
                   padding: "5px 0px",
-                  width: "auto",
-                  cursor: "pointer",
-                  color:theme.palette.primary.lightGrey,
-                  transition:"all ease-in-out 0.4s",
-                  "&:hover":{
-                    color:theme.palette.primary.logoColor,
-                    paddingLeft:"20px"
-                  }
+                  width: "auto",                  
                 }}>
-                <Typography variant="p" sx={{
+              <Link to="/AboutUs">  <Typography variant="p" sx={{
                     fontFamily: "'Roboto', sans-serif !important",
                     fontSize:"16px",
                     fontWeight:"500",
-                }}><Link to="/AboutUs">About Us</Link></Typography>
+                    color:theme.palette.primary.lightGrey,
+                  transition:"all ease-in-out 0.4s",
+                  "&:hover":{
+                    color:theme.palette.primary.logoColor,
+                    paddingLeft:"20px",
+                  }
+                }}>About Us</Typography> </Link>
               </ListItem>
               <ListItem sx={{
                   display: "block",
                   padding: "5px 0px",
-                  width: "auto",
-                  cursor: "pointer",
-                  color:theme.palette.primary.lightGrey,
-                  transition:"all ease-in-out 0.4s",
-                  "&:hover":{
-                    color:theme.palette.primary.logoColor,
-                    paddingLeft:"20px"
-                  }
+                  width: "auto",         
                 }}>
-                <Typography variant="p" sx={{
+               <Link to="/Blog"> <Typography variant="p" sx={{
                       fontFamily: "'Roboto', sans-serif !important",
                       fontSize:"16px",
                       fontWeight:"500",
-                }}><Link to="/Blog">Blog & Articles</Link></Typography>
+                      color:theme.palette.primary.lightGrey,
+                      transition:"all ease-in-out 0.4s",
+                      "&:hover":{
+                        color:theme.palette.primary.logoColor,
+                        paddingLeft:"20px"
+                      }
+                }}>Blog & Articles</Typography></Link>
               </ListItem>
               <ListItem sx={{
                   display: "block",
                   padding: "5px 0px",
                   width: "auto",
-                  cursor: "pointer",
-                  color:theme.palette.primary.lightGrey,
-                  transition:"all ease-in-out 0.4s",
-                  "&:hover":{
-                    color:theme.palette.primary.logoColor,
-                    paddingLeft:"20px"
-                  }
+                 
                 }}>
-                <Typography variant="p" sx={{
+              <Link to="/TermsConditions"><Typography variant="p" sx={{
                     fontFamily: "'Roboto', sans-serif !important",
                     fontSize:"16px",
                     fontWeight:"500",
-                }}><Link to="/TermsConditions">Terms and Conditions</Link></Typography>
+                    color:theme.palette.primary.lightGrey,
+                    transition:"all ease-in-out 0.4s",
+                    "&:hover":{
+                      color:theme.palette.primary.logoColor,
+                      paddingLeft:"20px"
+                    }
+                }}>Terms and Conditions</Typography></Link>
               </ListItem>
               <ListItem sx={{
                   display: "block",
                   padding: "5px 0px",
                   width: "auto",
-                  cursor: "pointer",
-                  color:theme.palette.primary.lightGrey,
-                  transition:"all ease-in-out 0.4s",
-                  "&:hover":{
-                    color:theme.palette.primary.logoColor,
-                    paddingLeft:"20px"
-                  }
                 }}>
-                <Typography variant="p" sx={{
+              <Link to="/PrivacyPolicy"><Typography variant="p" sx={{
                    fontFamily: "'Roboto', sans-serif !important",
                    fontSize:"16px",
                    fontWeight:"500",
-                }}><Link to="/PrivacyPolicy">Privacy Policy</Link></Typography>
+                   color:theme.palette.primary.lightGrey,
+                   transition:"all ease-in-out 0.4s",
+                   "&:hover":{
+                     color:theme.palette.primary.logoColor,
+                     paddingLeft:"20px",
+                   }
+                }}>Privacy Policy</Typography></Link>
               
               </ListItem>
               <ListItem sx={{
                   display: "block",
                   padding: "5px 0px",
                   width: "auto",
-                  cursor: "pointer",
-                  color:theme.palette.primary.lightGrey,
-                  transition:"all ease-in-out 0.4s",
-                  "&:hover":{
-                    color:theme.palette.primary.logoColor,
-                    paddingLeft:"20px"
-                  }
                 }}>
-                 <Typography variant="p" sx={{
+               <Link to="/ContactUs">  <Typography variant="p" sx={{
                    fontFamily: "'Roboto', sans-serif !important",
                    fontSize:"16px",
                    fontWeight:"500",
-                }}><Link to="/ContactUs" className="nav-link">Contact us</Link></Typography>
+                   color:theme.palette.primary.lightGrey,
+                   transition:"all ease-in-out 0.4s",
+                   "&:hover":{
+                     color:theme.palette.primary.logoColor,
+                     paddingLeft:"20px",
+                   }
+                }}>Contact us</Typography></Link>
               </ListItem>
 
             </List>
@@ -242,7 +238,7 @@ const Footer = () => {
             width:  { xs: "100%", md: "100%", lg:"70%"},
             margin:"auto"
           }}>
-                  <Typography variant="h6" sx={{ color: theme.palette.primary.logoColor, fontSize: "22px", fontWeight: "500", lineHeight: "42px", textTransform: "capitalize" }}>Quick Links</Typography>
+                  <Typography variant="h6" sx={{ color: theme.palette.primary.logoColor, fontSize: "22px", fontWeight: "500", lineHeight: "42px", textTransform: "capitalize" }}>Contact Info</Typography>
             <List>
 
               <ListItem sx={{

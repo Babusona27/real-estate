@@ -125,6 +125,7 @@ const Home = () => {
         component={"div"}
         className="banner_sec"
         sx={{
+marginTop:"88px",
           background: "URL(./assets/images/heroBg.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

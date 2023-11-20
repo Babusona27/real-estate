@@ -162,17 +162,16 @@ const Navbar = () => {
                       {/* <Link to="/Login" className="nav-link">Login</Link> */}
 
                       {userData ? (
-                        <li className="menu-item" onClick={() => {
+                       
+                          <Link  onClick={() => {
                           dispatch(logOut())
                           navigate('/Login')
-                        }}
-                        >
-                          <Link className="nav-link">Logout</Link>
-                        </li>
+                        }} className="nav-link">Logout</Link>
+                        
                       ) : (
-                        <li className="menu-item">
+                       
                           <Link to="/Login" className="nav-link">Login</Link>
-                        </li>
+                      
                       )}
                     </li>
                   </ul>
