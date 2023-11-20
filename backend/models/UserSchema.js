@@ -4,23 +4,23 @@ const mongoose = require("mongoose");
 const UserAddressSchema = new mongoose.Schema({
   street: {
     type: String,
-    required: [true, "Street name is required"],
+    // required: [true, "Street name is required"],
   },
   city: {
     type: String,
-    required: [true, "City name is required"],
+    // required: [true, "City name is required"],
   },
   state: {
     type: String,
-    required: [true, "State name is required"],
+    // required: [true, "State name is required"],
   },
   postal_code: {
     type: String,
-    required: [true, "Postal code is required"],
+    // required: [true, "Postal code is required"],
   },
   country: {
     type: String,
-    required: [true, "Country name is required"],
+    // required: [true, "Country name is required"],
   },
 });
 
@@ -53,7 +53,7 @@ const UserSchema = new mongoose.Schema({
   user_type: {
     type: String,
     enum: ["seller", "buyer"],
-    required: [true, "User Type is required"],
+    // required: [true, "User Type is required"],
   },
   seller_type: {
     type: String,

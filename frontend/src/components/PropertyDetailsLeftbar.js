@@ -14,7 +14,7 @@ import { GetApiFetch } from "../common/CommonFunction";
 import { useSelector } from "react-redux";
 const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
-  
+  console.log('propertyDetails', propertyDetails);
   return (
     <Box
       flex={2}
@@ -367,9 +367,9 @@ const PropertyDetailsLeftbar = () => {
           }}
           component={"p"}
         >
-          {propertyDetails && propertyDetails.property_name} | Loft Type | Soon to be Available
+          {propertyDetails && propertyDetails.property_name} | {propertyDetails && propertyDetails.type} | Soon to be Available
         </Typography>
-        <Typography
+        {/* <Typography
           sx={{
             fontSize: "16px",
             color: "rgb(85, 85, 85)",
@@ -411,7 +411,17 @@ const PropertyDetailsLeftbar = () => {
           </ul>
 
 
-        </Typography>
+        </Typography> */}
+        <Typography
+          sx={{
+            fontSize: "16px",
+            color: "rgb(85, 85, 85)",
+            lineHeight: "28px",
+            marginBottom: "25px",
+            fontFamily: theme.palette.primary.Roboto,
+          }}
+          component={"p"}
+        >{propertyDetails && propertyDetails.description}</Typography>
       </Box>
       <Box sx={{
         padding: "25px 30px 30px",

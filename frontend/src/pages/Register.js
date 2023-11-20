@@ -120,21 +120,15 @@ const Register = () => {
   const handleSignUp = async () => {
     const formData = JSON.stringify({
       user_name: name,
-      user_type: type,
-      seller_type: sellerType,
       user_phone: phone,
       user_email: email,
-      user_address: {
-        street: street,
-        city: city,
-        state: state,
-        postal_code: postalCode,
-        country: country
-      },
+      user_address: street,
       password: password
     });
+    console.log("formData", formData,POST_REGISTER_API);
     PostApiFetch(POST_REGISTER_API, formData)
       .then(([status, response]) => {
+        console.log("response", response);
         if (status == 201) {
           if (response.status) {
             navigate('/Login');
@@ -147,7 +141,7 @@ const Register = () => {
       .finally(() => { });
   }
   useEffect(() => {
-    _getCountry()
+    // _getCountry()
   }, []);
   return (
     <>
@@ -374,7 +368,7 @@ const Register = () => {
                       setPhone(event.target.value);
                     }}
                   />
-                  <FormControl fullWidth>
+                  {/* <FormControl fullWidth>
                     <InputLabel id="outlined-adornment-user-type-label">User Type</InputLabel>
                     <Select
                       labelId="outlined-adornment-user-type-label"
@@ -404,7 +398,7 @@ const Register = () => {
                       <MenuItem value='owner'>Owner</MenuItem>
                       <MenuItem value='agent'>Agent</MenuItem>
                     </Select>
-                  </FormControl>
+                  </FormControl> */}
 
                   <TextField
                     fullWidth
@@ -417,7 +411,7 @@ const Register = () => {
                     }}
                   />
 
-                  <FormControl fullWidth>
+                  {/* <FormControl fullWidth>
                     <InputLabel id="outlined-adornment-user-country-label">Country</InputLabel>
                     <Select
                       labelId="outlined-adornment-user-country-label"
@@ -487,7 +481,7 @@ const Register = () => {
                     onChange={(event) => {
                       setPostalCode(event.target.value);
                     }}
-                  />
+                  /> */}
                   <TextField
                     fullWidth
                     id="outlined-password-input"
@@ -522,6 +516,7 @@ const Register = () => {
                       ),
                     }}
                   />
+
                   <Box sx={{
                     display: "flex",
                     justifyContent: "start",

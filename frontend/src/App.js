@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import AboutUs from "./pages/AboutUs";
 import Blog from "./pages/Blog";
 import ContactUs from "./pages/ContactUs";
+import TermsConditions from "./pages/TermsConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import {
   BrowserRouter as Router,
@@ -18,7 +20,12 @@ import AddNewProperty from "./pages/AddNewProperty";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
 import { store, persistor } from './redux/store';
-import SellerProfile from "./pages/SellerProfile"
+import SellerProfile from "./pages/SellerProfile";
+import AgentRegister from "./pages/AgentRegister";
+import AgentLogIn from "./pages/AgentLogIn";
+import UserProfile from "./pages/UserProfile";
+
+
 
 function App() {
   return (
@@ -43,6 +50,13 @@ function App() {
               <Route path="/AboutUs" element={<AboutUs />} />
               <Route path="/Blog" element={<Blog />} />
               <Route path="/ContactUs" element={<ContactUs />} />
+              <Route path="/TermsConditions" element={<TermsConditions />} />
+              <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+              <Route path="/AgentRegister" element={<AgentRegister />} />
+              <Route path="/AgentLogIn" element={<AgentLogIn />} />
+              <Route path="/userProfile" element={<UserProfile />} />
+
+
 
 
 
