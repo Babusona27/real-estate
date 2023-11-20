@@ -135,6 +135,7 @@ const Register = () => {
     });
     PostApiFetch(POST_REGISTER_API, formData)
       .then(([status, response]) => {
+        console.log("response", response);
         if (status == 201) {
           if (response.status) {
             navigate('/Login');
@@ -147,7 +148,7 @@ const Register = () => {
       .finally(() => { });
   }
   useEffect(() => {
-    _getCountry()
+    // _getCountry()
   }, []);
   return (
     <>
