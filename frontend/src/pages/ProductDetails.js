@@ -17,11 +17,12 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const params = useParams();
+  console.log('params', params);
   useEffect(() => {
     /* get properties  */
     const getPropertiesDetails = async () => {
       await axios
-        .get(GET_PRODUCT_DETAILS_PAGE_API+params.id)
+        .get(GET_PRODUCT_DETAILS_PAGE_API+params.slug)
         .then((res) => {       
           if (res.data.status) {
             dispatch(setProperty(res.data.data));

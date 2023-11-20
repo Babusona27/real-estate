@@ -28,7 +28,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(state => state.UserReducer.value);
-  console.log("userData", userData);
+  // console.log("userData", userData);
   const [isNavOpen, setNavOpen] = useState(false);
 
   useEffect(() => {

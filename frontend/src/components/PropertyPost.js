@@ -24,11 +24,11 @@ import { IMAGE_BASE_URL } from "../common/urls";
 
 
 const PropertyPost = ({ propertyDetails }) => {
-  // console.log(propertyDetails);
+  console.log(propertyDetails);
   return (
     <Box>
       {/* <a href="/ProductDetails"> */}
-        <Link to={"/ProductDetails/"+ propertyDetails._id}>
+        <Link to={"/ProductDetails/"+ propertyDetails.slug}>
         <Card className="post_card" sx={{
           width: "100%",
           border: "1px solid #e9e7d",
