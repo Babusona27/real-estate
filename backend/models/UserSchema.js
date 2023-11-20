@@ -53,7 +53,7 @@ const UserSchema = new mongoose.Schema({
   user_type: {
     type: String,
     enum: ["seller", "buyer"],
-    required: [true, "User Type is required"],
+    // required: [true, "User Type is required"],
   },
   seller_type: {
     type: String,
