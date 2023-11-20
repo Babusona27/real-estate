@@ -120,19 +120,12 @@ const Register = () => {
   const handleSignUp = async () => {
     const formData = JSON.stringify({
       user_name: name,
-      user_type: type,
-      seller_type: sellerType,
       user_phone: phone,
       user_email: email,
-      user_address: {
-        street: street,
-        city: city,
-        state: state,
-        postal_code: postalCode,
-        country: country
-      },
+      user_address: street,
       password: password
     });
+    console.log("formData", formData,POST_REGISTER_API);
     PostApiFetch(POST_REGISTER_API, formData)
       .then(([status, response]) => {
         console.log("response", response);
