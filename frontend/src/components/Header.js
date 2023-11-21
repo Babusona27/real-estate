@@ -162,16 +162,16 @@ const Navbar = () => {
                       {/* <Link to="/Login" className="nav-link">Login</Link> */}
 
                       {userData ? (
-                       
-                          <Link  onClick={() => {
+
+                        <Link onClick={() => {
                           dispatch(logOut())
                           navigate('/Login')
                         }} className="nav-link">Logout</Link>
-                        
+
                       ) : (
-                       
-                          <Link to="/Login" className="nav-link">Login</Link>
-                      
+
+                        <Link to="/Login" className="nav-link">Login</Link>
+
                       )}
                     </li>
                   </ul>
@@ -217,7 +217,7 @@ const Navbar = () => {
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Delete">
+                <Tooltip title="wishlist">
                   <IconButton
                     sx={{
                       border: "1px solid #dceeea",
@@ -229,7 +229,9 @@ const Navbar = () => {
                       height: { xs: "30px", sm: "30px", lg: "46px" },
                       fontSize: { xs: "20px", lg: "30px" },
                     }}
-                  >
+                    onClick={() => {
+                      navigate('/Wishlist')
+                    }}>
                     <StyledBadge badgeContent={4} color="secondary">
                       <FavoriteBorderIcon
                         sx={{
