@@ -72,7 +72,7 @@ const ContactUs = () => {
       <Box>
         <Header />
       </Box>
-      <BreadcrumbsBanner />
+      <BreadcrumbsBanner title="Contact Us" />
       <Box>
         <Container
           maxWidth="lg"
@@ -298,7 +298,7 @@ const ContactUs = () => {
           </Box>
         </Container>
         <Box sx={{
-              backgroundImage: "url(./assets/images/R6.jpg)",
+              backgroundImage: "url(./assets/images/R10.jpg)",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundAttachment:"fixed",

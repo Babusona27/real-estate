@@ -262,7 +262,7 @@ const PropertyPost = ({ propertyDetails }) => {
                   </UserBox>
                   <Button className="customBtnStyle"
                     sx={{
-                      fontFamily: "'Roboto', sans-serif !important",
+                      fontFamily:  theme.palette.primary.Roboto,
                       backgroundColor: "#dceeea",
                       color: theme.palette.primary.logoColor,
                       padding: "8px 22px",
