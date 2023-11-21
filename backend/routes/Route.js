@@ -26,7 +26,7 @@ router.delete("/deletecategory/:id", deleteCategory);
 
 // ******************All PROPERTY ROUTE*********************
 router.get("/getproperties", getProperties);
-router.get("/propertydetails/:id", getProperty);
+router.get("/propertydetails/:slug", getProperty);
 router.post("/createproperty", authenticate, validateRequest, checkSeller, createProperty);
 router.put("/updateproperty/:id", authenticate, checkSeller, updateProperty);
 router.delete("/deleteproperty/:id", authenticate, checkSeller, deleteProperty);

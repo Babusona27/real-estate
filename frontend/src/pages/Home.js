@@ -45,8 +45,6 @@ const TabPanel = ({ children, value, index }) => (
   </div>
 );
 
-
-
 const newSlider = {
   loop: false,
   autoplay: true,
@@ -68,20 +66,21 @@ const newSlider = {
 };
 
 const Home = () => {
-  const propertyList = useSelector(state => state.PropertyListReducer.value);
+  const propertyList = useSelector((state) => state.PropertyListReducer.value);
   // const userData = useSelector(state => state.UserReducer.value);
   // console.log("propertyList", propertyList);
   const dispatch = useDispatch();
-  const [value1, setVal] = React.useState("");
-  const [value2, setVal1] = React.useState("");
+  const [propertyType, setPropertyType] = React.useState("");
+  const [keyword, setKeyword] = React.useState("");
   const [value3, setVal2] = React.useState("");
   const [value4, setVal3] = React.useState("");
-  const handleChange1 = (event) => {
-    setVal(event.target.value);
-  };
-  const handleChange2 = (event) => {
-    setVal1(event.target.value);
-  };
+  // const handleChangeProperType = (event) => {
+  //   console.log("event.target.value", event.target.value);
+  //   setPropertyType(event.target.value);
+  // };
+  // const handleChange2 = (event) => {
+  //   setVal1(event.target.value);
+  // };
   const handleChange3 = (event) => {
     setVal2(event.target.value);
   };
@@ -94,7 +93,8 @@ const Home = () => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    //console.log("==>",newValue);
+    setPropertyType(newValue == 1 ? "rent" : "sale");
   };
   useEffect(() => {
     /* get properties  */
@@ -125,7 +125,7 @@ const Home = () => {
         component={"div"}
         className="banner_sec"
         sx={{
-marginTop:"88px",
+          marginTop: "88px",
           background: "URL(./assets/images/heroBg.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -188,52 +188,40 @@ marginTop:"88px",
             </Typography>
 
             <Box sx={{ width: "100%", margin: "0px auto", marginTop: "50px" }}>
-              <Tabs
-                className="tab_box"
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                value={value}
-                onChange={handleChange}
-                centered
-                indicatorColor="none"
-                textColor="primary"
-              >
-                <Tab
+            <Box sx={{
+              display:"flex",
+              gap:"20px",
+              justifyContent:"center",
+              alignItems:"center",
+              marginBottom:"25px",
+            }}>
+                <Button
                   sx={{
-                    backgroundColor: "#fff",
-                    height: "35px",
-                    lineHeight: "1",
-                    textAlign: "center",
-                    width: "auto",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    overflow: "visible",
+                    width:"12%",
+                    backgroundColor: theme.palette.primary.white,
+            color: theme.palette.primary.logoColor,
+            height: "40px",
+            "&:hover":
+            {
+              backgroundColor: theme.palette.primary.logoColor,
+              color: theme.palette.primary.white,
+            },
                   }}
-                  label="Buy"
-                  className={`tabBtn ${value === 0 ? "active_tab" : ""}`}
-                />
-                <Tab
+                >Sale</Button>
+                <Button
                   sx={{
-                    backgroundColor: "#fff",
-                    height: "35px",
-                    lineHeight: "1",
-                    textAlign: "center",
-                    width: "auto",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    overflow: "visible",
+                    width:"12%",
+                    backgroundColor: theme.palette.primary.logoColor,
+            height: "40px",
+            color: theme.palette.primary.white,
+            "&:hover":
+            {
+              backgroundColor: "#00a376"
+            },
                   }}
-                  label="Rent"
-                  className={`tabBtn ${value === 1 ? "active_tab" : ""}`}
-                />
-              </Tabs>
+                >Rent</Button>
+</Box>
 
-              <TabPanel value={value} index={0}>
                 <Box
                   className={"tab_cont"}
                   sx={{
@@ -266,7 +254,7 @@ marginTop:"88px",
                         md: "0px",
                         lg: "0px",
                         xl: "0px",
-                      }
+                      },
                     }}
                   />
                   <Box sx={{
@@ -284,139 +272,41 @@ marginTop:"88px",
                       sx={{ color: theme.palette.primary.lightGrey }}
                     >
                       <InputLabel id="demo-controlled-open-select-label">
-                        Property Type
+                       Location
                       </InputLabel>
                       <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
-                        value={value1}
-                        label="Property Type"
-                        onChange={handleChange1}
+                        value={propertyType}
+                        label="Location"
+                       // onChange={handleChangeProperType}
                       >
-                        <MenuItem value={1}>Property Type </MenuItem>
-                        <MenuItem value={2}>Sale</MenuItem>
-                        <MenuItem value={3}>Rent</MenuItem>
+                        <MenuItem value={''}>Property Type</MenuItem>
+                        <MenuItem value={'sale'}>Sale</MenuItem>
+                        <MenuItem value={'rent'}>Rent</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
-                  <TextField
+                  {/* <TextField
                     className="form_input1"
                     fullWidth
                     id="outlined-basic"
                     label="Location"
                     variant="outlined"
-                    sx={{
-                      width: "100%", marginBottom: {
-                        xs: "20px",
-                        sm: "0px",
-                        md: "0px",
-                        lg: "0px",
-                        xl: "0px",
-                      }
+                    onChange={(e) => {
+                      setKeyword(e.target.value);
                     }}
-                  />
-
-
-                  <Button
                     sx={{
                       width: "100%",
-                      backgroundColor: theme.palette.primary.logoColor,
-                      height: "45px",
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      lineHeight: "1.2px",
-                      boxShadow: "0 7px 18px 0 rgba(29, 142, 162, 0.32)",
-                      color: theme.palette.primary.white,
-                      "&:hover": { backgroundColor: "#00a376" },
-                    }}
-                  >
-                    Search
-                  </Button>
-                </Box>
-              </TabPanel>
-
-              <TabPanel value={value} index={1}>
-                <Box
-                  className={"tab_cont"}
-                  sx={{
-                    backgroundColor: theme.palette.primary.white,
-                    padding: "20px 20px",
-                    display: {
-                      xs: "block",
-                      sm: "flex",
-                      md: "flex",
-                      lg: "flex",
-                    },
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "20px",
-                    position: "relative",
-                    zIndex: "5",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <TextField
-                    className="form_input1"
-                    fullWidth
-                    id="outlined-basic"
-                    label="Enter keyword..."
-                    variant="outlined"
-                    sx={{
                       marginBottom: {
                         xs: "20px",
                         sm: "0px",
                         md: "0px",
                         lg: "0px",
                         xl: "0px",
-                      }
+                      },
                     }}
-                  />
-                  <Box sx={{
-                    width: "100%", marginBottom: {
-                      xs: "20px",
-                      sm: "0px",
-                      md: "0px",
-                      lg: "0px",
-                      xl: "0px",
-                    }
-                  }}>
-                    <FormControl
-                      className="form_input1"
-                      fullWidth
-                      sx={{ color: theme.palette.primary.lightGrey }}
-                    >
-                      <InputLabel id="demo-controlled-open-select-label">
-                        Property Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={value1}
-                        label="Property Type"
-                        onChange={handleChange1}
-                      >
-                        <MenuItem value={1}>Property Type </MenuItem>
-                        <MenuItem value={2}>Sale</MenuItem>
-                        <MenuItem value={3}>Rent</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  <TextField
-                    className="form_input1"
-                    fullWidth
-                    id="outlined-basic"
-                    label="Location"
-                    variant="outlined"
-                    sx={{
-                      width: "100%", marginBottom: {
-                        xs: "20px",
-                        sm: "0px",
-                        md: "0px",
-                        lg: "0px",
-                        xl: "0px",
-                      }
-                    }}
-                  />
+                  /> */}
 
                   <Button
                     sx={{
@@ -434,7 +324,6 @@ marginTop:"88px",
                     Search
                   </Button>
                 </Box>
-              </TabPanel>
             </Box>
           </Box>
         </Container>
@@ -491,291 +380,160 @@ marginTop:"88px",
           <Box>
             <OwlCarousel className="owl-theme" {...newSlider}>
               {/* need to be chenge property_items  */}
-              {propertyList && propertyList.map((item, key) => (
-                <div class="property_item">
-                  {/* {console.log("item", item)} */}
-                <Box>
-                  <Card
-                    className="post_card"
-                    sx={{
-                      width: "100%",
-                      border: "1px solid #e9e7d",
-                      boxShadow: "0 4px 18px 0 rgb(194 200 213 / 0%)",
-                      "&:hover": {
-                        boxShadow: "0 11px 35px 0 rgba(0, 0, 0, .1)",
-                      },
-                    }}
-                  >
-                    <CardActionArea>
-                      <Box sx={{ position: "relative" }}>
-                        <Catagorys>
-                          <Span
-                            bgcolor={"#ff9642"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Featured
-                          </Span>
-                          <Span
-                            bgcolor={"#17a2b8 "}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Top
-                          </Span>
-                          <Span
-                            bgcolor={"#5f40fb"}
-                            variant="span"
-                            className="catagory"
-                          >
-                            Bump Up
-                          </Span>
-                        </Catagorys>
-                        <CardMedia
-                          component="img"
-                          height="200"
-                          image={"./assets/images/R1.jpg"}
-                          alt="green iguana"
-                          sx={{
-                            height: "250px",
-                          }}
-                        />
-                        <BottomBar>
-                          <Typography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: "600",
-                              textShadow: "0.5px 0.5px #000000",
-                              color: theme.palette.primary.white,
-                            }}
-                            variant="h6"
-                          >
-                           {item.price}
-                          </Typography>
-                          <Listings className="listings">
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <FavoriteBorderIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                display: "flex",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                borderRadius: "3px",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <CompareArrowsIcon />
-                            </IconButton>
-                            <IconButton
-                              sx={{
-                                height: "35px",
-                                width: "35px",
-                                borderRadius: "3px",
-                                fontSize: "16px",
-                                lineHeight: "1",
-                                backgroundColor:
-                                  theme.palette.primary.LightBlue,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                border: "none",
-                                color: theme.palette.primary.white,
-                                transition: "0.4s",
-                                "&:hover": {
-                                  backgroundColor: theme.palette.primary.white,
-                                  color: theme.palette.primary.logoColor,
-                                },
-                              }}
-                            >
-                              <SavedSearchIcon />
-                            </IconButton>
-                          </Listings>
-                        </BottomBar>
-                        <Rent>{item.category}</Rent>
-                      </Box>
-                      <CardContent
+              {propertyList &&
+                propertyList.map((item, key) => (
+                  <div class="property_item">
+                    {/* {console.log("item", item)} */}
+                    <Box>
+                      <Card
+                        className="post_card"
                         sx={{
-                          paddingLeft: "0px",
-                          paddingRight: "0px",
+                          width: "100%",
+                          border: "1px solid #e9e7d",
+                          boxShadow: "0 4px 18px 0 rgb(194 200 213 / 0%)",
+                          "&:hover": {
+                            boxShadow: "0 11px 35px 0 rgba(0, 0, 0, .1)",
+                          },
                         }}
                       >
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                            paddingBottom: "10px",
-                            marginBottom: "10px",
-                            borderBottom: "1px solid #e1e1e1",
-                          }}
-                        >
-                          <Typography
+                        <CardActionArea>
+                          <Box sx={{ position: "relative" }}>
+                            <Catagorys>
+                              <Span
+                                bgcolor={"#ff9642"}
+                                variant="span"
+                                className="catagory"
+                              >
+                                Featured
+                              </Span>
+                              <Span
+                                bgcolor={"#17a2b8 "}
+                                variant="span"
+                                className="catagory"
+                              >
+                                Top
+                              </Span>
+                              <Span
+                                bgcolor={"#5f40fb"}
+                                variant="span"
+                                className="catagory"
+                              >
+                                Bump Up
+                              </Span>
+                            </Catagorys>
+                            <CardMedia
+                              component="img"
+                              height="200"
+                              image={"./assets/images/R1.jpg"}
+                              alt="green iguana"
+                              sx={{
+                                height: "250px",
+                              }}
+                            />
+                            <BottomBar>
+                              <Typography
+                                sx={{
+                                  fontSize: "22px",
+                                  fontWeight: "600",
+                                  textShadow: "0.5px 0.5px #000000",
+                                  color: theme.palette.primary.white,
+                                }}
+                                variant="h6"
+                              >
+                                {item.price}
+                              </Typography>
+                              <Listings className="listings">
+                                <IconButton
+                                  sx={{
+                                    height: "35px",
+                                    width: "35px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    fontSize: "16px",
+                                    lineHeight: "1",
+                                    borderRadius: "3px",
+                                    backgroundColor:
+                                      theme.palette.primary.LightBlue,
+                                    border: "none",
+                                    color: theme.palette.primary.white,
+                                    transition: "0.4s",
+                                    "&:hover": {
+                                      backgroundColor:
+                                        theme.palette.primary.white,
+                                      color: theme.palette.primary.logoColor,
+                                    },
+                                  }}
+                                >
+                                  <FavoriteBorderIcon />
+                                </IconButton>
+                                <IconButton
+                                  sx={{
+                                    height: "35px",
+                                    width: "35px",
+                                    display: "flex",
+                                    fontSize: "16px",
+                                    lineHeight: "1",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderRadius: "3px",
+                                    backgroundColor:
+                                      theme.palette.primary.LightBlue,
+                                    border: "none",
+                                    color: theme.palette.primary.white,
+                                    transition: "0.4s",
+                                    "&:hover": {
+                                      backgroundColor:
+                                        theme.palette.primary.white,
+                                      color: theme.palette.primary.logoColor,
+                                    },
+                                  }}
+                                >
+                                  <CompareArrowsIcon />
+                                </IconButton>
+                                <IconButton
+                                  sx={{
+                                    height: "35px",
+                                    width: "35px",
+                                    borderRadius: "3px",
+                                    fontSize: "16px",
+                                    lineHeight: "1",
+                                    backgroundColor:
+                                      theme.palette.primary.LightBlue,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    border: "none",
+                                    color: theme.palette.primary.white,
+                                    transition: "0.4s",
+                                    "&:hover": {
+                                      backgroundColor:
+                                        theme.palette.primary.white,
+                                      color: theme.palette.primary.logoColor,
+                                    },
+                                  }}
+                                >
+                                  <SavedSearchIcon />
+                                </IconButton>
+                              </Listings>
+                            </BottomBar>
+                            <Rent>{item.category}</Rent>
+                          </Box>
+                          <CardContent
                             sx={{
-                              display: "-webkit-box",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              WebkitLineClamp: "1",
-                              WebkitBoxOrient: "vertical",
-                              fontSize: "22px",
-                              fontWeight: "500",
-                              lineHeight: "32px",
-                              marginBottom: "15px",
+                              paddingLeft: "0px",
+                              paddingRight: "0px",
                             }}
-                            gutterBottom
-                            variant="h5"
-                            component="h4"
                           >
-                           {item.property_name}
-                          </Typography>
-                          <FlexBox>
-                            <List
+                            <Box
                               sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
+                                paddingLeft: "20px",
+                                paddingRight: "20px",
+                                paddingBottom: "10px",
+                                marginBottom: "10px",
+                                borderBottom: "1px solid #e1e1e1",
                               }}
                             >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <SingleBedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                2
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <BathtubOutlinedIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                4
-                              </Typography>
-                            </List>
-                            <List
-                              sx={{
-                                display: "flex",
-                                gap: "7px",
-                                alignItems: "center",
-                                padding: "0px",
-                              }}
-                            >
-                              <IconButton
-                                sx={{
-                                  backgroundColor:
-                                    theme.palette.primary.LightVlue2,
-                                  color: theme.palette.primary.logoColor,
-                                  width: "32px",
-                                  height: "32px",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <ZoomOutMapIcon />
-                              </IconButton>
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  color: "#666666",
-                                }}
-                                variant="span"
-                                component="h3"
-                              >
-                                1437
-                              </Typography>
-                            </List>
-                          </FlexBox>
-                        </Box>
-                        <Box
-                          sx={{
-                            paddingLeft: "20px",
-                            paddingRight: "20px",
-                          }}
-                        >
-                          <FlexBox>
-                            <UserBox>
-                              <Avatar
-                                sx={{ width: "36px", height: "36px" }}
-                                src="./assets/images/avtar/avatar.png"
-                              />
                               <Typography
                                 sx={{
                                   display: "-webkit-box",
@@ -783,51 +541,188 @@ marginTop:"88px",
                                   textOverflow: "ellipsis",
                                   WebkitLineClamp: "1",
                                   WebkitBoxOrient: "vertical",
-                                  fontFamily: "'Roboto', sans-serif !important",
-                                  fontSize: "14px",
+                                  fontSize: "22px",
                                   fontWeight: "500",
-                                  color: "#666666",
+                                  lineHeight: "32px",
+                                  marginBottom: "15px",
                                 }}
-                                variant="span"
+                                gutterBottom
+                                variant="h5"
+                                component="h4"
                               >
-                                suraj
+                                {item.property_name}
                               </Typography>
-                            </UserBox>
-                            <Button
-                              className="customBtnStyle"
+                              <FlexBox>
+                                <List
+                                  sx={{
+                                    display: "flex",
+                                    gap: "7px",
+                                    alignItems: "center",
+                                    padding: "0px",
+                                  }}
+                                >
+                                  <IconButton
+                                    sx={{
+                                      backgroundColor:
+                                        theme.palette.primary.LightVlue2,
+                                      color: theme.palette.primary.logoColor,
+                                      width: "32px",
+                                      height: "32px",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <SingleBedIcon />
+                                  </IconButton>
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      color: "#666666",
+                                    }}
+                                    variant="span"
+                                    component="h3"
+                                  >
+                                    2
+                                  </Typography>
+                                </List>
+                                <List
+                                  sx={{
+                                    display: "flex",
+                                    gap: "7px",
+                                    alignItems: "center",
+                                    padding: "0px",
+                                  }}
+                                >
+                                  <IconButton
+                                    sx={{
+                                      backgroundColor:
+                                        theme.palette.primary.LightVlue2,
+                                      color: theme.palette.primary.logoColor,
+                                      width: "32px",
+                                      height: "32px",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <BathtubOutlinedIcon />
+                                  </IconButton>
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      color: "#666666",
+                                    }}
+                                    variant="span"
+                                    component="h3"
+                                  >
+                                    4
+                                  </Typography>
+                                </List>
+                                <List
+                                  sx={{
+                                    display: "flex",
+                                    gap: "7px",
+                                    alignItems: "center",
+                                    padding: "0px",
+                                  }}
+                                >
+                                  <IconButton
+                                    sx={{
+                                      backgroundColor:
+                                        theme.palette.primary.LightVlue2,
+                                      color: theme.palette.primary.logoColor,
+                                      width: "32px",
+                                      height: "32px",
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <ZoomOutMapIcon />
+                                  </IconButton>
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      color: "#666666",
+                                    }}
+                                    variant="span"
+                                    component="h3"
+                                  >
+                                    1437
+                                  </Typography>
+                                </List>
+                              </FlexBox>
+                            </Box>
+                            <Box
                               sx={{
-                                fontFamily: "'Roboto', sans-serif !important",
-                                backgroundColor: "#dceeea",
-                                color: theme.palette.primary.logoColor,
-                                padding: "8px 22px",
-                                fontSize: "14px",
-                                lineHeight: "18px",
-                                fontWeight: "500",
-                                border: "none",
-                                overflow: "hidden",
-                                position: "relative",
-                                boxShadow: "none",
-                                zIndex: "1",
-                                textTransform: "capitalize",
-                                "&:hover": {
-                                  backgroundColor:
-                                    theme.palette.primary.logoColor,
-                                  color: theme.palette.primary.white,
-                                  boxShadow: "none",
-                                },
+                                paddingLeft: "20px",
+                                paddingRight: "20px",
                               }}
-                              variant="contained"
                             >
-                              Details
-                            </Button>
-                          </FlexBox>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Box>
-              </div>
-              ))}
+                              <FlexBox>
+                                <UserBox>
+                                  <Avatar
+                                    sx={{ width: "36px", height: "36px" }}
+                                    src="./assets/images/avtar/avatar.png"
+                                  />
+                                  <Typography
+                                    sx={{
+                                      display: "-webkit-box",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      WebkitLineClamp: "1",
+                                      WebkitBoxOrient: "vertical",
+                                      fontFamily:
+                                        "'Roboto', sans-serif !important",
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      color: "#666666",
+                                    }}
+                                    variant="span"
+                                  >
+                                    suraj
+                                  </Typography>
+                                </UserBox>
+                                <Button
+                                  className="customBtnStyle"
+                                  sx={{
+                                    fontFamily:
+                                      "'Roboto', sans-serif !important",
+                                    backgroundColor: "#dceeea",
+                                    color: theme.palette.primary.logoColor,
+                                    padding: "8px 22px",
+                                    fontSize: "14px",
+                                    lineHeight: "18px",
+                                    fontWeight: "500",
+                                    border: "none",
+                                    overflow: "hidden",
+                                    position: "relative",
+                                    boxShadow: "none",
+                                    zIndex: "1",
+                                    textTransform: "capitalize",
+                                    "&:hover": {
+                                      backgroundColor:
+                                        theme.palette.primary.logoColor,
+                                      color: theme.palette.primary.white,
+                                      boxShadow: "none",
+                                    },
+                                  }}
+                                  variant="contained"
+                                >
+                                  Details
+                                </Button>
+                              </FlexBox>
+                            </Box>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Box>
+                  </div>
+                ))}
             </OwlCarousel>
           </Box>
         </Container>
@@ -911,56 +806,73 @@ marginTop:"88px",
                 position: "relative",
                 overflow: "hidden",
                 "&:hover": {
-                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
-                }
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)",
+                },
               }}
               className={"cities_box"}
               component={"a"}
               href="#"
             >
-              <Box className={"city_img"} sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                objectFit: "cover"
-              }} component={"img"} src="./assets/images/R6.jpg" />
-              <Box sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                background: "rgb(0,0,0,30%)",
-                opacity: "0"
-              }} className={"overlay"}></Box>
-              <Box sx={{
-                position: "absolute",
-                bottom: "-50%",
-                left: "0",
-                height: "30%",
-                width: "100%",
-
-              }}
-                className={"cities_content_box"}>
-                <Typography sx={{
-                  fontSize: "24px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "30px",
-                  textAlign: "center",
+              <Box
+                className={"city_img"}
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover",
                 }}
-                  component={"h3"}>Miami</Typography>
-                <Typography sx={{
-                  fontSize: "18px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "35px",
-                  textAlign: "center",
-                }} component={"h4"}>24 properties</Typography>
+                component={"img"}
+                src="./assets/images/R6.jpg"
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  background: "rgb(0,0,0,30%)",
+                  opacity: "0",
+                }}
+                className={"overlay"}
+              ></Box>
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "-50%",
+                  left: "0",
+                  height: "30%",
+                  width: "100%",
+                }}
+                className={"cities_content_box"}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "24px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "30px",
+                    textAlign: "center",
+                  }}
+                  component={"h3"}
+                >
+                  Miami
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "35px",
+                    textAlign: "center",
+                  }}
+                  component={"h4"}
+                >
+                  24 properties
+                </Typography>
               </Box>
-
             </Box>
             <Box
               sx={{
@@ -976,56 +888,73 @@ marginTop:"88px",
                 position: "relative",
                 overflow: "hidden",
                 "&:hover": {
-                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
-                }
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)",
+                },
               }}
               className={"cities_box"}
               component={"a"}
               href="#"
             >
-              <Box className={"city_img"} sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                objectFit: "cover"
-              }} component={"img"} src="./assets/images/R4.jpg" />
-              <Box sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                background: "rgb(0,0,0,30%)",
-                opacity: "0"
-              }} className={"overlay"}></Box>
-              <Box sx={{
-                position: "absolute",
-                bottom: "-50%",
-                left: "0",
-                height: "30%",
-                width: "100%",
-
-              }}
-                className={"cities_content_box"}>
-                <Typography sx={{
-                  fontSize: "24px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "30px",
-                  textAlign: "center",
+              <Box
+                className={"city_img"}
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover",
                 }}
-                  component={"h3"}>New York</Typography>
-                <Typography sx={{
-                  fontSize: "18px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "35px",
-                  textAlign: "center",
-                }} component={"h4"}>48 properties</Typography>
+                component={"img"}
+                src="./assets/images/R4.jpg"
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  background: "rgb(0,0,0,30%)",
+                  opacity: "0",
+                }}
+                className={"overlay"}
+              ></Box>
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "-50%",
+                  left: "0",
+                  height: "30%",
+                  width: "100%",
+                }}
+                className={"cities_content_box"}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "24px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "30px",
+                    textAlign: "center",
+                  }}
+                  component={"h3"}
+                >
+                  New York
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "35px",
+                    textAlign: "center",
+                  }}
+                  component={"h4"}
+                >
+                  48 properties
+                </Typography>
               </Box>
-
             </Box>
           </Box>
 
@@ -1060,56 +989,73 @@ marginTop:"88px",
                 position: "relative",
                 overflow: "hidden",
                 "&:hover": {
-                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
-                }
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)",
+                },
               }}
               className={"cities_box"}
               component={"a"}
               href="#"
             >
-              <Box className={"city_img"} sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                objectFit: "cover"
-              }} component={"img"} src="./assets/images/R9.jpg" />
-              <Box sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                background: "rgb(0,0,0,30%)",
-                opacity: "0"
-              }} className={"overlay"}></Box>
-              <Box sx={{
-                position: "absolute",
-                bottom: "-50%",
-                left: "0",
-                height: "30%",
-                width: "100%",
-
-              }}
-                className={"cities_content_box"}>
-                <Typography sx={{
-                  fontSize: "24px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "30px",
-                  textAlign: "center",
+              <Box
+                className={"city_img"}
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover",
                 }}
-                  component={"h3"}>Florida</Typography>
-                <Typography sx={{
-                  fontSize: "18px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "35px",
-                  textAlign: "center",
-                }} component={"h4"}>35 properties</Typography>
+                component={"img"}
+                src="./assets/images/R9.jpg"
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  background: "rgb(0,0,0,30%)",
+                  opacity: "0",
+                }}
+                className={"overlay"}
+              ></Box>
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "-50%",
+                  left: "0",
+                  height: "30%",
+                  width: "100%",
+                }}
+                className={"cities_content_box"}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "24px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "30px",
+                    textAlign: "center",
+                  }}
+                  component={"h3"}
+                >
+                  Florida
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "35px",
+                    textAlign: "center",
+                  }}
+                  component={"h4"}
+                >
+                  35 properties
+                </Typography>
               </Box>
-
             </Box>
             <Box
               sx={{
@@ -1125,62 +1071,74 @@ marginTop:"88px",
                 position: "relative",
                 overflow: "hidden",
                 "&:hover": {
-                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)"
-                }
+                  boxShadow: "3px 5px 10px 7px rgb(19 19 28 / 13%)",
+                },
               }}
               className={"cities_box"}
               component={"a"}
               href="#"
             >
-              <Box className={"city_img"} sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                objectFit: "cover"
-              }} component={"img"} src="./assets/images/R8.jpg" />
-              <Box sx={{
-                position: "absolute",
-                bottom: "0",
-                left: "0",
-                height: "100%",
-                width: "100%",
-                background: "rgb(0,0,0,30%)",
-                opacity: "0"
-              }} className={"overlay"}></Box>
-              <Box sx={{
-                position: "absolute",
-                bottom: "-50%",
-                left: "0",
-                height: "30%",
-                width: "100%",
-
-              }}
-                className={"cities_content_box"}>
-                <Typography sx={{
-                  fontSize: "24px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "30px",
-                  textAlign: "center",
+              <Box
+                className={"city_img"}
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover",
                 }}
-                  component={"h3"}>Los Angeles</Typography>
-                <Typography sx={{
-                  fontSize: "18px",
-                  color: theme.palette.primary.white,
-                  fontWeight: "500",
-                  lineHeight: "35px",
-                  textAlign: "center",
-                }} component={"h4"}>18 properties</Typography>
+                component={"img"}
+                src="./assets/images/R8.jpg"
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  height: "100%",
+                  width: "100%",
+                  background: "rgb(0,0,0,30%)",
+                  opacity: "0",
+                }}
+                className={"overlay"}
+              ></Box>
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "-50%",
+                  left: "0",
+                  height: "30%",
+                  width: "100%",
+                }}
+                className={"cities_content_box"}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "24px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "30px",
+                    textAlign: "center",
+                  }}
+                  component={"h3"}
+                >
+                  Los Angeles
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    color: theme.palette.primary.white,
+                    fontWeight: "500",
+                    lineHeight: "35px",
+                    textAlign: "center",
+                  }}
+                  component={"h4"}
+                >
+                  18 properties
+                </Typography>
               </Box>
-
             </Box>
-
-
-
-
-
           </Box>
         </Container>
       </Box>
@@ -1244,142 +1202,204 @@ marginTop:"88px",
               },
               justifyContent: "space-between",
               alignItems: "center",
-              gap: "30px"
+              gap: "30px",
             }}
           >
-            <Box className={"choose_box"} sx={{
-              backgroundColor: theme.palette.primary.white,
-              padding: "30px",
-              borderRadius: "10px",
-              transition: "all .3s ease",
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "25px",
-              minHeight: "250px",
-              "&:hover": {
-                boxShadow: "0 0 50px 0 rgba(19,19,28,.12)"
-              }
-            }} flex={1}>
-              <Box sx={{
-                height: "70px",
-                width: "70px",
-                borderRadius: "100%",
-                padding: "20px",
-                background: theme.palette.primary.LightGreen,
+            <Box
+              className={"choose_box"}
+              sx={{
+                backgroundColor: theme.palette.primary.white,
+                padding: "30px",
+                borderRadius: "10px",
+                transition: "all .3s ease",
+                textAlign: "center",
                 display: "flex",
-                justifyContent: "center",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 alignItems: "center",
-              }} className={"choose_icon_box"}>
-                <Box className={"img_color"} component={"img"} src="./assets/images/trust.png" />
+                gap: "25px",
+                minHeight: "250px",
+                "&:hover": {
+                  boxShadow: "0 0 50px 0 rgba(19,19,28,.12)",
+                },
+              }}
+              flex={1}
+            >
+              <Box
+                sx={{
+                  height: "70px",
+                  width: "70px",
+                  borderRadius: "100%",
+                  padding: "20px",
+                  background: theme.palette.primary.LightGreen,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className={"choose_icon_box"}
+              >
+                <Box
+                  className={"img_color"}
+                  component={"img"}
+                  src="./assets/images/trust.png"
+                />
               </Box>
               <Box className={"box_details"}>
-                <Typography sx={{
-                  fontSize: "24px",
-                  fontWeight: "500",
-                  lineHeight: "30px",
-                  marginBottom: "25px",
-                }} component={"h3"}>Trusted By Thousands</Typography>
-                <Typography sx={{
-                  fontSize: "14px",
+                <Typography
+                  sx={{
+                    fontSize: "24px",
+                    fontWeight: "500",
+                    lineHeight: "30px",
+                    marginBottom: "25px",
+                  }}
+                  component={"h3"}
+                >
+                  Trusted By Thousands
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
 
-                  fontWeight: "400",
-                  lineHeight: "20px",
-                }} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
-
+                    fontWeight: "400",
+                    lineHeight: "20px",
+                  }}
+                  component={"p"}
+                >
+                  Aliquam dictum elit vitae mauris facilisis at dictum urna
+                  dignissim donec vel lectus vel felis.
+                </Typography>
               </Box>
             </Box>
-            <Box className={"choose_box"} sx={{
-              backgroundColor: theme.palette.primary.white,
-              padding: "30px",
-              borderRadius: "10px",
-              transition: "all .3s ease",
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "25px",
-              minHeight: "250px",
-              "&:hover": {
-                boxShadow: "0 0 50px 0 rgba(19,19,28,.12)"
-              }
-            }} flex={1}>
-              <Box sx={{
-                height: "70px",
-                width: "70px",
-                borderRadius: "100%",
-                padding: "20px",
-                background: theme.palette.primary.LightGreen,
+            <Box
+              className={"choose_box"}
+              sx={{
+                backgroundColor: theme.palette.primary.white,
+                padding: "30px",
+                borderRadius: "10px",
+                transition: "all .3s ease",
+                textAlign: "center",
                 display: "flex",
-                justifyContent: "center",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 alignItems: "center",
-              }} className={"choose_icon_box"}>
-                <Box className={"img_color"} component={"img"} src="./assets/images/home.png" />
+                gap: "25px",
+                minHeight: "250px",
+                "&:hover": {
+                  boxShadow: "0 0 50px 0 rgba(19,19,28,.12)",
+                },
+              }}
+              flex={1}
+            >
+              <Box
+                sx={{
+                  height: "70px",
+                  width: "70px",
+                  borderRadius: "100%",
+                  padding: "20px",
+                  background: theme.palette.primary.LightGreen,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className={"choose_icon_box"}
+              >
+                <Box
+                  className={"img_color"}
+                  component={"img"}
+                  src="./assets/images/home.png"
+                />
               </Box>
               <Box className={"box_details"}>
-                <Typography sx={{
-                  fontSize: "24px",
-                  fontWeight: "500",
-                  lineHeight: "30px",
-                  marginBottom: "25px",
-                }} component={"h3"}>Wide Renge Of Properties</Typography>
-                <Typography sx={{
-                  fontSize: "14px",
+                <Typography
+                  sx={{
+                    fontSize: "24px",
+                    fontWeight: "500",
+                    lineHeight: "30px",
+                    marginBottom: "25px",
+                  }}
+                  component={"h3"}
+                >
+                  Wide Renge Of Properties
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
 
-                  fontWeight: "400",
-                  lineHeight: "20px",
-                }} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
-
+                    fontWeight: "400",
+                    lineHeight: "20px",
+                  }}
+                  component={"p"}
+                >
+                  Aliquam dictum elit vitae mauris facilisis at dictum urna
+                  dignissim donec vel lectus vel felis.
+                </Typography>
               </Box>
             </Box>
-            <Box className={"choose_box"} sx={{
-              backgroundColor: theme.palette.primary.white,
-              padding: "30px",
-              borderRadius: "10px",
-              transition: "all .3s ease",
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "25px",
-              minHeight: "250px",
-              "&:hover": {
-                boxShadow: "0 0 50px 0 rgba(19,19,28,.12)"
-              }
-            }} flex={1}>
-              <Box sx={{
-                height: "70px",
-                width: "70px",
-                borderRadius: "100%",
-                padding: "20px",
-                background: theme.palette.primary.LightGreen,
+            <Box
+              className={"choose_box"}
+              sx={{
+                backgroundColor: theme.palette.primary.white,
+                padding: "30px",
+                borderRadius: "10px",
+                transition: "all .3s ease",
+                textAlign: "center",
                 display: "flex",
-                justifyContent: "center",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 alignItems: "center",
-              }} className={"choose_icon_box"}>
-                <Box className={"img_color"} component={"img"} src="./assets/images/budget.png" />
+                gap: "25px",
+                minHeight: "250px",
+                "&:hover": {
+                  boxShadow: "0 0 50px 0 rgba(19,19,28,.12)",
+                },
+              }}
+              flex={1}
+            >
+              <Box
+                sx={{
+                  height: "70px",
+                  width: "70px",
+                  borderRadius: "100%",
+                  padding: "20px",
+                  background: theme.palette.primary.LightGreen,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className={"choose_icon_box"}
+              >
+                <Box
+                  className={"img_color"}
+                  component={"img"}
+                  src="./assets/images/budget.png"
+                />
               </Box>
               <Box className={"box_details"}>
-                <Typography sx={{
-                  fontSize: "24px",
-                  fontWeight: "500",
-                  lineHeight: "30px",
-                  marginBottom: "25px",
-                }} component={"h3"}>Financing Made Easy</Typography>
-                <Typography sx={{
-                  fontSize: "14px",
+                <Typography
+                  sx={{
+                    fontSize: "24px",
+                    fontWeight: "500",
+                    lineHeight: "30px",
+                    marginBottom: "25px",
+                  }}
+                  component={"h3"}
+                >
+                  Financing Made Easy
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
 
-                  fontWeight: "400",
-                  lineHeight: "20px",
-                }} component={"p"}>Aliquam dictum elit vitae mauris facilisis at dictum urna dignissim donec vel lectus vel felis.</Typography>
-
+                    fontWeight: "400",
+                    lineHeight: "20px",
+                  }}
+                  component={"p"}
+                >
+                  Aliquam dictum elit vitae mauris facilisis at dictum urna
+                  dignissim donec vel lectus vel felis.
+                </Typography>
               </Box>
             </Box>
-
           </Box>
         </Container>
       </Box>
@@ -1433,130 +1453,155 @@ marginTop:"88px",
               We only work with the best companies around the globe
             </Typography>
           </Box>
-          <Box sx={{
-            display: {
-              xs: "grid",
-              sm: "flex",
-              md: "flex",
-              lg: "flex",
-              xl: "flex",
-            },
-            justifyContent: "space-around",
-            gap: "15px"
-          }}>
-            <Box sx={{
-              height: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
+          <Box
+            sx={{
+              display: {
+                xs: "grid",
+                sm: "flex",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
               },
-              width: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              objectFit: "contain",
-              textAlign: "center"
-            }} component={"img"} src="./assets/images/logos/logo1.png" />
-            <Box sx={{
-              height: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              width: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              objectFit: "contain",
-              textAlign: "center"
-            }} component={"img"} src="./assets/images/logos/logo2.png" />
-            <Box sx={{
-              height: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              width: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              objectFit: "contain",
-              textAlign: "center"
-            }} component={"img"} src="./assets/images/logos/logo5.png" />
-            <Box sx={{
-              height: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              width: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              objectFit: "contain",
-              textAlign: "center"
-            }} component={"img"} src="./assets/images/logos/logo2.png" />
-            <Box sx={{
-              height: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              width: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              objectFit: "contain",
-              textAlign: "center"
-            }} component={"img"} src="./assets/images/logos/logo1.png" />
-            <Box sx={{
-              height: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              width: {
-                xs: "130px",
-                sm: "100px",
-                md: "150px",
-                lg: "150px",
-                xl: "150px",
-              },
-              objectFit: "contain",
-              textAlign: "center"
-            }} component={"img"} src="./assets/images/logos/logo5.png" />
+              justifyContent: "space-around",
+              gap: "15px",
+            }}
+          >
+            <Box
+              sx={{
+                height: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                width: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                objectFit: "contain",
+                textAlign: "center",
+              }}
+              component={"img"}
+              src="./assets/images/logos/logo1.png"
+            />
+            <Box
+              sx={{
+                height: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                width: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                objectFit: "contain",
+                textAlign: "center",
+              }}
+              component={"img"}
+              src="./assets/images/logos/logo2.png"
+            />
+            <Box
+              sx={{
+                height: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                width: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                objectFit: "contain",
+                textAlign: "center",
+              }}
+              component={"img"}
+              src="./assets/images/logos/logo5.png"
+            />
+            <Box
+              sx={{
+                height: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                width: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                objectFit: "contain",
+                textAlign: "center",
+              }}
+              component={"img"}
+              src="./assets/images/logos/logo2.png"
+            />
+            <Box
+              sx={{
+                height: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                width: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                objectFit: "contain",
+                textAlign: "center",
+              }}
+              component={"img"}
+              src="./assets/images/logos/logo1.png"
+            />
+            <Box
+              sx={{
+                height: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                width: {
+                  xs: "130px",
+                  sm: "100px",
+                  md: "150px",
+                  lg: "150px",
+                  xl: "150px",
+                },
+                objectFit: "contain",
+                textAlign: "center",
+              }}
+              component={"img"}
+              src="./assets/images/logos/logo5.png"
+            />
           </Box>
-
         </Container>
       </Box>
-{/* Partner section  */}
+      {/* Partner section  */}
       <Box
         className="partner_section"
         component={"section"}
@@ -1577,22 +1622,23 @@ marginTop:"88px",
             },
           }}
         >
-          <Box sx={{
-            display: {
-              xs: "grid",
-              sm: "flex",
-              md: "flex",
-              lg: "flex",
-              xl: "flex",
-            },
-            justifyContent: "space-between",
-            gap: "15px"
-          }}>
+          <Box
+            sx={{
+              display: {
+                xs: "grid",
+                sm: "flex",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
+              },
+              justifyContent: "space-between",
+              gap: "15px",
+            }}
+          >
             <Box
               className={"heading"}
               sx={{
                 textAlign: "left",
-
               }}
             >
               <Typography
@@ -1618,7 +1664,8 @@ marginTop:"88px",
                 We only work with the best companies around the globe
               </Typography>
             </Box>
-            <Button className="customBtnStyle"
+            <Button
+              className="customBtnStyle"
               sx={{
                 fontFamily: "'Roboto', sans-serif !important",
                 backgroundColor: "#dceeea",
@@ -1639,12 +1686,13 @@ marginTop:"88px",
                   backgroundColor: theme.palette.primary.logoColor,
                   color: theme.palette.primary.white,
                   boxShadow: "none",
-                }
-              }} variant="contained">Register Now</Button>
+                },
+              }}
+              variant="contained"
+            >
+              Register Now
+            </Button>
           </Box>
-
-
-
         </Container>
       </Box>
 
