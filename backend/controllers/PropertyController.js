@@ -74,9 +74,10 @@ async function getProperties(req, res) {
 
 // GET ONLY SINGLE PROPERTY (GET METHOD)
 async function getProperty(req, res) {
-  const propertyId = req.params.id;
+  const slug = req.params.slug;
   try {
-    const property = await PropertySchema.findById(propertyId);
+    const property = await PropertySchema.findOne({ slug: slug });
+    
     if (property) {
       res.json({
         status: true,

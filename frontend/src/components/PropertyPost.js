@@ -24,7 +24,7 @@ import { IMAGE_BASE_URL } from "../common/urls";
 
 
 const PropertyPost = ({ propertyDetails }) => {
-  console.log(propertyDetails);
+  console.log("propertyDetails==>",propertyDetails);
   return (
     <Box>
       {/* <a href="/ProductDetails"> */}
