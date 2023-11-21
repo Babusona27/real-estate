@@ -717,7 +717,7 @@ const handleAddReview = () => {
                     variant="h6"
                     component={"h3"}
                   >
-                    John Doe
+                    Suraj Banerjee
                   </Typography>
                   <Rating
                     sx={{
