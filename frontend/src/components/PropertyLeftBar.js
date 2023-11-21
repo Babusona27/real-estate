@@ -30,23 +30,34 @@ import axios from "axios";
 
 const PropertyLeftBar = () => {
   const navigate = useNavigate();
-  const [val, setVal] = React.useState("");
-  const [val1, setVal1] = React.useState("");
+  const [propertyType, setProperty] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState("");
   const [val2, setVal2] = React.useState("");
   const [val3, setVal3] = React.useState("");
   const [val4, setVal4] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const [category, setCategory] = useState(false);
-  const [propertyType, setPropertyType] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categoryList, setCategoryList] = useState(false);
 
-  const handleChange1 = (event) => {
-    setVal(event.target.value);
+  const paramsArray = [];
+
+
+
+  const handlePropertyType = (event) => {
+    console.log("event-->", event.target.value);  
+    setProperty(event.target.value);
+    if(event.target.value != ""){
+      paramsArray.push(`type=${event.target.value}`);
+    }
+      
     // setPropertyType(type);
     // setSelectedCategory("");
   };
-  const handleChange2 = (event) => {
-    setVal1(event.target.value);
+  const handleCategory = (event) => {
+    if(event.target.value != ""){
+      paramsArray.push(`category=${event.target.value}`);
+    }
+    //console.log("event-->", event.target.value);
+    setSelectedCategory(event.target.value);
   };
   const handleChange3 = (event) => {
     setVal2(event.target.value);
@@ -77,30 +88,30 @@ const PropertyLeftBar = () => {
     // navigate('/new-route');
 
     // Navigate to a route with query parameters
+    console.log('paramsArray', paramsArray);
     navigate('/Properties?param1=value1&param2=value2');
   };
  
   useEffect(() => {
     // Get Category 
-    const getcategories = async () => {
+    const getCategories = async () => {
       await axios
         .get(GET_ALL_CATEGORY)
         .then((response) => {
           if (response.data.status) {
             // console.log("response-->", response.data.data);
-            setCategory( response.data.data)
+            setCategoryList( response.data.data)
           }
 
         })
         .catch((err) => {
           console.log(err);
         });
-    }
-    
-    getcategories();
+    }    
+    getCategories();
   }, [])
 
-
+  
   return (
     <Box flex={2} paddingLeft={{ xs: '0px', md: '15px' }} paddingRight={{ xs: '0px', md: '15px' }}>
       <Box sx={{ padding: "25px 30px 30px", background: theme.palette.primary.white, boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)", borderRadius: "6px", marginBottom: "30px" }}>
@@ -144,15 +155,18 @@ const PropertyLeftBar = () => {
               open={open}
               onClose={handleClose}
               onOpen={handleOpen}
-              value={val}
+              value={propertyType}
               label="Property Type"
-              onChange={handleChange1}
+              onChange={handlePropertyType}
             >
-             { category && category.map((item, key) => ( 
-              <MenuItem value={item.type} key={item.type}>{item.type}</MenuItem>
-              ))}
-              {/* <MenuItem value='sale'>Sale</MenuItem>
-              <MenuItem value='rent'>Rent</MenuItem> */}
+             {/* { category && category.map((item, key) => ( 
+              
+              <MenuItem value={item.type} key={item.type}>{capitalizeFirstLetter(item.type)}</MenuItem>
+              ))} */}
+              <MenuItem value={""}>Property Type</MenuItem>
+              <MenuItem value={"sell"}>Sell</MenuItem>
+              <MenuItem value={"rent"}>Rent</MenuItem>
+            
             </Select>
           </FormControl>
         </Box>
@@ -163,20 +177,15 @@ const PropertyLeftBar = () => {
             <InputLabel htmlFor="grouped-select">All Categories</InputLabel>
             <Select
               id="grouped-select"
-              value={val1}
+              value={selectedCategory}
               label="All Categories"
-              onChange={handleChange2}>
+              onChange={handleCategory}>
 
-              <MenuItem value={"Category1"}>All Categories</MenuItem>
-              {category && category.map((item, key) => (
+              <MenuItem value={""}>All Categories</MenuItem>
+              {categoryList && categoryList.map((item, key) => (
                 <MenuItem value={item.category_name} key={item.category_name} >{item.category_name}</MenuItem>
               ))}
-              {/* <ListSubheader>Category 1</ListSubheader>
-              <MenuItem value={"Category2"}>Option 1</MenuItem>
-              <MenuItem value={"Category3"}>Option 2</MenuItem>
-              <ListSubheader>Category 2</ListSubheader>
-              <MenuItem value={"Category4"}>Option 3</MenuItem>
-              <MenuItem value={"Category5"}>Option 4</MenuItem> */}
+            
             </Select>
           </FormControl>
         </Box>
