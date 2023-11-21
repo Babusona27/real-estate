@@ -188,52 +188,40 @@ const Home = () => {
             </Typography>
 
             <Box sx={{ width: "100%", margin: "0px auto", marginTop: "50px" }}>
-              <Tabs
-                className="tab_box"
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                value={value}
-                onChange={handleChange}
-                centered
-                indicatorColor="none"
-                textColor="primary"
-              >
-                <Tab
+            <Box sx={{
+              display:"flex",
+              gap:"20px",
+              justifyContent:"center",
+              alignItems:"center",
+              marginBottom:"25px",
+            }}>
+                <Button
                   sx={{
-                    backgroundColor: "#fff",
-                    height: "35px",
-                    lineHeight: "1",
-                    textAlign: "center",
-                    width: "auto",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    overflow: "visible",
+                    width:"12%",
+                    backgroundColor: theme.palette.primary.white,
+            color: theme.palette.primary.logoColor,
+            height: "40px",
+            "&:hover":
+            {
+              backgroundColor: theme.palette.primary.logoColor,
+              color: theme.palette.primary.white,
+            },
                   }}
-                  label="Buy"
-                  className={`tabBtn ${value === 0 ? "active_tab" : ""}`}
-                />
-                <Tab
+                >Sale</Button>
+                <Button
                   sx={{
-                    backgroundColor: "#fff",
-                    height: "35px",
-                    lineHeight: "1",
-                    textAlign: "center",
-                    width: "auto",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    overflow: "visible",
+                    width:"12%",
+                    backgroundColor: theme.palette.primary.logoColor,
+            height: "40px",
+            color: theme.palette.primary.white,
+            "&:hover":
+            {
+              backgroundColor: "#00a376"
+            },
                   }}
-                  label="Rent"
-                  className={`tabBtn ${value === 1 ? "active_tab" : ""}`}
-                />
-              </Tabs>
+                >Rent</Button>
+</Box>
 
-              <TabPanel value={value} index={0}>
                 <Box
                   className={"tab_cont"}
                   sx={{
@@ -284,13 +272,13 @@ const Home = () => {
                       sx={{ color: theme.palette.primary.lightGrey }}
                     >
                       <InputLabel id="demo-controlled-open-select-label">
-                        Property Type
+                       Location
                       </InputLabel>
                       <Select
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
                         value={propertyType}
-                        label="Property Type"
+                        label="Location"
                        // onChange={handleChangeProperType}
                       >
                         <MenuItem value={''}>Property Type</MenuItem>
@@ -336,109 +324,6 @@ const Home = () => {
                     Search
                   </Button>
                 </Box>
-              </TabPanel>
-
-              <TabPanel value={value} index={1}>
-                <Box
-                  className={"tab_cont"}
-                  sx={{
-                    backgroundColor: theme.palette.primary.white,
-                    padding: "20px 20px",
-                    display: {
-                      xs: "block",
-                      sm: "flex",
-                      md: "flex",
-                      lg: "flex",
-                    },
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "20px",
-                    position: "relative",
-                    zIndex: "5",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <TextField
-                    className="form_input1"
-                    fullWidth
-                    id="outlined-basic"
-                    label="Enter keyword..."
-                    variant="outlined"
-                    sx={{
-                      marginBottom: {
-                        xs: "20px",
-                        sm: "0px",
-                        md: "0px",
-                        lg: "0px",
-                        xl: "0px",
-                      },
-                    }}
-                  />
-                  {/* <Box sx={{
-                    width: "100%", marginBottom: {
-                      xs: "20px",
-                      sm: "0px",
-                      md: "0px",
-                      lg: "0px",
-                      xl: "0px",
-                    }
-                  }}>
-                    <FormControl
-                      className="form_input1"
-                      fullWidth
-                      sx={{ color: theme.palette.primary.lightGrey }}
-                    >
-                      <InputLabel id="demo-controlled-open-select-label">
-                        Property Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={propertyType}
-                        label="Property Type"
-                        //onChange={handleChangeProperType}
-                      >
-                        <MenuItem value={1}>Property Type </MenuItem>
-                        <MenuItem value={2}>Sale</MenuItem>
-                        <MenuItem value={3}>Rent</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box> */}
-                  {/* <TextField
-                    className="form_input1"
-                    fullWidth
-                    id="outlined-basic"
-                    label="Location"
-                    variant="outlined"
-                    sx={{
-                      width: "100%",
-                      marginBottom: {
-                        xs: "20px",
-                        sm: "0px",
-                        md: "0px",
-                        lg: "0px",
-                        xl: "0px",
-                      },
-                    }}
-                  /> */}
-
-                  <Button
-                    sx={{
-                      width: "100%",
-                      backgroundColor: theme.palette.primary.logoColor,
-                      height: "45px",
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      lineHeight: "1.2px",
-                      boxShadow: "0 7px 18px 0 rgba(29, 142, 162, 0.32)",
-                      color: theme.palette.primary.white,
-                      "&:hover": { backgroundColor: "#00a376" },
-                    }}
-                  >
-                    Search
-                  </Button>
-                </Box>
-              </TabPanel>
             </Box>
           </Box>
         </Container>
