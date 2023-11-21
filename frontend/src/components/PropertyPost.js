@@ -24,7 +24,7 @@ import { IMAGE_BASE_URL } from "../common/urls";
 
 
 const PropertyPost = ({ propertyDetails }) => {
-  console.log(propertyDetails);
+  // console.log(propertyDetails);
   return (
     <Box>
       {/* <a href="/ProductDetails"> */}
@@ -66,7 +66,7 @@ const PropertyPost = ({ propertyDetails }) => {
                   fontWeight: "600",
                   textShadow: "0.5px 0.5px #000000",
                   color: theme.palette.primary.white
-                }} variant="h6">{propertyDetails.price}</Typography>
+                }} variant="h6">$ {propertyDetails.price}</Typography>
                 <Listings className="listings">
                   <IconButton
                     sx={{
