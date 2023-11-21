@@ -7,13 +7,14 @@ const { checkSeller } = require("../middleware/CheckSeller");
 const { checkBuyer } = require("../middleware/CheckBuyer");
 const { authenticate } = require("../middleware/Authentication");
 const { getCategories, createCategory, updateCategory, deleteCategory, } = require("../controllers/CategoryController");
-const { getProperties, createProperty, updateProperty, deleteProperty, getProperty, deleteImages, getSellerProperty, reviewSubmit } = require("../controllers/PropertyController");
 const { GetCountry, CreateCountry, UpdateCountry, DeleteCountry, } = require("../controllers/CountryController");
 const { addToFavorite, myFavorites, deleteFavorite, sendAppointmentRequest } = require("../controllers/FavouriteController");
 const BlogController = require("../controllers/BlogController");
 const AboutUsController = require("../controllers/AboutUsController");
 const TermsAndConditionsController = require("../controllers/TermsAndConditionsController");
 const PrivacyPolicyController = require("../controllers/PrivacyPolicyController");
+const ContactUsController = require("../controllers/ContactUsController");
+const propertyController = require("../controllers/PropertyController");
 
 
 
@@ -25,20 +26,17 @@ router.put("/updatecategory/:id", updateCategory);
 router.delete("/deletecategory/:id", deleteCategory);
 
 // ******************All PROPERTY ROUTE*********************
-router.get("/getproperties", getProperties);
-router.get("/propertydetails/:id", getProperty);
-router.post("/createproperty", authenticate, validateRequest, checkSeller, createProperty);
-router.put("/updateproperty/:id", authenticate, checkSeller, updateProperty);
-router.delete("/deleteproperty/:id", authenticate, checkSeller, deleteProperty);
+router.get("/getproperties", propertyController.getProperties);
+router.get("/propertydetails/:id", propertyController.getProperty);
+router.post("/createproperty", authenticate, validateRequest, checkSeller, propertyController.createProperty);
+router.put("/updateproperty/:id", authenticate, checkSeller, propertyController.updateProperty);
+router.delete("/deleteproperty/:id", authenticate, checkSeller, propertyController.deleteProperty);
+router.post("/reviewsubmit/:propertyId", authenticate, checkBuyer, propertyController.reviewSubmit);
+router.get("/reviews/:propertyId", propertyController.getReviews);
+router.put("/updatereview/:propertyId", authenticate, checkBuyer, propertyController.updateReviews);
 
-// ******************REVIEWS ROUTE*********************
-router.post("/reviewsubmit/:propertyId", authenticate, checkBuyer, reviewSubmit);
-
-// ******************GET SELLER ALL PROPERTY*********************
-router.get("/myproperties", authenticate, checkSeller, getSellerProperty);
-
-// ******************DELETE IMAGE ROUTE********
-router.delete("/deleteimages/:id/:imageIndex", deleteImages);
+router.get("/myproperties", authenticate, checkSeller, propertyController.getSellerProperty);
+router.delete("/deleteimages/:id/:imageIndex", propertyController.deleteImages);
 
 // ********************All FAVOURITE ROUTE******************************
 router.post("/addToFavorite", authenticate, checkBuyer, addToFavorite);
@@ -77,8 +75,8 @@ router.get("/privacypolicy", PrivacyPolicyController.getPrivacyPolicy);
 router.post("/privacypolicy", PrivacyPolicyController.createPrivacyPolicy);
 router.put("/privacypolicy/:id", PrivacyPolicyController.updatePrivacyPolicy);
 router.delete("/privacypolicy/:id", PrivacyPolicyController.deletePrivacyPolicy);
-
-
-
+// ********************All ContactUs ROUTE******************************
+router.get("/contactus", ContactUsController.getContactUs);
+router.post("/contactus", ContactUsController.createContactUs);
 
 module.exports = router;

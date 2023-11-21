@@ -98,7 +98,7 @@ async function Userlogin(req, res) {
     const token = jwt.sign(payload, secretKey, {
       expiresIn: "24h",
     });
-    
+
     const data = {
       token: token,
       user_name: user.user_name,
