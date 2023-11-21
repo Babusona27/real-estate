@@ -19,4 +19,5 @@ export const GET_ABOUT_US = BASE_URL+'/aboutus';
 export const GET_PRIVACY_POLICY = BASE_URL+'/privacypolicy';
 export const GET_TERMS_CONDITIONS = BASE_URL+'/termsandconditions';
 export const GET_BLOGS = BASE_URL+'/blog';
+export const GET_CONTACTUS_DETAILS = BASE_URL+'/contactus';
 
