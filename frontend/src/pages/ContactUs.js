@@ -72,7 +72,7 @@ const ContactUs = () => {
       <Box>
         <Header />
       </Box>
-      <BreadcrumbsBanner />
+      <BreadcrumbsBanner title="Contact Us" />
       <Box>
         <Container
           maxWidth="lg"
@@ -297,36 +297,43 @@ const ContactUs = () => {
             </Box>
           </Box>
         </Container>
+        <Box sx={{
+              backgroundImage: "url(./assets/images/R10.jpg)",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundAttachment:"fixed",
+              height: "auto", 
+        }} component={"section"}>
         <Container
           maxWidth="lg"
           sx={{
             height: "100%",
             padding: {
-              xs: "0px 10px",
+              xs: "30px 10px",
               sm: "40px 10px",
               md: "40px 10px",
               lg: "40px 0px",
             },
-            background: theme.palette.primary.white,
+            background: "transparent",
           }}
         >
-          <Box
-            sx={{
+            <Box sx={{
               padding: "30px",
-              background: theme.palette.primary.white,
-              border: "1px solid #ebebeb",
+              position:"relative",
+              background: "rgb(255 255 255 / 90%)",
               borderRadius: "8px",
               marginBottom: "25px",
               transition: "all 0.4s ease-out",
+              boxShadow: "0 4px 12px rgba(0,0,0,15%)",
               marginTop: {
                 xs: "30px",
                 lg: "0px",
               },
               "&:hover": {
-                boxShadow: "0 4px 12px rgba(0,0,0,.1)",
+                boxShadow: "0 4px 12px rgba(0,0,0,20%)",
               },
-            }}
-          >
+            }}>
+            <Box sx={{}}>
             <Typography
               variant="h4"
               component={"h4"}
@@ -478,7 +485,11 @@ const ContactUs = () => {
                 </Box>
               )}
           </Box>
+            </Box>
+       
         </Container>
+        </Box>
+        
                 {/* Partner section  */}
       <Box
         className="partner_section"
