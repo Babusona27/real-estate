@@ -1556,7 +1556,7 @@ marginTop:"88px",
 
         </Container>
       </Box>
-
+{/* Partner section  */}
       <Box
         className="partner_section"
         component={"section"}
