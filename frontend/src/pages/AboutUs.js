@@ -1,21 +1,44 @@
 import { Box, Container, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
-
+import { GET_ABOUT_US } from "../common/urls";
 import theme from "../Theme";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
-const AboutUs = () => {
+const AboutUs = () => { 
+  const [aboutUs, setAboutUs] = useState([]);
+ 
+
+  const _getAboutUs = async () => {
+    await axios
+      .get(GET_ABOUT_US)
+      .then((response) => {
+        // console.log("response", response);
+        if (response.data.status) {
+          setAboutUs(response.data.data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    _getAboutUs();
+  }, []);
+  
   return (
     <>
       <Box>
         <Header />
       </Box>
-      <BreadcrumbsBanner />
+      {/* <BreadcrumbsBanner /> */}
+      <BreadcrumbsBanner title="About Us" />
       <Box>
         <Container
           maxWidth="lg"
@@ -47,17 +70,18 @@ const AboutUs = () => {
               }}
             >
               Our Mission
+
             </Typography>
             <Box
               sx={{
                 display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
                 justifyContent: "space-between",
                 alignItems: "center",
-                flexDirection:{
-                  xs:"column-reverse",
-                  sm:"column-reverse",
-                  md:"row",
-                  lg:"row",
+                flexDirection: {
+                  xs: "column-reverse",
+                  sm: "column-reverse",
+                  md: "row",
+                  lg: "row",
 
                 }
               }}
@@ -85,9 +109,7 @@ const AboutUs = () => {
                   variant="h6"
                   component={"h3"}
                 >
-                  Mauris ac consectetur ante, dapibus gravida tellus. Nullam
-                  aliquet eleifend dapibus. Cras sagittis, ex euismod lacinia
-                  tempor.
+                  {aboutUs  && aboutUs.title}
                 </Typography>
                 <Typography
                   sx={{
@@ -103,18 +125,9 @@ const AboutUs = () => {
                   variant="body2"
                   component={"p"}
                 >
-                  Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Duis
-                  Mollis Et Sem Sed Sollicitudin. Donec Non Odio Neque. Aliquam
-                  Hendrerit Sollicitudin Purus, Quis Rutrum Mi Accumsan Nec.
-                  Quisque Bibendum Orci Ac Nibh Facilisis, At Malesuada Orci
-                  Congue. Nullam Tempus Sollicitudin Cursus. Lorem Ipsum Dolor
-                  Sit Amet, Consectetur Adipiscing Elit. Duis Mollis Et Sem Sed
-                  Sollicitudin. Donec Non Odio Neque. Aliquam Hendrerit
-                  Sollicitudin Purus, Quis Rutrum Mi Accumsan Nec. Quisque
-                  Bibendum Orci Ac Nibh Facilisis, At Malesuada Orci Congue.
-                  Nullam Tempus Sollicitudin Cursus.
+                  {aboutUs  && aboutUs.description}
                 </Typography>
-                <Typography
+                {/* <Typography
                   sx={{
                     color: theme.palette.primary.dark,
                     display: "block",
@@ -133,7 +146,7 @@ const AboutUs = () => {
                   Hendrerit Sollicitudin Purus, Quis Rutrum Mi Accumsan Nec.
                   Quisque Bibendum Orci Ac Nibh Facilisis, At Malesuada Orci
                   Congue. Nullam Tempus Sollicitudin Cursus.
-                </Typography>
+                </Typography> */}
                 <Box
                   component={"ul"}
                   sx={{
