@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const { validateRequest } = require("../middleware/PropertyMiddleware");
-const { Userregister, Userlogin } = require("../controllers/UserController");
 const { checkSeller } = require("../middleware/CheckSeller");
 const { checkBuyer } = require("../middleware/CheckBuyer");
 const { authenticate } = require("../middleware/Authentication");
@@ -15,6 +14,7 @@ const TermsAndConditionsController = require("../controllers/TermsAndConditionsC
 const PrivacyPolicyController = require("../controllers/PrivacyPolicyController");
 const ContactUsController = require("../controllers/ContactUsController");
 const propertyController = require("../controllers/PropertyController");
+const UserController = require("../controllers/UserController");
 
 
 
@@ -31,8 +31,9 @@ router.get("/propertydetails/:slug", propertyController.getProperty);
 router.post("/createproperty", authenticate, validateRequest, checkSeller, propertyController.createProperty);
 router.put("/updateproperty/:id", authenticate, checkSeller, propertyController.updateProperty);
 router.delete("/deleteproperty/:id", authenticate, checkSeller, propertyController.deleteProperty);
+//property review
 router.post("/reviewsubmit/:propertyId", authenticate, checkBuyer, propertyController.reviewSubmit);
-router.get("/reviews/:propertyId", propertyController.getReviews);
+router.get("/reviews/:propertyId", authenticate, propertyController.getReviews);
 router.put("/updatereview/:propertyId", authenticate, checkBuyer, propertyController.updateReviews);
 
 
@@ -48,8 +49,11 @@ router.get("/myFavorites/:user_id", authenticate, checkBuyer, myFavorites);
 router.post("/sendAppointmentRequest", authenticate, checkBuyer, sendAppointmentRequest);
 
 // ********************USER ROUTE******************************
-router.post("/Userregister", Userregister);
-router.post("/Userlogin", Userlogin);
+router.post("/Userregister", UserController.userRegister);
+router.post("/Userlogin", UserController.userLogin);
+//user review
+router.post("/userreview/:userId", authenticate, UserController.userReview);
+router.get("/userreviews/:userId", authenticate, UserController.getUserReviews);
 
 // ********************All COUNTRY ROUTE******************************
 router.get("/country", GetCountry);
