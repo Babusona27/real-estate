@@ -188,106 +188,106 @@ const Home = () => {
             </Typography>
 
             <Box sx={{ width: "100%", margin: "0px auto", marginTop: "50px" }}>
-            <Box sx={{
-              display:"flex",
-              gap:"20px",
-              justifyContent:"center",
-              alignItems:"center",
-              marginBottom:"25px",
-            }}>
+              <Box sx={{
+                display: "flex",
+                gap: "20px",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "25px",
+              }}>
                 <Button
                   sx={{
-                    width:"12%",
+                    width: "12%",
                     backgroundColor: theme.palette.primary.white,
-            color: theme.palette.primary.logoColor,
-            height: "40px",
-            "&:hover":
-            {
-              backgroundColor: theme.palette.primary.logoColor,
-              color: theme.palette.primary.white,
-            },
+                    color: theme.palette.primary.logoColor,
+                    height: "40px",
+                    "&:hover":
+                    {
+                      backgroundColor: theme.palette.primary.logoColor,
+                      color: theme.palette.primary.white,
+                    },
                   }}
                 >Sale</Button>
                 <Button
                   sx={{
-                    width:"12%",
+                    width: "12%",
                     backgroundColor: theme.palette.primary.logoColor,
-            height: "40px",
-            color: theme.palette.primary.white,
-            "&:hover":
-            {
-              backgroundColor: "#00a376"
-            },
+                    height: "40px",
+                    color: theme.palette.primary.white,
+                    "&:hover":
+                    {
+                      backgroundColor: "#00a376"
+                    },
                   }}
                 >Rent</Button>
-</Box>
+              </Box>
 
-                <Box
-                  className={"tab_cont"}
+              <Box
+                className={"tab_cont"}
+                sx={{
+                  backgroundColor: theme.palette.primary.white,
+                  padding: "20px 20px",
+                  display: {
+                    xs: "block",
+                    sm: "flex",
+                    md: "flex",
+                    lg: "flex",
+                  },
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "20px",
+                  position: "relative",
+                  zIndex: "5",
+                  borderRadius: "10px",
+                }}
+              >
+                <TextField
+                  className="form_input1"
+                  fullWidth
+                  id="outlined-basic"
+                  label="Enter keyword..."
+                  variant="outlined"
                   sx={{
-                    backgroundColor: theme.palette.primary.white,
-                    padding: "20px 20px",
-                    display: {
-                      xs: "block",
-                      sm: "flex",
-                      md: "flex",
-                      lg: "flex",
-                    },
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: "20px",
-                    position: "relative",
-                    zIndex: "5",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <TextField
-                    className="form_input1"
-                    fullWidth
-                    id="outlined-basic"
-                    label="Enter keyword..."
-                    variant="outlined"
-                    sx={{
-                      marginBottom: {
-                        xs: "20px",
-                        sm: "0px",
-                        md: "0px",
-                        lg: "0px",
-                        xl: "0px",
-                      },
-                    }}
-                  />
-                  <Box sx={{
-                    width: "100%", marginBottom: {
+                    marginBottom: {
                       xs: "20px",
                       sm: "0px",
                       md: "0px",
                       lg: "0px",
                       xl: "0px",
-                    }
-                  }}>
-                    <FormControl
-                      className="form_input1"
-                      fullWidth
-                      sx={{ color: theme.palette.primary.lightGrey }}
+                    },
+                  }}
+                />
+                <Box sx={{
+                  width: "100%", marginBottom: {
+                    xs: "20px",
+                    sm: "0px",
+                    md: "0px",
+                    lg: "0px",
+                    xl: "0px",
+                  }
+                }}>
+                  <FormControl
+                    className="form_input1"
+                    fullWidth
+                    sx={{ color: theme.palette.primary.lightGrey }}
+                  >
+                    <InputLabel id="demo-controlled-open-select-label">
+                      Location
+                    </InputLabel>
+                    <Select
+                      labelId="demo-controlled-open-select-label"
+                      id="demo-controlled-open-select"
+                      value={propertyType}
+                      label="Location"
+                    // onChange={handleChangeProperType}
                     >
-                      <InputLabel id="demo-controlled-open-select-label">
-                       Location
-                      </InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={propertyType}
-                        label="Location"
-                       // onChange={handleChangeProperType}
-                      >
-                        <MenuItem value={''}>Property Type</MenuItem>
-                        <MenuItem value={'sale'}>Sale</MenuItem>
-                        <MenuItem value={'rent'}>Rent</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  {/* <TextField
+                      <MenuItem value={''}>Property Type</MenuItem>
+                      <MenuItem value={'sale'}>Sale</MenuItem>
+                      <MenuItem value={'rent'}>Rent</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+                {/* <TextField
                     className="form_input1"
                     fullWidth
                     id="outlined-basic"
@@ -308,22 +308,22 @@ const Home = () => {
                     }}
                   /> */}
 
-                  <Button
-                    sx={{
-                      width: "100%",
-                      backgroundColor: theme.palette.primary.logoColor,
-                      height: "45px",
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      lineHeight: "1.2px",
-                      boxShadow: "0 7px 18px 0 rgba(29, 142, 162, 0.32)",
-                      color: theme.palette.primary.white,
-                      "&:hover": { backgroundColor: "#00a376" },
-                    }}
-                  >
-                    Search
-                  </Button>
-                </Box>
+                <Button
+                  sx={{
+                    width: "100%",
+                    backgroundColor: theme.palette.primary.logoColor,
+                    height: "45px",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    lineHeight: "1.2px",
+                    boxShadow: "0 7px 18px 0 rgba(29, 142, 162, 0.32)",
+                    color: theme.palette.primary.white,
+                    "&:hover": { backgroundColor: "#00a376" },
+                  }}
+                >
+                  Search
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Container>

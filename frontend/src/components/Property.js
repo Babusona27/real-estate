@@ -9,7 +9,6 @@ import { GET_PROPERTIES_API } from "../common/urls";
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../redux/reducers/UserReducer';
 
-
 const Property = () => {
   const propertyList = useSelector(state => state.PropertyListReducer.value);
   const userData = useSelector(state => state.UserReducer.value);
