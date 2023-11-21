@@ -15,3 +15,8 @@ export const GET_ALL_COUNTRIES_API =  '/country';
 export const POST_REGISTER_API = '/Userregister';
 export const POST_LOGIN_API = '/Userlogin';
 export const GET_ALL_CATEGORY = BASE_URL+'/getcategories';
+export const GET_ABOUT_US = BASE_URL+'/aboutus';
+export const GET_PRIVACY_POLICY = BASE_URL+'/privacypolicy';
+export const GET_TERMS_CONDITIONS = BASE_URL+'/termsandconditions';
+export const GET_BLOGS = BASE_URL+'/blog';
+

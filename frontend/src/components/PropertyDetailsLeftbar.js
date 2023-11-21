@@ -1,27 +1,67 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import React from "react";
 import theme from "../Theme";
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import NoCrashIcon from '@mui/icons-material/NoCrash';
-import KingBedIcon from '@mui/icons-material/KingBed';
-import BathtubIcon from '@mui/icons-material/Bathtub';
-import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { useParams } from 'react-router-dom';
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import NoCrashIcon from "@mui/icons-material/NoCrash";
+import KingBedIcon from "@mui/icons-material/KingBed";
+import BathtubIcon from "@mui/icons-material/Bathtub";
+import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useParams } from "react-router-dom";
 import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL } from "../common/urls";
 import { GetApiFetch } from "../common/CommonFunction";
 import { useSelector } from "react-redux";
 const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
-  console.log('propertyDetails', propertyDetails);
+  console.log("propertyDetails", propertyDetails);
+
+// add review popup box 
+const [open, setOpen] = useState(false);
+const [rating, setRating] = useState(0);
+const [comment, setComment] = useState('');
+const [name, setName] = useState('');
+
+const handleOpen = () => {
+  setOpen(true);
+};
+
+const handleClose = () => {
+  setOpen(false);
+};
+
+const handleAddReview = () => {
+  // Implement your logic to add the review (e.g., API call)
+  console.log('Rating:', rating);
+  console.log('Comment:', comment);
+  console.log('Name:', name);
+  // Close the dialog
+  handleClose();
+};
+
+
+
   return (
     <Box
       flex={2}
       paddingLeft={{ xs: "0px", md: "15px" }}
       paddingRight={{ xs: "0px", md: "15px" }}
     >
-      <Box component={"div"}
+      <Box
+        component={"div"}
         sx={{
           padding: "25px 30px 30px",
           background: theme.palette.primary.white,
@@ -42,12 +82,17 @@ const PropertyDetailsLeftbar = () => {
         >
           Overview
         </Typography>
-        <Box className="details_icon_list"
+        <Box
+          className="details_icon_list"
           component="ul"
           sx={{
             display: "grid",
             gap: "30px 15px",
-            gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" },
+            gridTemplateColumns: {
+              xs: "repeat(2, 1fr)",
+              sm: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
+            },
             alignItems: "center",
           }}
         >
@@ -70,33 +115,40 @@ const PropertyDetailsLeftbar = () => {
                 border: "1px solid rgb(232, 233, 241)",
                 color: theme.palette.primary.logoColor,
                 transition: "0.4s",
-                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)"
-              }}>
+                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)",
+              }}
+            >
               <LocalOfferIcon />
             </IconButton>
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              justifyContent: "center",
-              gap: "5px"
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: "16px",
                   color: theme.palette.primary.logoColor,
                   fontFamily: theme.palette.primary.Roboto,
                 }}
-                variant="h6" >ID No </Typography>
+                variant="h6"
+              >
+                ID No{" "}
+              </Typography>
               <Typography
                 sx={{
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails && propertyDetails._id}</Typography>
-
+                variant="span"
+              >
+                {propertyDetails && propertyDetails._id}
+              </Typography>
             </Box>
-
           </Box>
           <Box
             component="li"
@@ -117,33 +169,40 @@ const PropertyDetailsLeftbar = () => {
                 border: "1px solid rgb(232, 233, 241)",
                 color: theme.palette.primary.logoColor,
                 transition: "0.4s",
-                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)"
-              }}>
+                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)",
+              }}
+            >
               <NoCrashIcon />
             </IconButton>
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              justifyContent: "center",
-              gap: "5px"
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: "16px",
                   color: theme.palette.primary.logoColor,
                   fontFamily: theme.palette.primary.Roboto,
                 }}
-                variant="h6" >Parking</Typography>
+                variant="h6"
+              >
+                Parking
+              </Typography>
               <Typography
                 sx={{
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails && propertyDetails.parking ? 'Yes' : 'No'}</Typography>
-
+                variant="span"
+              >
+                {propertyDetails && propertyDetails.parking ? "Yes" : "No"}
+              </Typography>
             </Box>
-
           </Box>
           <Box
             component="li"
@@ -164,33 +223,40 @@ const PropertyDetailsLeftbar = () => {
                 border: "1px solid rgb(232, 233, 241)",
                 color: theme.palette.primary.logoColor,
                 transition: "0.4s",
-                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)"
-              }}>
+                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)",
+              }}
+            >
               <KingBedIcon />
             </IconButton>
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              justifyContent: "center",
-              gap: "5px"
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: "16px",
                   color: theme.palette.primary.logoColor,
                   fontFamily: theme.palette.primary.Roboto,
                 }}
-                variant="h6" >Bedroom</Typography>
+                variant="h6"
+              >
+                Bedroom
+              </Typography>
               <Typography
                 sx={{
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails && propertyDetails.bedroom}</Typography>
-
+                variant="span"
+              >
+                {propertyDetails && propertyDetails.bedroom}
+              </Typography>
             </Box>
-
           </Box>
           <Box
             component="li"
@@ -211,33 +277,40 @@ const PropertyDetailsLeftbar = () => {
                 border: "1px solid rgb(232, 233, 241)",
                 color: theme.palette.primary.logoColor,
                 transition: "0.4s",
-                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)"
-              }}>
+                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)",
+              }}
+            >
               <BathtubIcon />
             </IconButton>
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              justifyContent: "center",
-              gap: "5px"
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: "16px",
                   color: theme.palette.primary.logoColor,
                   fontFamily: theme.palette.primary.Roboto,
                 }}
-                variant="h6" >Bath</Typography>
+                variant="h6"
+              >
+                Bath
+              </Typography>
               <Typography
                 sx={{
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails && propertyDetails.bath} </Typography>
-
+                variant="span"
+              >
+                {propertyDetails && propertyDetails.bath}{" "}
+              </Typography>
             </Box>
-
           </Box>
           <Box
             component="li"
@@ -258,33 +331,40 @@ const PropertyDetailsLeftbar = () => {
                 border: "1px solid rgb(232, 233, 241)",
                 color: theme.palette.primary.logoColor,
                 transition: "0.4s",
-                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)"
-              }}>
-              < ZoomOutMapIcon />
+                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)",
+              }}
+            >
+              <ZoomOutMapIcon />
             </IconButton>
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              justifyContent: "center",
-              gap: "5px"
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: "16px",
                   color: theme.palette.primary.logoColor,
                   fontFamily: theme.palette.primary.Roboto,
                 }}
-                variant="h6" >Sqft </Typography>
+                variant="h6"
+              >
+                Sqft{" "}
+              </Typography>
               <Typography
                 sx={{
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails && propertyDetails.sqft}</Typography>
-
+                variant="span"
+              >
+                {propertyDetails && propertyDetails.sqft}
+              </Typography>
             </Box>
-
           </Box>
           <Box
             component="li"
@@ -305,45 +385,53 @@ const PropertyDetailsLeftbar = () => {
                 border: "1px solid rgb(232, 233, 241)",
                 color: theme.palette.primary.logoColor,
                 transition: "0.4s",
-                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)"
-              }}>
+                boxShadow: "0 4px 18px 0 rgba(188, 192, 202, 0.26)",
+              }}
+            >
               <LocationOnIcon />
             </IconButton>
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              justifyContent: "center",
-              gap: "5px"
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "start",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: "16px",
                   color: theme.palette.primary.logoColor,
                   fontFamily: theme.palette.primary.Roboto,
                 }}
-                variant="h6" >Location</Typography>
+                variant="h6"
+              >
+                Location
+              </Typography>
               <Typography
                 sx={{
                   fontSize: "14px",
                   color: theme.palette.primary.lightGrey,
                 }}
-                variant="span" >{propertyDetails && propertyDetails.state}</Typography>
-
+                variant="span"
+              >
+                {propertyDetails && propertyDetails.state}
+              </Typography>
             </Box>
-
           </Box>
         </Box>
-
-
       </Box>
-      <Box sx={{
-        padding: "25px 30px 30px",
-        background: theme.palette.primary.white,
-        boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
-        borderRadius: "6px",
-        marginBottom: "10px",
-      }} component={"div"}>
+      <Box
+        sx={{
+          padding: "25px 30px 30px",
+          background: theme.palette.primary.white,
+          boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
+          borderRadius: "6px",
+          marginBottom: "10px",
+        }}
+        component={"div"}
+      >
         <Typography
           sx={{
             fontSize: "22px",
@@ -367,51 +455,10 @@ const PropertyDetailsLeftbar = () => {
           }}
           component={"p"}
         >
-          {propertyDetails && propertyDetails.property_name} | {propertyDetails && propertyDetails.type} | Soon to be Available
+          {propertyDetails && propertyDetails.property_name} |{" "}
+          {propertyDetails && propertyDetails.type} | Soon to be Available
         </Typography>
-        {/* <Typography
-          sx={{
-            fontSize: "16px",
-            color: "rgb(85, 85, 85)",
-            lineHeight: "28px",
-            marginBottom: "25px",
-            fontFamily: theme.palette.primary.Roboto,
-          }}
-          component={"p"}
-        >
-          <p className="para"><b> MD REAL ESTATE </b>is delighted to offer you this spacious one bedroom for rent located in Mamsha . The size is 1497 Sqft with amazing sea view. The spacious apartment with large windows makes for a bright apartment with excellent views . Enjoy preparing meals in the closed kitchen that is fully fitted and has high quality countertops . The bedroom is complete with built in wardrobes and a respective modern bathroom. Perfectly finished with a large terrace for a breath of fresh air.</p>
-          <h3 className="details_list_heading">
-            Overview :
-          </h3>
-          <ul className="details_lists">
-            <li>
-              One Bedroom With Elegant Built-In-Wardrobes
-            </li>
-            <li>
-              Fitted Kitchen With Built-In-Cabinets and High Quality Countertops
-            </li>
-            <li>
-              Extensive Open Living and Dinning Area
-            </li>
-            <li>
-              Modern Bathroom With Walk-In-Shower and Bathtub
-            </li>
-            <li>
-              BUA: 1497.47 Sqft
-            </li>
-            <li>
-              One Designated Parking
-            </li>
-            <li>
-              For More information <b> Please Contact Our Property Consultant Carine</b>
-            </li>
-            <li>
-              <b>Margossian</b> +971565399293
-            </li>
-          </ul>
-
-
-        </Typography> */}
+       
         <Typography
           sx={{
             fontSize: "16px",
@@ -421,15 +468,20 @@ const PropertyDetailsLeftbar = () => {
             fontFamily: theme.palette.primary.Roboto,
           }}
           component={"p"}
-        >{propertyDetails && propertyDetails.description}</Typography>
+        >
+          {propertyDetails && propertyDetails.description}
+        </Typography>
       </Box>
-      <Box sx={{
-        padding: "25px 30px 30px",
-        background: theme.palette.primary.white,
-        boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
-        borderRadius: "6px",
-        marginBottom: "10px",
-      }} component={"div"}>
+      <Box
+        sx={{
+          padding: "25px 30px 30px",
+          background: theme.palette.primary.white,
+          boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
+          borderRadius: "6px",
+          marginBottom: "10px",
+        }}
+        component={"div"}
+      >
         <Typography
           sx={{
             fontSize: "22px",
@@ -443,13 +495,16 @@ const PropertyDetailsLeftbar = () => {
           Features & Amenities
         </Typography>
       </Box>
-      <Box sx={{
-        padding: "25px 30px 30px",
-        background: theme.palette.primary.white,
-        boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
-        borderRadius: "6px",
-        marginBottom: "10px",
-      }} component={"div"}>
+      <Box
+        sx={{
+          padding: "25px 30px 30px",
+          background: theme.palette.primary.white,
+          boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
+          borderRadius: "6px",
+          marginBottom: "10px",
+        }}
+        component={"div"}
+      >
         <Typography
           sx={{
             fontSize: "22px",
@@ -466,28 +521,301 @@ const PropertyDetailsLeftbar = () => {
           <img height={"100%"} width={"100%"} src="./assets/images/map.jpeg" />
         </Box>
       </Box>
-      <Box sx={{
-        padding: "25px 30px 30px",
-        background: theme.palette.primary.white,
-        boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
-        borderRadius: "6px",
-        marginBottom: "25px",
-      }} component={"div"}>
+      <Box
+        sx={{
+          padding: "25px 30px 30px",
+          background: theme.palette.primary.white,
+          boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)",
+          borderRadius: "6px",
+          marginBottom: "25px",
+        }}
+        component={"div"}
+      >
+        <Box sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "30px",
+              marginBottom: "50px",
+            }}>
         <Typography
           sx={{
-            fontSize: "22px",
+            fontSize: {
+              xs:"16px",
+              sm:"16px",
+              md:"22px",
+              lg:"22px",
+            },
             color: "#212121",
-            lineHeight: "30px",
-            marginBottom: "25px",
+            lineHeight: "22px",
             fontWeight: "500",
           }}
           variant="h6"
+          component={"h3"}
         >
-          Yelp Nearby Places
+          Customer Reviews
         </Typography>
+        <Button className="customBtnStyle"
+                    sx={{
+                      fontFamily:  theme.palette.primary.Roboto,
+                      backgroundColor: theme.palette.primary.logoColor,
+                      height: "40px",
+                      padding:{
+                        xs:"8px 10px",
+                        sm:"8px 10px",
+                        md:"8px 22px",
+                        lg:"8px 22px",
+                      },
+                      fontSize: "14px",
+                      lineHeight: "18px",
+                      fontWeight: "500",
+                      borderRadius:"8px",
+                      color: theme.palette.primary.white,
+                      "&:hover":
+                      {
+                        backgroundColor: theme.palette.primary.Green,
+                      },
+                    }} variant="contained" onClick={handleOpen}>
+        Add Review
+      </Button>
+        </Box>
+       
+        <Box>
+          <Box
+            sx={{
+              display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: {
+                xs: "column",
+                sm: "column",
+                md: "row",
+                lg: "row",
+              },
+              gap: "30px",
+            }}
+            mb={1}
+          >
+            <Avatar
+              sx={{
+                height: "100px",
+                width: "100px",
+                objectFit: "cover",
+              }}
+              alt="suraj"
+              src="./assets/images/R6.jpg"
+            />
+            <Box>
+              <Box sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}>
+                <Box>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      color: "#212121",
+                      lineHeight: "22px",
+                      fontWeight: "600",
+                      marginBottom: "10px",
+                      fontFamily: theme.palette.primary.Roboto,
+                    }}
+                    variant="h6"
+                    component={"h3"}
+                  >
+                    Suraj Banerjee
+                  </Typography>
+                  <Rating
+                    sx={{
+                      fontSize: "18px",
+                    }}
+                    name="customer-rating"
+                    value={4}
+                    readOnly
+                  />
+                </Box>
+                <Typography sx={{
+                 fontFamily: "'Roboto', sans-serif !important",
+                 backgroundColor: "#dceeea",
+                 color: theme.palette.primary.logoColor,
+                 padding: "8px 22px",
+                 fontSize: "14px",
+                 lineHeight: "18px",
+                 fontWeight: "500",
+                 borderRadius:"8px",
+                 border: "none",
+                 overflow: "hidden",
+                 position: "relative",
+                 boxShadow: "none",
+                 zIndex: "1",
+                 textTransform: "capitalize",
+                 "&:hover": {
+                   backgroundColor: theme.palette.primary.logoColor,
+                   color: theme.palette.primary.white,
+                   boxShadow: "none",
+                 }
+                }} variant="h6" component={"h3"}>
+                 Sep 3, 2020
+                </Typography>
+              </Box>
+
+              <Typography variant="body1" mt={1}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Typography>
+            </Box>
+          </Box>
+
+          <Divider
+            sx={{
+              margin: "20px 0px",
+            }}
+          />
+        </Box>
+         <Box>
+          <Box
+            sx={{
+              display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: {
+                xs: "column",
+                sm: "column",
+                md: "row",
+                lg: "row",
+              },
+              gap: "30px",
+            }}
+            mb={1}
+          >
+            <Avatar
+              sx={{
+                height: "100px",
+                width: "100px",
+                objectFit: "cover",
+              }}
+              alt="suraj"
+              src="./assets/images/R6.jpg"
+            />
+            <Box>
+              <Box sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}>
+                <Box>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      color: "#212121",
+                      lineHeight: "22px",
+                      fontWeight: "600",
+                      marginBottom: "10px",
+                      fontFamily: theme.palette.primary.Roboto,
+                    }}
+                    variant="h6"
+                    component={"h3"}
+                  >
+                    John Doe
+                  </Typography>
+                  <Rating
+                    sx={{
+                      fontSize: "18px",
+                    }}
+                    name="customer-rating"
+                    value={4}
+                    readOnly
+                  />
+                </Box>
+                <Typography sx={{
+                 fontFamily: "'Roboto', sans-serif !important",
+                 backgroundColor: "#dceeea",
+                 color: theme.palette.primary.logoColor,
+                 padding: "8px 22px",
+                 fontSize: "14px",
+                 borderRadius:"8px",
+                 lineHeight: "18px",
+                 fontWeight: "500",
+                 border: "none",
+                 overflow: "hidden",
+                 position: "relative",
+                 boxShadow: "none",
+                 zIndex: "1",
+                 textTransform: "capitalize",
+                 "&:hover": {
+                   backgroundColor: theme.palette.primary.logoColor,
+                   color: theme.palette.primary.white,
+                   boxShadow: "none",
+                 }
+                }} variant="h6" component={"h3"}>
+                 Sep 3, 2020
+                </Typography>
+              </Box>
+
+              <Typography variant="body1" mt={1}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Typography>
+            </Box>
+          </Box>
+
+          <Divider
+            sx={{
+              margin: "20px 0px",
+            }}
+          />
+        </Box>
+        {/* Add more reviews as needed */}
+        <Dialog fullWidth sx={{
+          
+        }} open={open} onClose={handleClose}>
+        <DialogTitle>Add Review</DialogTitle>
+        <DialogContent>
+          <Box sx={{
+            display:"grid",
+            gap:"20px"
+          }}>
+          <Box>
+            <Rating
+              name="add-review-rating"
+              value={rating}
+              onChange={(event, newValue) => setRating(newValue)}
+            />
+          </Box>
+          <TextField
+                  fullWidth
+                  id="outlined-adornment-name"
+                  required
+                  label="Enter your name"
+                  variant="outlined"
+                  value={name}
+            onChange={(event) => setName(event.target.value)} />
+          <TextField
+            fullWidth
+            id="outlined-adornment-name"
+            required
+            label="Type your message"
+            multiline
+            rows={4}
+            variant="outlined"
+            value={comment}
+            onChange={(event) => setComment(event.target.value)}
+          />
+          </Box>
+         
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleAddReview} color="primary">
+            Add Review
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Box>
     </Box>
-
   );
 };
 

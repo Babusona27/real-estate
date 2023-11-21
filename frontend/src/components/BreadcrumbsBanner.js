@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import HomeIcon from "@mui/icons-material/Home";
 import GrainIcon from "@mui/icons-material/Grain";
 
-const BreadcrumbsBanner = () => {
+const BreadcrumbsBanner = ({ title }) => {
   return (
     <Box
     sx={{
@@ -55,7 +55,7 @@ marginTop:"88px"
       textAlign:"center"  ,
         }}
       >
-        Blog
+        {title}
       </Typography>
       <Breadcrumbs sx={{
          background: 'rgba(255, 255, 255, 0.7)', // Adjust the background color and opacity
@@ -78,7 +78,7 @@ marginTop:"88px"
           color="text.primary"
         >
           <GrainIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-          Blog
+        {title}
         </Typography>
       </Breadcrumbs>
       </Box>

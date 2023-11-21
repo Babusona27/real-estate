@@ -21,23 +21,43 @@ import BlogListing from "../components/BlogListing";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import theme from "../Theme";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { GET_BLOGS } from "../common/urls";
+import axios from "axios";
 
 const Blog = () => {
   const [searchText, setSearchText] = useState("");
+  const [blogData, setBlogData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = () => {
     // Implement your search logic here
     console.log(`Searching for: ${searchText}`);
   };
 
+  const _getBlogData = async () => {
+    await axios
+      .get(GET_BLOGS)
+      .then((response) => {
+        console.log("response_blogs", response);
+        if (response.data.status) {
+          setBlogData(response.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    _getBlogData();
+  }, []);
   return (
     <>
       <Box>
         <Header />
       </Box>
       {/* banner section  */}
-      <BreadcrumbsBanner />
+      <BreadcrumbsBanner title="Blogs" />
       {/* blog area  */}
 
       <Box>
@@ -71,10 +91,13 @@ const Blog = () => {
                 gap: "15px",
               }}
             >
+              {blogData && blogData.map((item, key) => (
+              <BlogListing blogDetails={item} key={key} />
+
+              ))}
+              {/* <BlogListing />
               <BlogListing />
-              <BlogListing />
-              <BlogListing />
-              <BlogListing />
+              <BlogListing /> */}
             </Box>
             <Box
               flex={1}
@@ -89,7 +112,7 @@ const Blog = () => {
                   border: "1px solid #ebebeb",
                   borderRadius: "8px",
                   marginBottom: "25px",
-                  transition:"all 0.4s ease-out",
+                  transition: "all 0.4s ease-out",
                   marginTop: {
                     xs: "30px",
                     lg: "0px",
@@ -132,7 +155,7 @@ const Blog = () => {
                   background: theme.palette.primary.white,
                   border: "1px solid #ebebeb",
                   borderRadius: "8px",
-                  transition:"all 0.4s ease-out",
+                  transition: "all 0.4s ease-out",
                   "&:hover": {
                     boxShadow: "0 4px 12px rgba(0,0,0,.1)",
                   },

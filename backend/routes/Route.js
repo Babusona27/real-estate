@@ -27,13 +27,14 @@ router.delete("/deletecategory/:id", deleteCategory);
 
 // ******************All PROPERTY ROUTE*********************
 router.get("/getproperties", propertyController.getProperties);
-router.get("/propertydetails/:id", propertyController.getProperty);
+router.get("/propertydetails/:slug", propertyController.getProperty);
 router.post("/createproperty", authenticate, validateRequest, checkSeller, propertyController.createProperty);
 router.put("/updateproperty/:id", authenticate, checkSeller, propertyController.updateProperty);
 router.delete("/deleteproperty/:id", authenticate, checkSeller, propertyController.deleteProperty);
 router.post("/reviewsubmit/:propertyId", authenticate, checkBuyer, propertyController.reviewSubmit);
 router.get("/reviews/:propertyId", propertyController.getReviews);
 router.put("/updatereview/:propertyId", authenticate, checkBuyer, propertyController.updateReviews);
+
 
 router.get("/myproperties", authenticate, checkSeller, propertyController.getSellerProperty);
 router.delete("/deleteimages/:id/:imageIndex", propertyController.deleteImages);

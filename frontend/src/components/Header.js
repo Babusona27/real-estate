@@ -28,7 +28,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(state => state.UserReducer.value);
-  console.log("userData", userData);
+  // console.log("userData", userData);
   const [isNavOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
@@ -162,17 +162,16 @@ const Navbar = () => {
                       {/* <Link to="/Login" className="nav-link">Login</Link> */}
 
                       {userData ? (
-                        <li className="menu-item" onClick={() => {
+
+                        <Link onClick={() => {
                           dispatch(logOut())
                           navigate('/Login')
-                        }}
-                        >
-                          <Link className="nav-link">Logout</Link>
-                        </li>
+                        }} className="nav-link">Logout</Link>
+
                       ) : (
-                        <li className="menu-item">
-                          <Link to="/Login" className="nav-link">Login</Link>
-                        </li>
+
+                        <Link to="/Login" className="nav-link">Login</Link>
+
                       )}
                     </li>
                   </ul>
@@ -218,7 +217,7 @@ const Navbar = () => {
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Delete">
+                <Tooltip title="wishlist">
                   <IconButton
                     sx={{
                       border: "1px solid #dceeea",
@@ -230,7 +229,9 @@ const Navbar = () => {
                       height: { xs: "30px", sm: "30px", lg: "46px" },
                       fontSize: { xs: "20px", lg: "30px" },
                     }}
-                  >
+                    onClick={() => {
+                      navigate('/Wishlist')
+                    }}>
                     <StyledBadge badgeContent={4} color="secondary">
                       <FavoriteBorderIcon
                         sx={{

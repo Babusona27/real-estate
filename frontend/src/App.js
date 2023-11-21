@@ -7,7 +7,7 @@ import Blog from "./pages/Blog";
 import ContactUs from "./pages/ContactUs";
 import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-
+import Wishlist from "./pages/Wishlist";
 import {
   BrowserRouter as Router,
   Route,
@@ -24,10 +24,15 @@ import SellerProfile from "./pages/SellerProfile";
 import AgentRegister from "./pages/AgentRegister";
 import AgentLogIn from "./pages/AgentLogIn";
 import UserProfile from "./pages/UserProfile";
-
+import { Navigate } from "react-router";
+import { useSelector } from "react-redux";
+import PrivateRoute from "./PrivateRoute";
 
 
 function App() {
+  // const userData = useSelector(state => state.UserReducer.value);
+  // console.log('userData', userData);
+
   return (
     <Stack
     //   direction="row"
@@ -44,7 +49,12 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Register" element={<Register />} />
               <Route path="/Properties" element={<AllProperties />} />
-              <Route path="/ProductDetails/:id" element={<ProductDetails />} />
+
+              {/* <Route path="/Properties" element={<PrivateRoute><AllProperties /></PrivateRoute>} /> */}
+
+              {/* <Route path="/ProductDetails/:id" element={<ProductDetails />} /> */}
+              <Route path="/ProductDetails/:slug" element={<ProductDetails />} />
+
               <Route path="/AddNewProperty" element={<AddNewProperty />} />
               <Route path="/SellerProfile" element={<SellerProfile />} />
               <Route path="/AboutUs" element={<AboutUs />} />
@@ -55,6 +65,7 @@ function App() {
               <Route path="/AgentRegister" element={<AgentRegister />} />
               <Route path="/AgentLogIn" element={<AgentLogIn />} />
               <Route path="/userProfile" element={<UserProfile />} />
+              <Route path="/wishlist" element={<Wishlist />} />
 
 
 
