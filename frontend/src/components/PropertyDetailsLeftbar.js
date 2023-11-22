@@ -308,7 +308,7 @@ const handleAddReview = () => {
                 }}
                 variant="span"
               >
-                {propertyDetails && propertyDetails.bath}{" "}
+                {propertyDetails && propertyDetails.bath}
               </Typography>
             </Box>
           </Box>
@@ -455,7 +455,7 @@ const handleAddReview = () => {
           }}
           component={"p"}
         >
-          {propertyDetails && propertyDetails.property_name} |{" "}
+          {/* {propertyDetails && propertyDetails.property_name} */}
           {propertyDetails && propertyDetails.type} | Soon to be Available
         </Typography>
        
@@ -533,7 +533,7 @@ const handleAddReview = () => {
       >
 
         {/* User Review Section */}
-        
+
         <Box sx={{
               display: "flex",
               alignItems: "center",
