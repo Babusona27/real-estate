@@ -67,7 +67,7 @@ const PropertyPost = ({ propertyDetails }) => {
                   fontWeight: "600",
                   textShadow: "0.5px 0.5px #000000",
                   color: theme.palette.primary.white
-                }} variant="h6">$ {propertyDetails.price}</Typography>
+                }} variant="h6">$ {propertyDetails && propertyDetails.price}</Typography>
                 <Listings className="listings">
                   <IconButton
                     sx={{
@@ -138,7 +138,7 @@ const PropertyPost = ({ propertyDetails }) => {
                 </Listings>
               </BottomBar>
               <Rent>
-                {propertyDetails.category}
+                {propertyDetails && propertyDetails.category}
               </Rent>
             </Box>
             <CardContent sx={{
@@ -165,7 +165,7 @@ const PropertyPost = ({ propertyDetails }) => {
                     marginBottom: "15px",
 
                   }} gutterBottom variant="h5" component="h4">
-                  {propertyDetails.property_name} </Typography>
+                  {propertyDetails && propertyDetails.property_name} </Typography>
                 <FlexBox>
                   <List sx={{
                     display: "flex",
@@ -188,7 +188,7 @@ const PropertyPost = ({ propertyDetails }) => {
                       fontSize: "14px",
                       fontWeight: "500",
                       color: "#666666",
-                    }} variant="span" component="h3">{propertyDetails.bedroom}</Typography>
+                    }} variant="span" component="h3">{propertyDetails && propertyDetails.bedroom}</Typography>
                   </List>
                   <List sx={{
                     display: "flex",
@@ -211,7 +211,7 @@ const PropertyPost = ({ propertyDetails }) => {
                       fontSize: "14px",
                       fontWeight: "500",
                       color: "#666666",
-                    }} variant="span" component="h3">{propertyDetails.bath}</Typography>
+                    }} variant="span" component="h3">{propertyDetails && propertyDetails.bath}</Typography>
                   </List>
                   <List sx={{
                     display: "flex",
@@ -234,7 +234,7 @@ const PropertyPost = ({ propertyDetails }) => {
                       fontSize: "14px",
                       fontWeight: "500",
                       color: "#666666",
-                    }} variant="span" component="h3">{propertyDetails.sqft}</Typography>
+                    }} variant="span" component="h3">{propertyDetails && propertyDetails.sqft}</Typography>
                   </List>
                 </FlexBox>
               </Box>

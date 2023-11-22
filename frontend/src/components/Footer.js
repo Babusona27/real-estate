@@ -17,8 +17,31 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CallIcon from '@mui/icons-material/Call';
 import MailIcon from '@mui/icons-material/Mail';
 import { Link } from "react-router-dom";
+import { GET_CONTACTUS_DETAILS } from "../common/urls";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Footer = () => {
+  const [contactUsDetails, setContactUsDetails] = useState([]);
+
+  const _getContactUsDetails = async () => {
+    await axios
+      .get(GET_CONTACTUS_DETAILS)
+      .then((response) => {
+        // console.log("response_contact", response);
+        if (response.data.status) {
+          setContactUsDetails(response.data.data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    _getContactUsDetails()
+  }, []);
+
   return (
     <Box
       sx={{
@@ -61,8 +84,7 @@ const Footer = () => {
               variant="p"
               component={"p"}
             >
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy
+              {contactUsDetails.description}
             </Typography>
             <List
               sx={{
@@ -88,7 +110,7 @@ const Footer = () => {
                   <Avatar sx={{
                     backgroundColor:theme.palette.primary.main,
                   }}>
-                    <FacebookIcon />
+                    <FacebookIcon url={contactUsDetails && contactUsDetails.facebook} />
                   </Avatar>
                 </ListItemAvatar>
               </ListItem>
@@ -266,7 +288,7 @@ const Footer = () => {
                       fontFamily: "'Roboto', sans-serif !important",
                       fontSize:"16px",
                       fontWeight:"500",
-                }}> +91 9903-686-925 </Typography>
+                }}> {contactUsDetails && contactUsDetails.phone} </Typography>
               </ListItem>
               <ListItem sx={{
                   display: "flex",
@@ -293,7 +315,7 @@ const Footer = () => {
                     fontFamily: "'Roboto', sans-serif !important",
                     fontSize:"16px",
                     fontWeight:"500",
-                }}>+91 9748447476</Typography>
+                }}>{contactUsDetails && contactUsDetails.phone}</Typography>
               </ListItem>
               <ListItem sx={{
                   display: "flex",
@@ -320,7 +342,7 @@ const Footer = () => {
                    fontFamily: "'Roboto', sans-serif !important",
                    fontSize:"16px",
                    fontWeight:"500",
-                }}>hr@websadroit.com </Typography>
+                }}>{contactUsDetails && contactUsDetails.email}</Typography>
               </ListItem>
               <ListItem sx={{
                   display: "flex",
@@ -348,7 +370,7 @@ const Footer = () => {
                    fontSize:"16px",
                    fontWeight:"500",
                 }}>
-                48/14 Purna Chandra Mitra Lane, Charu Market kolkata- 700033</Typography>
+                {contactUsDetails && contactUsDetails.address}</Typography>
               </ListItem>
 
             </List>

@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
-  const [privacypolicy, setPrivacyPolicy] = useState("");
+  const [privacypolicy, setPrivacyPolicy] = useState([]);
   const _getPrivacyPolicy = async () => {
     await axios
       .get(GET_PRIVACY_POLICY)

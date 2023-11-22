@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const TermsConditions = () => {
   const navigate = useNavigate();
-  const [termsconditions, setTermsConditions] = useState("");
+  const [termsconditions, setTermsConditions] = useState([]);
   const _getTermsConditions = async () => {
     await axios
       .get(GET_TERMS_CONDITIONS)
