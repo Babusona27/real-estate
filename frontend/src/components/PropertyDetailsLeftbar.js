@@ -27,30 +27,38 @@ import { GetApiFetch } from "../common/CommonFunction";
 import { useSelector } from "react-redux";
 const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
-  console.log("propertyDetails", propertyDetails);
+  const userData = useSelector((state) => state.UserReducer.value);
+  // console.log("propertyDetails", propertyDetails);
+  console.log('userData', userData);
+  // add review popup box 
+  const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [name, setName] = useState('');
 
-// add review popup box 
-const [open, setOpen] = useState(false);
-const [rating, setRating] = useState(0);
-const [comment, setComment] = useState('');
-const [name, setName] = useState('');
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-const handleOpen = () => {
-  setOpen(true);
-};
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-const handleClose = () => {
-  setOpen(false);
-};
-
-const handleAddReview = () => {
-  // Implement your logic to add the review (e.g., API call)
-  console.log('Rating:', rating);
-  console.log('Comment:', comment);
-  console.log('Name:', name);
-  // Close the dialog
-  handleClose();
-};
+  const handleAddReview = () => {
+    // Implement your logic to add the review (e.g., API call)
+    console.log('Rating:', rating);
+    console.log('Comment:', comment);
+    console.log('Name:', name);
+    const formData = JSON.stringify({
+      rating: rating,
+      review: comment,
+      user_name: name,
+      user_id: 1,
+    });
+    // PostApiFetch(POST_REGISTER_API, formData)
+    // Close the dialog
+    handleClose();
+  };
 
 
 
@@ -458,7 +466,7 @@ const handleAddReview = () => {
           {/* {propertyDetails && propertyDetails.property_name} */}
           {propertyDetails && propertyDetails.type} | Soon to be Available
         </Typography>
-       
+
         <Typography
           sx={{
             fontSize: "16px",
@@ -535,54 +543,54 @@ const handleAddReview = () => {
         {/* User Review Section */}
 
         <Box sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: "30px",
-              marginBottom: "50px",
-            }}>
-        <Typography
-          sx={{
-            fontSize: {
-              xs:"16px",
-              sm:"16px",
-              md:"22px",
-              lg:"22px",
-            },
-            color: "#212121",
-            lineHeight: "22px",
-            fontWeight: "500",
-          }}
-          variant="h6"
-          component={"h3"}
-        >
-          Customer Reviews
-        </Typography>
-        <Button className="customBtnStyle"
-                    sx={{
-                      fontFamily:  theme.palette.primary.Roboto,
-                      backgroundColor: theme.palette.primary.logoColor,
-                      height: "40px",
-                      padding:{
-                        xs:"8px 10px",
-                        sm:"8px 10px",
-                        md:"8px 22px",
-                        lg:"8px 22px",
-                      },
-                      fontSize: "14px",
-                      lineHeight: "18px",
-                      fontWeight: "500",
-                      borderRadius:"8px",
-                      color: theme.palette.primary.white,
-                      "&:hover":
-                      {
-                        backgroundColor: theme.palette.primary.Green,
-                      },
-                    }} variant="contained" onClick={handleOpen}>
-        Add Review
-      </Button>
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "30px",
+          marginBottom: "50px",
+        }}>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "16px",
+                sm: "16px",
+                md: "22px",
+                lg: "22px",
+              },
+              color: "#212121",
+              lineHeight: "22px",
+              fontWeight: "500",
+            }}
+            variant="h6"
+            component={"h3"}
+          >
+            Customer Reviews
+          </Typography>
+          <Button className="customBtnStyle"
+            sx={{
+              fontFamily: theme.palette.primary.Roboto,
+              backgroundColor: theme.palette.primary.logoColor,
+              height: "40px",
+              padding: {
+                xs: "8px 10px",
+                sm: "8px 10px",
+                md: "8px 22px",
+                lg: "8px 22px",
+              },
+              fontSize: "14px",
+              lineHeight: "18px",
+              fontWeight: "500",
+              borderRadius: "8px",
+              color: theme.palette.primary.white,
+              "&:hover":
+              {
+                backgroundColor: theme.palette.primary.Green,
+              },
+            }} variant="contained" onClick={handleOpen}>
+            Add Review
+          </Button>
         </Box>
-       
+
         <Box>
           <Box
             sx={{
@@ -610,10 +618,10 @@ const handleAddReview = () => {
             />
             <Box>
               <Box sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}>
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}>
                 <Box>
                   <Typography
                     sx={{
@@ -639,27 +647,27 @@ const handleAddReview = () => {
                   />
                 </Box>
                 <Typography sx={{
-                 fontFamily: "'Roboto', sans-serif !important",
-                 backgroundColor: "#dceeea",
-                 color: theme.palette.primary.logoColor,
-                 padding: "8px 22px",
-                 fontSize: "14px",
-                 lineHeight: "18px",
-                 fontWeight: "500",
-                 borderRadius:"8px",
-                 border: "none",
-                 overflow: "hidden",
-                 position: "relative",
-                 boxShadow: "none",
-                 zIndex: "1",
-                 textTransform: "capitalize",
-                 "&:hover": {
-                   backgroundColor: theme.palette.primary.logoColor,
-                   color: theme.palette.primary.white,
-                   boxShadow: "none",
-                 }
+                  fontFamily: "'Roboto', sans-serif !important",
+                  backgroundColor: "#dceeea",
+                  color: theme.palette.primary.logoColor,
+                  padding: "8px 22px",
+                  fontSize: "14px",
+                  lineHeight: "18px",
+                  fontWeight: "500",
+                  borderRadius: "8px",
+                  border: "none",
+                  overflow: "hidden",
+                  position: "relative",
+                  boxShadow: "none",
+                  zIndex: "1",
+                  textTransform: "capitalize",
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.logoColor,
+                    color: theme.palette.primary.white,
+                    boxShadow: "none",
+                  }
                 }} variant="h6" component={"h3"}>
-                 Sep 3, 2020
+                  Sep 3, 2020
                 </Typography>
               </Box>
 
@@ -676,7 +684,7 @@ const handleAddReview = () => {
             }}
           />
         </Box>
-         <Box>
+        <Box>
           <Box
             sx={{
               display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
@@ -703,10 +711,10 @@ const handleAddReview = () => {
             />
             <Box>
               <Box sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}>
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}>
                 <Box>
                   <Typography
                     sx={{
@@ -732,27 +740,27 @@ const handleAddReview = () => {
                   />
                 </Box>
                 <Typography sx={{
-                 fontFamily: "'Roboto', sans-serif !important",
-                 backgroundColor: "#dceeea",
-                 color: theme.palette.primary.logoColor,
-                 padding: "8px 22px",
-                 fontSize: "14px",
-                 borderRadius:"8px",
-                 lineHeight: "18px",
-                 fontWeight: "500",
-                 border: "none",
-                 overflow: "hidden",
-                 position: "relative",
-                 boxShadow: "none",
-                 zIndex: "1",
-                 textTransform: "capitalize",
-                 "&:hover": {
-                   backgroundColor: theme.palette.primary.logoColor,
-                   color: theme.palette.primary.white,
-                   boxShadow: "none",
-                 }
+                  fontFamily: "'Roboto', sans-serif !important",
+                  backgroundColor: "#dceeea",
+                  color: theme.palette.primary.logoColor,
+                  padding: "8px 22px",
+                  fontSize: "14px",
+                  borderRadius: "8px",
+                  lineHeight: "18px",
+                  fontWeight: "500",
+                  border: "none",
+                  overflow: "hidden",
+                  position: "relative",
+                  boxShadow: "none",
+                  zIndex: "1",
+                  textTransform: "capitalize",
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.logoColor,
+                    color: theme.palette.primary.white,
+                    boxShadow: "none",
+                  }
                 }} variant="h6" component={"h3"}>
-                 Sep 3, 2020
+                  Sep 3, 2020
                 </Typography>
               </Box>
 
@@ -771,52 +779,52 @@ const handleAddReview = () => {
         </Box>
         {/* Add more reviews as needed */}
         <Dialog fullWidth sx={{
-          
+
         }} open={open} onClose={handleClose}>
-        <DialogTitle>Add Review</DialogTitle>
-        <DialogContent>
-          <Box sx={{
-            display:"grid",
-            gap:"20px"
-          }}>
-          <Box>
-            <Rating
-              name="add-review-rating"
-              value={rating}
-              onChange={(event, newValue) => setRating(newValue)}
-            />
-          </Box>
-          <TextField
-                  fullWidth
-                  id="outlined-adornment-name"
-                  required
-                  label="Enter your name"
-                  variant="outlined"
-                  value={name}
-            onChange={(event) => setName(event.target.value)} />
-          <TextField
-            fullWidth
-            id="outlined-adornment-name"
-            required
-            label="Type your message"
-            multiline
-            rows={4}
-            variant="outlined"
-            value={comment}
-            onChange={(event) => setComment(event.target.value)}
-          />
-          </Box>
-         
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleAddReview} color="primary">
-            Add Review
-          </Button>
-        </DialogActions>
-      </Dialog>
+          <DialogTitle>Add Review</DialogTitle>
+          <DialogContent>
+            <Box sx={{
+              display: "grid",
+              gap: "20px"
+            }}>
+              <Box>
+                <Rating
+                  name="add-review-rating"
+                  value={rating}
+                  onChange={(event, newValue) => setRating(newValue)}
+                />
+              </Box>
+              <TextField
+                fullWidth
+                id="outlined-adornment-name"
+                required
+                label="Enter your name"
+                variant="outlined"
+                value={name}
+                onChange={(event) => setName(event.target.value)} />
+              <TextField
+                fullWidth
+                id="outlined-adornment-name"
+                required
+                label="Type your message"
+                multiline
+                rows={4}
+                variant="outlined"
+                value={comment}
+                onChange={(event) => setComment(event.target.value)}
+              />
+            </Box>
+
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleAddReview} color="primary">
+              Add Review
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Box>
   );

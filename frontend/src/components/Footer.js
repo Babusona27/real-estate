@@ -84,7 +84,7 @@ const Footer = () => {
               variant="p"
               component={"p"}
             >
-              {contactUsDetails.description}
+              {contactUsDetails && contactUsDetails.description}
             </Typography>
             <List
               sx={{
@@ -110,7 +110,7 @@ const Footer = () => {
                   <Avatar sx={{
                     backgroundColor:theme.palette.primary.main,
                   }}>
-                    <FacebookIcon url={contactUsDetails && contactUsDetails.facebook} />
+                    <FacebookIcon />
                   </Avatar>
                 </ListItemAvatar>
               </ListItem>
