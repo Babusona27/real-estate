@@ -1,11 +1,15 @@
 import { BASE_URL } from "./urls";
 
-export const PostApiFetch = async (URL, formData) => {
+export const PostApiFetch = async (URL, formData, token) => {
+  console.log('token', token);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `${token}`
+  };
+  console.log('headers', headers);
   return await fetch(BASE_URL + URL, {
     method: "POST",
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: headers,
     body: formData,
   }).then((response) => {
     const statusCode = response.status;

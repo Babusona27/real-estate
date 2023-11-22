@@ -22,13 +22,16 @@ import BathtubIcon from "@mui/icons-material/Bathtub";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useParams } from "react-router-dom";
-import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL } from "../common/urls";
-import { GetApiFetch } from "../common/CommonFunction";
+import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL, POST_SUBMIT_REVIEW_API } from "../common/urls";
+import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
 import { useSelector } from "react-redux";
+import axios from "axios";
+
 const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const userData = useSelector((state) => state.UserReducer.value);
-  // console.log("propertyDetails", propertyDetails);
+  const token = useSelector((state) => state.UserReducer.value.data.token);
+  console.log("propertyDetails", propertyDetails);
   console.log('userData', userData);
   // add review popup box 
   const [open, setOpen] = useState(false);
@@ -44,22 +47,27 @@ const PropertyDetailsLeftbar = () => {
     setOpen(false);
   };
 
-  const handleAddReview = () => {
-    // Implement your logic to add the review (e.g., API call)
-    console.log('Rating:', rating);
-    console.log('Comment:', comment);
-    console.log('Name:', name);
+  const handleAddReview = async () => {
     const formData = JSON.stringify({
       rating: rating,
       review: comment,
       user_name: name,
-      user_id: 1,
+      user_id: userData.data.userId,
     });
-    // PostApiFetch(POST_REGISTER_API, formData)
+    console.log('formData', formData);
+    const userId = userData.data.userId;
+    // const url = `${ POST_REVIEW_API }/${userId};
+    PostApiFetch(POST_SUBMIT_REVIEW_API + userId, formData, token)
+      .then(([status, response]) => {
+        console.log('status', status);
+        console.log('response', response);
+        if (status === 200) {
+          console.log('Review Added Successfully');
+        }
+      })
     // Close the dialog
     handleClose();
   };
-
 
 
   return (
