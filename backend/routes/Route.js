@@ -32,7 +32,7 @@ router.post("/createproperty", authenticate, validateRequest, checkSeller, prope
 router.put("/updateproperty/:id", authenticate, checkSeller, propertyController.updateProperty);
 router.delete("/deleteproperty/:id", authenticate, checkSeller, propertyController.deleteProperty);
 //property review
-router.post("/reviewsubmit/:propertyId", authenticate, propertyController.reviewSubmit);
+router.post("/reviewsubmit/:slug", authenticate, propertyController.reviewSubmit);
 router.get("/reviews/:propertyId", authenticate, propertyController.getReviews);
 router.put("/updatereview/:propertyId", authenticate, propertyController.updateReviews);
 
