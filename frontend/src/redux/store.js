@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import UserReducer from './reducers/UserReducer';
 import PropertyReducer from './reducers/PropertyReducer';
 import PropertyListReducer from './reducers/PropertyListReducer';
+import SearchReducer from './reducers/SearchReducer';
 
 const persistConfig = {
   key: 'root',
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   UserReducer: persistReducer(persistConfig, UserReducer),
   PropertyReducer: PropertyReducer,
   PropertyListReducer: PropertyListReducer,
+  SearchReducer: SearchReducer
 });
 
 export const store = configureStore({
