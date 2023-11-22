@@ -37,8 +37,6 @@ const SellerSchema = new mongoose.Schema({
 const ReviewSchema = new mongoose.Schema({
   rating: {
     type: Number,
-    min: 1,
-    max: 5,
   },
   review: String,
   user_name: String,
@@ -47,6 +45,11 @@ const ReviewSchema = new mongoose.Schema({
     default: null,
   },
   user_id: mongoose.Schema.Types.ObjectId,
+  status: {
+    type: String,
+    enum: ["active", "inactive"],
+    default: "inactive",
+  },
 });
 
 // PROPERTY SCHEMA
@@ -81,6 +84,10 @@ const PropertySchema = new mongoose.Schema({
   },
   posted_on: Date,
   slug: String,
+  features: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model("Property", PropertySchema);

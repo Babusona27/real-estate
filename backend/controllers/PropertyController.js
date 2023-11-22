@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 // GET ALL PROPERTIES (GET METHOD)
-async function getProperties(req, res) {
+exports.getProperties = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
@@ -73,11 +73,11 @@ async function getProperties(req, res) {
 }
 
 // GET ONLY SINGLE PROPERTY (GET METHOD)
-async function getProperty(req, res) {
+exports.getProperty = async (req, res) => {
   const slug = req.params.slug;
   try {
     const property = await PropertySchema.findOne({ slug: slug });
-    
+
     if (property) {
       res.json({
         status: true,
@@ -99,7 +99,7 @@ async function getProperty(req, res) {
 }
 
 // CREATE NEW PROPERTY (POST METHOD)
-async function createProperty(req, res) {
+exports.createProperty = async (req, res) => {
   const {
     property_name,
     type,
@@ -200,7 +200,7 @@ async function createProperty(req, res) {
 }
 
 // UPDATE PROPERTY (PUT METHOD)
-async function updateProperty(req, res) {
+exports.updateProperty = async (req, res) => {
   const { id } = req.params;
   const {
     property_name,
@@ -311,7 +311,7 @@ async function updateProperty(req, res) {
 }
 
 // DELETE PROPERTY (DELETE METHOD)
-async function deleteProperty(req, res) {
+exports.deleteProperty = async (req, res) => {
   const { id } = req.params;
   try {
     const property = await PropertySchema.findByIdAndDelete(id);
@@ -337,7 +337,7 @@ async function deleteProperty(req, res) {
 }
 
 // DELETE IMAGES BY INDEX (DELETE METHOD)
-async function deleteImages(req, res) {
+exports.deleteImages = async (req, res) => {
   const propertyId = req.params.id;
   const imageIndex = parseInt(req.params.imageIndex);
 
@@ -382,7 +382,7 @@ async function deleteImages(req, res) {
 }
 
 // GET SELLER ALL PROPERTY (GET METHOD)
-async function getSellerProperty(req, res) {
+exports.getSellerProperty = async (req, res) => {
   try {
     const filter = {};
 
@@ -412,7 +412,7 @@ async function getSellerProperty(req, res) {
 }
 
 // REVIEW SUBMIT BY USER (POST METHOD)
-async function reviewSubmit(req, res) {
+exports.reviewSubmit = async (req, res) => {
   try {
     const propertyId = req.params.propertyId;
     const { rating, review, user_name, user_profile_image, user_id } = req.body;
@@ -451,14 +451,54 @@ async function reviewSubmit(req, res) {
     res.status(500).json({ status: false, message: "Internal server error" });
   }
 }
-
-module.exports = {
-  getProperties,
-  getProperty,
-  createProperty,
-  updateProperty,
-  deleteProperty,
-  deleteImages,
-  getSellerProperty,
-  reviewSubmit,
-};
+//GET REVIEWS BY PROPERTY ID (GET METHOD)
+exports.getReviews = async (req, res) => {
+  try {
+    const propertyId = req.params.propertyId;
+    reviews = await PropertySchema.findById(propertyId, { reviews: 1 });
+    res.status(200).json({
+      status: true,
+      message: "Reviews fetched successfully",
+      data: reviews,
+    });
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, message: "Internal server error" });
+  }
+}
+//UPDATE REVIEWS BY USER ID AND PROPERTY ID (PUT METHOD)
+exports.updateReviews = async (req, res) => {
+  try {
+    const propertyId = req.params.propertyId;
+    const userId = req.params.userId;
+    const { rating, review, user_name, user_profile_image } = req.body;
+    const property = await PropertySchema.findById(propertyId);
+    if (!property) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Property not found" });
+    }
+    const reviewIndex = property.reviews.findIndex(
+      (review) => review.user_id.toString() === userId
+    );
+    if (reviewIndex === -1) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Review not found" });
+    }
+    property.reviews[reviewIndex].rating = rating;
+    property.reviews[reviewIndex].review = review;
+    property.reviews[reviewIndex].user_name = user_name;
+    property.reviews[reviewIndex].user_profile_image = user_profile_image;
+    await property.save();
+    res.status(200).json({
+      status: true,
+      message: "Review updated successfully",
+      data: property.reviews[reviewIndex],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, message: "Internal server error" });
+  }
+}

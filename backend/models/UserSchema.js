@@ -39,6 +39,34 @@ const FavoritePropertySchema = new mongoose.Schema({
     default: null,
   },
 });
+//review schema
+const ReviewSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
+  user_name: {
+    type: String,
+  },
+  user_image: {
+    type: String,
+    default: null,
+  },
+  review: {
+    type: String,
+  },
+  rating: {
+    type: Number,
+  },
+  status: {
+    type: String,
+    enum: ["active", "inactive"],
+    default: "inactive",
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 // USER SCHEMA
 const UserSchema = new mongoose.Schema({
@@ -53,7 +81,6 @@ const UserSchema = new mongoose.Schema({
   user_type: {
     type: String,
     enum: ["seller", "buyer"],
-    // required: [true, "User Type is required"],
   },
   seller_type: {
     type: String,
@@ -77,6 +104,10 @@ const UserSchema = new mongoose.Schema({
   },
   favorite_properties: {
     type: [FavoritePropertySchema],
+    default: [],
+  },
+  reviews: {
+    type: [ReviewSchema],
     default: [],
   },
 });

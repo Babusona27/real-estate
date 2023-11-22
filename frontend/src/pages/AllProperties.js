@@ -46,7 +46,7 @@ const AllProperties = () => {
       {/* Header */}
       <Header />
       {/* Header */}
-      <BreadcrumbsBanner/>
+      <BreadcrumbsBanner title="Properties"/>
             {/* banner section  */}
  
       {/* blog area  */}

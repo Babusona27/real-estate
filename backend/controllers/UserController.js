@@ -5,7 +5,7 @@ require("dotenv").config();
 const secretKey = process.env.SECRET_KEY;
 
 // NEW USER REGISTRATION (POST METHOD)
-async function Userregister(req, res) {
+exports.userRegister = async (req, res) => {
   const {
     user_name,
     user_image,
@@ -68,7 +68,7 @@ async function Userregister(req, res) {
 }
 
 // USER LOGIN (POST METHOD)
-async function Userlogin(req, res) {
+exports.userLogin = async (req, res) => {
   const { user_email, password } = req.body;
 
   try {
@@ -98,7 +98,7 @@ async function Userlogin(req, res) {
     const token = jwt.sign(payload, secretKey, {
       expiresIn: "24h",
     });
-    
+
     const data = {
       token: token,
       user_name: user.user_name,
@@ -114,4 +114,45 @@ async function Userlogin(req, res) {
   }
 }
 
-module.exports = { Userregister, Userlogin };
+//user review
+exports.userReview = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { user_name, user_image, review, rating, user_id } = req.body;
+    //find user
+    const user = await UserSchema.findById(userId);
+    if (!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
+    //create review
+    const newReview = {
+      user_name,
+      user_image,
+      review,
+      rating,
+      user_id,
+    };
+    //add review to user
+    user.reviews.push(newReview);
+    await user.save();
+    res.json({ status: true, message: "Review added successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, message: error.message });
+  }
+}
+//get all user reviews
+exports.getUserReviews = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    //find user
+    const user = await UserSchema.findById(userId);
+    if (!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
+    res.json({ status: true, message: "User reviews", data: user.reviews });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: false, message: error.message });
+  }
+}
