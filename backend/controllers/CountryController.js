@@ -1,7 +1,7 @@
 const CountrySchema = require("../models/CountrySchema");
 
 // GET ALL COUNTRIES (GET METHOD)
-async function GetCountry(req, res) {
+exports.getCountry = async (req, res) => {
   try {
     const countries = await CountrySchema.find();
 
@@ -20,7 +20,7 @@ async function GetCountry(req, res) {
 }
 
 // CREATE NEW COUNTRY (POST METHOD)
-async function CreateCountry(req, res) {
+exports.createCountry = async (req, res) => {
   try {
     const newCountry = await CountrySchema.create(req.body);
     res
@@ -35,7 +35,7 @@ async function CreateCountry(req, res) {
 }
 
 // UPDATE COUNTRY (PUT METHOD)
-async function UpdateCountry(req, res) {
+exports.updateCountry = async (req, res) => {
   const countryId = parseInt(req.params.countryId);
   try {
     const updatedCountry = await CountrySchema.findByIdAndUpdate(
@@ -59,7 +59,7 @@ async function UpdateCountry(req, res) {
 }
 
 // DELETE COUNTRY (DELETE METHOD)
-async function DeleteCountry(req, res) {
+exports.deleteCountry = async (req, res) => {
   const countryId = parseInt(req.params.countryId);
   try {
     const deletedCountry = await CountrySchema.findByIdAndDelete(countryId);
@@ -78,10 +78,3 @@ async function DeleteCountry(req, res) {
       .json({ message: "Failed to delete Country", error: error.message });
   }
 }
-
-module.exports = {
-  GetCountry,
-  CreateCountry,
-  UpdateCountry,
-  DeleteCountry,
-};
