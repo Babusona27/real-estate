@@ -414,11 +414,11 @@ exports.getSellerProperty = async (req, res) => {
 // REVIEW SUBMIT BY USER (POST METHOD)
 exports.reviewSubmit = async (req, res) => {
   try {
-    const propertyId = req.params.propertyId;
+    const slug = req.params.slug;
     const { rating, review, user_name, user_profile_image, user_id } = req.body;
 
     // Find the property by ID
-    const property = await PropertySchema.findById(propertyId);
+    const property = await PropertySchema.findOne({ slug: slug });
 
     if (!property) {
       return res
