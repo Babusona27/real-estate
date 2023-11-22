@@ -70,16 +70,6 @@ const ProductDetails = () => {
           <PropertyDetailsRightbar />
         </Box>
       </Container>
-      {/* <Typography
-              variant="span"
-              sx={{
-                fontSize: "15px",
-                fontWeight: "400",
-                fontFamily: "'Roboto',sans-serif !important",
-              }}
-            >
-              {propertyDetails.property_name}
-            </Typography> */}
 
       <Box>
         <Footer />

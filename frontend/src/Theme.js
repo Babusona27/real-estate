@@ -5,7 +5,7 @@ import { createTheme } from '@mui/material/styles';
     primary: {
       logoColor: '#1d8ea2',
       main: '#3f50b5',
-      dark: '#333',
+      dark: '#484848',
       white: '#fff',
       Green:"#00c194",
       LightBlue:"rgba(0, 0, 0, .5)",
