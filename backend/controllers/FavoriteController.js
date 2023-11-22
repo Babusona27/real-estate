@@ -2,7 +2,7 @@ const UserSchema = require("../models/UserSchema");
 const AppointmentRequestSchema = require("../models/AppointmentRequestSchema");
 
 // ADD NEW FAVORITE PROPERTY (POST METHOD)
-async function addToFavorite(req, res) {
+exports.addToFavorite = async (req, res) => {
   const { property_id, property_name, property_image } = req.body;
 
   const userId = req.user.user_id; // Assuming you have the user_id in the decoded JWT payload
@@ -53,7 +53,7 @@ async function addToFavorite(req, res) {
 }
 
 // DELETE FAVORITE PROPERTY BY INDEX (DELETE METHOD)
-async function deleteFavorite(req, res) {
+exports.deleteFavorite = async (req, res) => {
   const userId = req.params.id;
   const propertyIndex = parseInt(req.params.propertyIndex);
 
@@ -99,7 +99,7 @@ async function deleteFavorite(req, res) {
 }
 
 // GET MY FAVORITE LIST (GET METHOD)
-async function myFavorites(req, res) {
+exports.myFavorites = async (req, res) => {
   const { user_id } = req.params;
 
   try {
@@ -126,7 +126,7 @@ async function myFavorites(req, res) {
 }
 
 // CREATE NEW APPOINTMENT REQUEST (POST METHOD)
-async function sendAppointmentRequest(req, res) {
+exports.sendAppointmentRequest = async (req, res) => {
   const { user_id, property_id, seller_id } = req.body;
 
   // Create a new appointment request
@@ -149,10 +149,3 @@ async function sendAppointmentRequest(req, res) {
     res.status(500).json({ status: false, message: error.message });
   }
 }
-
-module.exports = {
-  addToFavorite,
-  deleteFavorite,
-  myFavorites,
-  sendAppointmentRequest,
-};

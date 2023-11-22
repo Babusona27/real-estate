@@ -1,7 +1,7 @@
 const CategorySchema = require("../models/CategorySchema");
 
 // GET ALL CATEGORIES (GET METHOD)
-async function getCategories(req, res) {
+exports.getCategories = async (req, res) => {
   try {
     const categories = await CategorySchema.find();
 
@@ -20,7 +20,7 @@ async function getCategories(req, res) {
 }
 
 // CREATE NEW CATEGORY (POST METHOD)
-async function createCategory(req, res) {
+exports.createCategory = async (req, res) => {
   const { category_name, type } = req.body;
 
   try {
@@ -43,7 +43,7 @@ async function createCategory(req, res) {
 }
 
 // UPDATE CATEGORY (PUT METHOD)
-async function updateCategory(req, res) {
+exports.updateCategory = async (req, res) => {
   const { id } = req.params;
   const { category_name, type } = req.body;
 
@@ -74,7 +74,7 @@ async function updateCategory(req, res) {
 }
 
 // DELETE CATEGORY (DELETE METHOD)
-async function deleteCategory(req, res) {
+exports.deleteCategory = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -99,10 +99,3 @@ async function deleteCategory(req, res) {
     });
   }
 }
-
-module.exports = {
-  getCategories,
-  createCategory,
-  updateCategory,
-  deleteCategory,
-};
