@@ -57,7 +57,7 @@ const PropertyDetailsLeftbar = () => {
     console.log('formData', formData);
     const userId = userData.data.userId;
     // const url = `${ POST_REVIEW_API }/${userId};
-    PostApiFetch(POST_SUBMIT_REVIEW_API + userId, formData, token)
+    PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, token)
       .then(([status, response]) => {
         console.log('status', status);
         console.log('response', response);
