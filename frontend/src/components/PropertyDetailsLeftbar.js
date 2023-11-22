@@ -22,15 +22,18 @@ import BathtubIcon from "@mui/icons-material/Bathtub";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useParams } from "react-router-dom";
-import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL } from "../common/urls";
-import { GetApiFetch } from "../common/CommonFunction";
+import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL, POST_SUBMIT_REVIEW_API, GET_REVIEW_DETAILS } from "../common/urls";
+import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
 import { useSelector } from "react-redux";
+import axios from "axios";
+
 const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const userData = useSelector((state) => state.UserReducer.value);
-  // console.log("propertyDetails", propertyDetails);
-  console.log("userData", userData);
-  // add review popup box
+  const token = useSelector((state) => state.UserReducer.value.data.token);
+  console.log("propertyDetails", propertyDetails);
+  console.log('userData', userData);
+  // add review popup box 
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [name, setName] = useState('');
@@ -48,20 +51,65 @@ const PropertyDetailsLeftbar = () => {
     setComment('');
   };
 
-  const handleAddReview = () => {
-    // Implement your logic for adding the review
-    console.log('Adding review with rating:', rating);
-    console.log('Name:', name);
-    console.log('Comment:', comment);
-
-    // Reset the form fields
-    setRating(0);
-    setName('');
-    setComment('');
-
+  const handleAddReview = async () => {
+    const formData = JSON.stringify({
+      rating: rating,
+      review: comment,
+      user_name: name,
+      user_id: userData.data.userId,
+    });
+    PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, token)
+      .then(([status, response]) => {
+        // console.log('status', status);
+        // console.log('response', response);
+        if (status === 200) {
+          console.log('Review Added Successfully');
+        }
+      })
     // Close the dialog
     handleClose();
   };
+  // const getReviewDetails = async () => {
+  //   console.log('propertyDetails.slug========>', GET_REVIEW_DETAILS + propertyDetails.slug);
+  //   await axios
+  //     .get(GET_REVIEW_DETAILS + propertyDetails.slug,{
+  //       headers: {
+  //         'Authorization': `${token}`
+  //       }
+  //     })
+  //     .then((response) => {
+  //       if (response.data.status) {
+  //         console.log('response_Review', response.data.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  const getReviewDetails = async () => {
+    if (propertyDetails) {
+      await axios
+        .get(GET_REVIEW_DETAILS + propertyDetails.slug, {
+          headers: {
+            'Authorization': `${token}`
+          }
+        })
+        .then((response) => {
+          if (response.data.status) {
+            console.log('response_Review', response.data.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('propertyDetails is null');
+    }
+  };
+  useEffect(() => {
+    // getReviewDetails()
+  }, []);
+
   // popup massage
   const [active, setActive] = useState(false);
   const [yourname, setYourName] = useState('');
