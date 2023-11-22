@@ -105,6 +105,7 @@ exports.userLogin = async (req, res) => {
       user_image: user.user_image,
       user_type: user.user_type,
       seller_type: user.seller_type,
+      userId: user._id,
     };
 
     res.json({ status: true, message: "User Login Successfull", data: data });
