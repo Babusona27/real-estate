@@ -454,13 +454,19 @@ exports.reviewSubmit = async (req, res) => {
 //GET REVIEWS BY PROPERTY ID (GET METHOD)
 exports.getReviews = async (req, res) => {
   try {
-    const propertyId = req.params.propertyId;
-    reviews = await PropertySchema.findById(propertyId, { reviews: 1 });
-    res.status(200).json({
-      status: true,
-      message: "Reviews fetched successfully",
-      data: reviews,
-    });
+    const slug = req.params.slug;
+    reviews = await PropertySchema.findOne({ slug: slug }, { reviews: 1 });
+    if (!reviews) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Reviews not found" });
+    } else {
+      res.status(200).json({
+        status: true,
+        message: "Reviews fetched successfully",
+        data: reviews,
+      });
+    }
   }
   catch (error) {
     console.error(error);

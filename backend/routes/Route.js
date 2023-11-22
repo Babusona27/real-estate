@@ -8,22 +8,22 @@ const { authenticate } = require("../middleware/Authentication");
 const blogController = require("../controllers/BlogController");
 const aboutUsController = require("../controllers/AboutUsController");
 const termsAndConditionsController = require("../controllers/TermsAndConditionsController");
-const PrivacyPolicyController = require("../controllers/PrivacyPolicyController");
-const ContactUsController = require("../controllers/ContactUsController");
+const privacyPolicyController = require("../controllers/PrivacyPolicyController");
+const contactUsController = require("../controllers/ContactUsController");
 const propertyController = require("../controllers/PropertyController");
-const UserController = require("../controllers/UserController");
-const CategoryController = require("../controllers/CategoryController");
-const CountryController = require("../controllers/CountryController");
+const userController = require("../controllers/UserController");
+const categoryController = require("../controllers/CategoryController");
+const countryController = require("../controllers/CountryController");
 const favoriteController = require("../controllers/FavoriteController");
 
 
 
 
 // ******************All CATEGORY ROUTE*********************
-router.get("/getcategories", CategoryController.getCategories);
-router.post("/createcategory", validateRequest, CategoryController.createCategory);
-router.put("/updatecategory/:id", CategoryController.updateCategory);
-router.delete("/deletecategory/:id", CategoryController.deleteCategory);
+router.get("/getcategories", categoryController.getCategories);
+router.post("/createcategory", validateRequest, categoryController.createCategory);
+router.put("/updatecategory/:id", categoryController.updateCategory);
+router.delete("/deletecategory/:id", categoryController.deleteCategory);
 
 // ******************All PROPERTY ROUTE*********************
 router.get("/getproperties", propertyController.getProperties);
@@ -33,7 +33,7 @@ router.put("/updateproperty/:id", authenticate, checkSeller, propertyController.
 router.delete("/deleteproperty/:id", authenticate, checkSeller, propertyController.deleteProperty);
 //property review
 router.post("/reviewsubmit/:slug", authenticate, propertyController.reviewSubmit);
-router.get("/reviews/:propertyId", authenticate, propertyController.getReviews);
+router.get("/reviews/:slug", authenticate, propertyController.getReviews);
 router.put("/updatereview/:propertyId", authenticate, propertyController.updateReviews);
 
 
@@ -49,17 +49,17 @@ router.get("/myFavorites/:user_id", authenticate, checkBuyer, favoriteController
 router.post("/sendAppointmentRequest", authenticate, checkBuyer, favoriteController.sendAppointmentRequest);
 
 // ********************USER ROUTE******************************
-router.post("/Userregister", UserController.userRegister);
-router.post("/Userlogin", UserController.userLogin);
+router.post("/Userregister", userController.userRegister);
+router.post("/Userlogin", userController.userLogin);
 //user review
-router.post("/userreview/:userId", authenticate, UserController.userReview);
-router.get("/userreviews/:userId", authenticate, UserController.getUserReviews);
+router.post("/userreview/:userId", authenticate, userController.userReview);
+router.get("/userreviews/:userId", authenticate, userController.getUserReviews);
 
 // ********************All COUNTRY ROUTE******************************
-router.get("/country", CountryController.getCountry);
-router.post("/country", CountryController.createCountry);
-router.put("country/:id", CountryController.updateCountry);
-router.delete("country/:id", CountryController.deleteCountry);
+router.get("/country", countryController.getCountry);
+router.post("/country", countryController.createCountry);
+router.put("country/:id", countryController.updateCountry);
+router.delete("country/:id", countryController.deleteCountry);
 // ********************All Blog ROUTE******************************
 router.get("/blog", blogController.getBlog);
 router.post("/blog", blogController.createBlog);
@@ -76,12 +76,14 @@ router.post("/termsandconditions", termsAndConditionsController.createTermsAndCo
 router.put("/termsandconditions/:id", termsAndConditionsController.updateTermsAndConditions);
 router.delete("/termsandconditions/:id", termsAndConditionsController.deleteTermsAndConditions);
 // ********************All PrivacyPolicy ROUTE******************************
-router.get("/privacypolicy", PrivacyPolicyController.getPrivacyPolicy);
-router.post("/privacypolicy", PrivacyPolicyController.createPrivacyPolicy);
-router.put("/privacypolicy/:id", PrivacyPolicyController.updatePrivacyPolicy);
-router.delete("/privacypolicy/:id", PrivacyPolicyController.deletePrivacyPolicy);
+router.get("/privacypolicy", privacyPolicyController.getPrivacyPolicy);
+router.post("/privacypolicy", privacyPolicyController.createPrivacyPolicy);
+router.put("/privacypolicy/:id", privacyPolicyController.updatePrivacyPolicy);
+router.delete("/privacypolicy/:id", privacyPolicyController.deletePrivacyPolicy);
 // ********************All ContactUs ROUTE******************************
-router.get("/contactus", ContactUsController.getContactUs);
-router.post("/contactus", ContactUsController.createContactUs);
+router.get("/contactus", contactUsController.getContactUs);
+router.post("/contactus", contactUsController.createContactUs);
+//mail send
+router.post("/sendmail", contactUsController.sendMail);
 
 module.exports = router;
