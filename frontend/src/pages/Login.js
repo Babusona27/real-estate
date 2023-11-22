@@ -37,7 +37,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const [message, setMessage] = useState('');
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -63,9 +63,12 @@ const Login = () => {
     PostApiFetch(POST_LOGIN_API, formData)
       .then(([status, response]) => {
         if (status == 200) {
+          console.log(response);
           if (response.status) {
+            localStorage.setItem('token', response.data.token);
             dispatch(userDetails(response));
             navigate('/');
+            setMessage(response.message);
           }
         } else {
           console.log('Something went wrong');
