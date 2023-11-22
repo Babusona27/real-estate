@@ -22,7 +22,7 @@ import BathtubIcon from "@mui/icons-material/Bathtub";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useParams } from "react-router-dom";
-import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL, POST_SUBMIT_REVIEW_API } from "../common/urls";
+import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL, POST_SUBMIT_REVIEW_API, GET_REVIEW_DETAILS } from "../common/urls";
 import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -68,8 +68,21 @@ const PropertyDetailsLeftbar = () => {
     // Close the dialog
     handleClose();
   };
-
-
+  // const getReviewDetails = async () => {
+  //   await axios
+  //     .get(GET_REVIEW_DETAILS + propertyDetails.slug)
+  //     .then((response) => {
+  //       if (response.data.status) {
+  //         console.log('response_Review', response.data.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  useEffect(() => {
+    // getReviewDetails()
+  }, []);
   return (
     <Box
       flex={2}

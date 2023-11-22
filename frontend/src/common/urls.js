@@ -22,4 +22,5 @@ export const GET_BLOGS = BASE_URL+'/blog';
 export const GET_CONTACTUS_DETAILS = BASE_URL+'/contactus';
 export const POST_REVIEW_API = '/userreview';
 export const POST_SUBMIT_REVIEW_API = '/reviewsubmit/';
+export const GET_REVIEW_DETAILS = '/reviews/';
 
