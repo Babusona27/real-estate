@@ -54,13 +54,10 @@ const PropertyDetailsLeftbar = () => {
       user_name: name,
       user_id: userData.data.userId,
     });
-    console.log('formData', formData);
-    const userId = userData.data.userId;
-    // const url = `${ POST_REVIEW_API }/${userId};
     PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, token)
       .then(([status, response]) => {
-        console.log('status', status);
-        console.log('response', response);
+        // console.log('status', status);
+        // console.log('response', response);
         if (status === 200) {
           console.log('Review Added Successfully');
         }
@@ -69,8 +66,13 @@ const PropertyDetailsLeftbar = () => {
     handleClose();
   };
   // const getReviewDetails = async () => {
+  //   console.log('propertyDetails.slug========>', GET_REVIEW_DETAILS + propertyDetails.slug);
   //   await axios
-  //     .get(GET_REVIEW_DETAILS + propertyDetails.slug)
+  //     .get(GET_REVIEW_DETAILS + propertyDetails.slug,{
+  //       headers: {
+  //         'Authorization': `${token}`
+  //       }
+  //     })
   //     .then((response) => {
   //       if (response.data.status) {
   //         console.log('response_Review', response.data.data);
@@ -80,6 +82,26 @@ const PropertyDetailsLeftbar = () => {
   //       console.log(err);
   //     });
   // };
+  const getReviewDetails = async () => {
+    if (propertyDetails) {
+      await axios
+        .get(GET_REVIEW_DETAILS + propertyDetails.slug, {
+          headers: {
+            'Authorization': `${token}`
+          }
+        })
+        .then((response) => {
+          if (response.data.status) {
+            console.log('response_Review', response.data.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('propertyDetails is null');
+    }
+  };
   useEffect(() => {
     // getReviewDetails()
   }, []);
