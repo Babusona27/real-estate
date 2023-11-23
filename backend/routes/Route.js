@@ -28,9 +28,9 @@ router.delete("/deletecategory/:id", categoryController.deleteCategory);
 // ******************All PROPERTY ROUTE*********************
 router.get("/getproperties", propertyController.getProperties);
 router.get("/propertydetails/:slug", propertyController.getProperty);
-router.post("/createproperty", authenticate, validateRequest, checkSeller, propertyController.createProperty);
-router.put("/updateproperty/:id", authenticate, checkSeller, propertyController.updateProperty);
-router.delete("/deleteproperty/:id", authenticate, checkSeller, propertyController.deleteProperty);
+router.post("/createproperty", authenticate, validateRequest, propertyController.createProperty);
+router.put("/updateproperty/:id", authenticate, propertyController.updateProperty);
+router.delete("/deleteproperty/:id", authenticate, propertyController.deleteProperty);
 //property review
 router.post("/reviewsubmit/:slug", authenticate, propertyController.reviewSubmit);
 router.get("/reviews/:slug", authenticate, propertyController.getReviews);
@@ -41,12 +41,12 @@ router.get("/myproperties", authenticate, checkSeller, propertyController.getSel
 router.delete("/deleteimages/:id/:imageIndex", propertyController.deleteImages);
 
 // ********************All FAVOURITE ROUTE******************************
-router.post("/addToFavorite", authenticate, checkBuyer, favoriteController.addToFavorite);
-router.delete("/deleteFavorite/:id/:propertyIndex", authenticate, checkBuyer, favoriteController.deleteFavorite);
-router.get("/myFavorites/:user_id", authenticate, checkBuyer, favoriteController.myFavorites);
+router.post("/addToFavorite", authenticate, favoriteController.addToFavorite);
+router.delete("/deleteFavorite/:id/:propertyIndex", authenticate, favoriteController.deleteFavorite);
+router.get("/myFavorites/:user_id", authenticate, favoriteController.myFavorites);
 
 // ********************APPOINTMENT REQUEST ROUTE******************************
-router.post("/sendAppointmentRequest", authenticate, checkBuyer, favoriteController.sendAppointmentRequest);
+router.post("/sendAppointmentRequest", authenticate, favoriteController.sendAppointmentRequest);
 
 // ********************USER ROUTE******************************
 router.post("/Userregister", userController.userRegister);

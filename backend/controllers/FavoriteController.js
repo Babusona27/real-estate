@@ -3,7 +3,7 @@ const AppointmentRequestSchema = require("../models/AppointmentRequestSchema");
 
 // ADD NEW FAVORITE PROPERTY (POST METHOD)
 exports.addToFavorite = async (req, res) => {
-  const { property_id, property_name, property_image } = req.body;
+  const { property_id, property_name, property_image, propertyPrice } = req.body;
 
   const userId = req.user.user_id; // Assuming you have the user_id in the decoded JWT payload
 
@@ -19,7 +19,8 @@ exports.addToFavorite = async (req, res) => {
       (favorite) =>
         favorite.property_id === property_id &&
         favorite.property_name === property_name &&
-        favorite.property_image === property_image
+        favorite.property_image === property_image &&
+        favorite.propertyPrice === propertyPrice
     );
 
     if (existingFavorite) {
@@ -35,6 +36,7 @@ exports.addToFavorite = async (req, res) => {
       property_id,
       property_name,
       property_image,
+      propertyPrice,
     });
 
     // Save the updated user document
