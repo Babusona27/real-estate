@@ -641,7 +641,7 @@ const PropertyDetailsLeftbar = () => {
           Map Location
         </Typography>
         <Box className="map_box" component={"div"}>
-          <img height={"100%"} width={"100%"} src="./assets/images/map.jpeg" />
+          <img height={"100%"} width={"100%"} src={process.env.PUBLIC_URL+"/assets/images/map.jpeg"} />        
         </Box>
       </Box>
       <Box
