@@ -114,7 +114,7 @@ const Wishlist = () => {
                       objectFit: "cover",
                     }}
                     component={"img"}
-                    src="./assets/images/R1.jpg"
+                    src={process.env.PUBLIC_URL+"/assets/images/R1.jpg"}
                   />
                
                 </Box>
@@ -308,7 +308,7 @@ const Wishlist = () => {
                       objectFit: "cover",
                     }}
                     component={"img"}
-                    src="./assets/images/R1.jpg"
+                    src={process.env.PUBLIC_URL+"/assets/images/R1.jpg"}
                   />
                
                 </Box>

@@ -211,7 +211,7 @@ const Register = () => {
                   lg: "0",
                 },
                 objectFit: "contain",
-              }} className="login_image" src="./assets/images/login.png" component={"img"} />
+              }} className="login_image" src={process.env.PUBLIC_URL+"/assets/images/login.png"} component={"img"} />
             </Box>
             <Box flex={2}>
               <Box sx={{

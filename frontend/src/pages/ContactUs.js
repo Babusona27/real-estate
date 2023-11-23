@@ -151,7 +151,7 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src="./assets/images/mail.png"
+                  src={process.env.PUBLIC_URL+"/assets/images/mail.png"}
                   component={"img"}
                 />
                 <Typography
@@ -216,7 +216,7 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src="./assets/images/call.png"
+                  src={process.env.PUBLIC_URL+"/assets/images/call.png"}
                   component={"img"}
                 />
                 <Typography
@@ -281,7 +281,7 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src="./assets/images/location.png"
+                  src={process.env.PUBLIC_URL+"/assets/images/location.png"}
                   component={"img"}
                 />
                 <Typography

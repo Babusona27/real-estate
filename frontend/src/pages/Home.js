@@ -668,7 +668,7 @@ const Home = () => {
                                   <UserBox>
                                     <Avatar
                                       sx={{ width: "36px", height: "36px" }}
-                                      src="./assets/images/avtar/avatar.png"
+                                      src={process.env.PUBLIC_URL+"/assets/images/avatar.png"}
                                     />
                                     <Typography
                                       sx={{
@@ -830,7 +830,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src="./assets/images/R6.jpg"
+                src={process.env.PUBLIC_URL+"/assets/images/R6.jpg"}
               />
               <Box
                 sx={{
@@ -912,7 +912,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src="./assets/images/R4.jpg"
+                src={process.env.PUBLIC_URL+"/assets/images/R4.jpg"}
               />
               <Box
                 sx={{
@@ -1013,7 +1013,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src="./assets/images/R9.jpg"
+                src={process.env.PUBLIC_URL+"/assets/images/R9.jpg"}
               />
               <Box
                 sx={{
@@ -1095,7 +1095,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src="./assets/images/R8.jpg"
+                src={process.env.PUBLIC_URL+"/assets/images/R8.jpg"}
               />
               <Box
                 sx={{
@@ -1247,7 +1247,7 @@ const Home = () => {
                 <Box
                   className={"img_color"}
                   component={"img"}
-                  src="./assets/images/trust.png"
+                  src={process.env.PUBLIC_URL+"/assets/images/trust.png"}
                 />
               </Box>
               <Box className={"box_details"}>
@@ -1312,7 +1312,7 @@ const Home = () => {
                 <Box
                   className={"img_color"}
                   component={"img"}
-                  src="./assets/images/home.png"
+                  src={process.env.PUBLIC_URL+"/assets/images/home.png"}
                 />
               </Box>
               <Box className={"box_details"}>
@@ -1377,7 +1377,7 @@ const Home = () => {
                 <Box
                   className={"img_color"}
                   component={"img"}
-                  src="./assets/images/budget.png"
+                  src={process.env.PUBLIC_URL+"/assets/images/budget.png"}
                 />
               </Box>
               <Box className={"box_details"}>
@@ -1492,7 +1492,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src="./assets/images/logos/logo1.png"
+              src={process.env.PUBLIC_URL+"/assets/images/logos/logo1.png"}
             />
             <Box
               sx={{
@@ -1514,7 +1514,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src="./assets/images/logos/logo2.png"
+              src={process.env.PUBLIC_URL+"/assets/images/logos/logo2.png"}
             />
             <Box
               sx={{
@@ -1536,7 +1536,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src="./assets/images/logos/logo5.png"
+              src={process.env.PUBLIC_URL+"/assets/images/logos/logo5.png"}
             />
             <Box
               sx={{
@@ -1558,7 +1558,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src="./assets/images/logos/logo2.png"
+              src={process.env.PUBLIC_URL+"/assets/images/logos/logo2.png"}
             />
             <Box
               sx={{
@@ -1580,7 +1580,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src="./assets/images/logos/logo1.png"
+              src={process.env.PUBLIC_URL+"/assets/images/logos/logo1.png"}
             />
             <Box
               sx={{
@@ -1602,7 +1602,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src="./assets/images/logos/logo5.png"
+              src={process.env.PUBLIC_URL+"/assets/images/logos/logo5.png"}
             />
           </Box>
         </Container>
