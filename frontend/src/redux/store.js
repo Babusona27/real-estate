@@ -6,6 +6,7 @@ import UserReducer from './reducers/UserReducer';
 import PropertyReducer from './reducers/PropertyReducer';
 import PropertyListReducer from './reducers/PropertyListReducer';
 import SearchReducer from './reducers/SearchReducer';
+import WishlistReducer from './reducers/WishlistReducer';
 
 const persistConfig = {
   key: 'root',
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   UserReducer: persistReducer(persistConfig, UserReducer),
   PropertyReducer: PropertyReducer,
   PropertyListReducer: PropertyListReducer,
-  SearchReducer: SearchReducer
+  SearchReducer: SearchReducer,
+  WishlistReducer: WishlistReducer,
 });
 
 export const store = configureStore({
