@@ -49,7 +49,7 @@ const PropertyDetailsLeftbar = () => {
     setRating(0);
     setName('');
     setComment('');
-  };
+  }
 
   const handleAddReview = async () => {
     const formData = JSON.stringify({
