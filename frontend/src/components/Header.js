@@ -33,6 +33,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
 import theme from "../Theme";
 
+import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 const Navbar = () => {
   // user box popup
   const [isBoxVisible, setIsBoxVisible] = useState(false);
@@ -65,7 +66,9 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.UserReducer.value);
+  const userData = useSelector(state => state.UserReducer.value);
+  const favoriteProperty = useSelector(state => state.FavoritePropertyReducer.value);
+
   // console.log("userData", userData);
   const [isNavOpen, setNavOpen] = useState(false);
 
@@ -412,7 +415,7 @@ const Navbar = () => {
                   </Box>
                 </Box>
 
-                <Tooltip title="wishlist">
+                <Tooltip title="My Favorite Property">
                   <IconButton
                     sx={{
                       border: "1px solid #dceeea",
@@ -425,10 +428,11 @@ const Navbar = () => {
                       fontSize: { xs: "20px", lg: "30px" },
                     }}
                     onClick={() => {
-                      navigate("/Wishlist");
-                    }}
-                  >
-                    <StyledBadge badgeContent={4} color="secondary">
+                    
+                      navigate('/favoriteProperty')
+                    }}>
+                    <StyledBadge badgeContent={favoriteProperty && favoriteProperty.length} color="secondary">  
+                    {/* <StyledBadge badgeContent={4} color="secondary"> */}
                       <FavoriteBorderIcon
                         sx={{
                           fontSize: { xs: "20px", lg: "30px" },

@@ -7,8 +7,11 @@ import Blog from "./pages/Blog";
 import ContactUs from "./pages/ContactUs";
 import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+
 import PersonalPropertyList from "./pages/PersonalPropertyList";
 import Wishlist from "./pages/Wishlist";
+
+import FavoriteProperty from "./pages/FavoriteProperty";
 import {
   BrowserRouter as Router,
   Route,
@@ -66,7 +69,7 @@ function App() {
               <Route path="/AgentRegister" element={<AgentRegister />} />
               <Route path="/AgentLogIn" element={<AgentLogIn />} />
               <Route path="/userProfile" element={<UserProfile />} />
-              <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/favoriteProperty" element={<FavoriteProperty />} />
               <Route path="/NoPropertiesAdd" element={<NoPropertiesAdd />} />
               <Route path="/PersonalPropertyList" element={<PersonalPropertyList />} />
 
