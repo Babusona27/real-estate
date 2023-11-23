@@ -49,7 +49,6 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Register" element={<Register />} />
               <Route path="/Properties" element={<AllProperties />} />
-
               {/* <Route path="/Properties" element={<PrivateRoute><AllProperties /></PrivateRoute>} /> */}
 
               {/* <Route path="/ProductDetails/:id" element={<ProductDetails />} /> */}
