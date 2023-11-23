@@ -20,11 +20,42 @@ import SingleBedIcon from '@mui/icons-material/SingleBed';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import { Link, useNavigate } from "react-router-dom";
-import { IMAGE_BASE_URL } from "../common/urls";
-
+import { IMAGE_BASE_URL, POST_ADD_WISHLIST_API } from "../common/urls";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishlist } from "../redux/reducers/WishlistReducer";
+import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
-  // console.log(propertyDetails);
+const dispatch = useDispatch();
+const userData = useSelector((state) => state.UserReducer.value);
+const wishlistData = useSelector((state) => state.WishlistReducer.value);
+
+console.log('wishlistData', wishlistData);
+
+console.log('userData', userData);
+
+const handleWishlist = async () => {
+
+ await axios.post(POST_ADD_WISHLIST_API, {
+    property_id: propertyDetails._id,
+    property_name: propertyDetails.property_name,
+    property_image: propertyDetails.images[0],
+    propertyPrice: propertyDetails.price
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${userData.data.token}`
+    }
+  })
+    .then(function (response) {
+      console.log(response);
+      dispatch(setWishlist(response.data.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  
+}
 
   return (
     <Box>
@@ -69,7 +100,24 @@ const PropertyPost = ({ propertyDetails }) => {
                   color: theme.palette.primary.white
                 }} variant="h6">$ {propertyDetails && propertyDetails.price}</Typography>
                 <Listings className="listings">
-                  <IconButton
+
+                  <IconButton onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    handleWishlist();
+
+                  //   console.log('addToWishlist')
+                  //   {propertyDetails && addToWishlist(propertyDetails._id, propertyDetails.property_name, propertyDetails.images[0], propertyDetails.price, userData.data.token).then(([wishlistData]) => {
+                  //     console.log('wishlistData', wishlistData);
+                  //   })
+                  // }
+
+                  //insert to wishlist collection 
+                  
+                    
+                  }}
+                  
                     sx={{
                       height: "35px",
                       width: "35px",

@@ -23,4 +23,5 @@ export const GET_CONTACTUS_DETAILS = BASE_URL+'/contactus';
 export const POST_REVIEW_API = '/userreview';
 export const POST_SUBMIT_REVIEW_API = '/reviewsubmit/';
 export const GET_REVIEW_DETAILS = '/reviews/';
+export const POST_ADD_WISHLIST_API = BASE_URL+'/addToFavorite';
 
