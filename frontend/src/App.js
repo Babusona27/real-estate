@@ -7,6 +7,7 @@ import Blog from "./pages/Blog";
 import ContactUs from "./pages/ContactUs";
 import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PersonalPropertyList from "./pages/PersonalPropertyList";
 import Wishlist from "./pages/Wishlist";
 import {
   BrowserRouter as Router,
@@ -68,6 +69,8 @@ function App() {
               <Route path="/userProfile" element={<UserProfile />} />
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/NoPropertiesAdd" element={<NoPropertiesAdd />} />
+              <Route path="/PersonalPropertyList" element={<PersonalPropertyList />} />
+
 
 
 

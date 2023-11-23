@@ -134,6 +134,7 @@ const ContactUs = () => {
                   border: "1px solid #ebebeb",
                   borderRadius: "8px",
                   marginBottom: "25px",
+                  minHeight:"230px",
                   textAlign: "center",
                   transition: "all 0.4s ease-out",
                   marginTop: {
@@ -151,7 +152,10 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src="./assets/images/mail.png"
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/assets/images/mail.png"
+                  }
                   component={"img"}
                 />
                 <Typography
@@ -200,6 +204,7 @@ const ContactUs = () => {
                   borderRadius: "8px",
                   marginBottom: "25px",
                   textAlign: "center",
+                  minHeight:"230px",
                   transition: "all 0.4s ease-out",
                   marginTop: {
                     xs: "30px",
@@ -216,7 +221,10 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src="./assets/images/call.png"
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/assets/images/call.png"
+                  }
                   component={"img"}
                 />
                 <Typography
@@ -265,6 +273,7 @@ const ContactUs = () => {
                   borderRadius: "8px",
                   marginBottom: "25px",
                   textAlign: "center",
+                  minHeight:"230px",
                   transition: "all 0.4s ease-out",
                   marginTop: {
                     xs: "30px",
@@ -281,7 +290,10 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src="./assets/images/location.png"
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/assets/images/location.png"
+                  }
                   component={"img"}
                 />
                 <Typography
@@ -319,7 +331,7 @@ const ContactUs = () => {
           </Box>
         </Container>
         <Box sx={{
-          backgroundImage: "url(./assets/images/R10.jpg)",
+          backgroundImage:`url(${process.env.PUBLIC_URL}/assets/images/R10.jpg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: "fixed",
@@ -344,6 +356,7 @@ const ContactUs = () => {
               background: "rgb(255 255 255 / 90%)",
               borderRadius: "8px",
               marginBottom: "25px",
+              
               transition: "all 0.4s ease-out",
               boxShadow: "0 4px 12px rgba(0,0,0,15%)",
               marginTop: {

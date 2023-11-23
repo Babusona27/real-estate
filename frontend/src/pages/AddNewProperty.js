@@ -25,11 +25,8 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import theme from "../Theme";
-import InputAdornment from "@mui/material/InputAdornment";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Checkbox from "@mui/material/Checkbox";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -49,6 +46,8 @@ const AddNewProperty = () => {
             <Box>
                 <Header />
             </Box>
+               {/* <BreadcrumbsBanner /> */}
+      <BreadcrumbsBanner title=" Add New Properties" />
             <Box
                 component={"div"}
                 sx={{
@@ -58,11 +57,11 @@ const AddNewProperty = () => {
                         md: "50px 0px",
                         lg: "50px 0px",
                     },
-                    backgroundColor: theme.palette.primary.BGColor,
+                    backgroundColor: theme.palette.primary.white,
                 }}
             >
                 <Container
-                    maxWidth="xl"
+                    maxWidth="lg"
                     sx={{
                         // backgroundColor: theme.palette.primary.BGColor,
                         height: "100%",
@@ -74,43 +73,7 @@ const AddNewProperty = () => {
                     }}
                 >
                     <Box>
-                        <Box
-                            sx={{
-                                padding: {
-                                    xs: "70px 0px 20px",
-                                    sm: "70px 0px 30px",
-                                    md: "70px 0px 30px",
-                                    lg: "70px 0px",
-                                },
-                                textAlign: "center",
-                            }}
-                        >
-                            <Typography
-                                sx={{
-                                    fontWeight: "500",
-                                    marginBottom: "15px",
-                                    fontSize: {
-                                        xs: "24px",
-                                        sm: "24px",
-                                        md: "32px",
-                                        lg: "32px",
-                                    },
-                                }}
-                                variant="h4"
-                                component={"h3"}
-                            >
-                                Add New <span className="lastword">Property</span>
-                            </Typography>
-                            <Typography
-                                sx={{
-                                    color: theme.palette.secondary.light,
-                                    marginBottom: "20px",
-                                }}
-                                component={"p"}
-                            >
-                                We are glad to see you again!
-                            </Typography>
-                        </Box>
+                        
                         <Box sx={{
                             display: {
                                 xs: "block",
@@ -128,8 +91,7 @@ const AddNewProperty = () => {
                         <Box
                             sx={{
                                 padding: "30px",
-                                backgroundColor: theme.palette.primary.white,
-                                height: "auto",
+                                boxShadow:"0 5px 20px 0 rgba(23, 44, 82, 0.1)",
                                 margin: {
                                     xs: "20px",
                                     sm: "20px",
@@ -262,9 +224,7 @@ const AddNewProperty = () => {
                                     >
                                         <InputLabel id="demo-simple-select-label">Country</InputLabel>
                                         <Select
-                                            // labelId="demo-simple-select-label"
-                                            // id="demo-simple-select"
-                                            // value={age}
+                                          
                                             label="Country"
                                             // onChange={handleChange}
                                             variant="outlined"
@@ -274,8 +234,39 @@ const AddNewProperty = () => {
                                             <MenuItem value={30}>Thirty</MenuItem>
                                         </Select>
                                     </FormControl>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-basic"
+                                        required
+                                        label="Bedroom"
+                                        type="number"
+                                        variant="outlined"
+                                        sx={{
+                                            width: {
+                                                xs: "100%",
+                                                sm: "100%",
+                                                md: "50%",
+                                                lg: "50%"
+                                            },
+                                            gap: "30px"
+                                        }}
+                                    />
+                                   
+                                </Box>
 
-                                    <FormControl
+                                <Box
+                                    sx={{
+                                        display: {
+                                            xs: "grid",
+                                            sm: "grid",
+                                            md: "flex",
+                                            lg: "flex"
+                                        },
+                                        gap: "30px"
+                                    }}
+                                >
+                                 
+                                 <FormControl
                                         fullWidth
                                         sx={{
                                             width: {
@@ -301,6 +292,23 @@ const AddNewProperty = () => {
                                             <MenuItem value={30}>Thirty</MenuItem>
                                         </Select>
                                     </FormControl>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-basic"
+                                        required
+                                        label=" Price"
+                                        type="number"
+                                        variant="outlined"
+                                        sx={{
+                                            width: {
+                                                xs: "100%",
+                                                sm: "100%",
+                                                md: "50%",
+                                                lg: "50%"
+                                            },
+                                            gap: "30px"
+                                        }}
+                                    />
                                 </Box>
 
                                 <Box
@@ -314,7 +322,7 @@ const AddNewProperty = () => {
                                         gap: "30px"
                                     }}
                                 >
-                                    <FormControl
+ <FormControl
                                         fullWidth
                                         sx={{
                                             width: {
@@ -340,55 +348,7 @@ const AddNewProperty = () => {
                                             <MenuItem value={30}>Thirty</MenuItem>
                                         </Select>
                                     </FormControl>
-
-                                    <TextField
-                                        fullWidth
-                                        id="outlined-basic"
-                                        required
-                                        label="Square Feet"
-                                        type="number"
-                                        variant="outlined"
-                                        sx={{
-                                            width: {
-                                                xs: "100%",
-                                                sm: "100%",
-                                                md: "50%",
-                                                lg: "50%"
-                                            },
-                                            gap: "30px"
-                                        }}
-                                    />
-                                </Box>
-
-                                <Box
-                                    sx={{
-                                        display: {
-                                            xs: "grid",
-                                            sm: "grid",
-                                            md: "flex",
-                                            lg: "flex"
-                                        },
-                                        gap: "30px"
-                                    }}
-                                >
-
-                                    <TextField
-                                        fullWidth
-                                        id="outlined-basic"
-                                        required
-                                        label="Bedroom"
-                                        type="number"
-                                        variant="outlined"
-                                        sx={{
-                                            width: {
-                                                xs: "100%",
-                                                sm: "100%",
-                                                md: "50%",
-                                                lg: "40%"
-                                            },
-                                            gap: "30px"
-                                        }}
-                                    />
+                                    
                                     <TextField
                                         fullWidth
                                         id="outlined-basic"
@@ -401,70 +361,15 @@ const AddNewProperty = () => {
                                                 xs: "100%",
                                                 sm: "100%",
                                                 md: "50%",
-                                                lg: "40%"
+                                                lg: "50%"
                                             },
                                             gap: "30px"
                                         }}
                                     />
-                                    <FormControl
-                                        row
-                                        sx={{
-                                            width: {
-                                                xs: "100%",
-                                                sm: "100%",
-                                                md: "50%",
-                                                lg: "20%"
-                                            },
-                                            flexDirection:
-                                            {
-                                                xs: 'column',
-                                                sm: 'column',
-                                                md: 'row',
-                                                lg: 'row',
-                                            },
-                                            alignItems:
-                                            {
-                                                xs: "start",
-                                                sm: "start",
-                                                md: "center",
-                                                lg: "center",
-                                            },
-                                            gap:
-                                            {
-                                                xs: "5px",
-                                                sm: "5px",
-                                                md: "10px",
-                                                lg: "10px",
-                                                xl:"30px",
-                                            }
-                                        }}
-                                    >
-                                        <FormLabel id="radio-buttons-group-label">Parking :</FormLabel>
-                                        <RadioGroup
-                                            variant="outlined"
-                                            id="outlined-basic"
-                                            aria-labelledby="demo-radio-buttons-group-label"
-                                            defaultValue="female"
-                                            name="radio-buttons-group"
-                                            row
-                                            sx={{
-                                                gap:
-                                                {
-                                                    xs: "5px",
-                                                    sm: "5px",
-                                                    md: "10px",
-                                                    lg: "10px",
-                                                    xl:"30px",
-                                                }
-                                            }}
-                                        >
-                                            <FormControlLabel value="Yes" control={<Radio />} label="Yes" className="radio_btn" />
-                                            <FormControlLabel value="No" control={<Radio />} label="No" className="radio_btn" />
-                                        </RadioGroup>
-                                    </FormControl>
+                                 
 
                                 </Box>
-
+                       
                                 <TextField
                                     fullWidth
                                     multiline
@@ -525,6 +430,62 @@ const AddNewProperty = () => {
                                     </Button>
 
                                 </Box>
+                                <FormControl
+                                        row
+                                        sx={{
+                                            width: {
+                                                xs: "100%",
+                                                sm: "100%",
+                                                md: "100%",
+                                                lg: "100%"
+                                            },
+                                            flexDirection:
+                                            {
+                                                xs: 'column',
+                                                sm: 'column',
+                                                md: 'row',
+                                                lg: 'row',
+                                            },
+                                            alignItems:
+                                            {
+                                                xs: "start",
+                                                sm: "start",
+                                                md: "center",
+                                                lg: "center",
+                                            },
+                                            gap:
+                                            {
+                                                xs: "5px",
+                                                sm: "5px",
+                                                md: "10px",
+                                                lg: "10px",
+                                                xl:"30px",
+                                            }
+                                        }}
+                                    >
+                                        <FormLabel id="radio-buttons-group-label">Parking :</FormLabel>
+                                        <RadioGroup
+                                            variant="outlined"
+                                            id="outlined-basic"
+                                            aria-labelledby="demo-radio-buttons-group-label"
+                                            defaultValue="female"
+                                            name="radio-buttons-group"
+                                            row
+                                            sx={{
+                                                gap:
+                                                {
+                                                    xs: "5px",
+                                                    sm: "5px",
+                                                    md: "10px",
+                                                    lg: "10px",
+                                                    xl:"30px",
+                                                }
+                                            }}
+                                        >
+                                            <FormControlLabel value="Yes" control={<Radio />} label="Yes" className="radio_btn" />
+                                            <FormControlLabel value="No" control={<Radio />} label="No" className="radio_btn" />
+                                        </RadioGroup>
+                                    </FormControl>
                                 <Box sx={{
                                     display: 'flex',
                                     justifyContent: "center"
@@ -610,7 +571,99 @@ const AddNewProperty = () => {
                     </Box>
                 </Container>
             </Box>
+        {/* Partner section  */}
+        <Box
+          className="partner_section"
+          component={"section"}
+          sx={{
+            padding: "50px 0px",
+            backgroundColor: theme.palette.primary.Green,
+          }}
+        >
+          <Container
+            maxWidth="xl"
+            sx={{
+              height: "100%",
+              padding: {
+                xs: "0px 10px",
+                sm: "0px 10px",
+                md: "0px 10px",
+                lg: "0px 24px",
+              },
+            }}
+          >
+            <Box sx={{
+              display: {
+                xs: "grid",
+                sm: "flex",
+                md: "flex",
+                lg: "flex",
+                xl: "flex",
+              },
+              justifyContent: "space-between",
+              gap: "15px"
+            }}>
+              <Box
+                className={"heading"}
+                sx={{
+                  textAlign: "left",
 
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  component={"h2"}
+                  sx={{
+                    fontSize: "30px",
+                    fontWeight: "500",
+                    lineHeight: "32px",
+                    marginBottom: "10px",
+                    color: theme.palette.primary.white,
+                  }}
+                >
+                  Become a Real Estate Agent
+                </Typography>
+                <Typography
+                  component={"p"}
+                  sx={{
+                    fontSize: "14px",
+                    color: theme.palette.primary.white,
+                  }}
+                >
+                  We only work with the best companies around the globe
+                </Typography>
+              </Box>
+              <Button className="customBtnStyle"
+                sx={{
+                  fontFamily: "'Roboto', sans-serif !important",
+                  backgroundColor: "#dceeea",
+                  color: theme.palette.primary.logoColor,
+                  padding: "8px 22px",
+                  fontSize: "18px",
+                  minHeight: "50px",
+                  height: "50px",
+                  lineHeight: "18px",
+                  fontWeight: "500",
+                  border: "none",
+                  overflow: "hidden",
+                  position: "relative",
+                  boxShadow: "none",
+                  zIndex: "1",
+                  textTransform: "capitalize",
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.logoColor,
+                    color: theme.palette.primary.white,
+                    boxShadow: "none",
+                  }
+                }} variant="contained" onClick={()=>{
+                  window.location.href = "/AgentRegister";
+                }}>Register Now</Button>
+            </Box>
+
+
+
+          </Container>
+        </Box>
             <Box>
                 <Footer />
             </Box>
