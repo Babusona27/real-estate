@@ -22,15 +22,17 @@ import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import { Link, useNavigate } from "react-router-dom";
 import { IMAGE_BASE_URL, POST_ADD_WISHLIST_API } from "../common/urls";
 import { useDispatch, useSelector } from "react-redux";
-import { setWishlist } from "../redux/reducers/WishlistReducer";
+// import { setWishlist } from "../redux/reducers/WishlistReducer";
+import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
 const dispatch = useDispatch();
 const userData = useSelector((state) => state.UserReducer.value);
-const wishlistData = useSelector((state) => state.WishlistReducer.value);
+// const wishlistData = useSelector((state) => state.WishlistReducer.value);
+const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
 
-console.log('wishlistData', wishlistData);
+// console.log('favoriteProperty_Property', favoriteProperty);
 
 console.log('userData', userData);
 
@@ -48,8 +50,12 @@ const handleWishlist = async () => {
     }
   })
     .then(function (response) {
-      console.log(response);
-      dispatch(setWishlist(response.data.data));
+      if (response.data.status) {
+        // dispatch(setFevoriteProperty([]));
+        dispatch(setFevoriteProperty(response.data.data));
+      }else{
+        console.log(response.data.message);
+      }
     })
     .catch(function (error) {
       console.log(error);

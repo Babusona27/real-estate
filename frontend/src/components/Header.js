@@ -23,11 +23,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
-
+import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(state => state.UserReducer.value);
+  const favoriteProperty = useSelector(state => state.FavoritePropertyReducer.value);
   // console.log("userData", userData);
   const [isNavOpen, setNavOpen] = useState(false);
 
@@ -217,7 +218,7 @@ const Navbar = () => {
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="wishlist">
+                <Tooltip title="My Favorite Property">
                   <IconButton
                     sx={{
                       border: "1px solid #dceeea",
@@ -230,9 +231,10 @@ const Navbar = () => {
                       fontSize: { xs: "20px", lg: "30px" },
                     }}
                     onClick={() => {
-                      navigate('/Wishlist')
+                      navigate('/favoriteProperty')
                     }}>
-                    <StyledBadge badgeContent={4} color="secondary">
+                    <StyledBadge badgeContent={favoriteProperty && favoriteProperty.length} color="secondary">  
+                    {/* <StyledBadge badgeContent={4} color="secondary"> */}
                       <FavoriteBorderIcon
                         sx={{
                           fontSize: { xs: "20px", lg: "30px" },
