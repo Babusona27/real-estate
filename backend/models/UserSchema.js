@@ -38,6 +38,10 @@ const FavoritePropertySchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  propertyPrice: {
+    type: Number,
+    required: [true, "Property price is Required"],
+  },
 });
 //review schema
 const ReviewSchema = new mongoose.Schema({

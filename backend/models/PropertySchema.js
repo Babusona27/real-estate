@@ -82,12 +82,27 @@ const PropertySchema = new mongoose.Schema({
     enum: ["active", "inactive", "sold"],
     default: "active",
   },
-  posted_on: Date,
+  posted_on: {
+    type: Date,
+    default: Date.now,
+  },
   slug: String,
   features: {
     type: Boolean,
     default: false
-  }
+  },
+  createBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  propertyOwnerType:
+  {
+    type: String,
+    enum: ["agent", "owner"],
+  },
+  propertyOwnerContactNumber: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Property", PropertySchema);
