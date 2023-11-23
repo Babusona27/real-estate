@@ -123,6 +123,9 @@ exports.createProperty = async (req, res) => {
     reviews,
     property_status,
     posted_on,
+    createBy,
+    propertyOwnerType,
+    propertyOwnerContactNumber
   } = req.body;
 
   var images = [];
@@ -152,6 +155,7 @@ exports.createProperty = async (req, res) => {
       floor_plan_images.push(relativePath);
     }
     // console.log("Floor images - ", images);
+    //create slug
     createSlug = property_name.replace(/\s+/g, "-").toLowerCase();
     checkslug = await PropertySchema.findOne({ slug: createSlug });
     if (checkslug) {
@@ -182,6 +186,9 @@ exports.createProperty = async (req, res) => {
       property_status,
       posted_on,
       slug: createSlug,
+      createBy,
+      propertyOwnerType,
+      propertyOwnerContactNumber
     });
     await property.save();
     res.status(201).json({
@@ -225,6 +232,8 @@ exports.updateProperty = async (req, res) => {
     reviews,
     property_status,
     posted_on,
+    propertyOwnerContactNumber,
+    propertyOwnerType
   } = req.body;
 
   var images = [];
@@ -279,6 +288,8 @@ exports.updateProperty = async (req, res) => {
       reviews,
       property_status,
       posted_on,
+      propertyOwnerContactNumber,
+      propertyOwnerType
     };
 
     // Add images and floor_plan_images only if they are provided

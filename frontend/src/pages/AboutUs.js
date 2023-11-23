@@ -321,7 +321,7 @@ const AboutUs = () => {
                     objectFit: "cover",
                     borderRadius: "8px",
                   }}
-                  src="./assets/images/R5.jpg"
+                  src={process.env.PUBLIC_URL+"/assets/images/R5.jpg"}
                   component={"img"}
                 />
               </Box>
@@ -427,7 +427,7 @@ const AboutUs = () => {
                   <Box
                     className={"img_color"}
                     component={"img"}
-                    src="./assets/images/trust.png"
+                    src={process.env.PUBLIC_URL+"/assets/images/trust.png"}
                   />
                 </Box>
                 <Box className={"box_details"}>
@@ -492,7 +492,7 @@ const AboutUs = () => {
                   <Box
                     className={"img_color"}
                     component={"img"}
-                    src="./assets/images/home.png"
+                    src={process.env.PUBLIC_URL+"/assets/images/home.png"}
                   />
                 </Box>
                 <Box className={"box_details"}>
@@ -557,7 +557,7 @@ const AboutUs = () => {
                   <Box
                     className={"img_color"}
                     component={"img"}
-                    src="./assets/images/budget.png"
+                    src={process.env.PUBLIC_URL+"/assets/images/budget.png"}
                   />
                 </Box>
                 <Box className={"box_details"}>

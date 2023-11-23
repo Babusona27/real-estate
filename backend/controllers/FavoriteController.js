@@ -1,9 +1,9 @@
 const UserSchema = require("../models/UserSchema");
 const AppointmentRequestSchema = require("../models/AppointmentRequestSchema");
-
+const { ObjectId } = require('mongodb');
 // ADD NEW FAVORITE PROPERTY (POST METHOD)
 exports.addToFavorite = async (req, res) => {
-  const { property_id, property_name, property_image } = req.body;
+  const { property_id, property_name, property_image, propertyPrice } = req.body;
 
   const userId = req.user.user_id; // Assuming you have the user_id in the decoded JWT payload
 
@@ -14,36 +14,29 @@ exports.addToFavorite = async (req, res) => {
     if (!user) {
       return res.status(404).json({ status: false, message: "User not found" });
     }
-
-    const existingFavorite = user.favorite_properties.find(
-      (favorite) =>
-        favorite.property_id === property_id &&
-        favorite.property_name === property_name &&
-        favorite.property_image === property_image
+    //user table favorite_properties array property_id check
+    const propertyExist = user.favorite_properties.find(
+      (property) => property.property_id.equals(new ObjectId(property_id))
     );
-
-    if (existingFavorite) {
-      return res.status(400).json({
-        status: false,
-        message: "Property already in favorites",
-        existingFavorite,
-      });
+    if (propertyExist) {
+      return res
+        .status(200)
+        .json({ status: false, message: "Property already exist" });
     }
-
-    // Add the new favorite property to the user's favorites
+    // Add the property to the user's favorite_properties array
     user.favorite_properties.push({
       property_id,
       property_name,
       property_image,
+      propertyPrice,
     });
-
-    // Save the updated user document
-    await user.save();
-
+    const savedUser = await user.save();
     res.status(200).json({
       status: true,
-      message: "Property added to favorites",
+      message: "Property added to favorites successfully",
+      data: savedUser.favorite_properties,
     });
+
   } catch (error) {
     console.error(error);
     res

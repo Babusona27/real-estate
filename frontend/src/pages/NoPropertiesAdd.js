@@ -2,13 +2,13 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
-
+import { useNavigate } from "react-router-dom";
 
 import { Box, Button, Container, IconButton, Typography } from "@mui/material";
 import theme from "../Theme";
 
 const NoPropertiesAdd = () => {
-
+const navigate = useNavigate();
     const handleAddProduct = () => {
         // Implement your logic for adding a product
         console.log('Adding a product...');
@@ -96,7 +96,7 @@ const NoPropertiesAdd = () => {
               }} paragraph>
           Please add your properties to get started.
         </Typography>
-        <Button className="customBtnStyle new_btn"
+        <Button className="customBtnStyle new_btn" onClick={() => navigate("/AddNewProperty")}
             sx={{
               fontFamily: "'Roboto', sans-serif !important",
               backgroundColor: "transparent",
