@@ -143,7 +143,7 @@ const Login = () => {
                   lg: "0",
                 },
                 objectFit: "contain",
-              }} className="login_image" src="./assets/images/login.png" component={"img"} />
+              }} className="login_image" src={process.env.PUBLIC_URL+"/assets/images/login.png"}component={"img"} />
             </Box>
             <Box flex={2}>
               <Box sx={{
@@ -205,7 +205,7 @@ const Login = () => {
                       width: "20px",
                       height: "20px",
                       objectFit: "contain",
-                    }} src="./assets/images/linkdin.svg" component={"img"} />
+                    }} src={process.env.PUBLIC_URL+"/assets/images/linkdin.svg"} component={"img"} />
                     <Typography component={"span"} sx={{
                       fontSize: "18px",
                       fontWeight: "500",
@@ -241,7 +241,7 @@ const Login = () => {
                       width: "20px",
                       height: "20px",
                       objectFit: "contain",
-                    }} src="./assets/images/google.svg" component={"img"} />
+                    }} src={process.env.PUBLIC_URL+"/assets/images/google.svg"} component={"img"} />
                     <Typography component={"span"} sx={{
                       fontSize: "18px",
                       fontWeight: "500",

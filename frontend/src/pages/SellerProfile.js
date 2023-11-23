@@ -106,7 +106,7 @@ display: {
               boxShadow:"0 0 10px 0px rgb(0 0 0 / 22%)"
             }}
             alt="The house from the offer."
-            src="./assets/images/user-img.jpg"
+            src={process.env.PUBLIC_URL+"/assets/images/user-img.jpg"}
           />
           <Box>
             <Box sx={{

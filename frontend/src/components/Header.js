@@ -241,7 +241,7 @@ const Navbar = () => {
                     </StyledBadge>
                   </IconButton>
                 </Tooltip>
-                <Link to="/AgentLogIn">
+                <Link to="/NoPropertiesAdd">
                   <Button
                     sx={{
                       borderRadius: "30px",
