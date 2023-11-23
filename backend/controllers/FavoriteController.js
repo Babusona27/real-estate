@@ -20,7 +20,7 @@ exports.addToFavorite = async (req, res) => {
     );
     if (propertyExist) {
       return res
-        .status(400)
+        .status(200)
         .json({ status: false, message: "Property already exist" });
     }
     // Add the property to the user's favorite_properties array
