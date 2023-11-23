@@ -71,7 +71,7 @@ const Footer = () => {
                 minWidth: { xs: "80px", sm: "100px", lg: "220px" },
               }}
             >
-              <img className="logo" src="./assets/images/logo.gif" />
+              <img className="logo" src={process.env.PUBLIC_URL+"/assets/images/logo.gif"} />
             </Box>
             <Typography
               sx={{

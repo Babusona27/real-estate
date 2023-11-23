@@ -9,7 +9,7 @@ const BreadcrumbsBanner = ({ title }) => {
     <Box
     sx={{
       position: 'relative',
-backgroundImage: "url(./assets/images/R6.jpg)",
+      backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/R6.jpg)`,
 backgroundSize: 'cover',
 backgroundPosition: 'center',
 height: {

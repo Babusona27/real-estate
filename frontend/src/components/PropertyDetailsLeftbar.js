@@ -22,7 +22,7 @@ import BathtubIcon from "@mui/icons-material/Bathtub";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useParams } from "react-router-dom";
-import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL, POST_SUBMIT_REVIEW_API } from "../common/urls";
+import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL, POST_SUBMIT_REVIEW_API, GET_REVIEW_DETAILS } from "../common/urls";
 import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -36,8 +36,8 @@ const PropertyDetailsLeftbar = () => {
   // add review popup box 
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
   const [name, setName] = useState('');
+  const [comment, setComment] = useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -45,7 +45,11 @@ const PropertyDetailsLeftbar = () => {
 
   const handleClose = () => {
     setOpen(false);
-  };
+    // Reset the form fields
+    setRating(0);
+    setName('');
+    setComment('');
+  }
 
   const handleAddReview = async () => {
     const formData = JSON.stringify({
@@ -54,13 +58,10 @@ const PropertyDetailsLeftbar = () => {
       user_name: name,
       user_id: userData.data.userId,
     });
-    console.log('formData', formData);
-    const userId = userData.data.userId;
-    // const url = `${ POST_REVIEW_API }/${userId};
     PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, token)
       .then(([status, response]) => {
-        console.log('status', status);
-        console.log('response', response);
+        // console.log('status', status);
+        // console.log('response', response);
         if (status === 200) {
           console.log('Review Added Successfully');
         }
@@ -68,7 +69,77 @@ const PropertyDetailsLeftbar = () => {
     // Close the dialog
     handleClose();
   };
+  // const getReviewDetails = async () => {
+  //   console.log('propertyDetails.slug========>', GET_REVIEW_DETAILS + propertyDetails.slug);
+  //   await axios
+  //     .get(GET_REVIEW_DETAILS + propertyDetails.slug,{
+  //       headers: {
+  //         'Authorization': `${token}`
+  //       }
+  //     })
+  //     .then((response) => {
+  //       if (response.data.status) {
+  //         console.log('response_Review', response.data.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  const getReviewDetails = async () => {
+    if (propertyDetails) {
+      await axios
+        .get(GET_REVIEW_DETAILS + propertyDetails.slug, {
+          headers: {
+            'Authorization': `${token}`
+          }
+        })
+        .then((response) => {
+          if (response.data.status) {
+            console.log('response_Review', response.data.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('propertyDetails is null');
+    }
+  };
+  useEffect(() => {
+    // getReviewDetails()
+  }, []);
 
+  // popup massage
+  const [active, setActive] = useState(false);
+  const [yourname, setYourName] = useState('');
+  const [yourmail, setYourMail] = useState('');
+  const [massage, setMassage] = useState('');
+
+  const PopupOpen = () => {
+    setActive(true);
+  };
+
+  const PopupClose = () => {
+    setActive(false);
+    // Reset the form fields
+    setYourName('');
+    setYourMail('');
+    setMassage('');
+  };
+
+  const handleAddMassage = () => {
+    // Implement your logic for sending the message
+    console.log('Sending Message:', { yourname, yourmail, massage });
+
+    // Reset the form fields
+    setYourName('');
+    setYourMail('');
+    setMassage('');
+
+    // Close the dialog
+    PopupClose();
+  };
 
   return (
     <Box
@@ -86,18 +157,54 @@ const PropertyDetailsLeftbar = () => {
           marginBottom: "10px",
         }}
       >
-        <Typography
+        <Box
           sx={{
-            fontSize: "22px",
-            color: "#212121",
-            lineHeight: "30px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             marginBottom: "25px",
-            fontWeight: "500",
           }}
-          variant="h6"
         >
-          Overview
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: "22px",
+              color: "#212121",
+              lineHeight: "30px",
+
+              fontWeight: "500",
+            }}
+            variant="h6"
+          >
+            Overview
+          </Typography>
+          <Button
+            className="customBtnStyle"
+            sx={{
+              fontFamily: theme.palette.primary.Roboto,
+              backgroundColor: theme.palette.primary.logoColor,
+              height: "40px",
+              padding: {
+                xs: "8px 10px",
+                sm: "8px 10px",
+                md: "8px 22px",
+                lg: "8px 22px",
+              },
+              fontSize: "14px",
+              lineHeight: "18px",
+              fontWeight: "500",
+              borderRadius: "8px",
+              color: theme.palette.primary.white,
+              "&:hover": {
+                backgroundColor: theme.palette.primary.Green,
+              },
+            }}
+            variant="contained"
+            onClick={PopupOpen}
+          >
+            book an appointment
+          </Button>
+        </Box>
+
         <Box
           className="details_icon_list"
           component="ul"
@@ -534,7 +641,7 @@ const PropertyDetailsLeftbar = () => {
           Map Location
         </Typography>
         <Box className="map_box" component={"div"}>
-          <img height={"100%"} width={"100%"} src="./assets/images/map.jpeg" />
+          <img height={"100%"} width={"100%"} src={process.env.PUBLIC_URL+"/assets/images/map.jpeg"} />        
         </Box>
       </Box>
       <Box
@@ -547,16 +654,17 @@ const PropertyDetailsLeftbar = () => {
         }}
         component={"div"}
       >
-
         {/* User Review Section */}
 
-        <Box sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "30px",
-          marginBottom: "50px",
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "30px",
+            marginBottom: "50px",
+          }}
+        >
           <Typography
             sx={{
               fontSize: {
@@ -574,7 +682,8 @@ const PropertyDetailsLeftbar = () => {
           >
             Customer Reviews
           </Typography>
-          <Button className="customBtnStyle"
+          <Button
+            className="customBtnStyle"
             sx={{
               fontFamily: theme.palette.primary.Roboto,
               backgroundColor: theme.palette.primary.logoColor,
@@ -590,11 +699,13 @@ const PropertyDetailsLeftbar = () => {
               fontWeight: "500",
               borderRadius: "8px",
               color: theme.palette.primary.white,
-              "&:hover":
-              {
+              "&:hover": {
                 backgroundColor: theme.palette.primary.Green,
               },
-            }} variant="contained" onClick={handleOpen}>
+            }}
+            variant="contained"
+            onClick={handleOpen}
+          >
             Add Review
           </Button>
         </Box>
@@ -625,11 +736,13 @@ const PropertyDetailsLeftbar = () => {
               src="./assets/images/R6.jpg"
             />
             <Box>
-              <Box sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Box>
                   <Typography
                     sx={{
@@ -654,27 +767,31 @@ const PropertyDetailsLeftbar = () => {
                     readOnly
                   />
                 </Box>
-                <Typography sx={{
-                  fontFamily: "'Roboto', sans-serif !important",
-                  backgroundColor: "#dceeea",
-                  color: theme.palette.primary.logoColor,
-                  padding: "8px 22px",
-                  fontSize: "14px",
-                  lineHeight: "18px",
-                  fontWeight: "500",
-                  borderRadius: "8px",
-                  border: "none",
-                  overflow: "hidden",
-                  position: "relative",
-                  boxShadow: "none",
-                  zIndex: "1",
-                  textTransform: "capitalize",
-                  "&:hover": {
-                    backgroundColor: theme.palette.primary.logoColor,
-                    color: theme.palette.primary.white,
+                <Typography
+                  sx={{
+                    fontFamily: "'Roboto', sans-serif !important",
+                    backgroundColor: "#dceeea",
+                    color: theme.palette.primary.logoColor,
+                    padding: "8px 22px",
+                    fontSize: "14px",
+                    lineHeight: "18px",
+                    fontWeight: "500",
+                    borderRadius: "8px",
+                    border: "none",
+                    overflow: "hidden",
+                    position: "relative",
                     boxShadow: "none",
-                  }
-                }} variant="h6" component={"h3"}>
+                    zIndex: "1",
+                    textTransform: "capitalize",
+                    "&:hover": {
+                      backgroundColor: theme.palette.primary.logoColor,
+                      color: theme.palette.primary.white,
+                      boxShadow: "none",
+                    },
+                  }}
+                  variant="h6"
+                  component={"h3"}
+                >
                   Sep 3, 2020
                 </Typography>
               </Box>
@@ -718,11 +835,13 @@ const PropertyDetailsLeftbar = () => {
               src="./assets/images/R6.jpg"
             />
             <Box>
-              <Box sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Box>
                   <Typography
                     sx={{
@@ -747,27 +866,31 @@ const PropertyDetailsLeftbar = () => {
                     readOnly
                   />
                 </Box>
-                <Typography sx={{
-                  fontFamily: "'Roboto', sans-serif !important",
-                  backgroundColor: "#dceeea",
-                  color: theme.palette.primary.logoColor,
-                  padding: "8px 22px",
-                  fontSize: "14px",
-                  borderRadius: "8px",
-                  lineHeight: "18px",
-                  fontWeight: "500",
-                  border: "none",
-                  overflow: "hidden",
-                  position: "relative",
-                  boxShadow: "none",
-                  zIndex: "1",
-                  textTransform: "capitalize",
-                  "&:hover": {
-                    backgroundColor: theme.palette.primary.logoColor,
-                    color: theme.palette.primary.white,
+                <Typography
+                  sx={{
+                    fontFamily: "'Roboto', sans-serif !important",
+                    backgroundColor: "#dceeea",
+                    color: theme.palette.primary.logoColor,
+                    padding: "8px 22px",
+                    fontSize: "14px",
+                    borderRadius: "8px",
+                    lineHeight: "18px",
+                    fontWeight: "500",
+                    border: "none",
+                    overflow: "hidden",
+                    position: "relative",
                     boxShadow: "none",
-                  }
-                }} variant="h6" component={"h3"}>
+                    zIndex: "1",
+                    textTransform: "capitalize",
+                    "&:hover": {
+                      backgroundColor: theme.palette.primary.logoColor,
+                      color: theme.palette.primary.white,
+                      boxShadow: "none",
+                    },
+                  }}
+                  variant="h6"
+                  component={"h3"}
+                >
                   Sep 3, 2020
                 </Typography>
               </Box>
@@ -786,15 +909,28 @@ const PropertyDetailsLeftbar = () => {
           />
         </Box>
         {/* Add more reviews as needed */}
-        <Dialog fullWidth sx={{
-
-        }} open={open} onClose={handleClose}>
-          <DialogTitle>Add Review</DialogTitle>
+        <Dialog fullWidth sx={{}} open={open} onClose={handleClose}>
+          <DialogTitle
+            className="popupHeading"
+            sx={{
+              fontSize: "22px",
+              color: "#212121",
+              lineHeight: "30px",
+              marginBottom: "15px",
+              fontWeight: "600",
+              textAlign: "center",
+              fontFamily: theme.palette.primary.Roboto,
+            }}
+          >
+            Add Review
+          </DialogTitle>
           <DialogContent>
-            <Box sx={{
-              display: "grid",
-              gap: "20px"
-            }}>
+            <Box
+              sx={{
+                display: "grid",
+                gap: "20px",
+              }}
+            >
               <Box>
                 <Rating
                   name="add-review-rating"
@@ -809,7 +945,8 @@ const PropertyDetailsLeftbar = () => {
                 label="Enter your name"
                 variant="outlined"
                 value={name}
-                onChange={(event) => setName(event.target.value)} />
+                onChange={(event) => setName(event.target.value)}
+              />
               <TextField
                 fullWidth
                 id="outlined-adornment-name"
@@ -822,14 +959,188 @@ const PropertyDetailsLeftbar = () => {
                 onChange={(event) => setComment(event.target.value)}
               />
             </Box>
-
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
+          <DialogActions
+            sx={{
+              padding: "0px 20px 20px 20px",
+              display:"flex",
+              justifyContent:"space-between",
+              alignItems:"center"
+            }}>
+            <Button
+              className="customBtnStyle new_btn"
+              sx={{
+                fontFamily: "'Roboto', sans-serif !important",
+                backgroundColor: "#dceeea",
+                color: theme.palette.primary.logoColor,
+                padding: "8px 22px",
+                fontSize: "14px",
+                lineHeight: "18px",
+                fontWeight: "500",
+                border: "none",
+                overflow: "hidden",
+                position: "relative",
+                boxShadow: "none",
+                zIndex: "1",
+                textTransform: "capitalize",
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.logoColor,
+                  color: theme.palette.primary.white,
+                  boxShadow: "none",
+                },
+              }}
+              variant="contained"
+              onClick={handleClose}
+            >
               Cancel
             </Button>
-            <Button onClick={handleAddReview} color="primary">
+            <Button
+              className="customBtnStyle new_btn"
+              sx={{
+                fontFamily: "'Roboto', sans-serif !important",
+                backgroundColor: "#dceeea",
+                color: theme.palette.primary.logoColor,
+                padding: "8px 22px",
+                fontSize: "14px",
+                lineHeight: "18px",
+                fontWeight: "500",
+                border: "none",
+                overflow: "hidden",
+                position: "relative",
+                boxShadow: "none",
+                zIndex: "1",
+                textTransform: "capitalize",
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.logoColor,
+                  color: theme.palette.primary.white,
+                  boxShadow: "none",
+                },
+              }}
+              variant="contained"
+              onClick={handleAddReview}
+            >
               Add Review
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* book an appointment*/}
+        <Dialog fullWidth sx={{}} open={active} onClose={PopupClose}>
+          <DialogTitle
+            className="popupHeading"
+            sx={{
+              fontSize: "22px",
+              color: "#212121",
+              lineHeight: "30px",
+              marginBottom: "15px",
+              fontWeight: "600",
+              textAlign: "center",
+              fontFamily: theme.palette.primary.Roboto,
+            }}
+          >
+            Drop Messege For Book
+          </DialogTitle>
+          <DialogContent>
+            <Box
+              sx={{
+                display: "grid",
+                gap: "20px",
+              }}
+            >
+              <TextField
+                fullWidth
+                id="outlined-adornment-name"
+                required
+                label="Your Name"
+                variant="outlined"
+                value={yourname}
+                onChange={(event) => setYourName(event.target.value)}
+              />
+              <TextField
+                fullWidth
+                id="outlined-adornment-name"
+                required
+                label="Your e-Mail"
+                variant="outlined"
+                value={yourmail}
+                onChange={(event) => setYourMail(event.target.value)}
+              />
+              <TextField
+                fullWidth
+                id="outlined-adornment-name"
+                required
+                label="Write Message..."
+                multiline
+                rows={4}
+                variant="outlined"
+                value={massage}
+                onChange={(event) => setMassage(event.target.value)}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions
+            sx={{
+              padding: "0px 20px 20px 20px",
+              display:"flex",
+              justifyContent:"space-between",
+              alignItems:"center"
+            }}
+          >
+            <Button
+              className="customBtnStyle new_btn"
+              sx={{
+                fontFamily: "'Roboto', sans-serif !important",
+                backgroundColor: "#dceeea",
+                color: theme.palette.primary.logoColor,
+                padding: "8px 22px",
+                fontSize: "14px",
+                lineHeight: "18px",
+                fontWeight: "500",
+                border: "none",
+                overflow: "hidden",
+                position: "relative",
+                boxShadow: "none",
+                zIndex: "1",
+                textTransform: "capitalize",
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.logoColor,
+                  color: theme.palette.primary.white,
+                  boxShadow: "none",
+                },
+              }}
+              variant="contained"
+              onClick={PopupClose}
+              color="primary"
+            >
+              Cancel
+            </Button>
+            <Button
+              className="customBtnStyle new_btn"
+              sx={{
+                fontFamily: "'Roboto', sans-serif !important",
+                backgroundColor: "#dceeea",
+                color: theme.palette.primary.logoColor,
+                padding: "8px 22px",
+                fontSize: "14px",
+                lineHeight: "18px",
+                fontWeight: "500",
+                border: "none",
+                overflow: "hidden",
+                position: "relative",
+                boxShadow: "none",
+                zIndex: "1",
+                textTransform: "capitalize",
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.logoColor,
+                  color: theme.palette.primary.white,
+                  boxShadow: "none",
+                },
+              }}
+              variant="contained"
+              onClick={handleAddMassage}
+              color="primary"
+            >
+              Send Messege
             </Button>
           </DialogActions>
         </Dialog>

@@ -27,8 +27,11 @@ import LetestPosts from "./LetestPosts";
 import { useNavigate } from 'react-router-dom';
 import { GET_ALL_CATEGORY } from "../common/urls";
 import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
+import { setSearch,removeSearch } from "../redux/reducers/SearchReducer";
 
 const PropertyLeftBar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [propertyType, setProperty] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("");
@@ -38,25 +41,24 @@ const PropertyLeftBar = () => {
   const [open, setOpen] = React.useState(false);
   const [categoryList, setCategoryList] = useState(false);
 
-  const paramsArray = [];
+  const paramsArray = useSelector((state) => state.SearchReducer.value) || [];
 
 
 
-  const handlePropertyType = (event) => {
-    console.log("event-->", event.target.value);  
+  const handlePropertyType = (event) => {   
     setProperty(event.target.value);
-    if(event.target.value != ""){
-      paramsArray.push(`type=${event.target.value}`);
-    }
-      
-    // setPropertyType(type);
-    // setSelectedCategory("");
+    if(event.target.value != ""){          
+      dispatch(setSearch({ key: 'propertyType', item: event.target.value }));
+    }else{
+      dispatch(removeSearch({ keyToRemove: 'propertyType' }));
+    }          
   };
   const handleCategory = (event) => {
     if(event.target.value != ""){
-      paramsArray.push(`category=${event.target.value}`);
-    }
-    //console.log("event-->", event.target.value);
+      dispatch(setSearch({ key: 'category', item: event.target.value }));
+    }else{
+    dispatch(removeSearch({ keyToRemove: 'category' }));
+    }   
     setSelectedCategory(event.target.value);
   };
   const handleChange3 = (event) => {
@@ -89,7 +91,15 @@ const PropertyLeftBar = () => {
 
     // Navigate to a route with query parameters
     console.log('paramsArray', paramsArray);
-    navigate('/Properties?param1=value1&param2=value2');
+    let params = "";
+    paramsArray.map((item, key) => {
+      params += item.key + "=" + item.item + "&";
+    })
+    //remove last & if exist
+    if (params.charAt(params.length - 1) == '&') {
+      params = params.slice(0, -1);
+    }
+     navigate('/Properties?'+params);
   };
  
   useEffect(() => {
@@ -181,7 +191,7 @@ const PropertyLeftBar = () => {
               label="All Categories"
               onChange={handleCategory}>
 
-              <MenuItem value={""}>All Categories</MenuItem>
+              <MenuItem value="">All Categories</MenuItem>
               {categoryList && categoryList.map((item, key) => (
                 <MenuItem value={item.category_name} key={item.category_name} >{item.category_name}</MenuItem>
               ))}

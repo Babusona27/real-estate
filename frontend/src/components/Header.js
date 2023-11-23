@@ -110,7 +110,7 @@ const Navbar = () => {
                 minWidth: { xs: "80px", sm: "100px", lg: "120px" },
               }}
             >
-              <img className="logo" src="./assets/images/logo.gif" />
+              <Box component={"img"} className="logo" src={process.env.PUBLIC_URL+"/assets/images/logo.gif"} />
             </Box>
 
             <Box sx={{ display: { xs: "flex", md: "none", lg: "flex" } }}>

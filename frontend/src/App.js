@@ -24,6 +24,7 @@ import SellerProfile from "./pages/SellerProfile";
 import AgentRegister from "./pages/AgentRegister";
 import AgentLogIn from "./pages/AgentLogIn";
 import UserProfile from "./pages/UserProfile";
+import NoPropertiesAdd from "./pages/NoPropertiesAdd";
 import { Navigate } from "react-router";
 import { useSelector } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
@@ -49,7 +50,6 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Register" element={<Register />} />
               <Route path="/Properties" element={<AllProperties />} />
-
               {/* <Route path="/Properties" element={<PrivateRoute><AllProperties /></PrivateRoute>} /> */}
 
               {/* <Route path="/ProductDetails/:id" element={<ProductDetails />} /> */}
@@ -66,6 +66,7 @@ function App() {
               <Route path="/AgentLogIn" element={<AgentLogIn />} />
               <Route path="/userProfile" element={<UserProfile />} />
               <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/NoPropertiesAdd" element={<NoPropertiesAdd />} />
 
 
 
