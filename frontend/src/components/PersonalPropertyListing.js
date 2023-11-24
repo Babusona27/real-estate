@@ -28,7 +28,7 @@ const PersonalPropertyListing = () => {
     >
       <Box
         sx={{
-          display: { xs: "block", sm: "block", md: "block", lg: "grid" },
+          display: { xs: "grid", sm: "grid", md: "grid", lg: "grid" },
           alignItems: "center",
           gridTemplateColumns: {
             xs: "repeat(1, 1fr)",
@@ -41,10 +41,22 @@ const PersonalPropertyListing = () => {
       >
         <Box
           sx={{
-            width: "250px",
-            height: "200px",
+            width: {
+                xs: "100%",
+                sm: "100%",
+                md: "250px",
+                lg: "250px",
+              },
+            height: {
+                xs: "100%",
+                sm: "100%",
+                md: "200px",
+                lg: "200px",
+              },
+            
             borderRadius: "10px",
             overflow: "hidden",
+            display:"block"
           }}
           href="#"
           component={"a"}

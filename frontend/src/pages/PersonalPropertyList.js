@@ -57,41 +57,48 @@ const PersonalPropertyList = () => {
         >
           <Box
             sx={{
-              display: { xs: "block", sm: "block", md: "block", lg: "flex" },
-              justifyContent: "space-between",
               margin: "30px 0px",
             }}
           >
-            <Box
-              flex={2}
-              paddingLeft={{ xs: "0px", md: "15px" }}
-              paddingRight={{ xs: "0px", md: "15px" }}
-              className={"LeftBar"}
-             
-            >
+            <Box>
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "start",
+                  display: { xs: "grid", sm: "grid", md: "flex", lg: "flex" },
+                  justifyContent:{
+                    xs: "center",
+                    sm: "center",
+                    md: "start",
+                    lg: "start",
+                  },
                   alignItems: "center",
-                 gap:"30px"
+                  gap: "30px",
                 }}
               >
-                  <FormControl>
-                  <InputLabel  sx={{
-                    padding:"0px 14px",
-                    top:"-5px"
-                   }} id="demo-simple-select-label">Sort by</InputLabel>
+                <FormControl>
+                  <InputLabel
+                    sx={{
+                      padding: "0px 14px",
+                      top: "-5px",
+                    }}
+                    id="demo-simple-select-label"
+                  >
+                    Sort by
+                  </InputLabel>
                   <Select
                     value={sortValue}
                     onChange={handleSortChange}
                     variant="outlined"
                     label="Sort by"
                     sx={{
-                      width:"200px",
-                      height:"45px",
-                      padding:"0px 14px"
-                     }}
+                      width: {
+                        xs: "100%",
+                        sm: "100%",
+                        md: "200px",
+                        lg: "200px",
+                      },
+                      height: "45px",
+                      padding: "0px 14px",
+                    }}
                   >
                     <MenuItem value="">None</MenuItem>
                     <MenuItem value="name">Sort by Name</MenuItem>
@@ -101,97 +108,60 @@ const PersonalPropertyList = () => {
                 </FormControl>
                 <FormControl
                   sx={{
-                    width:"200px",
-                    height:"45px",
-                   }} className="search_fld">
-                     <InputLabel sx={{
-                    padding:"0px 14px",
-                    top:"-5px"
-                   }} id="demo-simple-select-label"></InputLabel>
-                <TextField
-                   sx={{
-                    width:"200px",
-                    height:"100%",
-                    minHeight:"45px",
-                    padding:"0px 0px"
-                   }}
-                  variant="outlined"
-                  label="Search..."
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton  onClick={handleSearch}>
-                          <SearchIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
+                    width: {
+                      xs: "100%",
+                      sm: "100%",
+                      md: "200px",
+                      lg: "200px",
+                    },
+                    height: "45px",
                   }}
-                />
-                  </FormControl>
-              </Box>
-              <Box sx={{
-                display: "grid",
-                gap: "15px",
-                marginTop:"25px"
-              }}>
-<PersonalPropertyListing/>
-<PersonalPropertyListing/>
-<PersonalPropertyListing/>
-<PersonalPropertyListing/>
-              </Box>
-            </Box>
-            <Box
-              flex={1}
-              paddingLeft={{ xs: "0px", md: "15px" }}
-              paddingRight={{ xs: "0px", md: "15px" }}
-              className={"RightBar"}
-            >
-              <Box sx={{
-                  marginBottom: "25px",
-                  textAlign:"center"
-              }}>
-              <Typography
-                  sx={{
-                    fontSize: "26px",
-                    color: "#212121",
-                    lineHeight: "30px",
-                    marginBottom: "10px",
-                    fontWeight: "600",
-                  }}
-                  variant="h6"
-                  component={"h3"}
+                  className="search_fld"
                 >
-                 Advance Information
-                </Typography>
-                <Typography
-                        sx={{
-                          color: theme.palette.primary.dark,
-                          fontSize: "16px",
-                          fontWeight: "400",
-                        }}
-                        component={"p"}
-                      >
-                       About 9,620 results
-                      </Typography>
+                  <InputLabel
+                    sx={{
+                      padding: "0px 14px",
+                      top: "-5px",
+                    }}
+                    id="demo-simple-select-label"
+                  ></InputLabel>
+                  <TextField
+                    sx={{
+                      width: {
+                        xs: "100%",
+                        sm: "100%",
+                        md: "200px",
+                        lg: "200px",
+                      },
+                      height: "100%",
+                      minHeight: "45px",
+                      padding: "0px 0px",
+                    }}
+                    variant="outlined"
+                    label="Search..."
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleSearch}>
+                            <SearchIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </FormControl>
               </Box>
               <Box
                 sx={{
-                  padding: "30px",
-                  background: theme.palette.primary.white,
-                  border: "1px solid #ebebeb",
-                  borderRadius: "8px",
-                  transition: "all 0.4s ease-out",
-                  boxShadow: "0 4px 12px rgba(0,0,0,10%)",
-                  marginTop: {
-                    xs: "30px",
-                    lg: "0px",
-                  },
-                  "&:hover": {
-                    boxShadow: "0 4px 12px rgba(0,0,0,20%)",
-                  },
+                  display: "grid",
+                  gap: "15px",
+                  marginTop: "25px",
                 }}
               >
-               
+                <PersonalPropertyListing />
+                <PersonalPropertyListing />
+                <PersonalPropertyListing />
+                <PersonalPropertyListing />
               </Box>
             </Box>
           </Box>
