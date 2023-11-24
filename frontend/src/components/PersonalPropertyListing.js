@@ -1,10 +1,11 @@
-import { Avatar, Box, IconButton, List, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, List, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import theme from "../Theme";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import SingleBedIcon from "@mui/icons-material/SingleBed";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import BathtubOutlinedIcon from "@mui/icons-material/BathtubOutlined";
+import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 
 const PersonalPropertyListing = () => {
   return (
@@ -328,6 +329,21 @@ const PersonalPropertyListing = () => {
                 </Typography>
               </Box>
             </Box>
+            <Tooltip title="edit">
+  <IconButton className="edit_icon" sx={{
+    background:theme.palette.primary.logoColor,
+    color:theme.palette.primary.white,
+    transition: "all 0.4s ease-out",
+    boxShadow: "0 4px 12px rgba(0,0,0,10%)",
+    "&:hover": {
+        background:theme.palette.primary.white,
+        color:theme.palette.primary.logoColor,
+        boxShadow: "0 3px 12px rgb(0 0 0 / 23%)",
+      },
+  }}>
+    <EditNoteRoundedIcon  />
+  </IconButton>
+</Tooltip>
           </Box>
         </Box>
       </Box>
