@@ -71,14 +71,19 @@ const Property = () => {
                  display: "block",
                  width:"100%"
               }} fullWidth>
-                <InputLabel id="demo-simple-select-label">
+                <InputLabel  sx={{
+                    padding:"0px",
+                    top:"-5px",
+                    fontSize:"14px"
+                   }} id="demo-simple-select-label">
                   Sort Option
                 </InputLabel>
                 <Select
-                  sx={{
-                     minHeight: "35px" ,
-                     width:"200px"
-                    }}
+                   sx={{
+                    width:"150px",
+                    height:"40px",
+                    padding:"0px 14px"
+                   }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={sortOption}

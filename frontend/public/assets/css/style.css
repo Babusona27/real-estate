@@ -795,3 +795,10 @@ padding-left: 30px;
     opacity: 1;
 	transform: translate(-100px, 60px) !important;
 }
+.search_fld .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 0px 12px !important;
+    height: 45px !important;
+}
+.search_fld .css-xfn8dw-MuiFormLabel-root-MuiInputLabel-root{
+	top: -5px;
+}

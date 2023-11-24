@@ -16,6 +16,7 @@ import Footer from "../components/Footer";
 import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import theme from "../Theme";
 import SearchIcon from "@mui/icons-material/Search";
+import PersonalPropertyListing from "../components/PersonalPropertyListing";
 
 const PersonalPropertyList = () => {
   // SearchAndFilter
@@ -66,29 +67,31 @@ const PersonalPropertyList = () => {
               paddingLeft={{ xs: "0px", md: "15px" }}
               paddingRight={{ xs: "0px", md: "15px" }}
               className={"LeftBar"}
-              sx={{
-                display: "grid",
-                gap: "15px",
-              }}
+             
             >
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "start",
                   alignItems: "center",
-                  gap:"50px",
+                 gap:"30px"
                 }}
               >
-                  <FormControl
-                  fullWidth
-                >
-                  <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
+                  <FormControl>
+                  <InputLabel  sx={{
+                    padding:"0px 14px",
+                    top:"-5px"
+                   }} id="demo-simple-select-label">Sort by</InputLabel>
                   <Select
                     value={sortValue}
                     onChange={handleSortChange}
                     variant="outlined"
                     label="Sort by"
-                    fullWidth
+                    sx={{
+                      width:"200px",
+                      height:"45px",
+                      padding:"0px 14px"
+                     }}
                   >
                     <MenuItem value="">None</MenuItem>
                     <MenuItem value="name">Sort by Name</MenuItem>
@@ -96,21 +99,45 @@ const PersonalPropertyList = () => {
                     {/* Add more sorting options as needed */}
                   </Select>
                 </FormControl>
+                <FormControl
+                  sx={{
+                    width:"200px",
+                    height:"45px",
+                   }} className="search_fld">
+                     <InputLabel sx={{
+                    padding:"0px 14px",
+                    top:"-5px"
+                   }} id="demo-simple-select-label"></InputLabel>
                 <TextField
-                  placeholder="Search..."
-                  fullWidth
+                   sx={{
+                    width:"200px",
+                    height:"100%",
+                    minHeight:"45px",
+                    padding:"0px 0px"
+                   }}
                   variant="outlined"
+                  label="Search..."
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton onClick={handleSearch}>
+                        <IconButton  onClick={handleSearch}>
                           <SearchIcon />
                         </IconButton>
                       </InputAdornment>
                     ),
                   }}
                 />
-              
+                  </FormControl>
+              </Box>
+              <Box sx={{
+                display: "grid",
+                gap: "15px",
+                marginTop:"25px"
+              }}>
+<PersonalPropertyListing/>
+<PersonalPropertyListing/>
+<PersonalPropertyListing/>
+<PersonalPropertyListing/>
               </Box>
             </Box>
             <Box
@@ -119,24 +146,52 @@ const PersonalPropertyList = () => {
               paddingRight={{ xs: "0px", md: "15px" }}
               className={"RightBar"}
             >
+              <Box sx={{
+                  marginBottom: "25px",
+                  textAlign:"center"
+              }}>
+              <Typography
+                  sx={{
+                    fontSize: "26px",
+                    color: "#212121",
+                    lineHeight: "30px",
+                    marginBottom: "10px",
+                    fontWeight: "600",
+                  }}
+                  variant="h6"
+                  component={"h3"}
+                >
+                 Advance Information
+                </Typography>
+                <Typography
+                        sx={{
+                          color: theme.palette.primary.dark,
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                        component={"p"}
+                      >
+                       About 9,620 results
+                      </Typography>
+              </Box>
               <Box
                 sx={{
                   padding: "30px",
                   background: theme.palette.primary.white,
                   border: "1px solid #ebebeb",
                   borderRadius: "8px",
-                  marginBottom: "25px",
                   transition: "all 0.4s ease-out",
+                  boxShadow: "0 4px 12px rgba(0,0,0,10%)",
                   marginTop: {
                     xs: "30px",
                     lg: "0px",
                   },
                   "&:hover": {
-                    boxShadow: "0 4px 12px rgba(0,0,0,.1)",
+                    boxShadow: "0 4px 12px rgba(0,0,0,20%)",
                   },
                 }}
               >
-                suraj
+               
               </Box>
             </Box>
           </Box>

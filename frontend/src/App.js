@@ -9,7 +9,6 @@ import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import PersonalPropertyList from "./pages/PersonalPropertyList";
-import Wishlist from "./pages/Wishlist";
 
 import FavoriteProperty from "./pages/FavoriteProperty";
 import {

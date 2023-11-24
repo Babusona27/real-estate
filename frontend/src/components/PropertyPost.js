@@ -300,7 +300,7 @@ const handleWishlist = async () => {
                   <UserBox>
                     <Avatar
                       sx={{ width: "36px", height: "36px" }}
-                      src="./assets/images/avtar/avatar.png"
+                      src={process.env.PUBLIC_URL + "/assets/images/avtar/avatar1.png"}
                     />
                     <Typography sx={{
                       display: "-webkit-box",
@@ -308,7 +308,7 @@ const handleWishlist = async () => {
                       textOverflow: "ellipsis",
                       WebkitLineClamp: "1",
                       WebkitBoxOrient: "vertical",
-                      fontFamily: "'Roboto', sans-serif !important",
+                      fontFamily:  theme.palette.primary.Roboto,
                       fontSize: "14px",
                       fontWeight: "500",
                       color: "#666666",
