@@ -32,12 +32,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
 import theme from "../Theme";
-
+import { IMAGE_BASE_URL } from "../common/urls";
 import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 const Navbar = () => {
   // user box popup
   const [isBoxVisible, setIsBoxVisible] = useState(false);
-
   const handleButtonClick = () => {
     setIsBoxVisible(!isBoxVisible);
   };
@@ -67,9 +66,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(state => state.UserReducer.value);
+  console.log("userData", userData);
   const favoriteProperty = useSelector(state => state.FavoritePropertyReducer.value);
 
-  // console.log("userData", userData);
   const [isNavOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
@@ -238,35 +237,33 @@ const Navbar = () => {
                   }}
                   className="toggle-button"
                   onClick={handleButtonClick}
-                  
+
                 >
                   <Box
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      cursor:"pointer"
+                      cursor: "pointer"
                     }}
                   >
                     <Avatar
                       alt="User Image"
-                      src={
-                        process.env.PUBLIC_URL +
-                        "/assets/images/avtar/avatar.png"
-                      }
+                      src={userData && userData.user_image ? IMAGE_BASE_URL+userData.user_image : "./assets/images/avtar/avatar.png"}
+                      // src="./assets/images/avtar/avatar.png"
                       sx={{ marginRight: 1 }}
                     />
                     <Typography sx={{
-                              fontSize: "16px",
-                              color: theme.palette.primary.logoColor,
-                              lineHeight: "1.2",
-                              fontWeight: "500",
-                              display:{
-                                xs:"none",
-                                sm:"none",
-                                md:"block",
-                                lg:"block"
-                              }
-                            }} component={"p"}>Suraj Banerjee</Typography>
+                      fontSize: "16px",
+                      color: theme.palette.primary.logoColor,
+                      lineHeight: "1.2",
+                      fontWeight: "500",
+                      display: {
+                        xs: "none",
+                        sm: "none",
+                        md: "block",
+                        lg: "block"
+                      }
+                    }} component={"p"}>{userData && userData.user_name}</Typography>
                   </Box>
 
                   <Box
@@ -275,7 +272,7 @@ const Navbar = () => {
                       width: "200px",
                       padding: "20px",
                       height: "fit-content",
-                      transition:"all 0.3s ease-in-out",
+                      transition: "all 0.3s ease-in-out",
                       backgroundColor: theme.palette.primary.white,
                       display: "block",
                       justifyContent: "center",
@@ -288,7 +285,7 @@ const Navbar = () => {
                       boxShadow: "0 0 50px 0 rgba(32,32,32,.15)",
                       borderRadius: "8px",
                       visibility: isBoxVisible ? "" : "hidden",
-                      opacity:"0"
+                      opacity: "0"
                     }}
                   >
                     <Box
@@ -308,10 +305,12 @@ const Navbar = () => {
                       >
                         <Avatar
                           alt="User Image"
-                          src={
-                            process.env.PUBLIC_URL +
-                            "/assets/images/avtar/avatar.png"
-                          }
+                          // src={
+                          //   process.env.PUBLIC_URL +
+                          //   "/assets/images/avtar/avatar.png"
+                          // }
+
+                          src={userData && userData.user_image ? IMAGE_BASE_URL+userData.user_image : "./assets/images/avtar/avatar.png"}
                           sx={{ marginRight: 1 }}
                         />
                         <Box
@@ -329,9 +328,10 @@ const Navbar = () => {
                             }}
                             variant="subtitle1"
                           >
-                            Suraj Banerjee
+                            {/* {userData && userData.data.user_name} */}
+                            {userData && userData.user_name}
                           </Typography>
-                          <Typography
+                          {/* <Typography
                             sx={{
                               fontSize: "14px",
                               color: "#7e7e7e",
@@ -345,7 +345,7 @@ const Navbar = () => {
                             component={"p"}
                           >
                             surajbanerjee.websadroit@gmail.com
-                          </Typography>
+                          </Typography> */}
                         </Box>
                       </Box>
                       <Box
@@ -354,21 +354,23 @@ const Navbar = () => {
                           padding: "0px",
                         }}
                       >
-                        <MenuItem
-                          sx={{
-                            color: theme.palette.primary.dark,
-                            transform:"translateX(0px)",
-                            transition:"0.3s all",
-                            "&:hover": {
-                              color: theme.palette.primary.logoColor,
-                              background:"transparent",
-                                transform:"translateX(15px)"
-                            },
-                          }}
-                        >
-                          My Profile
-                        </MenuItem>
-                        <MenuItem
+                        <Link to="/userProfile">
+                          <MenuItem
+                            sx={{
+                              color: theme.palette.primary.dark,
+                              transform: "translateX(0px)",
+                              transition: "0.3s all",
+                              "&:hover": {
+                                color: theme.palette.primary.logoColor,
+                                background: "transparent",
+                                transform: "translateX(15px)"
+                              },
+                            }}
+                          >
+                            My Profile
+                          </MenuItem>
+                        </Link>
+                        {/* <MenuItem
                           sx={{
                             color: theme.palette.primary.dark,
                             transform:"translateX(0px)",
@@ -381,35 +383,63 @@ const Navbar = () => {
                           }}
                         >
                           My Package
-                        </MenuItem>
-                        <MenuItem
-                          sx={{
-                            color: theme.palette.primary.dark,
-                            transform:"translateX(0px)",
-                            transition:"0.3s all",
-                            "&:hover": {
-                              color: theme.palette.primary.logoColor,
-                              background:"transparent",
-                                transform:"translateX(15px)"
-                            },
-                          }}
-                        >
-                          My Wishlist
-                        </MenuItem>
-                        <MenuItem
-                          sx={{
-                            color: theme.palette.primary.dark,
-                            transform:"translateX(0px)",
-                            transition:"0.3s all",
-                            "&:hover": {
-                              color: theme.palette.primary.logoColor,
-                              background:"transparent",
-                                transform:"translateX(15px)"
-                            },
-                          }}
-                        >
-                          Logout
-                        </MenuItem>
+                        </MenuItem> */}
+                        <Link to="/favoriteProperty">
+                          <MenuItem
+                            sx={{
+                              color: theme.palette.primary.dark,
+                              transform: "translateX(0px)",
+                              transition: "0.3s all",
+                              "&:hover": {
+                                color: theme.palette.primary.logoColor,
+                                background: "transparent",
+                                transform: "translateX(15px)"
+                              },
+                            }}
+                          >
+                            My Favorite Property
+                          </MenuItem>
+                        </Link>
+                        {userData ? (
+                          <Link
+                            onClick={() => {
+                              dispatch(logOut());
+                              navigate("/Login");
+                            }}
+                            className="nav-link"
+                          >
+                            <MenuItem
+                              sx={{
+                                color: theme.palette.primary.dark,
+                                transform: "translateX(0px)",
+                                transition: "0.3s all",
+                                "&:hover": {
+                                  color: theme.palette.primary.logoColor,
+                                  background: "transparent",
+                                  transform: "translateX(15px)"
+                                },
+                              }}
+                            >
+                              Logout
+                            </MenuItem>
+                          </Link>
+                        ) : (
+                          <MenuItem
+                            sx={{
+                              color: theme.palette.primary.dark,
+                              transform: "translateX(0px)",
+                              transition: "0.3s all",
+                              "&:hover": {
+                                color: theme.palette.primary.logoColor,
+                                background: "transparent",
+                                transform: "translateX(15px)"
+                              },
+                            }}
+                          >
+                            Login
+                          </MenuItem>
+                        )}
+
                       </Box>
                     </Box>
                   </Box>
@@ -428,11 +458,11 @@ const Navbar = () => {
                       fontSize: { xs: "20px", lg: "30px" },
                     }}
                     onClick={() => {
-                    
+
                       navigate('/favoriteProperty')
                     }}>
-                    <StyledBadge badgeContent={favoriteProperty && favoriteProperty.length} color="secondary">  
-                    {/* <StyledBadge badgeContent={4} color="secondary"> */}
+                    <StyledBadge badgeContent={favoriteProperty && favoriteProperty.length} color="secondary">
+                      {/* <StyledBadge badgeContent={4} color="secondary"> */}
                       <FavoriteBorderIcon
                         sx={{
                           fontSize: { xs: "20px", lg: "30px" },

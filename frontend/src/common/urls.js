@@ -11,9 +11,9 @@ export const GET_PROPERTIES_API = BASE_URL+'/getproperties';
 export const POST_SHOP_PAGE_API = BASE_URL+'/shopPage';
 export const GET_PRODUCT_DETAILS_API = BASE_URL+'/productDetailWeb';
 export const GET_PRODUCT_DETAILS_PAGE_API = BASE_URL+'/propertydetails/';
-export const GET_ALL_COUNTRIES_API =  '/country';
+export const GET_ALL_COUNTRIES_API = BASE_URL+'/country';
 export const POST_REGISTER_API = '/Userregister';
-export const POST_LOGIN_API = '/Userlogin';
+export const POST_LOGIN_API = BASE_URL + '/Userlogin';
 export const GET_ALL_CATEGORY = BASE_URL+'/getcategories';
 export const GET_ABOUT_US = BASE_URL+'/aboutus';
 export const GET_PRIVACY_POLICY = BASE_URL+'/privacypolicy';
@@ -24,4 +24,5 @@ export const POST_REVIEW_API = '/userreview';
 export const POST_SUBMIT_REVIEW_API = '/reviewsubmit/';
 export const GET_REVIEW_DETAILS = '/reviews/';
 export const POST_ADD_WISHLIST_API = BASE_URL+'/addToFavorite';
+export const POST_ADD_PROPERTY_API = BASE_URL+'/createproperty';
 

@@ -28,6 +28,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userDetails } from '../redux/reducers/UserReducer';
 import { Link } from "react-router-dom";
+import axios from "axios";
+import AlertMessage from "../components/AlertMessage";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -54,29 +57,89 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSignIn = async () => {
-    setIsSubmitted(true);
-    const formData = JSON.stringify({
-      user_email: email,
-      password: password
-    });
-    PostApiFetch(POST_LOGIN_API, formData)
-      .then(([status, response]) => {
-        if (status == 200) {
-          console.log(response);
-          if (response.status) {
-            localStorage.setItem('token', response.data.token);
-            dispatch(userDetails(response));
+  // State to manage form inputs
+  const [formData, setFormData] = useState({
+    user_email: "",
+    password: "",
+  });
+
+  // State to manage validation errors
+  const [errors, setErrors] = useState({
+    user_email: "",
+    password: "",
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    // Reset the corresponding validation error when the user types
+    setErrors({ ...errors, [name]: "" });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log('formData', formData);
+    // Validate form inputs
+    let isValid = true;
+    const newErrors = { ...errors };
+    if (!formData.user_email.trim()) {
+      isValid = false;
+      newErrors.user_email = "Email is required";
+    }
+    if (!formData.password.trim()) {
+      isValid = false;
+
+      newErrors.password = "Password is required";
+    }
+    setErrors(newErrors);
+
+    // If form is valid, submit the data
+    if (isValid) {
+      //   console.log("Form submitted:", formData);
+      // logic to submit data, e.g., make an API call
+      axios.post(POST_LOGIN_API, formData).then((res) => {
+        // console.log("response", res);
+          if (res.data.status === true) {
+            setMessageType("success");
+            setMessage(res.data.message);
+            dispatch(userDetails(res.data.data));
             navigate('/');
-            setMessage(response.message);
+          } else {
+            setMessageType("error");
+            setMessage(res.data.message);
           }
-        } else {
-          console.log('Something went wrong');
-        }
-      })
-      .catch(error => console.log(error))
-      .finally(() => { });
-  }
+        }).catch((err) => {
+          console.log(err.response);
+          if (err.response) {
+            setMessageType("error");
+            setMessage(err.response.data.message);
+          }
+      });
+    }
+  };
+
+  // const handleSignIn = async () => {
+  //   setIsSubmitted(true);
+  //   const formData = JSON.stringify({
+  //     user_email: email,
+  //     password: password
+  //   });
+  //   PostApiFetch(POST_LOGIN_API, formData)
+  //     .then(([status, response]) => {
+  //       if (status == 200) {
+  //         console.log(response);
+  //         if (response.status) {
+  //           localStorage.setItem('token', response.data.token);
+  //           dispatch(userDetails(response));
+  //           navigate('/');
+  //           setMessage(response.message);
+  //         }
+  //       } else {
+  //         console.log('Something went wrong');
+  //       }
+  //     })
+  //     .catch(error => console.log(error))
+  //     .finally(() => { });
+  // }
   return (
     <>
       <Box>
@@ -143,7 +206,7 @@ const Login = () => {
                   lg: "0",
                 },
                 objectFit: "contain",
-              }} className="login_image" src={process.env.PUBLIC_URL+"/assets/images/login.png"}component={"img"} />
+              }} className="login_image" src={process.env.PUBLIC_URL + "/assets/images/login.png"} component={"img"} />
             </Box>
             <Box flex={2}>
               <Box sx={{
@@ -205,7 +268,7 @@ const Login = () => {
                       width: "20px",
                       height: "20px",
                       objectFit: "contain",
-                    }} src={process.env.PUBLIC_URL+"/assets/images/linkdin.svg"} component={"img"} />
+                    }} src={process.env.PUBLIC_URL + "/assets/images/linkdin.svg"} component={"img"} />
                     <Typography component={"span"} sx={{
                       fontSize: "18px",
                       fontWeight: "500",
@@ -241,7 +304,7 @@ const Login = () => {
                       width: "20px",
                       height: "20px",
                       objectFit: "contain",
-                    }} src={process.env.PUBLIC_URL+"/assets/images/google.svg"} component={"img"} />
+                    }} src={process.env.PUBLIC_URL + "/assets/images/google.svg"} component={"img"} />
                     <Typography component={"span"} sx={{
                       fontSize: "18px",
                       fontWeight: "500",
@@ -262,6 +325,9 @@ const Login = () => {
                 }} flexItem>
                   Or
                 </Divider>
+                {messageType !== "" && (
+                  <AlertMessage type={messageType} message={message} />
+                )}
                 <Box sx={{
                   display: "grid",
                   gap: "15px",
@@ -272,26 +338,25 @@ const Login = () => {
                     id="outlined-adornment-email"
                     required
                     label="Email"
+                    name="user_email"
                     variant="outlined"
-                    error={emailError}
-                    helperText={emailError ? 'Enter a valid email' : ''}
-                    value={email}
-                    onChange={handleEmailChange}
+                    value={formData.user_email}
+                    onChange={handleInputChange}
+                    error={Boolean(errors.user_email)}
+                    helperText={errors.user_email}
                   />
                   <TextField
                     fullWidth
                     id="outlined-adornment-password"
                     required
+                    name="password"
                     label="Password"
                     variant="outlined"
                     type={showPassword ? 'text' : 'password'}
-                    helperText={
-                      <span style={{ color: 'red' }}>
-                        {!password && isSubmitted ? 'Enter Password' : ''}
-                      </span>
-                    }
-                    value={password}
-                    onChange={handlePasswordChange}
+                    error={Boolean(errors.password)}
+                    helperText={errors.password}
+                    value={formData.password}
+                    onChange={handleInputChange}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -317,7 +382,7 @@ const Login = () => {
                     {
                       backgroundColor: "#00a376"
                     },
-                  }} onClick={handleSignIn}>Sign in</Button>
+                  }} onClick={handleSubmit}>Sign in</Button>
                 </Box>
                 <Box>
                   <Typography> Don't have an account? <Link to="/Register">Register</Link></Typography>

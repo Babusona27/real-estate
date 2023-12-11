@@ -27,46 +27,47 @@ import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
-const dispatch = useDispatch();
-const userData = useSelector((state) => state.UserReducer.value);
-// const wishlistData = useSelector((state) => state.WishlistReducer.value);
-const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
+  // console.log("propertyDetails", propertyDetails);
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.UserReducer.value);
+  // const wishlistData = useSelector((state) => state.WishlistReducer.value);
+  const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
 
-// console.log('favoriteProperty_Property', favoriteProperty);
+  // console.log('favoriteProperty_Property', favoriteProperty);
 
-console.log('userData', userData);
+  // console.log('userData', userData);
 
-const handleWishlist = async () => {
+  const handleWishlist = async () => {
 
- await axios.post(POST_ADD_WISHLIST_API, {
-    property_id: propertyDetails._id,
-    property_name: propertyDetails.property_name,
-    property_image: propertyDetails.images[0],
-    propertyPrice: propertyDetails.price
-  }, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `${userData.data.token}`
-    }
-  })
-    .then(function (response) {
-      if (response.data.status) {
-        // dispatch(setFevoriteProperty([]));
-        dispatch(setFevoriteProperty(response.data.data));
-      }else{
-        console.log(response.data.message);
+    await axios.post(POST_ADD_WISHLIST_API, {
+      property_id: propertyDetails._id,
+      property_name: propertyDetails.property_name,
+      property_image: propertyDetails.images[0],
+      propertyPrice: propertyDetails.price
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${userData.data.token}`
       }
     })
-    .catch(function (error) {
-      console.log(error);
-    });
-  
-}
+      .then(function (response) {
+        if (response.data.status) {
+          // dispatch(setFevoriteProperty([]));
+          dispatch(setFevoriteProperty(response.data.data));
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
 
   return (
     <Box>
       {/* <a href="/ProductDetails"> */}
-        <Link to={"/ProductDetails/"+ propertyDetails.slug}>
+      <Link to={"/ProductDetails/" + propertyDetails.slug}>
         <Card className="post_card" sx={{
           width: "100%",
           border: "1px solid #e9e7d",
@@ -76,23 +77,27 @@ const handleWishlist = async () => {
             boxShadow: "0 11px 35px 0 rgba(0, 0, 0, .1)",
           },
         }}>
+
           <CardActionArea>
             <Box sx={{ position: "relative" }}>
               <Catagorys>
-                <Span bgcolor={"#ff9642"} variant="span" className="catagory">
-                  Featured
-                </Span>
-                <Span bgcolor={"#17a2b8 "} variant="span" className="catagory">
+                {propertyDetails.features &&
+                  <Span bgcolor={"#ff9642"} variant="span" className="catagory">
+                    Featured
+                  </Span>
+                }
+
+                {/* <Span bgcolor={"#17a2b8 "} variant="span" className="catagory">
                   Top
                 </Span>
                 <Span bgcolor={"#5f40fb"} variant="span" className="catagory">
                   Bump Up
-                </Span>
+                </Span> */}
               </Catagorys>
               <CardMedia
                 component="img"
                 height="200"
-                image={propertyDetails.images.length > 0 ? IMAGE_BASE_URL+propertyDetails.images[0] : "./assets/images/R1.jpg"}
+                image={propertyDetails.images.length > 0 ? IMAGE_BASE_URL + propertyDetails.images[0] : "./assets/images/R1.jpg"}
                 alt="green iguana"
                 sx={{
                   height: "250px"
@@ -113,17 +118,17 @@ const handleWishlist = async () => {
 
                     handleWishlist();
 
-                  //   console.log('addToWishlist')
-                  //   {propertyDetails && addToWishlist(propertyDetails._id, propertyDetails.property_name, propertyDetails.images[0], propertyDetails.price, userData.data.token).then(([wishlistData]) => {
-                  //     console.log('wishlistData', wishlistData);
-                  //   })
-                  // }
+                    //   console.log('addToWishlist')
+                    //   {propertyDetails && addToWishlist(propertyDetails._id, propertyDetails.property_name, propertyDetails.images[0], propertyDetails.price, userData.data.token).then(([wishlistData]) => {
+                    //     console.log('wishlistData', wishlistData);
+                    //   })
+                    // }
 
-                  //insert to wishlist collection 
-                  
-                    
+                    //insert to wishlist collection 
+
+
                   }}
-                  
+
                     sx={{
                       height: "35px",
                       width: "35px",
@@ -308,15 +313,15 @@ const handleWishlist = async () => {
                       textOverflow: "ellipsis",
                       WebkitLineClamp: "1",
                       WebkitBoxOrient: "vertical",
-                      fontFamily:  theme.palette.primary.Roboto,
+                      fontFamily: theme.palette.primary.Roboto,
                       fontSize: "14px",
                       fontWeight: "500",
                       color: "#666666",
-                    }} variant="span">suraj</Typography>
+                    }} variant="span">{propertyDetails.seller && propertyDetails.seller.seller_name}</Typography>
                   </UserBox>
                   <Button className="customBtnStyle"
                     sx={{
-                      fontFamily:  theme.palette.primary.Roboto,
+                      fontFamily: theme.palette.primary.Roboto,
                       backgroundColor: "#dceeea",
                       color: theme.palette.primary.logoColor,
                       padding: "8px 22px",
@@ -339,6 +344,7 @@ const handleWishlist = async () => {
               </Box>
             </CardContent>
           </CardActionArea>
+
         </Card>
         {/* </a> */}
       </Link>
@@ -399,7 +405,7 @@ const Listings = styled(Box)(({ theme }) => ({
   alignItems: "center",
   position: "absolute",
   bottom: "-45%",
-  left:"auto",
+  left: "auto",
   right: "50px",
   opacity: "0",
   transition: "0.3s ease-in-out"

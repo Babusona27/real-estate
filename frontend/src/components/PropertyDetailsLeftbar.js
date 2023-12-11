@@ -55,7 +55,7 @@ const PropertyDetailsLeftbar = () => {
     const formData = JSON.stringify({
       rating: rating,
       review: comment,
-      user_name: name,
+      // user_name: name,
       user_id: userData.data.userId,
     });
     PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, token)

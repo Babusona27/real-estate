@@ -407,7 +407,7 @@ const Home = () => {
                                 >
                                   Featured
                                 </Span>
-                                <Span
+                                {/* <Span
                                   bgcolor={"#17a2b8 "}
                                   variant="span"
                                   className="catagory"
@@ -420,7 +420,7 @@ const Home = () => {
                                   className="catagory"
                                 >
                                   Bump Up
-                                </Span>
+                                </Span> */}
                               </Catagorys>
                               <CardMedia
                                 component="img"

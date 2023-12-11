@@ -14,6 +14,7 @@ import Footer from "../components/Footer";
 import theme from "../Theme";
 import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import MyProperty from "../components/MyProperty";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   return (
@@ -21,7 +22,7 @@ const UserProfile = () => {
       <Box>
         <Header />
       </Box>
-      <BreadcrumbsBanner />
+      <BreadcrumbsBanner title="User Profile" />
       <Box>
         <Container
           maxWidth="lg"
@@ -75,33 +76,36 @@ const UserProfile = () => {
                       display: "grid",
                     }}
                   >
-                    <ListItem disablePadding>
-                      <ListItemButton
-                        className="listbtn btn_list_active"
-                        sx={{
-                          background: theme.palette.primary.LightVlue2,
-                          color: theme.palette.primary.lightGrey,
-                          transition: "all 0.3s ease-out",
-                          borderRadius: "8px",
-                          "&:hover": {
-                            background: theme.palette.primary.logoColor,
-                            color: theme.palette.primary.white,
-                            boxShadow: "inset 0px 0px 12px rgb(0 0 0 / 40%)",
-                          },
-                        }}
-                      >
-                        <Typography
+                    <Link to="/PersonalPropertyList">
+                      <ListItem disablePadding>
+                        <ListItemButton
+                          className="listbtn btn_list_active"
                           sx={{
-                            fontSize: "18px",
-                            fontWeight: "500",
+                            background: theme.palette.primary.LightVlue2,
+                            color: theme.palette.primary.lightGrey,
                             transition: "all 0.3s ease-out",
+                            borderRadius: "8px",
+                            "&:hover": {
+                              background: theme.palette.primary.logoColor,
+                              color: theme.palette.primary.white,
+                              boxShadow: "inset 0px 0px 12px rgb(0 0 0 / 40%)",
+                            },
                           }}
-                          component={"p"}
                         >
-                          Property
-                        </Typography>
-                      </ListItemButton>
-                    </ListItem>
+                          <Typography
+                            sx={{
+                              fontSize: "18px",
+                              fontWeight: "500",
+                              transition: "all 0.3s ease-out",
+                            }}
+                            component={"p"}
+                          >
+                            Property
+                          </Typography>
+                        </ListItemButton>
+                      </ListItem>
+                    </Link>
+
                     <ListItem disablePadding>
                       <ListItemButton
                         className="listbtn"
@@ -164,7 +168,7 @@ const UserProfile = () => {
                 paddingLeft={{ xs: "0px", md: "15px" }}
                 paddingRight={{ xs: "0px", md: "15px" }}
               >
-                <MyProperty/>
+                <MyProperty />
               </Box>
             </Box>
           </Box>
