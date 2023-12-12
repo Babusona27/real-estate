@@ -42,7 +42,7 @@ router.delete("/deleteimages/:id/:imageIndex", propertyController.deleteImages);
 
 // ********************All FAVOURITE ROUTE******************************
 router.post("/addToFavorite", authenticate, favoriteController.addToFavorite);
-router.delete("/deleteFavorite/:id/:propertyIndex", authenticate, favoriteController.deleteFavorite);
+router.delete("/deleteFavorite/:id/:property_id", favoriteController.deleteFavorite);
 router.get("/myFavorites/:user_id", authenticate, favoriteController.myFavorites);
 
 // ********************APPOINTMENT REQUEST ROUTE******************************
