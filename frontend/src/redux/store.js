@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   PropertyReducer: PropertyReducer,
   PropertyListReducer: PropertyListReducer,
   SearchReducer: SearchReducer,
-  FavoritePropertyReducer: persistReducer(persistConfig2, FavoritePropertyReducer) ,
+  FavoritePropertyReducer: (persistConfig2, FavoritePropertyReducer) ,
 });
 
 export const store = configureStore({

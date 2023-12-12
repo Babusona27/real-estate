@@ -8,7 +8,7 @@ export const FavoritePropertyReducer = createSlice({
     initialState,
     reducers: {
         setFevoriteProperty: (state, action) => {
-            state.value = [ ...state.value,action.payload];
+            state.value = action.payload;;
         }
     },
 }); 

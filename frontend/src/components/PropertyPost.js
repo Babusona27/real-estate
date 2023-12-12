@@ -27,7 +27,7 @@ import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
-  console.log("propertyDetails", propertyDetails);
+  // console.log("propertyDetails", propertyDetails);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.UserReducer.value);
   // const wishlistData = useSelector((state) => state.WishlistReducer.value);
@@ -47,13 +47,14 @@ const PropertyPost = ({ propertyDetails }) => {
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `${userData.data.token}`
+        'Authorization': `${userData.token}`
       }
     })
       .then(function (response) {
         if (response.data.status) {
           // dispatch(setFevoriteProperty([]));
           dispatch(setFevoriteProperty(response.data.data));
+          console.log('response.data.data===>', response.data.data);
         } else {
           console.log(response.data.message);
         }
@@ -80,20 +81,21 @@ const PropertyPost = ({ propertyDetails }) => {
 
           <CardActionArea>
             <Box sx={{ position: "relative" }}>
-              <Catagorys>
-                {propertyDetails.features &&
+            {propertyDetails.features && propertyDetails.features == true ?
+                <Catagorys>
                   <Span bgcolor={"#ff9642"} variant="span" className="catagory">
                     Featured
                   </Span>
-                }
-
-                {/* <Span bgcolor={"#17a2b8 "} variant="span" className="catagory">
+                  {/* <Span bgcolor={"#17a2b8 "} variant="span" className="catagory">
                   Top
                 </Span>
                 <Span bgcolor={"#5f40fb"} variant="span" className="catagory">
                   Bump Up
                 </Span> */}
-              </Catagorys>
+                </Catagorys>
+                : <></>
+               } 
+
               <CardMedia
                 component="img"
                 height="200"
@@ -354,9 +356,10 @@ const PropertyPost = ({ propertyDetails }) => {
 };
 const Catagorys = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
   alignItems: "center",
-  width: "60%",
+  gap: "10px",
+  width: "100%",
   marginLeft: "auto",
   position: "absolute",
   right: "20px",

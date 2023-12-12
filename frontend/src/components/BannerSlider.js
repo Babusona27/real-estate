@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 
 const BannerSlider = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
+  // console.log("propertyDetails_BannnerSlider", propertyDetails);
   const option = {
     items: 1,
     loop: true,
@@ -54,16 +55,16 @@ const BannerSlider = () => {
       <OwlCarousel className="owl-theme" {...option}>
         {propertyDetails && propertyDetails.images.map((item, key) => (
           <div class="item">
-          <img src={IMAGE_BASE_URL+item} />
-        </div>
+            <img src={IMAGE_BASE_URL + item} />
+          </div>
         ))}
-        
-        
+
+
       </OwlCarousel>
       <Box
         sx={{
           position: "absolute",
-          top:{ xs: "58%", sm: "50%", lg: "60%" },
+          top: { xs: "58%", sm: "50%", lg: "60%" },
           left: { xs: "50%", sm: "50%", lg: "0%" },
           padding: { xs: "20px 20px", sm: "20px 20px", lg: "20px 50px" },
           height: { xs: "100%", sm: "55%", lg: "40%" },
@@ -86,27 +87,30 @@ const BannerSlider = () => {
             justifyContent: { xs: "center", sm: "center", lg: "flex-start" },
           }}
         >
-          <Box
-            sx={{
-              padding: "5px 10px",
-              borderRadius: "3px",
-              fontSize: "13px",
-              fontWeight: "400",
-              lineHeight: "1.15px",
-              color: theme.palette.primary.white,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minWidth: "85px",
-              minHeight: "28px",
-            }}
-            bgcolor={"#ff9642"}
-            variant="contained"
-            className="catagory"
-          >
-            Featured
-          </Box>
-          <Box
+          {propertyDetails && propertyDetails.features ?
+            <Box
+              sx={{
+                padding: "5px 10px",
+                borderRadius: "3px",
+                fontSize: "13px",
+                fontWeight: "400",
+                lineHeight: "1.15px",
+                color: theme.palette.primary.white,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: "85px",
+                minHeight: "28px",
+              }}
+              bgcolor={"#ff9642"}
+              variant="contained"
+              className="catagory"
+            >
+              Featured
+            </Box>
+            : <></>}
+
+          {/* <Box
             sx={{
               padding: "5px 10px",
               borderRadius: "3px",
@@ -145,7 +149,7 @@ const BannerSlider = () => {
             className="catagory"
           >
             Bump Up
-          </Box>
+          </Box> */}
         </Box>
         <Typography
           variant="h4"

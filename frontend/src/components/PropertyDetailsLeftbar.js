@@ -31,7 +31,7 @@ const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const userData = useSelector((state) => state.UserReducer.value);
 
-  console.log('userData', userData);
+  console.log('propertyDetails', propertyDetails);
   // add review popup box 
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);

@@ -64,7 +64,7 @@ const FavoriteProperty = () => {
               gap: "20px"
             }}>
               {/* Wishlist */}
-              {favoriteProperty.map((item, key) => {
+              {/* {favoriteProperty.map((item, key) => {
                 <Box
                   sx={{
                     display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
@@ -256,7 +256,7 @@ const FavoriteProperty = () => {
                     </Tooltip>
                   </Box>
                 </Box>
-              })}
+              })} */}
 
               {/* Wishlist */}
               <Divider />
