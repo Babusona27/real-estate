@@ -47,7 +47,7 @@ const TabPanel = ({ children, value, index }) => (
 
 const newSlider = {
   loop: false,
-  autoplay: true,
+  autoplay: false,
   autoplayTimeout: 4000,
   nav: false,
   margin: 20,
@@ -384,7 +384,7 @@ const Home = () => {
                 propertyList.map((item, key) => (
                   <div class="property_item">
                     {/* {console.log("item", item)} */}
-                    {item.features &&
+                    {item.features && item.features ?
                       <Box>
                         <Card
                           className="post_card"
@@ -725,6 +725,8 @@ const Home = () => {
                           </CardActionArea>
                         </Card>
                       </Box>
+                      :
+                      <></>
                     }
 
                   </div>
@@ -1711,8 +1713,9 @@ const Home = () => {
 
 const Catagorys = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
   alignItems: "center",
+  gap: "10px",
   width: "60%",
   marginLeft: "auto",
   position: "absolute",

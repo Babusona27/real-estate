@@ -22,7 +22,7 @@ import { render } from "react-dom";
 
 const Property = () => {
   const propertyList = useSelector((state) => state.PropertyListReducer.value);
-  // console.log("propertyList", propertyList);
+  console.log("propertyList", propertyList);
   const userData = useSelector((state) => state.UserReducer.value);
   
   //define handleLogout function
