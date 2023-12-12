@@ -24,11 +24,33 @@ import { Navigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
 import { jwtDecode } from "jwt-decode";
+import { GET_FAVORITE_PROPERTY_API } from '../common/urls';
+import { setFevoriteProperty } from '../redux/reducers/FavoritePropertyReducer';
+import axios from 'axios';
 
 function Navigation() {
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.UserReducer.value);
+    console.log('userData', userData);
     useEffect(() => {
+        const getFavoriteProperty = async () => {
+            await axios
+                .get(GET_FAVORITE_PROPERTY_API +"/"+ userData.userId,
+                    {
+                        headers: {
+                            'Authorization': userData.token,
+                        }
+                    })
+                .then((res) => {
+                    if (res.data.status) {
+                        dispatch(setFevoriteProperty(res.data.favoriteProperties));
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
+        /* get properties  */
         const checkTokenExpiration = () => {
             const token = userData && userData.token;
 
@@ -51,6 +73,7 @@ function Navigation() {
             }
         };
         checkTokenExpiration();
+        getFavoriteProperty();
     }, [userData, dispatch]);
 
     return (

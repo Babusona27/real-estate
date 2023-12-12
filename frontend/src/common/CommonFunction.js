@@ -1,4 +1,4 @@
-import { BASE_URL, POST_ADD_WISHLIST_API } from "./urls";
+import { BASE_URL } from "./urls";
 
 export const PostApiFetch = async (URL, formData, token) => {
   const headers = {
@@ -32,28 +32,3 @@ export const GetApiFetch = async (URL, params = "") => {
 };
 
 
-// ==================== Add to Wishlist ====================
-
-export const addToWishlist = async (propertyId, propertyName, propertyImage, propertyPrice, token) => {
- 
-  const formData = JSON.stringify({
-    property_id: propertyId,
-    property_name: propertyName,
-    property_image: propertyImage,
-    propertyPrice: propertyPrice
-  });
-  console.log("formData => ", formData);
-  return PostApiFetch(POST_ADD_WISHLIST_API, formData, token)
-    .then(([status, response]) => {
-      console.log("addToWishlist => " + status, response);
-      // if (status == 200) {
-      //   var wishlistData = null
-      //   if (response.status == true) {
-      //     var wishlistData = response
-      //     return Promise.all([wishlistData]);
-      //   } else {
-      //     return Promise.all([wishlistData]);
-      //   }
-      // }
-    })
-}

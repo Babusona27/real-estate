@@ -7,7 +7,7 @@ export const IMAGE_BASE_URL = 'http://localhost:4000/';
 // export const IMAGE_BASE_URL = 'http://localhost/git/Massit_Admin2/public/';
 
 
-export const GET_PROPERTIES_API = BASE_URL+'/getproperties';
+export const GET_PROPERTIES_API = BASE_URL+'/getproperties/';
 export const POST_SHOP_PAGE_API = BASE_URL+'/shopPage';
 export const GET_PRODUCT_DETAILS_API = BASE_URL+'/productDetailWeb';
 export const GET_PRODUCT_DETAILS_PAGE_API = BASE_URL+'/propertydetails/';
@@ -23,6 +23,7 @@ export const GET_CONTACTUS_DETAILS = BASE_URL+'/contactus';
 export const POST_REVIEW_API = '/userreview';
 export const POST_SUBMIT_REVIEW_API = '/reviewsubmit/';
 export const GET_REVIEW_DETAILS = '/reviews/';
-export const POST_ADD_WISHLIST_API = BASE_URL+'/addToFavorite';
+export const POST_ADD_FAVORITE_API = BASE_URL+'/addToFavorite';
 export const POST_ADD_PROPERTY_API = BASE_URL+'/createproperty';
+export const GET_FAVORITE_PROPERTY_API = BASE_URL+'/myFavorites';
 

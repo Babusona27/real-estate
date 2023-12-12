@@ -22,6 +22,9 @@ const AllProperties = () => {
   useEffect(() => {
     /* get properties  */
     const getProperties = async () => {
+      const params = {
+        param1: 'value1',
+      };
       await axios
         .get(GET_PROPERTIES_API)
         .then((res) => {

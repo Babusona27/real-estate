@@ -12,16 +12,13 @@ const persistConfig = {
   key: 'root',
   storage
 };
-const persistConfig2 = {
-  key: 'root2',
-  storage
-};
+
 const rootReducer = combineReducers({
   UserReducer: persistReducer(persistConfig, UserReducer),
   PropertyReducer: PropertyReducer,
   PropertyListReducer: PropertyListReducer,
   SearchReducer: SearchReducer,
-  FavoritePropertyReducer: (persistConfig2, FavoritePropertyReducer) ,
+  FavoritePropertyReducer:  FavoritePropertyReducer ,
 });
 
 export const store = configureStore({

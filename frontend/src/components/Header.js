@@ -33,7 +33,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
 import theme from "../Theme";
 import { IMAGE_BASE_URL } from "../common/urls";
-import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 const Navbar = () => {
   // user box popup
   const [isBoxVisible, setIsBoxVisible] = useState(false);
@@ -66,9 +65,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(state => state.UserReducer.value);
-  console.log("userData", userData);
   const favoriteProperty = useSelector(state => state.FavoritePropertyReducer.value);
-
   const [isNavOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
@@ -112,6 +109,10 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+
+
+
+
   }, []);
 
   const theme = useTheme();
@@ -248,7 +249,7 @@ const Navbar = () => {
                   >
                     <Avatar
                       alt="User Image"
-                      src={userData && userData.user_image ? IMAGE_BASE_URL+userData.user_image : "./assets/images/avtar/avatar.png"}
+                      src={userData && userData.user_image ? IMAGE_BASE_URL + userData.user_image : "./assets/images/avtar/avatar.png"}
                       // src="./assets/images/avtar/avatar.png"
                       sx={{ marginRight: 1 }}
                     />
@@ -310,7 +311,7 @@ const Navbar = () => {
                           //   "/assets/images/avtar/avatar.png"
                           // }
 
-                          src={userData && userData.user_image ? IMAGE_BASE_URL+userData.user_image : "./assets/images/avtar/avatar.png"}
+                          src={userData && userData.user_image ? IMAGE_BASE_URL + userData.user_image : "./assets/images/avtar/avatar.png"}
                           sx={{ marginRight: 1 }}
                         />
                         <Box

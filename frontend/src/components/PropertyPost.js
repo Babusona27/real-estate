@@ -20,10 +20,11 @@ import SingleBedIcon from '@mui/icons-material/SingleBed';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import { Link, useNavigate } from "react-router-dom";
-import { IMAGE_BASE_URL, POST_ADD_WISHLIST_API } from "../common/urls";
+import { IMAGE_BASE_URL, POST_ADD_FAVORITE_API } from "../common/urls";
 import { useDispatch, useSelector } from "react-redux";
 // import { setWishlist } from "../redux/reducers/WishlistReducer";
-import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
+import { addFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
+
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
@@ -31,7 +32,7 @@ const PropertyPost = ({ propertyDetails }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.UserReducer.value);
   // const wishlistData = useSelector((state) => state.WishlistReducer.value);
-  const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
+  // const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
 
   // console.log('favoriteProperty_Property', favoriteProperty);
 
@@ -39,7 +40,7 @@ const PropertyPost = ({ propertyDetails }) => {
 
   const handleWishlist = async () => {
 
-    await axios.post(POST_ADD_WISHLIST_API, {
+    await axios.post(POST_ADD_FAVORITE_API, {
       property_id: propertyDetails._id,
       property_name: propertyDetails.property_name,
       property_image: propertyDetails.images[0],
@@ -53,7 +54,8 @@ const PropertyPost = ({ propertyDetails }) => {
       .then(function (response) {
         if (response.data.status) {
           // dispatch(setFevoriteProperty([]));
-          dispatch(setFevoriteProperty(response.data.data));
+          // dispatch(addPropertyFevorite(response.data.data));
+          dispatch(addFevoriteProperty(response.data.data));
           console.log('response.data.data===>', response.data.data);
         } else {
           console.log(response.data.message);
@@ -81,7 +83,7 @@ const PropertyPost = ({ propertyDetails }) => {
 
           <CardActionArea>
             <Box sx={{ position: "relative" }}>
-            {propertyDetails.features && propertyDetails.features == true ?
+              {propertyDetails.features && propertyDetails.features == true ?
                 <Catagorys>
                   <Span bgcolor={"#ff9642"} variant="span" className="catagory">
                     Featured
@@ -94,7 +96,7 @@ const PropertyPost = ({ propertyDetails }) => {
                 </Span> */}
                 </Catagorys>
                 : <></>
-               } 
+              }
 
               <CardMedia
                 component="img"
@@ -117,17 +119,7 @@ const PropertyPost = ({ propertyDetails }) => {
                   <IconButton onClick={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
-
-                    handleWishlist();
-
-                    //   console.log('addToWishlist')
-                    //   {propertyDetails && addToWishlist(propertyDetails._id, propertyDetails.property_name, propertyDetails.images[0], propertyDetails.price, userData.data.token).then(([wishlistData]) => {
-                    //     console.log('wishlistData', wishlistData);
-                    //   })
-                    // }
-
-                    //insert to wishlist collection 
-
+                    handleWishlist()
 
                   }}
 

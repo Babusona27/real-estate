@@ -9,7 +9,6 @@ import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutl
 import theme from "../Theme";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 
 const FavoriteProperty = () => {
   const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
@@ -64,7 +63,7 @@ const FavoriteProperty = () => {
               gap: "20px"
             }}>
               {/* Wishlist */}
-              {/* {favoriteProperty.map((item, key) => {
+              {favoriteProperty.map((item, key) => {
                 <Box
                   sx={{
                     display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
@@ -256,7 +255,7 @@ const FavoriteProperty = () => {
                     </Tooltip>
                   </Box>
                 </Box>
-              })} */}
+              })}
 
               {/* Wishlist */}
               <Divider />
