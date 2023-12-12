@@ -45,10 +45,55 @@ exports.addToFavorite = async (req, res) => {
   }
 }
 
-// DELETE FAVORITE PROPERTY BY INDEX (DELETE METHOD)
+// // DELETE FAVORITE PROPERTY BY INDEX (DELETE METHOD)
+// exports.deleteFavorite = async (req, res) => {
+//   const userId = req.params.id;
+//   const propertyIndex = parseInt(req.params.propertyIndex);
+
+//   try {
+//     const property = await UserSchema.findById(userId);
+
+//     if (!property) {
+//       return res.status(404).send("Property not found");
+//     }
+
+//     // Check if the imageIndex is within a valid range
+//     if (
+//       propertyIndex < 0 ||
+//       propertyIndex >= property.favorite_properties.length
+//     ) {
+//       return res
+//         .status(400)
+//         .json({ status: false, message: "Invalid image index" });
+//     }
+
+//     // const adjustedIndex = imageIndex - 1;
+
+//     const deletedImage = property.favorite_properties[propertyIndex];
+
+//     // Splice the image from the images array using the imageIndex
+//     property.favorite_properties.splice(propertyIndex, 1);
+
+//     await property.save(); // Save the updated property document
+
+//     res.status(200).json({
+//       status: true,
+//       message: "Image deleted successfully",
+//       data: deletedImage,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       status: false,
+//       message: "Error deleting image from property",
+//       message: error.message,
+//     });
+//   }
+// }
+// DELETE FAVORITE PROPERTY by property_id (DELETE METHOD)
 exports.deleteFavorite = async (req, res) => {
   const userId = req.params.id;
-  const propertyIndex = parseInt(req.params.propertyIndex);
+  const property_id = req.params.property_id;
 
   try {
     const property = await UserSchema.findById(userId);
@@ -56,36 +101,21 @@ exports.deleteFavorite = async (req, res) => {
     if (!property) {
       return res.status(404).send("Property not found");
     }
-
-    // Check if the imageIndex is within a valid range
-    if (
-      propertyIndex < 0 ||
-      propertyIndex >= property.favorite_properties.length
-    ) {
-      return res
-        .status(400)
-        .json({ status: false, message: "Invalid image index" });
-    }
-
-    // const adjustedIndex = imageIndex - 1;
-
-    const deletedImage = property.favorite_properties[propertyIndex];
-
-    // Splice the image from the images array using the imageIndex
-    property.favorite_properties.splice(propertyIndex, 1);
-
+    property.favorite_properties = property.favorite_properties.filter(
+      (property) => !property.property_id.equals(new ObjectId(property_id))
+    );
     await property.save(); // Save the updated property document
 
     res.status(200).json({
       status: true,
-      message: "Image deleted successfully",
-      data: deletedImage,
+      message: "Property deleted successfully",
+      // data: deletedImage,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       status: false,
-      message: "Error deleting image from property",
+      message: "Error deleting property from favorites",
       message: error.message,
     });
   }
