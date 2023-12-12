@@ -1,9 +1,82 @@
 const { log } = require("console");
 const PropertySchema = require("../models/PropertySchema");
+const userSchema = require("../models/UserSchema");
 const fs = require("fs");
 const path = require("path");
 
 // GET ALL PROPERTIES (GET METHOD)
+// exports.getProperties = async (req, res) => {
+//   try {
+//     const limit = parseInt(req.query.limit) || 10;
+//     const offset = parseInt(req.query.offset) || 0;
+
+//     // Define an empty filter object to hold the filtering criteria
+//     const filter = {};
+
+//     // Define criteria based on request parameters
+//     if (req.query.type) {
+//       filter.type = req.query.type;
+//     }
+//     if (req.query.category) {
+//       filter.category = req.query.category;
+//     }
+//     if (req.query.country) {
+//       filter.country = req.query.country;
+//     }
+//     if (req.query.state) {
+//       filter.state = req.query.state;
+//     }
+//     if (req.query.city) {
+//       filter.city = req.query.city;
+//     }
+//     if (req.query.sqft) {
+//       filter.sqft = parseInt(req.query.sqft);
+//     }
+//     if (req.query.bedroom) {
+//       filter.bedroom = parseInt(req.query.bedroom);
+//     }
+//     if (req.query.bath) {
+//       filter.bath = parseInt(req.query.bath);
+//     }
+//     if (req.query.parking === "true") {
+//       filter.parking = true;
+//     } else if (req.query.parking === "false") {
+//       filter.parking = false;
+//     }
+//     if (req.query.price_from && req.query.price_to) {
+//       const priceFrom = parseFloat(req.query.price_from);
+//       const priceTo = parseFloat(req.query.price_to);
+//       filter.price = { $gte: priceFrom, $lte: priceTo };
+//     } else if (req.query.price_from) {
+//       const priceFrom = parseFloat(req.query.price_from);
+//       filter.price = { $gte: priceFrom };
+//     } else if (req.query.price_to) {
+//       const priceTo = parseFloat(req.query.price_to);
+//       filter.price = { $lte: priceTo };
+//     }
+
+//     const properties = await PropertySchema.find(filter) // Apply the filtering criteria
+//       .skip(offset)
+//       .limit(limit);
+//     const propertiesCount = await PropertySchema.countDocuments(filter);
+//     res.json({
+//       status: true,
+//       message: "Properties fetched successfully",
+//       data: properties,
+//       propertiesCount,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       status: false,
+//       message: "Failed to fetch properties",
+//       data: null,
+//     });
+//   }
+// }
+
+
+
+
 exports.getProperties = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 10;
@@ -13,58 +86,49 @@ exports.getProperties = async (req, res) => {
     const filter = {};
 
     // Define criteria based on request parameters
-    if (req.query.type) {
-      filter.type = req.query.type;
-    }
-    if (req.query.category) {
-      filter.category = req.query.category;
-    }
-    if (req.query.country) {
-      filter.country = req.query.country;
-    }
-    if (req.query.state) {
-      filter.state = req.query.state;
-    }
-    if (req.query.city) {
-      filter.city = req.query.city;
-    }
-    if (req.query.sqft) {
-      filter.sqft = parseInt(req.query.sqft);
-    }
-    if (req.query.bedroom) {
-      filter.bedroom = parseInt(req.query.bedroom);
-    }
-    if (req.query.bath) {
-      filter.bath = parseInt(req.query.bath);
-    }
-    if (req.query.parking === "true") {
-      filter.parking = true;
-    } else if (req.query.parking === "false") {
-      filter.parking = false;
-    }
-    if (req.query.price_from && req.query.price_to) {
-      const priceFrom = parseFloat(req.query.price_from);
-      const priceTo = parseFloat(req.query.price_to);
-      filter.price = { $gte: priceFrom, $lte: priceTo };
-    } else if (req.query.price_from) {
-      const priceFrom = parseFloat(req.query.price_from);
-      filter.price = { $gte: priceFrom };
-    } else if (req.query.price_to) {
-      const priceTo = parseFloat(req.query.price_to);
-      filter.price = { $lte: priceTo };
-    }
+    // ... (your existing code for filtering criteria)
 
-    const properties = await PropertySchema.find(filter) // Apply the filtering criteria
+    const properties = await PropertySchema.find(filter)
       .skip(offset)
       .limit(limit);
-    const propertiesCount = await PropertySchema.countDocuments(filter);
-    res.json({
-      status: true,
-      message: "Properties fetched successfully",
-      data: properties,
-      propertiesCount,
-    });
+
+    // Check if the user is logged in (assuming you have authentication middleware)
+    if (req.user) {
+      const userId = req.user.user_id;
+      const user = await userSchema.findById(userId);
+
+      if (user.favorite_properties !== null) {
+        const favoritePropertyIds = user.favorite_properties.map(fav => fav.property_id ? fav.property_id.toString() : null);
+
+        const propertiesWithFavorites = properties.map(property => {
+          return {
+            ...property.toObject(),
+            isFavorite: property._id && favoritePropertyIds.includes(property._id.toString())
+          };
+        });
+
+        const propertiesCount = await PropertySchema.countDocuments(filter);
+
+        res.json({
+          status: true,
+          message: "Properties fetched successfully",
+          data: propertiesWithFavorites,
+          propertiesCount,
+        });
+      }
+    } else {
+      // If the user is not logged in, return properties without the 'isFavorite' field
+      const propertiesCount = await PropertySchema.countDocuments(filter);
+
+      res.json({
+        status: true,
+        message: "Properties fetched successfully",
+        data: properties,
+        propertiesCount,
+      });
+    }
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       status: false,
       message: "Failed to fetch properties",
@@ -72,6 +136,7 @@ exports.getProperties = async (req, res) => {
     });
   }
 }
+
 
 // GET ONLY SINGLE PROPERTY (GET METHOD)
 exports.getProperty = async (req, res) => {
