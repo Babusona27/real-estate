@@ -57,11 +57,12 @@ exports.getProperties = async (req, res) => {
     const properties = await PropertySchema.find(filter) // Apply the filtering criteria
       .skip(offset)
       .limit(limit);
-
+    const propertiesCount = await PropertySchema.countDocuments(filter);
     res.json({
       status: true,
       message: "Properties fetched successfully",
       data: properties,
+      propertiesCount,
     });
   } catch (error) {
     res.status(500).json({
@@ -161,6 +162,13 @@ exports.createProperty = async (req, res) => {
     if (checkslug) {
       createSlug = createSlug + "-" + sqft;
     }
+    //create property id 6 digit
+    createPropertyId = Math.floor(100000 + Math.random() * 900000);
+    checkPropertyId = await PropertySchema.findOne({ createPropertyId: createPropertyId });
+    if (checkPropertyId) {
+      createPropertyId = createPropertyId + 1;
+    }
+
 
     const property = new PropertySchema({
       property_name,
@@ -186,6 +194,7 @@ exports.createProperty = async (req, res) => {
       property_status,
       posted_on,
       slug: createSlug,
+      createPropertyId,
       createBy,
       propertyOwnerType,
       propertyOwnerContactNumber
