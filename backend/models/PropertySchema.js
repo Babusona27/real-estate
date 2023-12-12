@@ -87,6 +87,10 @@ const PropertySchema = new mongoose.Schema({
     default: Date.now,
   },
   slug: String,
+  createPropertyId: {
+    type: String,
+    default: null,
+  },
   features: {
     type: Boolean,
     default: false
