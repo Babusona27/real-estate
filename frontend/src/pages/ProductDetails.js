@@ -17,7 +17,7 @@ import {StickyShareButtons} from 'sharethis-reactjs';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
-  const propertyDetails = useSelector((state) => state.PropertyReducer.value);
+
   const params = useParams();
   // console.log('params', params);
   useEffect(() => {
