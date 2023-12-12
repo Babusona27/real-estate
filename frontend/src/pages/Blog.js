@@ -1,6 +1,5 @@
 import {
   Box,
-  Breadcrumbs,
   Container,
   IconButton,
   Input,
@@ -13,9 +12,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 
-// import theme from "../Theme";
-import HomeIcon from "@mui/icons-material/Home";
-import GrainIcon from "@mui/icons-material/Grain";
 import { Link } from "react-router-dom";
 import BlogListing from "../components/BlogListing";
 import SearchIcon from "@mui/icons-material/Search";
@@ -95,9 +91,7 @@ const Blog = () => {
               <BlogListing blogDetails={item} key={key} />
 
               ))}
-              {/* <BlogListing />
-              <BlogListing />
-              <BlogListing /> */}
+           
             </Box>
             <Box
               flex={1}

@@ -121,7 +121,7 @@ const AgentRegister = () => {
     const handleSignUp = async () => {
         setIsSubmitted(true);
         const formData = JSON.stringify({
-            user_name: name,
+            // user_name: name,
             user_type: type,
             seller_type: sellerType,
             user_phone: phone,

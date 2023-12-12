@@ -30,8 +30,7 @@ import axios from "axios";
 const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const userData = useSelector((state) => state.UserReducer.value);
-  const token = useSelector((state) => state.UserReducer.value.data.token);
-  console.log("propertyDetails", propertyDetails);
+
   console.log('userData', userData);
   // add review popup box 
   const [open, setOpen] = useState(false);
@@ -52,22 +51,22 @@ const PropertyDetailsLeftbar = () => {
   }
 
   const handleAddReview = async () => {
-    const formData = JSON.stringify({
-      rating: rating,
-      review: comment,
-      user_name: name,
-      user_id: userData.data.userId,
-    });
-    PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, token)
-      .then(([status, response]) => {
-        // console.log('status', status);
-        // console.log('response', response);
-        if (status === 200) {
-          console.log('Review Added Successfully');
-        }
-      })
-    // Close the dialog
-    handleClose();
+    // const formData = JSON.stringify({
+    //   rating: rating,
+    //   review: comment,
+    //   // user_name: name,
+    //   user_id: userData.data.userId,
+    // });
+    // PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, userData.token)
+    //   .then(([status, response]) => {
+    //     // console.log('status', status);
+    //     // console.log('response', response);
+    //     if (status === 200) {
+    //       console.log('Review Added Successfully');
+    //     }
+    //   })
+    // // Close the dialog
+    // handleClose();
   };
   // const getReviewDetails = async () => {
   //   console.log('propertyDetails.slug========>', GET_REVIEW_DETAILS + propertyDetails.slug);
@@ -91,7 +90,7 @@ const PropertyDetailsLeftbar = () => {
       await axios
         .get(GET_REVIEW_DETAILS + propertyDetails.slug, {
           headers: {
-            'Authorization': `${token}`
+            'Authorization': `${userData.token}`
           }
         })
         .then((response) => {

@@ -60,7 +60,7 @@ const navigate = useNavigate();
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "100%",
+              width: "90%",
               height: "auto",
               textAlign:"center"
             }}
@@ -69,7 +69,12 @@ const navigate = useNavigate();
               variant="h4"
               component={"h1"}
               sx={{
-                fontSize: "45px",
+                fontSize: {
+                    xs:"30px",
+                    sm:"40px",
+                    md:"40px",
+                    lg:"45px"
+                },
                 fontWeight: "500",
                 lineHeight: "32px",
                 margin: "0px 0px 25px",

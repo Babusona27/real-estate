@@ -121,7 +121,7 @@ const Register = () => {
   const handleSignUp = async () => {
     setIsSubmitted(true);
     const formData = JSON.stringify({
-      user_name: name,
+      // user_name: name,
       user_phone: phone,
       user_email: email,
       user_address: { street },
