@@ -13,7 +13,7 @@ export const PropertyListReducer = createSlice({
         updatePropertyList: (state, action) => {
             state.value = state.value.map((item) => {
                 if (item._id === action.payload._id) {
-                    return action.payload;
+                    return { ...item, isFavorite: action.payload.isFavorite };
                 }
                 return item;
             });

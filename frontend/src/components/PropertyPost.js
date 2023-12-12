@@ -25,17 +25,17 @@ import { IMAGE_BASE_URL, POST_ADD_FAVORITE_API, DELETE_FAVORITE_PROPERTY_API } f
 import { useDispatch, useSelector } from "react-redux";
 // import { setWishlist } from "../redux/reducers/WishlistReducer";
 import { addFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
-import{ removeFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
+import { removeFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 import { updatePropertyList } from "../redux/reducers/PropertyListReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
-  // console.log("propertyDetails", propertyDetails);
+  console.log("propertyDetails", propertyDetails);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.UserReducer.value);
   // const wishlistData = useSelector((state) => state.WishlistReducer.value);
-  // const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
-
+  const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
+  console.log('favoriteProperty_Property', favoriteProperty);
   // console.log('favoriteProperty_Property', favoriteProperty);
 
   // console.log('userData', userData);
@@ -55,11 +55,9 @@ const PropertyPost = ({ propertyDetails }) => {
     })
       .then(function (response) {
         if (response.data.status) {
-          // dispatch(setFevoriteProperty([]));
-          // dispatch(addPropertyFevorite(response.data.data));
           dispatch(addFevoriteProperty(response.data.data));
-      //  updatePropertyList with isFavorite true or false
-          dispatch(updatePropertyList(response.data.data));
+          //  updatePropertyList with isFavorite true or false
+          // dispatch(updatePropertyList(propertyDetails._id, propertyDetails.isFavorite = true));
 
           // console.log('response.data.data===>', response.data.data);
         } else {
@@ -71,31 +69,32 @@ const PropertyPost = ({ propertyDetails }) => {
       });
 
   }
-const handleRemoveWishlist = async () => {
-  axios.delete(DELETE_FAVORITE_PROPERTY_API + "/" + propertyDetails._id, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `${userData.token}`
-    }
-  }
-  )
-    .then(function (response) {
-      if (response.data.status) {
-        console.log('response_for_delete===>', response.data.data);
-        // dispatch(setFevoriteProperty([]));
-        // dispatch(addPropertyFevorite(response.data.data));
-        // dispatch(removeFevoriteProperty(propertyDetails._id));
-        // dispatch(updatePropertyList(response.data.data));
-
-        // console.log('response.data.data===>', response.data.data);
-      } else {
-        console.log(response.data.message);
+  const handleRemoveWishlist = async () => {
+    axios.delete(DELETE_FAVORITE_PROPERTY_API + "/" + userData.userId + "/" + propertyDetails._id, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${userData.token}`
       }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
+    }
+    )
+      .then(function (response) {
+        // console.log('response_for_delete===>', response);
+        if (response.data.status) {
+          // console.log('response_for_delete===>', response.data.data);
+          // dispatch(setFevoriteProperty([]));
+          // dispatch(addPropertyFevorite(response.data.data));
+          dispatch(removeFevoriteProperty(propertyDetails._id));
+          // dispatch(updatePropertyList(propertyDetails._id, propertyDetails.isFavorite = false));
+
+          console.log('response.data.data===>', response.data.data);
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   return (
     <Box>
@@ -149,7 +148,6 @@ const handleRemoveWishlist = async () => {
                     <IconButton onClick={(event) => {
                       event.preventDefault();
                       event.stopPropagation();
-                      // handleWishlist()
                       handleRemoveWishlist()
                     }}
 
@@ -172,7 +170,7 @@ const handleRemoveWishlist = async () => {
                         },
                       }}
                     >
-                      
+
                       <FavoriteIcon />
                     </IconButton>
                     :

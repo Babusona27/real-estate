@@ -14,6 +14,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import GrainIcon from "@mui/icons-material/Grain";
 import { Link } from "react-router-dom";
 import theme from "../Theme";
+// import search params
+import { useSearchParams } from "react-router-dom";
 
 const AllProperties = () => {
   const dispatch = useDispatch();
