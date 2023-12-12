@@ -27,7 +27,7 @@ import { setFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
-  // console.log("propertyDetails", propertyDetails);
+  console.log("propertyDetails", propertyDetails);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.UserReducer.value);
   // const wishlistData = useSelector((state) => state.WishlistReducer.value);
