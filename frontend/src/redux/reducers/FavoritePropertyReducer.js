@@ -14,9 +14,11 @@ export const FavoritePropertyReducer = createSlice({
         addFevoriteProperty: (state, action) => {
             state.value.push(action.payload);
         },
-       
+        removeFevoriteProperty: (state, action) => {
+            state.value = state.value.filter((item) => item._id !== action.payload._id);
+        }
     },
-}); 
-export const { setFevoriteProperty,addFevoriteProperty } = FavoritePropertyReducer.actions;
+});
+export const { setFevoriteProperty, addFevoriteProperty, removeFevoriteProperty } = FavoritePropertyReducer.actions;
 export default FavoritePropertyReducer.reducer;
 

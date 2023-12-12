@@ -9,10 +9,16 @@ export const PropertyListReducer = createSlice({
         setPropertyList: (state, action) => {
             state.value = action.payload;
         },
-        updateFevoriteProperty: (state, action) => {
-            state.value = [ ...state.value,action.payload];
-        }       
+            // update isFavorite property of property
+        updatePropertyList: (state, action) => {
+            state.value = state.value.map((item) => {
+                if (item._id === action.payload._id) {
+                    return action.payload;
+                }
+                return item;
+            });
+        }
     }
 });
-export const { setPropertyList } = PropertyListReducer.actions;
+export const { setPropertyList,updatePropertyList } = PropertyListReducer.actions;
 export default PropertyListReducer.reducer;

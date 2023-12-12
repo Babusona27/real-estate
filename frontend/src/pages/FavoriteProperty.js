@@ -9,10 +9,11 @@ import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutl
 import theme from "../Theme";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import{IMAGE_BASE_URL} from '../common/urls';
 
 const FavoriteProperty = () => {
   const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
-  console.log('favoriteProperty', favoriteProperty);
+  console.log('favoriteProperty============>', favoriteProperty);
   return (
     <>
       <Box>
@@ -58,209 +59,15 @@ const FavoriteProperty = () => {
               },
             }}
           >
+
+            {/* Wishlist */}
+            {favoriteProperty && favoriteProperty.map((item, key) => (
+            //  <Typography>{item.property_name}</Typography>
             <Box sx={{
               display: "grid",
               gap: "20px"
             }}>
-              {/* Wishlist */}
-              {favoriteProperty.map((item, key) => {
-                <Box
-                  sx={{
-                    display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexDirection: {
-                      xs: "column",
-                      sm: "column",
-                      md: "row",
-                      lg: "row",
-                      gap: "20px"
-
-                    }
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: {
-                        xs: "10px",
-                        sm: "10px",
-                        md: "30px",
-                        lg: "30px",
-                      },
-                      flexDirection: {
-                        xs: "column",
-                        sm: "column",
-                        md: "row",
-                        lg: "row",
-
-                      }
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        position: "relative",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          height: "150px",
-                          width: {
-                            xs: "100%",
-                            sm: "100%",
-                            md: "200px",
-                            lg: "200px"
-                          },
-                          borderRadius: "10px",
-                          objectFit: "cover",
-                        }}
-                        component={"img"}
-                        src={process.env.PUBLIC_URL + "/assets/images/R1.jpg"}
-                      />
-
-                    </Box>
-                    <Box
-                      sx={{
-                        display: { xs: "grid", sm: "Grid", md: "Grid", lg: "Grid" },
-                        gap: "5px",
-                        textAlign: { xs: "center", sm: "center", md: "left", lg: "left" }
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          WebkitLineClamp: "1",
-                          WebkitBoxOrient: "vertical",
-                          fontSize: "22px",
-                          fontWeight: "500",
-                          lineHeight: "32px",
-                          margin: "0px",
-                          width: "300px",
-                          color: theme.palette.primary.logoColor,
-                        }}
-                        gutterBottom
-                        variant="h5"
-                        component="h3"
-                      >
-                        Luxury Family Home
-                      </Typography>
-                      <Box
-                        sx={{
-                          display: { xs: "block", sm: "flex", md: "flex", lg: "flex" },
-                          alignItems: "center",
-                          gap: "5px",
-                          textAlign: { xs: "center", sm: "center", md: "left", lg: "left" }
-
-                        }}
-                      >
-                        <RoomOutlinedIcon
-                          sx={{
-                            fontSize: "18px",
-                            color: theme.palette.primary.dark,
-                            textAlign: { xs: "center", sm: "center", md: "left", lg: "left" }
-                          }}
-                        />
-                        <Typography
-                          sx={{
-                            color: theme.palette.primary.dark,
-                            display: "block",
-                            lineHeight: {
-                              xs: "26px",
-                              xl: "30px",
-                            },
-                            fontFamily: theme.palette.primary.Roboto,
-                          }}
-                          variant="body2"
-                          component={"p"}
-                        >
-                          1421 San Pedro St, Los Angeles, CA 900015
-                        </Typography>
-
-                      </Box>
-                      <Typography
-                        sx={{
-                          padding: "5px 10px",
-                          borderRadius: "3px",
-                          fontSize: "12px",
-                          fontWeight: "400",
-                          lineHeight: "1.15",
-                          color: theme.palette.primary.white,
-                          backgroundColor: theme.palette.primary.logoColor,
-                          display: "block",
-                          width: "fit-content"
-                        }}
-                        component={"p"}
-                      >
-                        Apartment for Rent
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Typography
-                    sx={{
-                      color: theme.palette.primary.logoColor,
-                      fontSize: "20px",
-                      fontWeight: "500",
-                      display: "block",
-                      lineHeight: {
-                        xs: "26px",
-                        xl: "30px",
-                      },
-                      fontFamily: theme.palette.primary.Roboto,
-                    }}
-                    variant="body2"
-                    component={"p"}
-                  >
-                    $13000/mo
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: { xs: "flex", sm: "grid", md: "grid", lg: "grid" },
-                      gap: "10px",
-
-                    }}
-                  >
-                    <Tooltip title="Add to Cart" placement="top">
-                      <IconButton
-                        sx={{
-                          background: theme.palette.primary.Green,
-                          borderRadius: "8px",
-                          color: theme.palette.primary.white,
-                          "&:hover": {
-                            background: theme.palette.primary.logoColor,
-                            color: theme.palette.primary.white,
-                          },
-                        }}
-                      >
-                        <AddShoppingCartOutlinedIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete">
-                      <IconButton
-                        sx={{
-                          background: "#ff383e",
-                          borderRadius: "8px",
-                          color: theme.palette.primary.white,
-                          "&:hover": {
-                            background: "#ff383e",
-                            color: theme.palette.primary.white,
-                          },
-                        }}>
-                        <DeleteOutlinedIcon />
-
-                      </IconButton>
-                    </Tooltip>
-                  </Box>
-                </Box>
-              })}
-
-              {/* Wishlist */}
-              <Divider />
-              {/* Wishlist */}
-              {/* <Box
+              <Box
                 sx={{
                   display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
                   justifyContent: "space-between",
@@ -313,7 +120,8 @@ const FavoriteProperty = () => {
                         objectFit: "cover",
                       }}
                       component={"img"}
-                      src={process.env.PUBLIC_URL + "/assets/images/R1.jpg"}
+                      // src={process.env.PUBLIC_URL + "/assets/images/R1.jpg"}
+                      src={item.property_image && item.property_image ? IMAGE_BASE_URL + item.property_image : process.env.PUBLIC_URL + "/assets/images/R1.jpg"}
                     />
 
                   </Box>
@@ -342,7 +150,7 @@ const FavoriteProperty = () => {
                       variant="h5"
                       component="h3"
                     >
-                      Luxury Family Home
+                      {item.property_name}
                     </Typography>
                     <Box
                       sx={{
@@ -353,14 +161,14 @@ const FavoriteProperty = () => {
 
                       }}
                     >
-                      <RoomOutlinedIcon
+                      {/* <RoomOutlinedIcon
                         sx={{
                           fontSize: "18px",
                           color: theme.palette.primary.dark,
                           textAlign: { xs: "center", sm: "center", md: "left", lg: "left" }
                         }}
-                      />
-                      <Typography
+                      /> */}
+                      {/* <Typography
                         sx={{
                           color: theme.palette.primary.dark,
                           display: "block",
@@ -374,25 +182,10 @@ const FavoriteProperty = () => {
                         component={"p"}
                       >
                         1421 San Pedro St, Los Angeles, CA 900015
-                      </Typography>
+                      </Typography> */}
 
                     </Box>
-                    <Typography
-                      sx={{
-                        padding: "5px 10px",
-                        borderRadius: "3px",
-                        fontSize: "12px",
-                        fontWeight: "400",
-                        lineHeight: "1.15",
-                        color: theme.palette.primary.white,
-                        backgroundColor: theme.palette.primary.logoColor,
-                        display: "block",
-                        width: "fit-content"
-                      }}
-                      component={"p"}
-                    >
-                      Apartment for Rent
-                    </Typography>
+                    
                   </Box>
                 </Box>
                 <Typography
@@ -410,7 +203,7 @@ const FavoriteProperty = () => {
                   variant="body2"
                   component={"p"}
                 >
-                  $13000/mo
+                  ${item.propertyPrice}/mo
                 </Typography>
                 <Box
                   sx={{
@@ -450,9 +243,13 @@ const FavoriteProperty = () => {
                     </IconButton>
                   </Tooltip>
                 </Box>
-              </Box> */}
-              {/* Wishlist */}
+              </Box>
             </Box>
+//  <Divider />
+            ))}
+
+
+
 
           </Box>
         </Container>

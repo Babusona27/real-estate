@@ -17,17 +17,23 @@ import theme from "../Theme";
 
 const AllProperties = () => {
   const dispatch = useDispatch();
-  
+  const userData = useSelector((state) => state.UserReducer.value);
 
   useEffect(() => {
     /* get properties  */
     const getProperties = async () => {
-      const params = {
-        param1: 'value1',
-      };
+      // const params = {
+      //   param1: '',
+      // };
       await axios
-        .get(GET_PROPERTIES_API)
+        .get(GET_PROPERTIES_API +'?limit=5&offset=0',
+          {
+            headers: {
+              'Authorization': userData.token,
+            }
+          })
         .then((res) => {
+
           if (res.data.status) {
             dispatch(setPropertyList(res.data.data));
           }

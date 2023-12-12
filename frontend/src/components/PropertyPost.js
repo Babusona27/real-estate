@@ -14,17 +14,19 @@ import {
 import React from "react";
 import theme from "../Theme";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import SavedSearchIcon from "@mui/icons-material/SavedSearch";
 import SingleBedIcon from '@mui/icons-material/SingleBed';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import { Link, useNavigate } from "react-router-dom";
-import { IMAGE_BASE_URL, POST_ADD_FAVORITE_API } from "../common/urls";
+import { IMAGE_BASE_URL, POST_ADD_FAVORITE_API, DELETE_FAVORITE_PROPERTY_API } from "../common/urls";
 import { useDispatch, useSelector } from "react-redux";
 // import { setWishlist } from "../redux/reducers/WishlistReducer";
 import { addFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
-
+import{ removeFevoriteProperty } from "../redux/reducers/FavoritePropertyReducer";
+import { updatePropertyList } from "../redux/reducers/PropertyListReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
@@ -56,7 +58,10 @@ const PropertyPost = ({ propertyDetails }) => {
           // dispatch(setFevoriteProperty([]));
           // dispatch(addPropertyFevorite(response.data.data));
           dispatch(addFevoriteProperty(response.data.data));
-          console.log('response.data.data===>', response.data.data);
+      //  updatePropertyList with isFavorite true or false
+          dispatch(updatePropertyList(response.data.data));
+
+          // console.log('response.data.data===>', response.data.data);
         } else {
           console.log(response.data.message);
         }
@@ -66,6 +71,31 @@ const PropertyPost = ({ propertyDetails }) => {
       });
 
   }
+const handleRemoveWishlist = async () => {
+  axios.delete(DELETE_FAVORITE_PROPERTY_API + "/" + propertyDetails._id, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${userData.token}`
+    }
+  }
+  )
+    .then(function (response) {
+      if (response.data.status) {
+        console.log('response_for_delete===>', response.data.data);
+        // dispatch(setFevoriteProperty([]));
+        // dispatch(addPropertyFevorite(response.data.data));
+        // dispatch(removeFevoriteProperty(propertyDetails._id));
+        // dispatch(updatePropertyList(response.data.data));
+
+        // console.log('response.data.data===>', response.data.data);
+      } else {
+        console.log(response.data.message);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
   return (
     <Box>
@@ -115,35 +145,67 @@ const PropertyPost = ({ propertyDetails }) => {
                   color: theme.palette.primary.white
                 }} variant="h6">$ {propertyDetails && propertyDetails.price}</Typography>
                 <Listings className="listings">
-
-                  <IconButton onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    handleWishlist()
-
-                  }}
-
-                    sx={{
-                      height: "35px",
-                      width: "35px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      fontSize: "16px",
-                      lineHeight: "1",
-                      borderRadius: "3px",
-                      backgroundColor: theme.palette.primary.LightBlue,
-                      border: "none",
-                      color: theme.palette.primary.white,
-                      transition: "0.4s",
-                      "&:hover": {
-                        backgroundColor: theme.palette.primary.white,
-                        color: theme.palette.primary.logoColor,
-                      },
+                  {propertyDetails && propertyDetails.isFavorite == true ?
+                    <IconButton onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      // handleWishlist()
+                      handleRemoveWishlist()
                     }}
-                  >
-                    <FavoriteBorderIcon />
-                  </IconButton>
+
+                      sx={{
+                        height: "35px",
+                        width: "35px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "16px",
+                        lineHeight: "1",
+                        borderRadius: "3px",
+                        backgroundColor: theme.palette.primary.LightBlue,
+                        border: "none",
+                        color: theme.palette.primary.white,
+                        transition: "0.4s",
+                        "&:hover": {
+                          backgroundColor: theme.palette.primary.white,
+                          color: theme.palette.primary.logoColor,
+                        },
+                      }}
+                    >
+                      
+                      <FavoriteIcon />
+                    </IconButton>
+                    :
+                    <IconButton onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      handleWishlist()
+
+                    }}
+
+                      sx={{
+                        height: "35px",
+                        width: "35px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "16px",
+                        lineHeight: "1",
+                        borderRadius: "3px",
+                        backgroundColor: theme.palette.primary.LightBlue,
+                        border: "none",
+                        color: theme.palette.primary.white,
+                        transition: "0.4s",
+                        "&:hover": {
+                          backgroundColor: theme.palette.primary.white,
+                          color: theme.palette.primary.logoColor,
+                        },
+                      }}
+                    >
+                      <FavoriteBorderIcon />
+                    </IconButton>
+                  }
+
                   <IconButton
                     sx={{
                       height: "35px",
@@ -346,6 +408,7 @@ const PropertyPost = ({ propertyDetails }) => {
     </Box>
   );
 };
+
 const Catagorys = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
