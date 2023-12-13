@@ -17,7 +17,9 @@ export const PropertyListReducer = createSlice({
                 }
                 return item;
             });
-        }
+        },
+        
+
     }
 });
 export const { setPropertyList,updatePropertyList } = PropertyListReducer.actions;
