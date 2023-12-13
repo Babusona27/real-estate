@@ -13,8 +13,6 @@ import {
   List,
   MenuItem,
   Select,
-  Tab,
-  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
@@ -35,15 +33,14 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { setPropertyList } from "../redux/reducers/PropertyListReducer";
-import { GetApiFetch } from "../common/CommonFunction";
 import { GET_PROPERTIES_API, IMAGE_BASE_URL} from "../common/urls";
 import axios from "axios";
 
-const TabPanel = ({ children, value, index }) => (
-  <div className={`tab-panel ${value === index ? "active" : ""}`}>
-    {value === index && <Box padding={"20px 0px"}>{children}</Box>}
-  </div>
-);
+// const TabPanel = ({ children, value, index }) => (
+//   <div className={`tab-panel ${value === index ? "active" : ""}`}>
+//     {value === index && <Box padding={"20px 0px"}>{children}</Box>}
+//   </div>
+// );
 
 const newSlider = {
   loop: false,
@@ -71,9 +68,6 @@ const Home = () => {
   // console.log("propertyList", propertyList);
   const dispatch = useDispatch();
   const [propertyType, setPropertyType] = React.useState("");
-  const [keyword, setKeyword] = React.useState("");
-  const [value3, setVal2] = React.useState("");
-  const [value4, setVal3] = React.useState("");
   // const handleChangeProperType = (event) => {
   //   console.log("event.target.value", event.target.value);
   //   setPropertyType(event.target.value);
@@ -81,12 +75,6 @@ const Home = () => {
   // const handleChange2 = (event) => {
   //   setVal1(event.target.value);
   // };
-  const handleChange3 = (event) => {
-    setVal2(event.target.value);
-  };
-  const handleChange4 = (event) => {
-    setVal3(event.target.value);
-  };
 
   // ===============select box
 

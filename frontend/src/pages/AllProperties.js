@@ -23,12 +23,10 @@ const AllProperties = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const userData = useSelector((state) => state.UserReducer.value);
-  console.log("location", location);
   const searchData = useSelector((state) => state.SearchReducer.value);
  
   useEffect(() => {
     /* get properties  */
-
     const getProperties = async () => {
       await axios
         .get(
@@ -43,7 +41,7 @@ const AllProperties = () => {
         )
         .then((res) => {
           if (res.data.status) {
-            console.log("add property list", res.data.data);
+            // console.log("add property list", res.data.data);
             dispatch(setPropertyList(res.data.data));
           }
         })

@@ -247,12 +247,15 @@ const Navbar = () => {
                       cursor: "pointer"
                     }}
                   >
-                    <Avatar
-                      alt="User Image"
-                      src={userData && userData.user_image ? IMAGE_BASE_URL + userData.user_image : "./assets/images/avtar/avatar.png"}
-                      // src="./assets/images/avtar/avatar.png"
-                      sx={{ marginRight: 1 }}
-                    />
+                    {userData &&
+                      <Avatar
+                        alt="User Image"
+                        src={userData && userData.user_image ? IMAGE_BASE_URL + userData.user_image : "./assets/images/avtar/avatar.png"}
+                        // src="./assets/images/avtar/avatar.png"
+                        sx={{ marginRight: 1 }}
+                      />
+                    }
+
                     <Typography sx={{
                       fontSize: "16px",
                       color: theme.palette.primary.logoColor,
@@ -459,8 +462,7 @@ const Navbar = () => {
                       fontSize: { xs: "20px", lg: "30px" },
                     }}
                     onClick={() => {
-
-                      navigate('/favoriteProperty')
+                      { userData ? navigate('/favoriteProperty') : navigate('/Login') }
                     }}>
                     <StyledBadge badgeContent={favoriteProperty && favoriteProperty.length} color="secondary">
                       {/* <StyledBadge badgeContent={4} color="secondary"> */}

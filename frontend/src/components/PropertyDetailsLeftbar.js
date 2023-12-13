@@ -908,7 +908,7 @@ const PropertyDetailsLeftbar = () => {
           />
         </Box>
         {/* Add more reviews as needed */}
-        <Dialog fullWidth sx={{}} open={open} onClose={handleClose}>
+        <Dialog fullwidth='true' sx={{}} open={open} onClose={handleClose}>
           <DialogTitle
             className="popupHeading"
             sx={{
@@ -938,7 +938,7 @@ const PropertyDetailsLeftbar = () => {
                 />
               </Box>
               <TextField
-                fullWidth
+                fullwidth="true"
                 id="outlined-adornment-name"
                 required
                 label="Enter your name"
@@ -947,7 +947,7 @@ const PropertyDetailsLeftbar = () => {
                 onChange={(event) => setName(event.target.value)}
               />
               <TextField
-                fullWidth
+                fullwidth="true"
                 id="outlined-adornment-name"
                 required
                 label="Type your message"
@@ -1024,7 +1024,7 @@ const PropertyDetailsLeftbar = () => {
         </Dialog>
 
         {/* book an appointment*/}
-        <Dialog fullWidth sx={{}} open={active} onClose={PopupClose}>
+        <Dialog fullwidth="true" sx={{}} open={active} onClose={PopupClose}>
           <DialogTitle
             className="popupHeading"
             sx={{
@@ -1047,7 +1047,7 @@ const PropertyDetailsLeftbar = () => {
               }}
             >
               <TextField
-                fullWidth
+                fullwidth="true"
                 id="outlined-adornment-name"
                 required
                 label="Your Name"
@@ -1056,7 +1056,7 @@ const PropertyDetailsLeftbar = () => {
                 onChange={(event) => setYourName(event.target.value)}
               />
               <TextField
-                fullWidth
+                fullwidth="true"
                 id="outlined-adornment-name"
                 required
                 label="Your e-Mail"
@@ -1065,7 +1065,7 @@ const PropertyDetailsLeftbar = () => {
                 onChange={(event) => setYourMail(event.target.value)}
               />
               <TextField
-                fullWidth
+                fullwidth="true"
                 id="outlined-adornment-name"
                 required
                 label="Write Message..."

@@ -37,66 +37,6 @@ const PropertyPost = ({ propertyDetails }) => {
   const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
   // console.log('favoriteProperty_Property', favoriteProperty);
 
-
-  // console.log('userData', userData);
-
-  // const handleWishlist = async () => {
-
-  //   await axios.post(POST_ADD_FAVORITE_API, {
-  //     property_id: propertyDetails._id,
-  //     property_name: propertyDetails.property_name,
-  //     property_image: propertyDetails.images[0],
-  //     propertyPrice: propertyDetails.price
-  //   }, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `${userData.token}`
-  //     }
-  //   })
-  //     .then(function (response) {
-  //       if (response.data.status) {
-  //         dispatch(addFevoriteProperty(response.data.data));
-  //         //  updatePropertyList with isFavorite true or false
-  //         // dispatch(updatePropertyList(propertyDetails._id, propertyDetails.isFavorite = true));
-  //         dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: true }))
-  //         // console.log('response.data.data===>', response.data.data);
-  //       } else {
-  //         console.log(response.data.message);
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-
-  // }
-  // const handleRemoveWishlist = async () => {
-  //   axios.delete(DELETE_FAVORITE_PROPERTY_API + "/" + userData.userId + "/" + propertyDetails._id, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `${userData.token}`
-  //     }
-  //   }
-  //   )
-  //     .then(function (response) {
-  //       // console.log('response_for_delete===>', response);
-  //       if (response.data.status) {
-  //         // console.log('response_for_delete===>', response.data.data);
-  //         // dispatch(setFevoriteProperty([]));
-  //         // dispatch(addPropertyFevorite(response.data.data));
-
-  //         dispatch(removeFevoriteProperty({ _id: propertyDetails._id }));
-  //          dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: false }));
-
-  //         console.log('response.data.data===>', response.data.data);
-  //       } else {
-  //         console.log(response.data.message);
-  //       }
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
-
   const manageWishlist = async () => {
     axios.post(POST_ADD_FAVORITE_API, {
       property_id: propertyDetails._id,
@@ -184,11 +124,13 @@ const PropertyPost = ({ propertyDetails }) => {
                   color: theme.palette.primary.white
                 }} variant="h6">$ {propertyDetails && propertyDetails.price}</Typography>
                 <Listings className="listings">
-                  {/* {propertyDetails && propertyDetails.isFavorite == true ?
+                  
+                  {userData && userData.token ?
                     <IconButton onClick={(event) => {
                       event.preventDefault();
                       event.stopPropagation();
-                      handleRemoveWishlist()
+                      // handleRemoveWishlist()
+                      manageWishlist()
                     }}
 
                       sx={{
@@ -211,68 +153,12 @@ const PropertyPost = ({ propertyDetails }) => {
                       }}
                     >
 
-                      <FavoriteIcon />
+                      {propertyDetails && propertyDetails.isFavorite == true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
                     :
-                    <IconButton onClick={(event) => {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      handleWishlist()
+                    <></>
+                  }
 
-                    }}
-
-                      sx={{
-                        height: "35px",
-                        width: "35px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "16px",
-                        lineHeight: "1",
-                        borderRadius: "3px",
-                        backgroundColor: theme.palette.primary.LightBlue,
-                        border: "none",
-                        color: theme.palette.primary.white,
-                        transition: "0.4s",
-                        "&:hover": {
-                          backgroundColor: theme.palette.primary.white,
-                          color: theme.palette.primary.logoColor,
-                        },
-                      }}
-                    >
-                      <FavoriteBorderIcon />
-                    </IconButton>
-                  } */}
-
-                  <IconButton onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    // handleRemoveWishlist()
-                    manageWishlist()
-                  }}
-
-                    sx={{
-                      height: "35px",
-                      width: "35px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      fontSize: "16px",
-                      lineHeight: "1",
-                      borderRadius: "3px",
-                      backgroundColor: theme.palette.primary.LightBlue,
-                      border: "none",
-                      color: theme.palette.primary.white,
-                      transition: "0.4s",
-                      "&:hover": {
-                        backgroundColor: theme.palette.primary.white,
-                        color: theme.palette.primary.logoColor,
-                      },
-                    }}
-                  >
-
-                    {propertyDetails && propertyDetails.isFavorite == true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                  </IconButton>
 
                   <IconButton
                     sx={{

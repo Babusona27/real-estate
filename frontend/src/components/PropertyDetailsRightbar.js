@@ -193,10 +193,10 @@ const PropertyDetailsRightbar = () => {
             gap: "25px",
             margin: "25px 0px"
           }} component={"form"}>
-            <TextField fullWidth id="outlined-basic" required label="Name" variant="outlined" />
-            <TextField fullWidth id="outlined-basic" required label="Email" variant="outlined" />
-            <TextField fullWidth id="outlined-basic" required label="Phone" variant="outlined" />
-            <TextField fullWidth multiline rows={4} required id="outlined-basic" label="Massage" variant="outlined" />
+            <TextField fullwidth="true" id="outlined-basic" required label="Name" variant="outlined" />
+            <TextField fullwidth="true" id="outlined-basic" required label="Email" variant="outlined" />
+            <TextField fullwidth="true" id="outlined-basic" required label="Phone" variant="outlined" />
+            <TextField fullwidth="true" multiline rows={4} required id="outlined-basic" label="Massage" variant="outlined" />
             <Button sx={{
               width: "100%",
               backgroundColor: theme.palette.primary.logoColor,

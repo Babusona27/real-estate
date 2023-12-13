@@ -72,7 +72,7 @@ const Property = () => {
                 <FormControl className="SortBy" sx={{
                   display: "block",
                   width: "100%"
-                }} fullWidth>
+                }} fullwidth='true'>
                   <InputLabel sx={{
                     padding: "0px",
                     top: "-5px",

@@ -139,7 +139,7 @@ const PropertyLeftBar = () => {
         {/* <Box marginBottom={"25px"}>
           <Input
             className="form_input"
-            fullWidth
+            fullwidth
             size="lg"
             sx={{
               border: "1px solid #e7e7e7",
@@ -156,7 +156,7 @@ const PropertyLeftBar = () => {
         </Box> */}
           {/* category type section */}
         <Box sx={{ marginBottom: "25px" }}>
-          <FormControl fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
+          <FormControl fullwidth="true" sx={{ color: theme.palette.primary.lightGrey }}>
             <InputLabel id="demo-controlled-open-select-label">Property Type</InputLabel>
             <Select
               labelId="demo-controlled-open-select-label"
@@ -182,7 +182,7 @@ const PropertyLeftBar = () => {
         {/* category section */}
 
         <Box sx={{ marginBottom: "25px" }}>
-          <FormControl fullWidth>
+          <FormControl fullwidth="true">
             <InputLabel htmlFor="grouped-select">All Categories</InputLabel>
             <Select
               id="grouped-select"
@@ -199,7 +199,7 @@ const PropertyLeftBar = () => {
           </FormControl>
         </Box>
         <Box sx={{ marginBottom: "25px" }}>
-          <FormControl fullWidth>
+          <FormControl fullwidth="true">
             <InputLabel htmlFor="grouped-select">All Cities</InputLabel>
             <Select
               id="grouped-select"
@@ -318,7 +318,7 @@ const PropertyLeftBar = () => {
           </Accordion>
         </Box>
         <Box sx={{ marginBottom: "25px" }}>
-          <FormControl fullWidth>
+          <FormControl fullwidth="true">
             <InputLabel htmlFor="grouped-select">Bedroom</InputLabel>
             <Select
               id="grouped-select"
@@ -337,7 +337,7 @@ const PropertyLeftBar = () => {
           </FormControl>
         </Box>
         <Box sx={{ marginBottom: "25px" }}>
-          <FormControl fullWidth>
+          <FormControl fullwidth="true">
             <InputLabel htmlFor="grouped-select">Bath</InputLabel>
             <Select
               id="grouped-select"
@@ -352,7 +352,7 @@ const PropertyLeftBar = () => {
             </Select>
           </FormControl>
         </Box>
-        <Box fullWidth sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box fullwidth="true" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Button sx={{
             width: "65%",
             backgroundColor: theme.palette.primary.logoColor,
