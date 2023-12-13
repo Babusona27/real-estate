@@ -30,19 +30,75 @@ import { updatePropertyList } from "../redux/reducers/PropertyListReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
-  console.log("propertyDetails", propertyDetails);
+  //console.log("propertyDetails", propertyDetails);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.UserReducer.value);
   // const wishlistData = useSelector((state) => state.WishlistReducer.value);
   const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
-  console.log('favoriteProperty_Property', favoriteProperty);
-  // console.log('favoriteProperty_Property', favoriteProperty);
+ // console.log('favoriteProperty_Property', favoriteProperty);
+
 
   // console.log('userData', userData);
 
-  const handleWishlist = async () => {
+  // const handleWishlist = async () => {
 
-    await axios.post(POST_ADD_FAVORITE_API, {
+  //   await axios.post(POST_ADD_FAVORITE_API, {
+  //     property_id: propertyDetails._id,
+  //     property_name: propertyDetails.property_name,
+  //     property_image: propertyDetails.images[0],
+  //     propertyPrice: propertyDetails.price
+  //   }, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `${userData.token}`
+  //     }
+  //   })
+  //     .then(function (response) {
+  //       if (response.data.status) {
+  //         dispatch(addFevoriteProperty(response.data.data));
+  //         //  updatePropertyList with isFavorite true or false
+  //         // dispatch(updatePropertyList(propertyDetails._id, propertyDetails.isFavorite = true));
+  //         dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: true }))
+  //         // console.log('response.data.data===>', response.data.data);
+  //       } else {
+  //         console.log(response.data.message);
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+
+  // }
+  // const handleRemoveWishlist = async () => {
+  //   axios.delete(DELETE_FAVORITE_PROPERTY_API + "/" + userData.userId + "/" + propertyDetails._id, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `${userData.token}`
+  //     }
+  //   }
+  //   )
+  //     .then(function (response) {
+  //       // console.log('response_for_delete===>', response);
+  //       if (response.data.status) {
+  //         // console.log('response_for_delete===>', response.data.data);
+  //         // dispatch(setFevoriteProperty([]));
+  //         // dispatch(addPropertyFevorite(response.data.data));
+          
+  //         dispatch(removeFevoriteProperty({ _id: propertyDetails._id }));
+  //          dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: false }));
+
+  //         console.log('response.data.data===>', response.data.data);
+  //       } else {
+  //         console.log(response.data.message);
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
+
+  const manageWishlist = async () => {
+    axios.post(POST_ADD_FAVORITE_API, {
       property_id: propertyDetails._id,
       property_name: propertyDetails.property_name,
       property_image: propertyDetails.images[0],
@@ -52,49 +108,29 @@ const PropertyPost = ({ propertyDetails }) => {
         'Content-Type': 'application/json',
         'Authorization': `${userData.token}`
       }
-    })
-      .then(function (response) {
-        if (response.data.status) {
-          dispatch(addFevoriteProperty(response.data.data));
-          //  updatePropertyList with isFavorite true or false
-          // dispatch(updatePropertyList(propertyDetails._id, propertyDetails.isFavorite = true));
-          dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: true }))
-          // console.log('response.data.data===>', response.data.data);
-        } else {
-          console.log(response.data.message);
+    }).then(function (response) {
+      if (response.data.status) {
+        // console.log('response.data.data===>', response.data.data);
+        dispatch(addFevoriteProperty(response.data.data));
+        //  updatePropertyList with isFavorite true or false
+        // check propertyDetails._id is exist in favoriteProperty array
+        // if exist then isFavorite true else false
+        let isFavorite = false;
+        if (response.data.data.length > 0) {
+          response.data.data.map((item, key) => {
+            if (item.property_id == propertyDetails._id) {
+              isFavorite = true;
+            }
+          })
         }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-  }
-  const handleRemoveWishlist = async () => {
-    axios.delete(DELETE_FAVORITE_PROPERTY_API + "/" + userData.userId + "/" + propertyDetails._id, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${userData.token}`
+       dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite:isFavorite }))
+      } else {
+        console.log(response.data.message);
       }
-    }
-    )
-      .then(function (response) {
-        // console.log('response_for_delete===>', response);
-        if (response.data.status) {
-          // console.log('response_for_delete===>', response.data.data);
-          // dispatch(setFevoriteProperty([]));
-          // dispatch(addPropertyFevorite(response.data.data));
-          
-          dispatch(removeFevoriteProperty({ _id: propertyDetails._id }));
-           dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: false }));
+    }).catch(function (error) {
+      console.log(error);
+    });
 
-          console.log('response.data.data===>', response.data.data);
-        } else {
-          console.log(response.data.message);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   }
 
   return (
@@ -145,7 +181,7 @@ const PropertyPost = ({ propertyDetails }) => {
                   color: theme.palette.primary.white
                 }} variant="h6">$ {propertyDetails && propertyDetails.price}</Typography>
                 <Listings className="listings">
-                  {propertyDetails && propertyDetails.isFavorite == true ?
+                  {/* {propertyDetails && propertyDetails.isFavorite == true ?
                     <IconButton onClick={(event) => {
                       event.preventDefault();
                       event.stopPropagation();
@@ -203,7 +239,37 @@ const PropertyPost = ({ propertyDetails }) => {
                     >
                       <FavoriteBorderIcon />
                     </IconButton>
-                  }
+                  } */}
+
+                  <IconButton onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      // handleRemoveWishlist()
+                      manageWishlist()
+                    }}
+
+                      sx={{
+                        height: "35px",
+                        width: "35px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "16px",
+                        lineHeight: "1",
+                        borderRadius: "3px",
+                        backgroundColor: theme.palette.primary.LightBlue,
+                        border: "none",
+                        color: theme.palette.primary.white,
+                        transition: "0.4s",
+                        "&:hover": {
+                          backgroundColor: theme.palette.primary.white,
+                          color: theme.palette.primary.logoColor,
+                        },
+                      }}
+                    >
+
+                     {propertyDetails && propertyDetails.isFavorite == true ? <FavoriteIcon />:<FavoriteBorderIcon /> }
+                    </IconButton>
 
                   <IconButton
                     sx={{

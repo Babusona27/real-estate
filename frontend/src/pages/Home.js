@@ -112,7 +112,7 @@ const Home = () => {
         });
     };
     /* get properties  */
-    getProperties();
+   //getProperties();
   }, []);
 
   return (

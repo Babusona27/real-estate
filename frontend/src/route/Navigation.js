@@ -33,23 +33,27 @@ function Navigation() {
     const userData = useSelector((state) => state.UserReducer.value);
     console.log('userData', userData);
     useEffect(() => {
-        const getFavoriteProperty = async () => {
-            await axios
-                .get(GET_FAVORITE_PROPERTY_API +"/"+ userData.userId,
-                    {
-                        headers: {
-                            'Authorization': userData.token,
+        if(userData){
+            const getFavoriteProperty = async () => {
+                await axios
+                    .get(GET_FAVORITE_PROPERTY_API +"/"+ userData.userId,
+                        {
+                            headers: {
+                                'Authorization': userData.token,
+                            }
+                        })
+                    .then((res) => {
+                        if (res.data.status) {
+                            dispatch(setFevoriteProperty(res.data.favoriteProperties));
                         }
                     })
-                .then((res) => {
-                    if (res.data.status) {
-                        dispatch(setFevoriteProperty(res.data.favoriteProperties));
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        };
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            };
+            getFavoriteProperty();
+        }
+        
         /* get properties  */
         const checkTokenExpiration = () => {
             const token = userData && userData.token;
@@ -73,7 +77,7 @@ function Navigation() {
             }
         };
         checkTokenExpiration();
-        getFavoriteProperty();
+ 
     }, [userData, dispatch]);
 
     return (

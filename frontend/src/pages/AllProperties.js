@@ -7,7 +7,10 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import axios from "axios";
-import { GET_PROPERTIES_API } from "../common/urls";
+import {
+  GET_PROPERTIES_API,
+  GET_PROPERTIES_WITHOUT_AUTH_API,
+} from "../common/urls";
 import { useDispatch, useSelector } from "react-redux";
 import { setPropertyList } from "../redux/reducers/PropertyListReducer";
 import HomeIcon from "@mui/icons-material/Home";
@@ -23,20 +26,22 @@ const AllProperties = () => {
 
   useEffect(() => {
     /* get properties  */
+
     const getProperties = async () => {
-      // const params = {
-      //   param1: '',
-      // };
       await axios
-        .get(GET_PROPERTIES_API +'?limit=5&offset=0',
+        .get(
+          userData
+            ? GET_PROPERTIES_API
+            : GET_PROPERTIES_WITHOUT_AUTH_API + "?limit=5&offset=0",
           {
             headers: {
-              'Authorization': userData.token,
-            }
-          })
+              Authorization: userData && userData.token,
+            },
+          }
+        )
         .then((res) => {
-
           if (res.data.status) {
+            console.log("add property list", res.data.data);
             dispatch(setPropertyList(res.data.data));
           }
         })
@@ -57,9 +62,9 @@ const AllProperties = () => {
       {/* Header */}
       <Header />
       {/* Header */}
-      <BreadcrumbsBanner title="Properties"/>
-            {/* banner section  */}
- 
+      <BreadcrumbsBanner title="Properties" />
+      {/* banner section  */}
+
       {/* blog area  */}
       <Box>
         <Container
@@ -72,7 +77,7 @@ const AllProperties = () => {
               md: "40px 10px",
               lg: "40px 0px",
             },
-            background:theme.palette.primary.LightVlue2,
+            background: theme.palette.primary.LightVlue2,
           }}
         >
           <Box

@@ -8,6 +8,8 @@ export const IMAGE_BASE_URL = 'http://localhost:4000/';
 
 
 export const GET_PROPERTIES_API = BASE_URL+'/getproperties/';
+export const GET_PROPERTIES_WITHOUT_AUTH_API = BASE_URL+'/getpropertieswithoutAuth/';
+
 export const POST_SHOP_PAGE_API = BASE_URL+'/shopPage';
 export const GET_PRODUCT_DETAILS_API = BASE_URL+'/productDetailWeb';
 export const GET_PRODUCT_DETAILS_PAGE_API = BASE_URL+'/propertydetails/';
