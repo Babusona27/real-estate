@@ -83,9 +83,9 @@ const PropertyPost = ({ propertyDetails }) => {
           // console.log('response_for_delete===>', response.data.data);
           // dispatch(setFevoriteProperty([]));
           // dispatch(addPropertyFevorite(response.data.data));
-          
+
           dispatch(removeFevoriteProperty({ _id: propertyDetails._id }));
-           dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: false }));
+          dispatch(updatePropertyList({ _id: propertyDetails._id, isFavorite: false }));
 
           console.log('response.data.data===>', response.data.data);
         } else {

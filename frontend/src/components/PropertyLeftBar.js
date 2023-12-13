@@ -121,7 +121,6 @@ const PropertyLeftBar = () => {
     getCategories();
   }, [])
 
-  
   return (
     <Box flex={2} paddingLeft={{ xs: '0px', md: '15px' }} paddingRight={{ xs: '0px', md: '15px' }}>
       <Box sx={{ padding: "25px 30px 30px", background: theme.palette.primary.white, boxShadow: "0 4px 18px 0 rgba(194, 200, 213, 0.3)", borderRadius: "6px", marginBottom: "30px" }}>

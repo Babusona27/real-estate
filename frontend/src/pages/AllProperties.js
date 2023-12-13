@@ -14,21 +14,24 @@ import HomeIcon from "@mui/icons-material/Home";
 import GrainIcon from "@mui/icons-material/Grain";
 import { Link } from "react-router-dom";
 import theme from "../Theme";
-// import search params
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const AllProperties = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const userData = useSelector((state) => state.UserReducer.value);
-
+  console.log("location", location);
+  const searchData = useSelector((state) => state.SearchReducer.value);
+ 
   useEffect(() => {
     /* get properties  */
     const getProperties = async () => {
       // const params = {
       //   param1: '',
       // };
+      // console.log("params", params);
       await axios
-        .get(GET_PROPERTIES_API +'?limit=5&offset=0',
+        .get(GET_PROPERTIES_API + '?offset=0&limit=5',
           {
             headers: {
               'Authorization': userData.token,
@@ -57,9 +60,9 @@ const AllProperties = () => {
       {/* Header */}
       <Header />
       {/* Header */}
-      <BreadcrumbsBanner title="Properties"/>
-            {/* banner section  */}
- 
+      <BreadcrumbsBanner title="Properties" />
+      {/* banner section  */}
+
       {/* blog area  */}
       <Box>
         <Container
@@ -72,7 +75,7 @@ const AllProperties = () => {
               md: "40px 10px",
               lg: "40px 0px",
             },
-            background:theme.palette.primary.LightVlue2,
+            background: theme.palette.primary.LightVlue2,
           }}
         >
           <Box

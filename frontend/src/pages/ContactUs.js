@@ -134,7 +134,7 @@ const ContactUs = () => {
                   border: "1px solid #ebebeb",
                   borderRadius: "8px",
                   marginBottom: "25px",
-                  minHeight:"230px",
+                  minHeight: "230px",
                   textAlign: "center",
                   transition: "all 0.4s ease-out",
                   marginTop: {
@@ -152,7 +152,7 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src={process.env.PUBLIC_URL+"/assets/images/mail.png"}
+                  src={process.env.PUBLIC_URL + "/assets/images/mail.png"}
                   component={"img"}
                 />
                 <Typography
@@ -201,7 +201,7 @@ const ContactUs = () => {
                   borderRadius: "8px",
                   marginBottom: "25px",
                   textAlign: "center",
-                  minHeight:"230px",
+                  minHeight: "230px",
                   transition: "all 0.4s ease-out",
                   marginTop: {
                     xs: "30px",
@@ -218,7 +218,7 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src={process.env.PUBLIC_URL+"/assets/images/call.png"}
+                  src={process.env.PUBLIC_URL + "/assets/images/call.png"}
                   component={"img"}
                 />
                 <Typography
@@ -267,7 +267,7 @@ const ContactUs = () => {
                   borderRadius: "8px",
                   marginBottom: "25px",
                   textAlign: "center",
-                  minHeight:"230px",
+                  minHeight: "230px",
                   transition: "all 0.4s ease-out",
                   marginTop: {
                     xs: "30px",
@@ -284,7 +284,7 @@ const ContactUs = () => {
                     height: "80px",
                     objectFit: "contain",
                   }}
-                  src={process.env.PUBLIC_URL+"/assets/images/location.png"}
+                  src={process.env.PUBLIC_URL + "/assets/images/location.png"}
                   component={"img"}
                 />
                 <Typography
@@ -322,7 +322,7 @@ const ContactUs = () => {
           </Box>
         </Container>
         <Box sx={{
-          backgroundImage:`url(${process.env.PUBLIC_URL}/assets/images/R10.jpg)`,
+          backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/R10.jpg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: "fixed",
@@ -347,7 +347,7 @@ const ContactUs = () => {
               background: "rgb(255 255 255 / 90%)",
               borderRadius: "8px",
               marginBottom: "25px",
-              
+
               transition: "all 0.4s ease-out",
               boxShadow: "0 4px 12px rgba(0,0,0,15%)",
               marginTop: {
@@ -428,7 +428,7 @@ const ContactUs = () => {
                       },
                     }}
                   >
-                    <FormControl fullWidth>
+                    {/* <FormControl fullWidth>
                       <InputLabel id="select-label">Select Option</InputLabel>
                       <Select
                         labelId="select-label"
@@ -444,7 +444,7 @@ const ContactUs = () => {
                         <MenuItem value="option2">Option 2</MenuItem>
                         <MenuItem value="option3">Option 3</MenuItem>
                       </Select>
-                    </FormControl>
+                    </FormControl> */}
                     <TextField
                       fullWidth
                       id="outlined-adornment-name"
@@ -599,7 +599,7 @@ const ContactUs = () => {
                     color: theme.palette.primary.white,
                     boxShadow: "none",
                   }
-                }} variant="contained" onClick={()=>{
+                }} variant="contained" onClick={() => {
                   window.location.href = "/AgentRegister";
                 }}>Register Now</Button>
             </Box>
