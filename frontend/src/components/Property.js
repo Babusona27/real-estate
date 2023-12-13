@@ -14,7 +14,7 @@ import React from "react";
 import PropertyPost from "./PropertyPost";
 import { useSearchParams } from "react-router-dom";
 import { GetApiFetch } from "../common/CommonFunction";
-import { GET_PROPERTIES_API } from "../common/urls";
+// import { GET_PROPERTIES_API } from "../common/urls";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
 import theme from "../Theme";
@@ -22,7 +22,7 @@ import { render } from "react-dom";
 
 const Property = () => {
   const propertyList = useSelector((state) => state.PropertyListReducer.value);
-  console.log("propertyList", propertyList);
+  // console.log("propertyList", propertyList);
   const userData = useSelector((state) => state.UserReducer.value);
   //define handleLogout function
   const dispatch = useDispatch();

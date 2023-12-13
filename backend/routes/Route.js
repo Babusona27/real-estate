@@ -26,7 +26,10 @@ router.put("/updatecategory/:id", categoryController.updateCategory);
 router.delete("/deletecategory/:id", categoryController.deleteCategory);
 
 // ******************All PROPERTY ROUTE*********************
+
+
 router.get("/getproperties", authenticate, propertyController.getProperties);
+router.get("/getpropertieswithoutAuth", propertyController.getProperties);
 router.get("/propertydetails/:slug", propertyController.getProperty);
 router.post("/createproperty", authenticate, validateRequest, propertyController.createProperty);
 router.put("/updateproperty/:id", authenticate, propertyController.updateProperty);

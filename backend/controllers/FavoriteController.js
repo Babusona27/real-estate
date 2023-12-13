@@ -1,9 +1,10 @@
 const UserSchema = require("../models/UserSchema");
 const AppointmentRequestSchema = require("../models/AppointmentRequestSchema");
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
 // ADD NEW FAVORITE PROPERTY (POST METHOD)
 exports.addToFavorite = async (req, res) => {
-  const { property_id, property_name, property_image, propertyPrice } = req.body;
+  const { property_id, property_name, property_image, propertyPrice } =
+    req.body;
 
   const userId = req.user.user_id; // Assuming you have the user_id in the decoded JWT payload
 
@@ -15,35 +16,48 @@ exports.addToFavorite = async (req, res) => {
       return res.status(404).json({ status: false, message: "User not found" });
     }
     //user table favorite_properties array property_id check
-    const propertyExist = user.favorite_properties.find(
-      (property) => property.property_id.equals(new ObjectId(property_id))
+    const propertyExist = user.favorite_properties.find((property) =>
+      property.property_id.equals(new ObjectId(property_id))
     );
     if (propertyExist) {
-      return res
-        .status(200)
-        .json({ status: false, message: "Property already exist" });
-    }
-    // Add the property to the user's favorite_properties array
-    user.favorite_properties.push({
-      property_id,
-      property_name,
-      property_image,
-      propertyPrice,
-    });
-    const savedUser = await user.save();
-    res.status(200).json({
-      status: true,
-      message: "Property added to favorites successfully",
-      data: savedUser.favorite_properties,
-    });
+      //remove property from favorite_properties array
+      user.favorite_properties = user.favorite_properties.filter(
+        (property) => !property.property_id.equals(new ObjectId(property_id))
+      );
+      const savedUser = await user.save();
+      res.status(200).json({
+        isFavorite: false,
+        status: true,
+        message: "Property remove from favorites successfully",
+        data: savedUser.favorite_properties,
+      });
 
+      // return res
+      //   .status(200)
+      //   .json({ status: false, message: "Property already exist" });
+    } else {
+      // Add the property to the user's favorite_properties array
+      user.favorite_properties.push({
+        property_id,
+        property_name,
+        property_image,
+        propertyPrice,
+      });
+      const savedUser = await user.save();
+      res.status(200).json({
+        isFavorite: true,
+        status: true,
+        message: "Property added to favorites successfully",
+        data: savedUser.favorite_properties,
+      });
+    }
   } catch (error) {
     console.error(error);
     res
       .status(500)
       .json({ status: false, message: "Failed to add property to favorites" });
   }
-}
+};
 
 // // DELETE FAVORITE PROPERTY BY INDEX (DELETE METHOD)
 // exports.deleteFavorite = async (req, res) => {
@@ -119,7 +133,7 @@ exports.deleteFavorite = async (req, res) => {
       message: error.message,
     });
   }
-}
+};
 
 // GET MY FAVORITE LIST (GET METHOD)
 exports.myFavorites = async (req, res) => {
@@ -146,7 +160,7 @@ exports.myFavorites = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // CREATE NEW APPOINTMENT REQUEST (POST METHOD)
 exports.sendAppointmentRequest = async (req, res) => {
@@ -171,4 +185,4 @@ exports.sendAppointmentRequest = async (req, res) => {
     console.error(error);
     res.status(500).json({ status: false, message: error.message });
   }
-}
+};

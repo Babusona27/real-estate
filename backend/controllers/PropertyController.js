@@ -78,6 +78,7 @@ const path = require("path");
 
 
 exports.getProperties = async (req, res) => {
+  
   try {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
@@ -92,9 +93,13 @@ exports.getProperties = async (req, res) => {
       .skip(offset)
       .limit(limit);
 
-    // Check if the user is logged in (assuming you have authentication middleware)
-    if (req.user) {
-      const userId = req.user.user_id;
+       
+
+
+    // Check if the user is logged in 
+    if (req.user) {      
+      const userId =  req.user.user_id; // Assuming you have the user_id in the decoded JWT payload    
+     
       const user = await userSchema.findById(userId);
 
       if (user.favorite_properties !== null) {
@@ -136,6 +141,8 @@ exports.getProperties = async (req, res) => {
     });
   }
 }
+
+
 
 
 // GET ONLY SINGLE PROPERTY (GET METHOD)
