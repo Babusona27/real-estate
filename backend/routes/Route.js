@@ -16,7 +16,7 @@ const categoryController = require("../controllers/CategoryController");
 const countryController = require("../controllers/CountryController");
 const favoriteController = require("../controllers/FavoriteController");
 const amenitiesController = require("../controllers/AmenitiesController");
-
+const messageController = require("../controllers/MessageController");
 
 
 
@@ -95,5 +95,7 @@ router.get("/amenities", amenitiesController.getAmenities);
 router.post("/amenities", amenitiesController.createAmenities);
 router.put("/amenities/:id", amenitiesController.updateAmenities);
 router.delete("/amenities/:id", amenitiesController.deleteAmenities);
-
+// ********************All Message ROUTE******************************
+router.post("/message", authenticate, messageController.sendMessage);
+router.get("/message", authenticate, messageController.getMessage);
 module.exports = router;

@@ -78,7 +78,6 @@ const path = require("path");
 
 
 exports.getProperties = async (req, res) => {
-  console.log("req.query", req.query);
   try {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
