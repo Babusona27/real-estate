@@ -15,6 +15,7 @@ const userController = require("../controllers/UserController");
 const categoryController = require("../controllers/CategoryController");
 const countryController = require("../controllers/CountryController");
 const favoriteController = require("../controllers/FavoriteController");
+const amenitiesController = require("../controllers/AmenitiesController");
 
 
 
@@ -63,6 +64,7 @@ router.get("/country", countryController.getCountry);
 router.post("/country", countryController.createCountry);
 router.put("country/:id", countryController.updateCountry);
 router.delete("country/:id", countryController.deleteCountry);
+router.get("/city", countryController.getCity);
 // ********************All Blog ROUTE******************************
 router.get("/blog", blogController.getBlog);
 router.post("/blog", blogController.createBlog);
@@ -88,5 +90,10 @@ router.get("/contactus", contactUsController.getContactUs);
 router.post("/contactus", contactUsController.createContactUs);
 //mail send
 router.post("/sendmail", contactUsController.sendMail);
+// ********************All Amenities ROUTE******************************
+router.get("/amenities", amenitiesController.getAmenities);
+router.post("/amenities", amenitiesController.createAmenities);
+router.put("/amenities/:id", amenitiesController.updateAmenities);
+router.delete("/amenities/:id", amenitiesController.deleteAmenities);
 
 module.exports = router;

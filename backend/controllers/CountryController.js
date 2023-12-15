@@ -78,3 +78,21 @@ exports.deleteCountry = async (req, res) => {
       .json({ message: "Failed to delete Country", error: error.message });
   }
 }
+
+//get all only city
+exports.getCity = async (req, res) => {
+  try {
+    const cities = await CountrySchema.distinct("states.cities");
+    res.status(200).json({
+      status: true,
+      message: "Cities fetched successfully",
+      data: cities,
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: false,
+      message: "Failed to fetch cities",
+      data: null,
+    });
+  }
+}

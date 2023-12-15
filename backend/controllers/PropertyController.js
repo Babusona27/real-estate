@@ -78,7 +78,7 @@ const path = require("path");
 
 
 exports.getProperties = async (req, res) => {
-  
+  console.log("req.query", req.query);
   try {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
@@ -86,20 +86,59 @@ exports.getProperties = async (req, res) => {
     // Define an empty filter object to hold the filtering criteria
     const filter = {};
 
-    // Define criteria based on request parameters
-    // ... (your existing code for filtering criteria)
-
+    if (req.query.type) {
+      filter.type = req.query.type;
+    }
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+    if (req.query.country) {
+      filter.country = req.query.country;
+    }
+    if (req.query.state) {
+      filter.state = req.query.state;
+    }
+    if (req.query.city) {
+      filter.city = req.query.city;
+    }
+    if (req.query.sqft) {
+      filter.sqft = parseInt(req.query.sqft);
+    }
+    if (req.query.bedroom) {
+      filter.bedroom = parseInt(req.query.bedroom);
+    }
+    if (req.query.bath) {
+      filter.bath = parseInt(req.query.bath);
+    }
+    if (req.query.parking) {
+      filter.parking = req.query.parking;
+    }
+    if (req.query.price_from && req.query.price_to) {
+      const priceFrom = parseFloat(req.query.price_from);
+      const priceTo = parseFloat(req.query.price_to);
+      filter.price = { $gte: priceFrom, $lte: priceTo };
+    } else if (req.query.price_from) {
+      const priceFrom = parseFloat(req.query.price_from);
+      filter.price = { $gte: priceFrom };
+    } else if (req.query.price_to) {
+      const priceTo = parseFloat(req.query.price_to);
+      filter.price = { $lte: priceTo };
+    }
+    if (req.query.amenities) {
+      const amenities = req.query.amenities.split("%");
+      filter.amenities = { $in: amenities };
+    }
     const properties = await PropertySchema.find(filter)
       .skip(offset)
       .limit(limit);
 
-       
+
 
 
     // Check if the user is logged in 
-    if (req.user) {      
-      const userId =  req.user.user_id; // Assuming you have the user_id in the decoded JWT payload    
-     
+    if (req.user) {
+      const userId = req.user.user_id; // Assuming you have the user_id in the decoded JWT payload    
+
       const user = await userSchema.findById(userId);
 
       if (user.favorite_properties !== null) {
@@ -112,7 +151,7 @@ exports.getProperties = async (req, res) => {
           };
         });
 
-        const propertiesCount = await PropertySchema.countDocuments(filter);
+        const propertiesCount = await PropertySchema.countDocuments();
 
         res.json({
           status: true,
@@ -123,7 +162,7 @@ exports.getProperties = async (req, res) => {
       }
     } else {
       // If the user is not logged in, return properties without the 'isFavorite' field
-      const propertiesCount = await PropertySchema.countDocuments(filter);
+      const propertiesCount = await PropertySchema.countDocuments();
 
       res.json({
         status: true,
@@ -198,7 +237,8 @@ exports.createProperty = async (req, res) => {
     posted_on,
     createBy,
     propertyOwnerType,
-    propertyOwnerContactNumber
+    propertyOwnerContactNumber,
+    amenities
   } = req.body;
 
   var images = [];
@@ -269,7 +309,8 @@ exports.createProperty = async (req, res) => {
       createPropertyId,
       createBy,
       propertyOwnerType,
-      propertyOwnerContactNumber
+      propertyOwnerContactNumber,
+      amenities
     });
     await property.save();
     res.status(201).json({
@@ -314,7 +355,8 @@ exports.updateProperty = async (req, res) => {
     property_status,
     posted_on,
     propertyOwnerContactNumber,
-    propertyOwnerType
+    propertyOwnerType,
+    amenities
   } = req.body;
 
   var images = [];
@@ -370,7 +412,8 @@ exports.updateProperty = async (req, res) => {
       property_status,
       posted_on,
       propertyOwnerContactNumber,
-      propertyOwnerType
+      propertyOwnerType,
+      amenities
     };
 
     // Add images and floor_plan_images only if they are provided

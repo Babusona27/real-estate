@@ -107,6 +107,7 @@ const PropertySchema = new mongoose.Schema({
   propertyOwnerContactNumber: {
     type: String,
   },
+  amenities: [String],
 });
 
 module.exports = mongoose.model("Property", PropertySchema);
