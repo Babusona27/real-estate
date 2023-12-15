@@ -146,7 +146,8 @@ exports.getProperties = async (req, res) => {
         const propertiesWithFavorites = properties.map(property => {
           return {
             ...property.toObject(),
-            isFavorite: property._id && favoritePropertyIds.includes(property._id.toString())
+            isFavorite: property._id && favoritePropertyIds.includes(property._id.toString()),
+            reviews_avg: property.reviews.length > 0 ? property.reviews.reduce((acc, curr) => acc + curr.rating, 0) / property.reviews.length : 0
           };
         });
 
@@ -162,11 +163,18 @@ exports.getProperties = async (req, res) => {
     } else {
       // If the user is not logged in, return properties without the 'isFavorite' field
       const propertiesCount = await PropertySchema.countDocuments();
+      //reviews avg
+      const propertiesWithReviews = properties.map(property => {
+        return {
+          ...property.toObject(),
+          reviews_avg: property.reviews.length > 0 ? property.reviews.reduce((acc, curr) => acc + curr.rating, 0) / property.reviews.length : 0
+        };
+      });
 
       res.json({
         status: true,
         message: "Properties fetched successfully",
-        data: properties,
+        data: propertiesWithReviews,
         propertiesCount,
       });
     }
@@ -237,7 +245,8 @@ exports.createProperty = async (req, res) => {
     createBy,
     propertyOwnerType,
     propertyOwnerContactNumber,
-    amenities
+    amenities,
+    mapUrl
   } = req.body;
 
   var images = [];
@@ -309,7 +318,8 @@ exports.createProperty = async (req, res) => {
       createBy,
       propertyOwnerType,
       propertyOwnerContactNumber,
-      amenities
+      amenities,
+      mapUrl
     });
     await property.save();
     res.status(201).json({
@@ -355,7 +365,8 @@ exports.updateProperty = async (req, res) => {
     posted_on,
     propertyOwnerContactNumber,
     propertyOwnerType,
-    amenities
+    amenities,
+    mapUrl
   } = req.body;
 
   var images = [];
@@ -412,7 +423,8 @@ exports.updateProperty = async (req, res) => {
       posted_on,
       propertyOwnerContactNumber,
       propertyOwnerType,
-      amenities
+      amenities,
+      mapUrl
     };
 
     // Add images and floor_plan_images only if they are provided
@@ -559,27 +571,35 @@ exports.reviewSubmit = async (req, res) => {
         .status(404)
         .json({ status: false, message: "Property not found" });
     }
+    // Check if the user has already submitted a review
+    const reviewIndex = property.reviews.findIndex(
+      (review) => review.user_id.toString() === user_id
+    );
+    if (reviewIndex !== -1) {
+      return res
+        .status(200)
+        .json({ status: false, message: "Review already submitted" });
+    } else {
+      const newReview = {
+        rating,
+        review,
+        user_name,
+        user_profile_image,
+        user_id,
+      };
 
-    // Create a new review
-    const newReview = {
-      rating,
-      review,
-      user_name,
-      user_profile_image,
-      user_id,
-    };
+      // Add the review to the property's reviews array
+      property.reviews.push(newReview);
 
-    // Add the review to the property's reviews array
-    property.reviews.push(newReview);
+      // Save the property with the new review
+      await property.save();
 
-    // Save the property with the new review
-    await property.save();
-
-    res.status(201).json({
-      status: true,
-      message: "Review submitted successfully",
-      data: newReview,
-    });
+      res.status(201).json({
+        status: true,
+        message: "Review submitted successfully",
+        data: newReview,
+      });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: false, message: "Internal server error" });

@@ -108,6 +108,9 @@ const PropertySchema = new mongoose.Schema({
     type: String,
   },
   amenities: [String],
+  mapUrl: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Property", PropertySchema);
