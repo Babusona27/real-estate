@@ -29,4 +29,6 @@ export const POST_ADD_FAVORITE_API = BASE_URL+'/addToFavorite';
 export const POST_ADD_PROPERTY_API = BASE_URL+'/createproperty';
 export const GET_FAVORITE_PROPERTY_API = BASE_URL+'/myFavorites';
 export const DELETE_FAVORITE_PROPERTY_API = BASE_URL+'/deleteFavorite';
+export const GET_ALL_CITIES = BASE_URL+'/city';
+export const GET_ALL_AMENITIES = BASE_URL+'/amenities';
 

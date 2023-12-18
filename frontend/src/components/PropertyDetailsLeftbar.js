@@ -31,7 +31,7 @@ const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const userData = useSelector((state) => state.UserReducer.value);
 
-  console.log('propertyDetails', propertyDetails);
+  console.log('userData', userData);
   // add review popup box 
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
@@ -49,8 +49,35 @@ const PropertyDetailsLeftbar = () => {
     setName('');
     setComment('');
   }
+  const [formData, setFormData] = useState({
+    rating: "",
+    review: "",
+    user_id: userData.userId,
+    user_name: "",
+  });
+  const [errors, setErrors] = useState({
+    rating: "",
+    review: "",
+    user_id: "",
+    user_name: ""
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    // Reset the corresponding validation error when the user types
+    setErrors({ ...errors, [name]: "" });
+  };
 
-  const handleAddReview = async () => {
+  const handleAddReview = async (e) => {
+  //   e.preventDefault();
+  //   let isValid = true;
+  //   const newErrors = {
+  //     rating: "",
+    }
+
+  
+
+  // const handleAddReview = async () => {
     // const formData = JSON.stringify({
     //   rating: rating,
     //   review: comment,
@@ -67,7 +94,7 @@ const PropertyDetailsLeftbar = () => {
     //   })
     // // Close the dialog
     // handleClose();
-  };
+  // };
   // const getReviewDetails = async () => {
   //   console.log('propertyDetails.slug========>', GET_REVIEW_DETAILS + propertyDetails.slug);
   //   await axios
@@ -106,7 +133,7 @@ const PropertyDetailsLeftbar = () => {
     }
   };
   useEffect(() => {
-    // getReviewDetails()
+    getReviewDetails()
   }, []);
 
   // popup massage
@@ -640,7 +667,7 @@ const PropertyDetailsLeftbar = () => {
           Map Location
         </Typography>
         <Box className="map_box" component={"div"}>
-          <img height={"100%"} width={"100%"} src={process.env.PUBLIC_URL+"/assets/images/map.jpeg"} />        
+          <img height={"100%"} width={"100%"} src={process.env.PUBLIC_URL + "/assets/images/map.jpeg"} />
         </Box>
       </Box>
       <Box
@@ -933,8 +960,8 @@ const PropertyDetailsLeftbar = () => {
               <Box>
                 <Rating
                   name="add-review-rating"
-                  value={rating}
-                  onChange={(event, newValue) => setRating(newValue)}
+                  value={formData.rating}
+                  onChange={handleInputChange}
                 />
               </Box>
               <TextField
@@ -943,8 +970,8 @@ const PropertyDetailsLeftbar = () => {
                 required
                 label="Enter your name"
                 variant="outlined"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                value={formData.user_name}
+                onChange={handleInputChange}
               />
               <TextField
                 fullwidth="true"
@@ -954,17 +981,17 @@ const PropertyDetailsLeftbar = () => {
                 multiline
                 rows={4}
                 variant="outlined"
-                value={comment}
-                onChange={(event) => setComment(event.target.value)}
+                value={formData.review}
+                onChange={handleInputChange}
               />
             </Box>
           </DialogContent>
           <DialogActions
             sx={{
               padding: "0px 20px 20px 20px",
-              display:"flex",
-              justifyContent:"space-between",
-              alignItems:"center"
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center"
             }}>
             <Button
               className="customBtnStyle new_btn"
@@ -1080,9 +1107,9 @@ const PropertyDetailsLeftbar = () => {
           <DialogActions
             sx={{
               padding: "0px 20px 20px 20px",
-              display:"flex",
-              justifyContent:"space-between",
-              alignItems:"center"
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center"
             }}
           >
             <Button

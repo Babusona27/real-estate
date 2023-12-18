@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    value: null
+    value: null,
+    count: 0
     };
 export const PropertyListReducer = createSlice({
     name: "PropertyList",
@@ -9,6 +10,9 @@ export const PropertyListReducer = createSlice({
     reducers: {
         setPropertyList: (state, action) => {
             state.value = action.payload;
+        },
+        setPropertyCount: (state, action) => {
+            state.count = action.payload;
         },
             // update isFavorite property of property
         updatePropertyList: (state, action) => {
@@ -23,5 +27,5 @@ export const PropertyListReducer = createSlice({
 
     }
 });
-export const { setPropertyList,updatePropertyList } = PropertyListReducer.actions;
+export const { setPropertyList,updatePropertyList,setPropertyCount } = PropertyListReducer.actions;
 export default PropertyListReducer.reducer;

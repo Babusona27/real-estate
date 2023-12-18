@@ -33,7 +33,7 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { setPropertyList } from "../redux/reducers/PropertyListReducer";
-import { GET_PROPERTIES_API, IMAGE_BASE_URL} from "../common/urls";
+import { GET_PROPERTIES_API, GET_PROPERTIES_WITHOUT_AUTH_API, IMAGE_BASE_URL } from "../common/urls";
 import axios from "axios";
 
 // const TabPanel = ({ children, value, index }) => (
@@ -64,7 +64,7 @@ const newSlider = {
 
 const Home = () => {
   const propertyList = useSelector((state) => state.PropertyListReducer.value);
-  // const userData = useSelector(state => state.UserReducer.value);
+  const userData = useSelector(state => state.UserReducer.value);
   // console.log("propertyList", propertyList);
   const dispatch = useDispatch();
   const [propertyType, setPropertyType] = React.useState("");
@@ -86,12 +86,34 @@ const Home = () => {
   };
   useEffect(() => {
     /* get properties  */
+    // const getProperties = async () => {
+    //   await axios
+    //     .get(GET_PROPERTIES_API)
+    //     .then((res) => {
+    //       if (res.data.status) {
+    //         // console.log(res.data.data);
+    //         dispatch(setPropertyList(res.data.data));
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // };
     const getProperties = async () => {
       await axios
-        .get(GET_PROPERTIES_API)
+        .get(
+          userData
+            ? GET_PROPERTIES_API
+            : GET_PROPERTIES_WITHOUT_AUTH_API + "?limit=5&offset=0",
+          {
+            headers: {
+              Authorization: userData && userData.token,
+            },
+          }
+        )
         .then((res) => {
           if (res.data.status) {
-            // console.log(res.data.data);
+            // console.log("add property list", res.data.data);
             dispatch(setPropertyList(res.data.data));
           }
         })
@@ -100,7 +122,7 @@ const Home = () => {
         });
     };
     /* get properties  */
-   //getProperties();
+    getProperties();
   }, []);
 
   return (
@@ -413,7 +435,7 @@ const Home = () => {
                               <CardMedia
                                 component="img"
                                 height="200"
-                                image={item.images.length > 0 ? IMAGE_BASE_URL+item.images[0] : "./assets/images/R1.jpg"}
+                                image={item.images.length > 0 ? IMAGE_BASE_URL + item.images[0] : "./assets/images/R1.jpg"}
                                 alt="green iguana"
                                 sx={{
                                   height: "250px",
@@ -656,7 +678,7 @@ const Home = () => {
                                   <UserBox>
                                     <Avatar
                                       sx={{ width: "36px", height: "36px" }}
-                                      src={process.env.PUBLIC_URL+"/assets/images/avatar.png"}
+                                      src={process.env.PUBLIC_URL + "/assets/images/avatar.png"}
                                     />
                                     <Typography
                                       sx={{
@@ -673,7 +695,7 @@ const Home = () => {
                                       }}
                                       variant="span"
                                     >
-                                   Suraj
+                                      Suraj
                                     </Typography>
                                   </UserBox>
                                   <Button
@@ -701,10 +723,10 @@ const Home = () => {
                                       },
                                     }}
                                     variant="contained"
-                                  onClick={()=>{
-                                    window.location.href="/ProductDetails/"+item.slug
-                                  
-                                  }}>
+                                    onClick={() => {
+                                      window.location.href = "/ProductDetails/" + item.slug
+
+                                    }}>
                                     Details
                                   </Button>
                                 </FlexBox>
@@ -820,7 +842,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src={process.env.PUBLIC_URL+"/assets/images/R6.jpg"}
+                src={process.env.PUBLIC_URL + "/assets/images/R6.jpg"}
               />
               <Box
                 sx={{
@@ -902,7 +924,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src={process.env.PUBLIC_URL+"/assets/images/R4.jpg"}
+                src={process.env.PUBLIC_URL + "/assets/images/R4.jpg"}
               />
               <Box
                 sx={{
@@ -1003,7 +1025,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src={process.env.PUBLIC_URL+"/assets/images/R9.jpg"}
+                src={process.env.PUBLIC_URL + "/assets/images/R9.jpg"}
               />
               <Box
                 sx={{
@@ -1085,7 +1107,7 @@ const Home = () => {
                   objectFit: "cover",
                 }}
                 component={"img"}
-                src={process.env.PUBLIC_URL+"/assets/images/R8.jpg"}
+                src={process.env.PUBLIC_URL + "/assets/images/R8.jpg"}
               />
               <Box
                 sx={{
@@ -1237,7 +1259,7 @@ const Home = () => {
                 <Box
                   className={"img_color"}
                   component={"img"}
-                  src={process.env.PUBLIC_URL+"/assets/images/trust.png"}
+                  src={process.env.PUBLIC_URL + "/assets/images/trust.png"}
                 />
               </Box>
               <Box className={"box_details"}>
@@ -1302,7 +1324,7 @@ const Home = () => {
                 <Box
                   className={"img_color"}
                   component={"img"}
-                  src={process.env.PUBLIC_URL+"/assets/images/home.png"}
+                  src={process.env.PUBLIC_URL + "/assets/images/home.png"}
                 />
               </Box>
               <Box className={"box_details"}>
@@ -1367,7 +1389,7 @@ const Home = () => {
                 <Box
                   className={"img_color"}
                   component={"img"}
-                  src={process.env.PUBLIC_URL+"/assets/images/budget.png"}
+                  src={process.env.PUBLIC_URL + "/assets/images/budget.png"}
                 />
               </Box>
               <Box className={"box_details"}>
@@ -1482,7 +1504,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src={process.env.PUBLIC_URL+"/assets/images/logos/logo1.png"}
+              src={process.env.PUBLIC_URL + "/assets/images/logos/logo1.png"}
             />
             <Box
               sx={{
@@ -1504,7 +1526,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src={process.env.PUBLIC_URL+"/assets/images/logos/logo2.png"}
+              src={process.env.PUBLIC_URL + "/assets/images/logos/logo2.png"}
             />
             <Box
               sx={{
@@ -1526,7 +1548,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src={process.env.PUBLIC_URL+"/assets/images/logos/logo5.png"}
+              src={process.env.PUBLIC_URL + "/assets/images/logos/logo5.png"}
             />
             <Box
               sx={{
@@ -1548,7 +1570,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src={process.env.PUBLIC_URL+"/assets/images/logos/logo2.png"}
+              src={process.env.PUBLIC_URL + "/assets/images/logos/logo2.png"}
             />
             <Box
               sx={{
@@ -1570,7 +1592,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src={process.env.PUBLIC_URL+"/assets/images/logos/logo1.png"}
+              src={process.env.PUBLIC_URL + "/assets/images/logos/logo1.png"}
             />
             <Box
               sx={{
@@ -1592,7 +1614,7 @@ const Home = () => {
                 textAlign: "center",
               }}
               component={"img"}
-              src={process.env.PUBLIC_URL+"/assets/images/logos/logo5.png"}
+              src={process.env.PUBLIC_URL + "/assets/images/logos/logo5.png"}
             />
           </Box>
         </Container>

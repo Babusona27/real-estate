@@ -22,7 +22,11 @@ import { render } from "react-dom";
 
 const Property = () => {
   const propertyList = useSelector((state) => state.PropertyListReducer.value);
-  // console.log("propertyList", propertyList);
+  const propertyCount = useSelector((state) => state.PropertyListReducer.count);
+  const [p, setP] = useState(1);
+  const [perpage, setPerpage] = useState(5);
+
+  console.log("propertyCount", propertyCount);
   const userData = useSelector((state) => state.UserReducer.value);
   //define handleLogout function
   const dispatch = useDispatch();
@@ -37,7 +41,7 @@ const Property = () => {
     setOption(event.target.value);
   };
   // short by filter
-  
+
   return (
     <Box flex={4} p={{ xs: "0px", md: "15px" }} m={0}>
       <HeaderArea sx={{
@@ -50,7 +54,8 @@ const Property = () => {
           justifyContent: "space-between",
           alignItems: "center",
         }}>
-          <Typography variant="h6">Showing 1–10 of 222 results</Typography>
+
+          <Typography variant="h6">Showing {p}–{Math.round(propertyCount/perpage)} of {propertyCount} results</Typography>
           <Box sx={{
             display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
             justifyContent: "space-between",
