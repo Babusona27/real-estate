@@ -26,7 +26,7 @@ const Property = () => {
   const [p, setP] = useState(1);
   const [perpage, setPerpage] = useState(5);
 
-  console.log("propertyCount", propertyCount);
+  // console.log("propertyCount", propertyCount);
   const userData = useSelector((state) => state.UserReducer.value);
   //define handleLogout function
   const dispatch = useDispatch();

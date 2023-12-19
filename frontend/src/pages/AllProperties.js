@@ -20,18 +20,23 @@ import { Link } from "react-router-dom";
 import theme from "../Theme";
 import { useLocation } from "react-router-dom";
 import queryString from 'query-string';
+import { setSearch, removeSearch } from "../redux/reducers/SearchReducer";
 
 const AllProperties = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  console.log('location', location);
   const userData = useSelector((state) => state.UserReducer.value);
+  const paramsArray = useSelector((state) => state.SearchReducer.value);
+  // console.log('paramsArray', paramsArray);
   const params = queryString.parse(location.search);
   // console.log('Useparams', params);
   const [pageCount, setPageCount] = useState(1);
   const [perPage, setPerPage] = useState(5);
-  const[page, setPage] = useState(0);
+  const [page, setPage] = useState(0);
   const handlePageChange = (event, value) => {
-    setPage(value-1);
+
+    setPage(value - 1);
   }
   useEffect(() => {
     /* get properties  */
@@ -39,8 +44,25 @@ const AllProperties = () => {
 
       const apiData = {
         limit: perPage,
-        offset: page
+        offset: page * perPage,
       };
+      if (location.search.includes('limit') && location.search.includes('offset')) {
+        location.pathname = location.pathname.replace(/limit=\d+/g, 'limit=' + perPage);
+        location.pathname = location.pathname.replace(/offset=\d+/g, 'offset=' + page * perPage);
+      }else if (!location.search.includes('limit') && location.search.includes('offset')) {
+        location.pathname = location.pathname + '&limit=' + perPage + '&offset=' + page * perPage;
+      }else{
+        location.pathname = location.pathname + '?limit=' + perPage + '&offset=' + page * perPage;
+      }
+      //
+      console.log('location.pathname', location.pathname);
+
+      // if(params.limit){
+      //   apiData.limit = params.limit;
+      // }
+      // if(params.offset){
+      //   apiData.offset = params.offset;
+      // }
       if (params.propertyType) {
         apiData.type = params.propertyType;
       }
@@ -63,7 +85,7 @@ const AllProperties = () => {
         apiData.bath = params.bath;
       }
 
-      // console.log("params==>", apiData);
+      console.log("params==>", apiData);
       await axios
         .get(
           userData
@@ -80,7 +102,7 @@ const AllProperties = () => {
           if (res.data.status) {
             // console.log("add property list", res.data);
             dispatch(setPropertyList(res.data.data));
-             dispatch(setPropertyCount(res.data.propertiesCount));
+            dispatch(setPropertyCount(res.data.propertiesCount));
             setPageCount(res.data.propertiesCount);
           }
         })
@@ -133,7 +155,7 @@ const AllProperties = () => {
             <Property />
             {/* Single Property component  */}
           </Box>
-          <Pagination count={Math.round(pageCount/perPage)} color="primary" onChange={handlePageChange} />
+          <Pagination count={Math.round(pageCount / perPage)} color="primary" onChange={handlePageChange} />
         </Container>
 
       </Box>

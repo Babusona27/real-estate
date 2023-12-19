@@ -37,7 +37,7 @@ const PropertyLeftBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = queryString.parse(location.search);
-  console.log('params', params);
+  // console.log('params', params);
   const [propertyType, setProperty] = React.useState(params.propertyType || "");
   const [selectedCategory, setSelectedCategory] = React.useState(params.category || "");
   const [open, setOpen] = React.useState(false);
