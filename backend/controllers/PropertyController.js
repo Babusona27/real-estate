@@ -158,6 +158,7 @@ exports.getProperties = async (req, res) => {
           message: "Properties fetched successfully",
           data: propertiesWithFavorites,
           propertiesCount,
+          total: properties.length
         });
       }
     } else {
@@ -176,6 +177,7 @@ exports.getProperties = async (req, res) => {
         message: "Properties fetched successfully",
         data: propertiesWithReviews,
         propertiesCount,
+        total: properties.length
       });
     }
   } catch (error) {
