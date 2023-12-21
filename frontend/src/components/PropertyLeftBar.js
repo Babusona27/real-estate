@@ -24,7 +24,7 @@ import LetestPosts from "./LetestPosts";
 import { useNavigate } from 'react-router-dom';
 import { GET_ALL_CATEGORY, GET_ALL_CITIES, GET_ALL_AMENITIES } from "../common/urls";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSearch, removeSearch } from "../redux/reducers/SearchReducer";
 import { useLocation } from "react-router-dom";
 import queryString from 'query-string';
@@ -64,7 +64,6 @@ const PropertyLeftBar = () => {
   };
   const handleCheckboxChange = (event) => {
     setCheckedAmenities({ ...checkedAmenities, [event.target.name]: event.target.checked });
-    // console.log('checkedAmenities', checkedAmenities);
   };
 
   const handleClose = () => {
@@ -121,14 +120,18 @@ const PropertyLeftBar = () => {
     if (range[1] !== 1000) {
       search_params = search_params + '&price_to=' + range[1];
     }
-    // if (checkedAmenities !== "") {
-    //   search_params = search_params + '&amenities=' + checkedAmenities;
-    // }
-    // console.log('search_params_property_left_bar', search_params);
+    if (checkedAmenities !== "") {
+      for (const key in checkedAmenities) {
+        if (checkedAmenities.hasOwnProperty(key)) {
+          search_params = search_params + `&${key}=${checkedAmenities[key]}`;
+        }
+      }
+    }
+    console.log('search_params_property_left_bar', search_params);
     navigate('/Properties?' + search_params);
 
   };
- 
+
 
 
   const resetFilter = () => {
@@ -149,11 +152,13 @@ const PropertyLeftBar = () => {
     // reset range slider
     setRange([0, 1000]);
     // resert checkbox
-    const newCheckedAmenities = {};
-    amenities.map((item, key) => {
-      newCheckedAmenities[item.title] = false;
-    })
-    setCheckedAmenities(newCheckedAmenities);
+    // const newCheckedAmenities = {};
+    // amenities.map((item, key) => {
+    //   newCheckedAmenities[item.title] = false;
+    // })
+
+    // setCheckedAmenities(newCheckedAmenities);
+
     // reset route
     navigate('/Properties');
 
@@ -208,7 +213,9 @@ const PropertyLeftBar = () => {
     getAmenities();
     getCities();
     getCategories();
-  }, [])
+    console.log('checkedAmenities', checkedAmenities);
+
+  }, [checkedAmenities])
 
   return (
     <Box flex={2} paddingLeft={{ xs: '0px', md: '15px' }} paddingRight={{ xs: '0px', md: '15px' }}>
@@ -239,7 +246,7 @@ const PropertyLeftBar = () => {
               label="Property Type"
               onChange={handlePropertyType}
             >
-            
+
               <MenuItem value={""}>Property Type</MenuItem>
               <MenuItem value={"sell"}>Sell</MenuItem>
               <MenuItem value={"rent"}>Rent</MenuItem>

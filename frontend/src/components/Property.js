@@ -20,7 +20,6 @@ const Property = () => {
   const propertyCount = useSelector((state) => state.PropertyListReducer.count);
   const [p, setP] = useState(1);
   const [perpage, setPerpage] = useState(5);
-  const [filteredPropertyList, setFilteredPropertyList] = useState([]);
 
   // console.log("propertyCount", propertyCount);
   const userData = useSelector((state) => state.UserReducer.value);
@@ -36,7 +35,6 @@ const Property = () => {
   const handleSortChange = (event) => {
     setOption(event.target.value);
   };
-  // short by filter
 
   return (
     <Box flex={4} p={{ xs: "0px", md: "15px" }} m={0}>
@@ -147,10 +145,6 @@ const Property = () => {
           propertyList.map((item, key) => (
             <PropertyPost propertyDetails={item} key={key} />
           ))}
-        {/* {filteredPropertyList &&
-          filteredPropertyList.map((item, key) => (
-            <PropertyPost propertyDetails={item} key={key} />
-          ))} */}
       </Post>
     </Box>
   );
