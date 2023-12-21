@@ -28,7 +28,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import theme from "../Theme";
-import { POST_ADD_PROPERTY_API, GET_ALL_CATEGORY, GET_ALL_COUNTRIES_API } from '../common/urls';
+import { POST_ADD_PROPERTY_API, GET_ALL_CATEGORY, GET_ALL_COUNTRIES_API, IMAGE_BASE_URL } from '../common/urls';
 import axios from 'axios';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -50,29 +50,16 @@ const AddNewProperty = () => {
     const navigate = useNavigate();
     const userData = useSelector(state => state.UserReducer.value);
     // console.log('userData', userData);
-    const [propertyName, setPropertyName] = useState("");
-    const [category, setCategory] = useState("");
-    const [propertyType, setPropertyType] = useState("");
-    const [country, setCountry] = useState("");
-    const [state, setState] = useState("");
-    const [city, setCity] = useState("");
-    const [bedroom, setBedroom] = useState("");
-    const [bathroom, setBathroom] = useState("");
-    const [squareFeet, setSquareFeet] = useState("");
-    const [price, setPrice] = useState("");
-    const [description, setDescription] = useState("");
-    const [parking, setParking] = useState(false);
+
+
     const [file, setFile] = useState(null);
+    const [floorImage, setFloorImage] = useState(null);
     const [isUploaded, setIsUploaded] = useState(false);
-    const [latitude, setLatitude] = useState("");
-    const [longitude, setLongitude] = useState("");
-
-    const [fileError, setFileError] = useState("");
-    const [successMsg, setSuccessMsg] = useState("");
-    const [errorMsg, setErrorMsg] = useState("");
-
+    const [isUploadedFloorImage, setIsUploadedFloorImage] = useState(false);
     const [categoryList, setCategoryList] = useState(false);
     const [countriesData, setCountriesData] = useState([]);
+    const [successMsg, setSuccessMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
     const _getCountry = async () => {
         await axios
@@ -80,7 +67,6 @@ const AddNewProperty = () => {
             .then((response) => {
                 if (response.data.status) {
                     // console.log("response-country->", response.data.data);
-                    // setCountry(response.data.data)
                     setCountriesData(response.data.data)
                 }
 
@@ -89,129 +75,7 @@ const AddNewProperty = () => {
                 console.log(err);
             });
     }
-    const countryChange = (event) => {
-        const selectedCountry = event.target.value;
-        setCountry(selectedCountry);
-        setState('');
-        setCity('');
-    };
-    const stateChange = (event) => {
-        const selectedState = event.target.value;
-        setState(selectedState);
-        setCity('');
-    };
-    const handleFileChange = (event) => {
-        const files = event.target.files[0];
-        setFile(files);
-        setIsUploaded(false)
-    };
-    // const handleUpload = () => {
-    //     // Implement your file upload logic here
-    //     if (file) {
-    //         console.log('Selected File:', file);
-    //         // You can use FormData, Axios, or any other method to upload the file to a server
-    //         setIsUploaded(true)
-    //     } else {
-    //         console.log('No file selected');
-    //     }
-    // };
-    // const _addYourProperty = async () => {
-    //     setIsUploaded(true)
-    //     const formData = JSON.stringify({
-    //         property_name: propertyName,
-    //         category: category,
-    //         type: propertyType,
-    //         country: country,
-    //         state: state,
-    //         city: city,
-    //         bedroom: bedroom,
-    //         bath: bathroom,
-    //         price: price,
-    //         description: description,
-    //         parking: parking,
-    //         sqft: squareFeet,
-    //         latitude: latitude,
-    //         longitude: longitude,
-    //         images_arr: file,
 
-    //     })
-    //     console.log("formData-->", formData);
-    //     await axios
-    //         .post(POST_ADD_PROPERTY_API, formData, {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 "Authorization": `${userData.data.token}`,
-    //             },
-    //         })
-    //         .then((response) => {
-    //             if (response.data.status) {
-    //                 console.log("response-->", response.data.data);
-    //                 setSuccessMsg(response.data.message);
-    //                 setErrorMsg("");
-    //                 navigate('/userProfile');
-    //             } else {
-    //                 setSuccessMsg("");
-    //                 setErrorMsg(response.data.message);
-    //             }
-
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }
-    const _addYourProperty = async () => {
-        setIsUploaded(true);
-
-        const formData = new FormData();
-        formData.append("property_name", propertyName);
-        formData.append("category", category);
-        formData.append("type", propertyType);
-        formData.append("country", country);
-        formData.append("state", state);
-        formData.append("city", city);
-        formData.append("bedroom", bedroom);
-        formData.append("bath", bathroom);
-        formData.append("price", price);
-        formData.append("description", description);
-        formData.append("parking", parking);
-        formData.append("sqft", squareFeet);
-        formData.append("latitude", latitude);
-        formData.append("longitude", longitude);
-
-        // Append each file to the form data
-        if (file) {
-            if (Array.isArray(file)) {
-                for (let i = 0; i < file.length; i++) {
-                    formData.append("images_arr", file[i]);
-                }
-            } else {
-                formData.append("images_arr", file);
-            }
-        }
-
-        console.log("formData-->", formData);
-
-        try {
-            const response = await axios.post(POST_ADD_PROPERTY_API, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `${userData.token}`,
-                },
-            });
-
-            if (response.data.status) {
-                console.log("response for property-->", response.data.data);
-                setSuccessMsg(response.data.message);
-                setErrorMsg("");
-                navigate('/userProfile');
-            } else {
-                setSuccessMsg("");
-                setErrorMsg(response.data.message);
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
     const [formData, setFormData] = useState({
         property_name: "",
         category: "",
@@ -228,6 +92,7 @@ const AddNewProperty = () => {
         latitude: "",
         longitude: "",
         images_arr: "",
+        floor_images: "",
     });
 
     const [errors, setErrors] = useState({
@@ -245,28 +110,62 @@ const AddNewProperty = () => {
         sqft: "",
         latitude: "",
         longitude: "",
-
+        images_arr: "",
+        floor_images: "",
     });
 
-    const handleInputChange = (e) => {
-        // for multiple image file upload and add to formData
-        if (e.target.name === "images_arr") {
-            const files = e.target.files;
-            setFile(files);
-            setIsUploaded(false)
-        }
+    // const handleInputChange = (e) => {
+    //     const { name, type } = e.target;
+    //     let value;
 
-        const { name, value } = e.target;
+    //     if (type === 'file') {
+    //         value = Array.from(e.target.files); // get all files
+    //         if (name === 'images_arr') {
+    //             setFile(value);
+    //             setIsUploaded(true);
+    //         } else if (name === 'floor_images') {
+    //             setFloorImage(value);
+    //             setIsUploadedFloorImage(true);
+    //         }
+    //     } else {
+    //         value = e.target.value;
+    //     }
+
+    //     setFormData({ ...formData, [name]: value });
+    //     // Reset the corresponding validation error when the user types
+    //     setErrors({ ...errors, [name]: "" });
+    //     console.log("formData-->", formData);
+    // };
+
+    const handleInputChange = (e) => {
+        const { name, type } = e.target;
+        let value;
+      
+        if (type === 'file') {
+          const files = Array.from(e.target.files); // get all files
+          value = files.map(file => IMAGE_BASE_URL + '/' + file.name); // concatenate IMAGE_BASE_URL with the file names
+      
+          if (name === 'images_arr') {
+            setFile(value);
+            setIsUploaded(true);
+          } else if (name === 'floor_images') {
+            setFloorImage(value);
+            setIsUploadedFloorImage(true);
+          }
+        } else {
+          value = e.target.value;
+        }
+      
         setFormData({ ...formData, [name]: value });
         // Reset the corresponding validation error when the user types
         setErrors({ ...errors, [name]: "" });
-        console.log("formData-->", formData);
-        
-    };
+        // console.log("formData-->", formData);
+      };
 
     const handleSubmit = () => {
         setIsUploaded(true);
-        // console.log("formData-->", formData);
+        setIsUploadedFloorImage(true);
+        console.log("formData-->", formData);
         let isValid = true;
         const newErrors = { ...errors };
         if (!formData.property_name.trim()) {
@@ -326,10 +225,15 @@ const AddNewProperty = () => {
             newErrors.longitude = "Longitude is required";
             isValid = false;
         }
-        // if (!file) {
-        //     setFileError("Please select an image to upload");
+        // if (!formData.images_arr.trim()) {
+        //     newErrors.images_arr = "Images is required";
         //     isValid = false;
         // }
+        // if (!formData.floor_images.trim()) {
+        //     newErrors.floor_images = "Floor Images is required";
+        //     isValid = false;
+        // }
+
         setErrors(newErrors);
         if (isValid) {
             axios
@@ -348,6 +252,7 @@ const AddNewProperty = () => {
                     } else {
                         setSuccessMsg("");
                         setErrorMsg(response.data.message);
+                        console.log("response-->", response.data.message);
                     }
 
                 })
@@ -356,8 +261,6 @@ const AddNewProperty = () => {
                 });
         }
     };
-
-
     useEffect(() => {
         // Get Category 
         const getCategories = async () => {
@@ -840,28 +743,6 @@ const AddNewProperty = () => {
                                             gap: "30px"
                                         }}
                                     />
-                                    {/* <Button component="label" variant="outlined" startIcon={<CloudUploadIcon />}
-                                        sx={{
-                                            width: {
-                                                xs: "100%",
-                                                sm: "100%",
-                                                md: "50%",
-                                                lg: "50%"
-                                            },
-                                            gap: {
-                                                xs: "25px",
-                                                sm: "25px",
-                                                md: "25px",
-                                                lg: "30px",
-                                            },
-                                            padding: "16.5px 14px",
-                                        }}
-                                        className="upload_outline"
-                                        onClick={handleUpload}
-                                    >
-                                        Upload file
-                                        <VisuallyHiddenInput type="file" multiple onChange={handleFileChange} />
-                                    </Button> */}
 
                                     <Button
                                         component="label"
@@ -892,12 +773,9 @@ const AddNewProperty = () => {
                                             <>
                                                 <CloudUploadIcon sx={{ marginRight: '10px' }} />
                                                 Upload file
-                                                <VisuallyHiddenInput type="file" multiple onChange={handleInputChange} />
+                                                <VisuallyHiddenInput type="file" name="images_arr" multiple onChange={handleInputChange} />
                                             </>
                                         )}
-                                        {/* <Button variant="contained" color="primary" onClick={handleUpload}>
-                                            Upload
-                                        </Button> */}
                                     </Button>
                                 </Box>
                                 <FormControl
@@ -941,7 +819,8 @@ const AddNewProperty = () => {
                                         defaultValue="female"
                                         // name="radio-buttons-group"
                                         name="parking"
-                                        value={formData.parking ? "Yes" : "No"}
+                                        // value={formData.parking ? "Yes" : "No"}
+                                        value={formData.parking}
                                         onChange={handleInputChange}
                                         row
                                         sx={{
@@ -959,6 +838,39 @@ const AddNewProperty = () => {
                                         <FormControlLabel value="No" control={<Radio />} label="No" className="radio_btn" />
                                     </RadioGroup>
                                 </FormControl>
+                                <Button
+                                    component="label"
+                                    variant="outlined"
+                                    sx={{
+                                        width: {
+                                            xs: '100%',
+                                            sm: '100%',
+                                            md: '50%',
+                                            lg: '50%',
+                                        },
+                                        gap: {
+                                            xs: '25px',
+                                            sm: '25px',
+                                            md: '25px',
+                                            lg: '30px',
+                                        },
+                                        padding: '16.5px 14px',
+                                    }}
+                                    className="upload_outline"
+                                >
+                                    {isUploadedFloorImage ? (
+                                        <>
+                                            <CloudDoneIcon sx={{ marginRight: '10px' }} />
+                                            Uploaded floor Image
+                                        </>
+                                    ) : (
+                                        <>
+                                            <CloudUploadIcon sx={{ marginRight: '10px' }} />
+                                            Upload floor Image file
+                                            <VisuallyHiddenInput type="file" name="floor_images" multiple onChange={handleInputChange} />
+                                        </>
+                                    )}
+                                </Button>
                                 <Box sx={{
                                     display: 'flex',
                                     justifyContent: "center"
@@ -995,52 +907,6 @@ const AddNewProperty = () => {
                                         }}
                                     >Submit</Button>
                                 </Box>
-                                {/* <Box
-                                    sx={{
-                                        display: {
-                                            xs: "grid",
-                                            sm: "grid",
-                                            md: "flex",
-                                            lg: "flex"
-                                        },
-                                        gap: "30px"
-
-                                    }}
-                                >
-                                    <TextField
-                                        fullWidth
-                                        id="outlined-basic"
-                                        required
-                                        label="Name"
-                                        variant="outlined"
-                                        sx={{
-                                            width: {
-                                                xs: "100%",
-                                                sm: "100%",
-                                                md: "50%",
-                                                lg: "50%"
-                                            },
-                                            gap: "30px"
-                                        }}
-                                    />
-                                    <TextField
-                                        fullWidth
-                                        id="outlined-basic"
-                                        required
-                                        label="Name"
-                                        variant="outlined"
-                                        sx={{
-                                            width: {
-                                                xs: "100%",
-                                                sm: "100%",
-                                                md: "50%",
-                                                lg: "50%"
-                                            },
-                                            gap: "30px"
-                                        }}
-                                    />
-
-                                </Box> */}
 
                             </Box>
                         </Box>
@@ -1048,6 +914,26 @@ const AddNewProperty = () => {
                 </Container>
             </Box>
             {/* Partner section  */}
+            {/* //show success message */}
+            {successMsg && (
+                <Box
+                    sx={{
+                        padding: "10px 0px",
+                        backgroundColor: theme.palette.primary.Green,
+                        textAlign: "center",
+                        color: theme.palette.primary.white,
+                    }}
+                >
+                    <Typography
+                        component={"p"}
+                        sx={{
+                            fontSize: "14px",
+                        }}
+                    >
+                        {successMsg}
+                    </Typography>
+                </Box>
+            )}
             <Box
                 className="partner_section"
                 component={"section"}
