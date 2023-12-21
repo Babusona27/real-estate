@@ -30,8 +30,7 @@ import axios from "axios";
 const PropertyDetailsLeftbar = () => {
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const userData = useSelector((state) => state.UserReducer.value);
-
-  console.log('propertyDetails', propertyDetails);
+  // console.log('propertyDetails', propertyDetails);
   // add review popup box 
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
@@ -45,49 +44,72 @@ const PropertyDetailsLeftbar = () => {
   const handleClose = () => {
     setOpen(false);
     // Reset the form fields
-    setRating(0);
-    setName('');
-    setComment('');
+    // setRating(0);
+    // setName('');
+    // setComment('');
   }
-
-  const handleAddReview = async () => {
-    // const formData = JSON.stringify({
-    //   rating: rating,
-    //   review: comment,
-    //   // user_name: name,
-    //   user_id: userData.data.userId,
-    // });
-    // PostApiFetch(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, userData.token)
-    //   .then(([status, response]) => {
-    //     // console.log('status', status);
-    //     // console.log('response', response);
-    //     if (status === 200) {
-    //       console.log('Review Added Successfully');
-    //     }
-    //   })
-    // // Close the dialog
-    // handleClose();
+  const [formData, setFormData] = useState({
+    rating: "",
+    review: "",
+    user_id: userData.userId,
+    user_name: "",
+  });
+  const [errors, setErrors] = useState({
+    rating: "",
+    review: "",
+    user_name: ""
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    // Reset the corresponding validation error when the user types
+    setErrors({ ...errors, [name]: "" });
   };
-  // const getReviewDetails = async () => {
-  //   console.log('propertyDetails.slug========>', GET_REVIEW_DETAILS + propertyDetails.slug);
-  //   await axios
-  //     .get(GET_REVIEW_DETAILS + propertyDetails.slug,{
-  //       headers: {
-  //         'Authorization': `${token}`
-  //       }
-  //     })
-  //     .then((response) => {
-  //       if (response.data.status) {
-  //         console.log('response_Review', response.data.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  const getReviewDetails = async () => {
-    if (propertyDetails) {
-      await axios
+
+  const handleAddReview = async (e) => {
+    e.preventDefault();
+    let isValid = true;
+    const newErrors = {
+      rating: "",
+      review: "",
+      user_id: "",
+      user_name: ""
+
+    };
+    console.log('formData', formData);
+    if (!formData.review) {
+      isValid = false;
+      newErrors.review = "Review is required.";
+    }
+    if (!formData.user_name) {
+      isValid = false;
+      newErrors.user_name = "User name is required.";
+    }
+    setErrors(newErrors);
+    if (isValid) {
+      axios
+        .post(POST_SUBMIT_REVIEW_API + propertyDetails.slug, formData, {
+          headers: {
+            'Authorization': `${userData.token}`
+          }
+        })
+        .then((response) => {
+          if (response.data.status) {
+            // console.log('response_Review', response.data.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // Close the dialog
+      handleClose();
+    }
+  };
+
+  const getReviewDetails = () => {
+    if (propertyDetails && propertyDetails.slug) {
+      axios
         .get(GET_REVIEW_DETAILS + propertyDetails.slug, {
           headers: {
             'Authorization': `${userData.token}`
@@ -96,18 +118,25 @@ const PropertyDetailsLeftbar = () => {
         .then((response) => {
           if (response.data.status) {
             console.log('response_Review', response.data.data);
+            setComment(response.data.data.reviews);
+            // response.data.data.reviews.map((item) => {
+            //   console.log('item', item);
+            // })
           }
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      console.log('propertyDetails is null');
+      console.log('propertyDetails is null or does not have a slug');
     }
   };
+
   useEffect(() => {
-    // getReviewDetails()
-  }, []);
+    if (propertyDetails && propertyDetails.slug) {
+      getReviewDetails();
+    }
+  }, [propertyDetails]);
 
   // popup massage
   const [active, setActive] = useState(false);
@@ -640,7 +669,7 @@ const PropertyDetailsLeftbar = () => {
           Map Location
         </Typography>
         <Box className="map_box" component={"div"}>
-          <img height={"100%"} width={"100%"} src={process.env.PUBLIC_URL+"/assets/images/map.jpeg"} />        
+          <img height={"100%"} width={"100%"} src={process.env.PUBLIC_URL + "/assets/images/map.jpeg"} />
         </Box>
       </Box>
       <Box
@@ -708,198 +737,81 @@ const PropertyDetailsLeftbar = () => {
             Add Review
           </Button>
         </Box>
-
+        {/* fetch reviews */}
+        {/* {comment && comment.reviews.map((item) => { */}
         <Box>
-          <Box
-            sx={{
-              display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexDirection: {
-                xs: "column",
-                sm: "column",
-                md: "row",
-                lg: "row",
-              },
-              gap: "30px",
-            }}
-            mb={1}
-          >
-            <Avatar
-              sx={{
-                height: "100px",
-                width: "100px",
-                objectFit: "cover",
-              }}
-              alt="suraj"
-              src="./assets/images/R6.jpg"
-            />
-            <Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Box>
-                  <Typography
-                    sx={{
-                      fontSize: "20px",
-                      color: "#212121",
-                      lineHeight: "22px",
-                      fontWeight: "600",
-                      marginBottom: "10px",
-                      fontFamily: theme.palette.primary.Roboto,
-                    }}
-                    variant="h6"
-                    component={"h3"}
-                  >
-                    Suraj Banerjee
-                  </Typography>
-                  <Rating
-                    sx={{
-                      fontSize: "18px",
-                    }}
-                    name="customer-rating"
-                    value={4}
-                    readOnly
-                  />
-                </Box>
-                <Typography
+          {comment && comment.map((item) => {
+            console.log('item', item);
+            return (
+              item.status == "active" ?
+                <Box
                   sx={{
-                    fontFamily: "'Roboto', sans-serif !important",
-                    backgroundColor: "#dceeea",
-                    color: theme.palette.primary.logoColor,
-                    padding: "8px 22px",
-                    fontSize: "14px",
-                    lineHeight: "18px",
-                    fontWeight: "500",
-                    borderRadius: "8px",
-                    border: "none",
-                    overflow: "hidden",
-                    position: "relative",
-                    boxShadow: "none",
-                    zIndex: "1",
-                    textTransform: "capitalize",
-                    "&:hover": {
-                      backgroundColor: theme.palette.primary.logoColor,
-                      color: theme.palette.primary.white,
-                      boxShadow: "none",
+                    display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexDirection: {
+                      xs: "column",
+                      sm: "column",
+                      md: "row",
+                      lg: "row",
                     },
+                    gap: "30px",
                   }}
-                  variant="h6"
-                  component={"h3"}
+                  mb={1}
                 >
-                  Sep 3, 2020
-                </Typography>
-              </Box>
-
-              <Typography variant="body1" mt={1}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Typography>
-            </Box>
-          </Box>
-
-          <Divider
-            sx={{
-              margin: "20px 0px",
-            }}
-          />
-        </Box>
-        <Box>
-          <Box
-            sx={{
-              display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexDirection: {
-                xs: "column",
-                sm: "column",
-                md: "row",
-                lg: "row",
-              },
-              gap: "30px",
-            }}
-            mb={1}
-          >
-            <Avatar
-              sx={{
-                height: "100px",
-                width: "100px",
-                objectFit: "cover",
-              }}
-              alt="suraj"
-              src="./assets/images/R6.jpg"
-            />
-            <Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Box>
-                  <Typography
+                  <Avatar
                     sx={{
-                      fontSize: "20px",
-                      color: "#212121",
-                      lineHeight: "22px",
-                      fontWeight: "600",
-                      marginBottom: "10px",
-                      fontFamily: theme.palette.primary.Roboto,
+                      height: "100px",
+                      width: "100px",
+                      objectFit: "cover",
                     }}
-                    variant="h6"
-                    component={"h3"}
-                  >
-                    Suraj Banerjee
-                  </Typography>
-                  <Rating
-                    sx={{
-                      fontSize: "18px",
-                    }}
-                    name="customer-rating"
-                    value={4}
-                    readOnly
+                    alt="suraj"
+                    src="./assets/images/R6.jpg"
+                  // src={IMAGE_BASE_URL + item.user_image}
                   />
-                </Box>
-                <Typography
-                  sx={{
-                    fontFamily: "'Roboto', sans-serif !important",
-                    backgroundColor: "#dceeea",
-                    color: theme.palette.primary.logoColor,
-                    padding: "8px 22px",
-                    fontSize: "14px",
-                    borderRadius: "8px",
-                    lineHeight: "18px",
-                    fontWeight: "500",
-                    border: "none",
-                    overflow: "hidden",
-                    position: "relative",
-                    boxShadow: "none",
-                    zIndex: "1",
-                    textTransform: "capitalize",
-                    "&:hover": {
-                      backgroundColor: theme.palette.primary.logoColor,
-                      color: theme.palette.primary.white,
-                      boxShadow: "none",
-                    },
-                  }}
-                  variant="h6"
-                  component={"h3"}
-                >
-                  Sep 3, 2020
-                </Typography>
-              </Box>
+                  <Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Box>
+                        <Typography
+                          sx={{
+                            fontSize: "20px",
+                            color: "#212121",
+                            lineHeight: "22px",
+                            fontWeight: "600",
+                            marginBottom: "10px",
+                            fontFamily: theme.palette.primary.Roboto,
+                          }}
+                          variant="h6"
+                          component={"h3"}
+                        >
+                          {item.user_name}
+                        </Typography>
+                        <Rating
+                          sx={{
+                            fontSize: "18px",
+                          }}
+                          name="customer-rating"
+                          value={item.rating}
+                          readOnly
+                        />
+                      </Box>
+                    </Box>
 
-              <Typography variant="body1" mt={1}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Typography>
-            </Box>
-          </Box>
+                    <Typography variant="body1" mt={1}>
+                      {item.review}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                : <></>
+            )
+          })}
 
           <Divider
             sx={{
@@ -932,9 +844,14 @@ const PropertyDetailsLeftbar = () => {
             >
               <Box>
                 <Rating
-                  name="add-review-rating"
-                  value={rating}
-                  onChange={(event, newValue) => setRating(newValue)}
+                  id="add-review-rating"
+                  name="rating"
+                  value={formData.rating}
+                  onChange={handleInputChange}
+                  onChangeActive={(event, newHover) => {
+                    setRating(newHover);
+                  }}
+
                 />
               </Box>
               <TextField
@@ -942,29 +859,35 @@ const PropertyDetailsLeftbar = () => {
                 id="outlined-adornment-name"
                 required
                 label="Enter your name"
+                name="user_name"
                 variant="outlined"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                value={formData.user_name}
+                onChange={handleInputChange}
+                error={Boolean(errors.user_name)}
+                helperText={errors.user_name}
               />
               <TextField
                 fullwidth="true"
                 id="outlined-adornment-name"
                 required
                 label="Type your message"
+                name="review"
                 multiline
                 rows={4}
                 variant="outlined"
-                value={comment}
-                onChange={(event) => setComment(event.target.value)}
+                value={formData.review}
+                onChange={handleInputChange}
+                error={Boolean(errors.review)}
+                helperText={errors.review}
               />
             </Box>
           </DialogContent>
           <DialogActions
             sx={{
               padding: "0px 20px 20px 20px",
-              display:"flex",
-              justifyContent:"space-between",
-              alignItems:"center"
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center"
             }}>
             <Button
               className="customBtnStyle new_btn"
@@ -1080,9 +1003,9 @@ const PropertyDetailsLeftbar = () => {
           <DialogActions
             sx={{
               padding: "0px 20px 20px 20px",
-              display:"flex",
-              justifyContent:"space-between",
-              alignItems:"center"
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center"
             }}
           >
             <Button
@@ -1145,7 +1068,7 @@ const PropertyDetailsLeftbar = () => {
         </Dialog>
       </Box>
     </Box>
-  );
-};
-
+  )
+}
 export default PropertyDetailsLeftbar;
+

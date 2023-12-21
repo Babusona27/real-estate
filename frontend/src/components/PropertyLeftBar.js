@@ -25,50 +25,75 @@ import Checkbox from "@mui/material/Checkbox";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import LetestPosts from "./LetestPosts";
 import { useNavigate } from 'react-router-dom';
-import { GET_ALL_CATEGORY } from "../common/urls";
+import { GET_ALL_CATEGORY, GET_ALL_CITIES, GET_ALL_AMENITIES } from "../common/urls";
 import axios from "axios";
-import { useSelector,useDispatch } from "react-redux";
-import { setSearch,removeSearch } from "../redux/reducers/SearchReducer";
+import { useSelector, useDispatch } from "react-redux";
+import { setSearch, removeSearch } from "../redux/reducers/SearchReducer";
+import { useLocation } from "react-router-dom";
+import queryString from 'query-string';
 
 const PropertyLeftBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [propertyType, setProperty] = React.useState("");
-  const [selectedCategory, setSelectedCategory] = React.useState("");
-  const [val2, setVal2] = React.useState("");
-  const [val3, setVal3] = React.useState("");
-  const [val4, setVal4] = React.useState("");
+  const location = useLocation();
+  const params = queryString.parse(location.search);
+  // console.log('params', params);
+  const [propertyType, setProperty] = React.useState(params.propertyType || "");
+  const [selectedCategory, setSelectedCategory] = React.useState(params.category || "");
   const [open, setOpen] = React.useState(false);
   const [categoryList, setCategoryList] = useState(false);
-
+  const [cityList, setCityList] = useState(false);
+  const [city, setCity] = useState(params.city || "");
+  const [bedroom, setBedroom] = useState(params.bedroom || "");
+  const [bath, setBath] = useState(params.bath || "");
+  const [amenities, setAmenities] = useState("");
+  const [checkedAmenities, setCheckedAmenities] = useState({});
   const paramsArray = useSelector((state) => state.SearchReducer.value) || [];
 
 
-
-  const handlePropertyType = (event) => {   
+  const handlePropertyType = (event) => {
     setProperty(event.target.value);
-    if(event.target.value != ""){          
+    if (event.target.value != "") {
       dispatch(setSearch({ key: 'propertyType', item: event.target.value }));
-    }else{
+    } else {
       dispatch(removeSearch({ keyToRemove: 'propertyType' }));
-    }          
+    }
   };
   const handleCategory = (event) => {
-    if(event.target.value != ""){
+    if (event.target.value != "") {
       dispatch(setSearch({ key: 'category', item: event.target.value }));
-    }else{
-    dispatch(removeSearch({ keyToRemove: 'category' }));
-    }   
+    } else {
+      dispatch(removeSearch({ keyToRemove: 'category' }));
+    }
     setSelectedCategory(event.target.value);
   };
   const handleChange3 = (event) => {
-    setVal2(event.target.value);
+    if (event.target.value != "") {
+      dispatch(setSearch({ key: 'city', item: event.target.value }));
+    } else {
+      dispatch(removeSearch({ keyToRemove: 'city' }));
+    }
+    setCity(event.target.value);
   };
   const handleChange4 = (event) => {
-    setVal3(event.target.value);
+    if (event.target.value != "") {
+      dispatch(setSearch({ key: 'bedroom', item: event.target.value }));
+    } else {
+      dispatch(removeSearch({ keyToRemove: 'bedroom' }));
+    }
+    setBedroom(event.target.value);
   };
   const handleChange5 = (event) => {
-    setVal4(event.target.value);
+    if (event.target.value != "") {
+      dispatch(setSearch({ key: 'bath', item: event.target.value }));
+    } else {
+      dispatch(removeSearch({ keyToRemove: 'bath' }));
+    }
+    setBath(event.target.value);
+  };
+  const handleCheckboxChange = (event) => {
+    setCheckedAmenities({ ...checkedAmenities, [event.target.name]: event.target.checked });
+    // console.log('checkedAmenities', checkedAmenities);
   };
 
   const handleClose = () => {
@@ -84,6 +109,23 @@ const PropertyLeftBar = () => {
 
   const handleChangeNew = (event, newValue) => {
     setRange(newValue);
+    if (range !== "") {
+      dispatch(
+        setSearch({
+          key: 'price_from',
+          item: range[0],
+        }),
+      );
+      dispatch(
+        setSearch({
+          key: 'price_to',
+          item: range[1],
+        }),
+      );
+    } else {
+      dispatch(removeSearch({ keyToRemove: 'price_from' }));
+      dispatch(removeSearch({ keyToRemove: 'price_to' }));
+    }
   };
   const changeRoute = () => {
     // Navigate to a new route
@@ -99,9 +141,38 @@ const PropertyLeftBar = () => {
     if (params.charAt(params.length - 1) == '&') {
       params = params.slice(0, -1);
     }
-     navigate('/Properties?'+params);
+    navigate('/Properties?' + params);
   };
- 
+
+  const resetFilter = () => {
+    setProperty("");
+    setSelectedCategory("");
+    setCity("");
+    setBedroom("");
+    setBath("");
+    setCheckedAmenities({});
+
+    dispatch(removeSearch({ keyToRemove: 'propertyType' }));
+    dispatch(removeSearch({ keyToRemove: 'category' }));
+    dispatch(removeSearch({ keyToRemove: 'city' }));
+    dispatch(removeSearch({ keyToRemove: 'bedroom' }));
+    dispatch(removeSearch({ keyToRemove: 'bath' }));
+    dispatch(removeSearch({ keyToRemove: 'price_from' }));
+    dispatch(removeSearch({ keyToRemove: 'price_to' }));
+    // reset range slider
+    setRange([0, 1000]);
+    // resert checkbox
+    const newCheckedAmenities = {};
+    amenities.map((item, key) => {
+      newCheckedAmenities[item.title] = false;
+    })
+    setCheckedAmenities(newCheckedAmenities);
+    // reset route
+    navigate('/Properties');
+
+  }
+
+
   useEffect(() => {
     // Get Category 
     const getCategories = async () => {
@@ -110,14 +181,45 @@ const PropertyLeftBar = () => {
         .then((response) => {
           if (response.data.status) {
             // console.log("response-->", response.data.data);
-            setCategoryList( response.data.data)
+            setCategoryList(response.data.data)
           }
 
         })
         .catch((err) => {
           console.log(err);
         });
-    }    
+    }
+    // Get Country
+    const getCities = async () => {
+      await axios
+        .get(GET_ALL_CITIES)
+        .then((response) => {
+          if (response.data.status) {
+            // console.log("response-->", response.data.data);
+            setCityList(response.data.data)
+          }
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    // Get Amenities
+    const getAmenities = async () => {
+      await axios
+        .get(GET_ALL_AMENITIES)
+        .then((response) => {
+          if (response.data.status) {
+            // console.log("responseAmenities-->", response.data.amenities);
+            setAmenities(response.data.amenities)
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    getAmenities();
+    getCities();
     getCategories();
   }, [])
 
@@ -154,7 +256,7 @@ const PropertyLeftBar = () => {
             variant="soft"
           />
         </Box> */}
-          {/* category type section */}
+        {/* category type section */}
         <Box className={'select_Box_new'} sx={{ marginBottom: "25px" }}>
           <FormControl fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
             <InputLabel id="demo-controlled-open-select-label">Property Type</InputLabel>
@@ -168,14 +270,11 @@ const PropertyLeftBar = () => {
               label="Property Type"
               onChange={handlePropertyType}
             >
-             {/* { category && category.map((item, key) => ( 
-              
-              <MenuItem value={item.type} key={item.type}>{capitalizeFirstLetter(item.type)}</MenuItem>
-              ))} */}
+            
               <MenuItem value={""}>Property Type</MenuItem>
               <MenuItem value={"sell"}>Sell</MenuItem>
               <MenuItem value={"rent"}>Rent</MenuItem>
-            
+
             </Select>
           </FormControl>
         </Box>
@@ -194,7 +293,7 @@ const PropertyLeftBar = () => {
               {categoryList && categoryList.map((item, key) => (
                 <MenuItem value={item.category_name} key={item.category_name} >{item.category_name}</MenuItem>
               ))}
-            
+
             </Select>
           </FormControl>
         </Box>
@@ -203,16 +302,13 @@ const PropertyLeftBar = () => {
             <InputLabel htmlFor="grouped-select">All Cities</InputLabel>
             <Select
               id="grouped-select"
-              value={val2}
+              value={city}
               label="All Cities"
               onChange={handleChange3}>
               <MenuItem value={"city1"}>All Cities</MenuItem>
-              <ListSubheader>Category 1</ListSubheader>
-              <MenuItem value={"city2"}>Option 1</MenuItem>
-              <MenuItem value={"city3"}>Option 2</MenuItem>
-              <ListSubheader>Category 2</ListSubheader>
-              <MenuItem value={"city4"}>Option 3</MenuItem>
-              <MenuItem value={"city5"}>Option 4</MenuItem>
+              {cityList && cityList.map((item, key) => (
+                <MenuItem value={item.city_name} key={item.city_name} >{item.city_name}</MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Box>
@@ -292,27 +388,20 @@ const PropertyLeftBar = () => {
             </AccordionSummary>
             <AccordionDetails sx={{ padding: "0px" }}>
               <FormGroup className="from_group_check">
-                <FormControlLabel control={<Checkbox />} label="TV Cable" />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Air Conditioning"
-                />
-                <FormControlLabel control={<Checkbox />} label="Barbeque" />
-                <FormControlLabel control={<Checkbox />} label="Gym" />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Swimming Pool"
-                />
-                <FormControlLabel control={<Checkbox />} label="Laundry" />
-                <FormControlLabel control={<Checkbox />} label="Microwave" />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label="Outdoor Shower"
-                />
-                <FormControlLabel control={<Checkbox />} label="Lawn" />
-                <FormControlLabel control={<Checkbox />} label="Refrigerator" />
-                <FormControlLabel control={<Checkbox />} label="Sauna" />
-                <FormControlLabel control={<Checkbox />} label="Washer" />
+                {amenities && amenities.map((item, key) => (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checkedAmenities[item.title] || false}
+                        onChange={handleCheckboxChange}
+                        name={item.title}
+                      />
+                    }
+                    label={item.title}
+                    key={item.title}
+                  />
+                ))
+                }
               </FormGroup>
             </AccordionDetails>
           </Accordion>
@@ -322,17 +411,17 @@ const PropertyLeftBar = () => {
             <InputLabel htmlFor="grouped-select">Bedroom</InputLabel>
             <Select
               id="grouped-select"
-              value={val3}
+              value={bedroom}
               label="Bedroom"
               onChange={handleChange4}>
-              <MenuItem value={"bed1"}> 1</MenuItem>
-              <MenuItem value={"bed2"}> 2</MenuItem>
-              <MenuItem value={"bed3"}> 3</MenuItem>
-              <MenuItem value={"bed4"}> 4</MenuItem>
-              <MenuItem value={"bed5"}> 5</MenuItem>
-              <MenuItem value={"bed6"}> 6</MenuItem>
-              <MenuItem value={"bed7"}> 7</MenuItem>
-              <MenuItem value={"bed8"}> 8</MenuItem>
+              <MenuItem value="1"> 1</MenuItem>
+              <MenuItem value={"2"}> 2</MenuItem>
+              <MenuItem value={"3"}> 3</MenuItem>
+              <MenuItem value={"4"}> 4</MenuItem>
+              <MenuItem value={"5"}> 5</MenuItem>
+              <MenuItem value={"6"}> 6</MenuItem>
+              <MenuItem value={"7"}> 7</MenuItem>
+              <MenuItem value={"8"}> 8</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -341,14 +430,14 @@ const PropertyLeftBar = () => {
             <InputLabel htmlFor="grouped-select">Bath</InputLabel>
             <Select
               id="grouped-select"
-              value={val4}
+              value={bath}
               label="Bath"
               onChange={handleChange5}
             >
-              <MenuItem value={"Bath1"}> 1</MenuItem>
-              <MenuItem value={"Bath2"}> 2</MenuItem>
-              <MenuItem value={"Bath3"}> 3</MenuItem>
-              <MenuItem value={"Bath4"}> 4</MenuItem>
+              <MenuItem value={"1"}> 1</MenuItem>
+              <MenuItem value={"2"}> 2</MenuItem>
+              <MenuItem value={"3"}> 3</MenuItem>
+              <MenuItem value={"4"}> 4</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -375,7 +464,8 @@ const PropertyLeftBar = () => {
               backgroundColor: theme.palette.primary.logoColor,
               color: theme.palette.primary.white,
             },
-          }}>
+          }}
+            onClick={resetFilter}>
             <AutorenewIcon />
             <Typography variant="span">Reset</Typography>
           </Button>

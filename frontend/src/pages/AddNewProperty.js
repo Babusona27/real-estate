@@ -49,7 +49,7 @@ const VisuallyHiddenInput = styled('input')({
 const AddNewProperty = () => {
     const navigate = useNavigate();
     const userData = useSelector(state => state.UserReducer.value);
-    console.log('userData', userData);
+    // console.log('userData', userData);
     const [propertyName, setPropertyName] = useState("");
     const [category, setCategory] = useState("");
     const [propertyType, setPropertyType] = useState("");
@@ -161,7 +161,7 @@ const AddNewProperty = () => {
     // }
     const _addYourProperty = async () => {
         setIsUploaded(true);
-      
+
         const formData = new FormData();
         formData.append("property_name", propertyName);
         formData.append("category", category);
@@ -177,42 +177,186 @@ const AddNewProperty = () => {
         formData.append("sqft", squareFeet);
         formData.append("latitude", latitude);
         formData.append("longitude", longitude);
-      
+
         // Append each file to the form data
         if (file) {
-          if (Array.isArray(file)) {
-            for (let i = 0; i < file.length; i++) {
-              formData.append("images_arr", file[i]);
+            if (Array.isArray(file)) {
+                for (let i = 0; i < file.length; i++) {
+                    formData.append("images_arr", file[i]);
+                }
+            } else {
+                formData.append("images_arr", file);
             }
-          } else {
-            formData.append("images_arr", file);
-          }
         }
-      
+
         console.log("formData-->", formData);
-      
+
         try {
-          const response = await axios.post(POST_ADD_PROPERTY_API, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `${userData.data.token}`,
-            },
-          });
-      
-          if (response.data.status) {
-            console.log("response-->", response.data.data);
-            setSuccessMsg(response.data.message);
-            setErrorMsg("");
-            navigate('/userProfile');
-          } else {
-            setSuccessMsg("");
-            setErrorMsg(response.data.message);
-          }
+            const response = await axios.post(POST_ADD_PROPERTY_API, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `${userData.token}`,
+                },
+            });
+
+            if (response.data.status) {
+                console.log("response for property-->", response.data.data);
+                setSuccessMsg(response.data.message);
+                setErrorMsg("");
+                navigate('/userProfile');
+            } else {
+                setSuccessMsg("");
+                setErrorMsg(response.data.message);
+            }
         } catch (err) {
-          console.error(err);
+            console.error(err);
         }
-      };
-      
+    };
+    const [formData, setFormData] = useState({
+        property_name: "",
+        category: "",
+        type: "",
+        country: "",
+        state: "",
+        city: "",
+        bedroom: "",
+        bath: "",
+        price: "",
+        description: "",
+        parking: "",
+        sqft: "",
+        latitude: "",
+        longitude: "",
+        images_arr: "",
+    });
+
+    const [errors, setErrors] = useState({
+        property_name: "",
+        category: "",
+        type: "",
+        country: "",
+        state: "",
+        city: "",
+        bedroom: "",
+        bath: "",
+        price: "",
+        description: "",
+        parking: "",
+        sqft: "",
+        latitude: "",
+        longitude: "",
+
+    });
+
+    const handleInputChange = (e) => {
+        // for multiple image file upload and add to formData
+        if (e.target.name === "images_arr") {
+            const files = e.target.files;
+            setFile(files);
+            setIsUploaded(false)
+        }
+
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        // Reset the corresponding validation error when the user types
+        setErrors({ ...errors, [name]: "" });
+        console.log("formData-->", formData);
+        
+    };
+
+    const handleSubmit = () => {
+        setIsUploaded(true);
+        // console.log("formData-->", formData);
+        let isValid = true;
+        const newErrors = { ...errors };
+        if (!formData.property_name.trim()) {
+            newErrors.property_name = "Property Name is required";
+            isValid = false;
+        }
+        if (!formData.category.trim()) {
+            newErrors.category = "Category is required";
+            isValid = false;
+        }
+        if (!formData.type.trim()) {
+            newErrors.type = "Property Type is required";
+            isValid = false;
+        }
+        if (!formData.country.trim()) {
+            newErrors.country = "Country is required";
+            isValid = false;
+        }
+        if (!formData.state.trim()) {
+            newErrors.state = "State is required";
+            isValid = false;
+        }
+
+        if (!formData.city.trim()) {
+            newErrors.city = "City is required";
+            isValid = false;
+        }
+        if (!formData.bedroom.trim()) {
+            newErrors.bedroom = "Bedroom is required";
+            isValid = false;
+        }
+        if (!formData.bath.trim()) {
+            newErrors.bath = "Bathroom is required";
+            isValid = false;
+        }
+        if (!formData.price.trim()) {
+            newErrors.price = "Price is required";
+            isValid = false;
+        }
+        if (!formData.description.trim()) {
+            newErrors.description = "Description is required";
+            isValid = false;
+        }
+        if (!formData.parking.trim()) {
+            newErrors.parking = "Parking is required";
+            isValid = false;
+        }
+        if (!formData.sqft.trim()) {
+            newErrors.sqft = "Square Feet is required";
+            isValid = false;
+        }
+        if (!formData.latitude.trim()) {
+            newErrors.latitude = "Latitude is required";
+            isValid = false;
+        }
+        if (!formData.longitude.trim()) {
+            newErrors.longitude = "Longitude is required";
+            isValid = false;
+        }
+        // if (!file) {
+        //     setFileError("Please select an image to upload");
+        //     isValid = false;
+        // }
+        setErrors(newErrors);
+        if (isValid) {
+            axios
+                .post(POST_ADD_PROPERTY_API, formData, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `${userData.token}`,
+                    },
+                })
+                .then((response) => {
+                    if (response.data.status) {
+                        console.log("response-->", response.data.data);
+                        setSuccessMsg(response.data.message);
+                        setErrorMsg("");
+                        navigate('/userProfile');
+                    } else {
+                        setSuccessMsg("");
+                        setErrorMsg(response.data.message);
+                    }
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
 
     useEffect(() => {
         // Get Category 
@@ -324,11 +468,12 @@ const AddNewProperty = () => {
                                     id="outlined-basic"
                                     required
                                     label="Property Name"
-                                    value={propertyName}
+                                    name="property_name"
+                                    value={formData.property_name}
                                     variant="outlined"
-                                    onChange={(event) => {
-                                        setPropertyName(event.target.value);
-                                    }}
+                                    onChange={handleInputChange}
+                                    error={Boolean(errors.property_name)}
+                                    helperText={errors.property_name}
                                 />
                                 <Box
                                     sx={{
@@ -357,20 +502,16 @@ const AddNewProperty = () => {
                                         <Select
                                             // labelId="demo-simple-select-label"
                                             // id="demo-simple-select"
-                                            value={category}
+                                            value={formData.category}
                                             label="Category"
+                                            name="category"
                                             // onChange={handleChange}   
-                                            onChange={(event) => {
-                                                setCategory(event.target.value);
-                                            }}
+                                            onChange={handleInputChange}
                                             variant="outlined"
                                         >
                                             {categoryList && categoryList.map((item, key) => (
                                                 <MenuItem value={item.category_name} key={item.category_name} >{item.category_name}</MenuItem>
                                             ))}
-                                            {/* <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem> */}
                                         </Select>
                                     </FormControl>
 
@@ -390,12 +531,11 @@ const AddNewProperty = () => {
                                         <Select
                                             // labelId="demo-simple-select-label"
                                             // id="demo-simple-select"
-                                            value={propertyType}
+                                            value={formData.type}
                                             label="Property Type"
+                                            name="type"
                                             variant="outlined"
-                                            onChange={(event) => {
-                                                setPropertyType(event.target.value);
-                                            }}
+                                            onChange={handleInputChange}
                                         >
                                             <MenuItem value="Sale">Sale</MenuItem>
                                             <MenuItem value="Rent">Rent</MenuItem>
@@ -430,13 +570,11 @@ const AddNewProperty = () => {
                                         <Select
 
                                             label="Country"
-                                            value={country}
-                                            onChange={countryChange}
+                                            value={formData.country}
+                                            name="country"
+                                            onChange={handleInputChange}
                                             variant="outlined"
                                         >
-                                            {/* <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem> */}
                                             {countriesData.map((countr) => (
                                                 <MenuItem key={countr._id} value={countr.country_name}>
                                                     {countr.country_name}
@@ -448,8 +586,9 @@ const AddNewProperty = () => {
                                         fullWidth
                                         id="outlined-basic"
                                         required
-                                        value={bedroom}
-                                        onChange={(event) => { setBedroom(event.target.value) }}
+                                        value={formData.bedroom}
+                                        name="bedroom"
+                                        onChange={handleInputChange}
                                         label="Bedroom"
                                         type="number"
                                         variant="outlined"
@@ -492,32 +631,29 @@ const AddNewProperty = () => {
                                     >
                                         <InputLabel id="demo-simple-select-label">State</InputLabel>
                                         <Select
-                                            // labelId="demo-simple-select-label"
-                                            // id="demo-simple-select"
-                                            value={state}
+                                            value={formData.state}
                                             label="State"
-                                            onChange={stateChange}
+                                            name="state"
+                                            onChange={handleInputChange}
                                             variant="outlined"
                                         >
-                                            {country &&
+                                            {formData.country &&
                                                 countriesData
-                                                    .find((c) => c.country_name === country)
+                                                    .find((c) => c.country_name === formData.country)
                                                     ?.states.map((state) => (
                                                         <MenuItem key={state._id} value={state.state_name}>
                                                             {state.state_name}
                                                         </MenuItem>
                                                     ))}
-                                            {/* <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem> */}
                                         </Select>
                                     </FormControl>
                                     <TextField
                                         fullWidth
                                         id="outlined-basic"
                                         required
-                                        value={price}
-                                        onChange={(event) => { setPrice(event.target.value) }}
+                                        value={formData.price}
+                                        name="price"
+                                        onChange={handleInputChange}
                                         label=" Price"
                                         type="number"
                                         variant="outlined"
@@ -560,27 +696,23 @@ const AddNewProperty = () => {
                                         <Select
                                             // labelId="demo-simple-select-label"
                                             // id="demo-simple-select"
-                                            value={city}
+                                            value={formData.city}
                                             label="City"
-                                            // onChange={handleChange}
-                                            onChange={(event) => {
-                                                setCity(event.target.value);
-                                            }}
+                                            name="city"
+
+                                            onChange={handleInputChange}
                                             variant="outlined"
                                         >
-                                            {country &&
-                                                state &&
+                                            {formData.country &&
+                                                formData.state &&
                                                 countriesData
-                                                    .find((c) => c.country_name === country)
-                                                    ?.states.find((s) => s.state_name === state)
+                                                    .find((c) => c.country_name === formData.country)
+                                                    ?.states.find((s) => s.state_name === formData.state)
                                                     ?.cities.map((city) => (
                                                         <MenuItem key={city._id} value={city.city_name}>
                                                             {city.city_name}
                                                         </MenuItem>
                                                     ))}
-                                            {/* <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem> */}
                                         </Select>
                                     </FormControl>
 
@@ -589,8 +721,9 @@ const AddNewProperty = () => {
                                         id="outlined-basic"
                                         required
                                         label="Bathroom"
-                                        value={bathroom}
-                                        onChange={(event) => { setBathroom(event.target.value) }}
+                                        name="bath"
+                                        value={formData.bath}
+                                        onChange={handleInputChange}
                                         type="number"
                                         variant="outlined"
                                         sx={{
@@ -623,8 +756,9 @@ const AddNewProperty = () => {
                                         id="outlined-basic"
                                         required
                                         label="Latitude"
-                                        value={latitude}
-                                        onChange={(event) => { setLatitude(event.target.value) }}
+                                        name="latitude"
+                                        value={formData.latitude}
+                                        onChange={handleInputChange}
                                         type="number"
                                         variant="outlined"
                                         sx={{
@@ -643,8 +777,9 @@ const AddNewProperty = () => {
                                         id="outlined-basic"
                                         required
                                         label="Longitude"
-                                        value={longitude}
-                                        onChange={(event) => { setLongitude(event.target.value) }}
+                                        name="longitude"
+                                        value={formData.longitude}
+                                        onChange={handleInputChange}
                                         type="number"
                                         variant="outlined"
                                         sx={{
@@ -667,9 +802,12 @@ const AddNewProperty = () => {
                                     required
                                     id="outlined-basic"
                                     label="Description"
-                                    value={description}
-                                    onChange={(event) => { setDescription(event.target.value) }}
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleInputChange}
                                     variant="outlined"
+                                    error={Boolean(errors.description)}
+                                    helperText={errors.description}
                                 />
                                 <Box
                                     sx={{
@@ -687,8 +825,9 @@ const AddNewProperty = () => {
                                         id="outlined-basic"
                                         required
                                         label="Square Feet"
-                                        value={squareFeet}
-                                        onChange={(event) => { setSquareFeet(event.target.value) }}
+                                        value={formData.sqft}
+                                        name="sqft"
+                                        onChange={handleInputChange}
                                         type="number"
                                         variant="outlined"
                                         sx={{
@@ -753,7 +892,7 @@ const AddNewProperty = () => {
                                             <>
                                                 <CloudUploadIcon sx={{ marginRight: '10px' }} />
                                                 Upload file
-                                                <VisuallyHiddenInput type="file" multiple onChange={handleFileChange} />
+                                                <VisuallyHiddenInput type="file" multiple onChange={handleInputChange} />
                                             </>
                                         )}
                                         {/* <Button variant="contained" color="primary" onClick={handleUpload}>
@@ -800,12 +939,10 @@ const AddNewProperty = () => {
                                         id="outlined-basic"
                                         aria-labelledby="demo-radio-buttons-group-label"
                                         defaultValue="female"
-                                        name="radio-buttons-group"
-                                        value={parking ? "Yes" : "No"}
-                                        onChange={(event) => {
-                                            // setParking(event.target.value);
-                                            setParking(event.target.value === "Yes");
-                                        }}
+                                        // name="radio-buttons-group"
+                                        name="parking"
+                                        value={formData.parking ? "Yes" : "No"}
+                                        onChange={handleInputChange}
                                         row
                                         sx={{
                                             gap:
@@ -827,7 +964,8 @@ const AddNewProperty = () => {
                                     justifyContent: "center"
                                 }}>
                                     <Button variant="contained" onClick={() => {
-                                        _addYourProperty();
+                                        // _addYourProperty();
+                                        handleSubmit();
                                     }}
                                         sx={{
                                             width: {
