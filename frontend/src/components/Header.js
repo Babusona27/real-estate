@@ -177,7 +177,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li className="menu-item">
-                      <Link to="/Properties" className="nav-link">
+                      <Link to="/properties" className="nav-link">
                         Properties
                       </Link>
                     </li>

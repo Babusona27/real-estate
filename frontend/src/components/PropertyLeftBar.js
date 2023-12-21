@@ -4,14 +4,11 @@ import {
   AccordionSummary,
   Box,
   Button,
-
   FormControl,
   FormControlLabel,
   FormGroup,
   IconButton,
-  Input,
   InputLabel,
-  ListSubheader,
   MenuItem,
   Select,
   Slider,
@@ -48,47 +45,21 @@ const PropertyLeftBar = () => {
   const [bath, setBath] = useState(params.bath || "");
   const [amenities, setAmenities] = useState("");
   const [checkedAmenities, setCheckedAmenities] = useState({});
-  const paramsArray = useSelector((state) => state.SearchReducer.value) || [];
 
 
   const handlePropertyType = (event) => {
     setProperty(event.target.value);
-    if (event.target.value != "") {
-      dispatch(setSearch({ key: 'propertyType', item: event.target.value }));
-    } else {
-      dispatch(removeSearch({ keyToRemove: 'propertyType' }));
-    }
   };
   const handleCategory = (event) => {
-    if (event.target.value != "") {
-      dispatch(setSearch({ key: 'category', item: event.target.value }));
-    } else {
-      dispatch(removeSearch({ keyToRemove: 'category' }));
-    }
     setSelectedCategory(event.target.value);
   };
   const handleChange3 = (event) => {
-    if (event.target.value != "") {
-      dispatch(setSearch({ key: 'city', item: event.target.value }));
-    } else {
-      dispatch(removeSearch({ keyToRemove: 'city' }));
-    }
     setCity(event.target.value);
   };
   const handleChange4 = (event) => {
-    if (event.target.value != "") {
-      dispatch(setSearch({ key: 'bedroom', item: event.target.value }));
-    } else {
-      dispatch(removeSearch({ keyToRemove: 'bedroom' }));
-    }
     setBedroom(event.target.value);
   };
   const handleChange5 = (event) => {
-    if (event.target.value != "") {
-      dispatch(setSearch({ key: 'bath', item: event.target.value }));
-    } else {
-      dispatch(removeSearch({ keyToRemove: 'bath' }));
-    }
     setBath(event.target.value);
   };
   const handleCheckboxChange = (event) => {
@@ -128,21 +99,37 @@ const PropertyLeftBar = () => {
     }
   };
   const changeRoute = () => {
-    // Navigate to a new route
-    // navigate('/new-route');
-
-    // Navigate to a route with query parameters
-    console.log('paramsArray', paramsArray);
-    let params = "";
-    paramsArray.map((item, key) => {
-      params += item.key + "=" + item.item + "&";
-    })
-    //remove last & if exist
-    if (params.charAt(params.length - 1) == '&') {
-      params = params.slice(0, -1);
+    let search_params = "";
+    if (propertyType !== "") {
+      search_params = search_params + 'propertyType=' + propertyType;
     }
-    navigate('/Properties?' + params);
+    if (selectedCategory !== "") {
+      search_params = search_params + '&category=' + selectedCategory;
+    }
+    if (city !== "") {
+      search_params = search_params + '&city=' + city;
+    }
+    if (bedroom !== "") {
+      search_params = search_params + '&bedroom=' + bedroom;
+    }
+    if (bath !== "") {
+      search_params = search_params + '&bath=' + bath;
+    }
+    if (range[0] !== 0) {
+      search_params = search_params + '&price_from=' + range[0];
+    }
+    if (range[1] !== 1000) {
+      search_params = search_params + '&price_to=' + range[1];
+    }
+    // if (checkedAmenities !== "") {
+    //   search_params = search_params + '&amenities=' + checkedAmenities;
+    // }
+    // console.log('search_params_property_left_bar', search_params);
+    navigate('/Properties?' + search_params);
+
   };
+ 
+
 
   const resetFilter = () => {
     setProperty("");
@@ -238,24 +225,6 @@ const PropertyLeftBar = () => {
         >
           Advanced Search
         </Typography>
-        {/* <Box marginBottom={"25px"}>
-          <Input
-            className="form_input"
-            fullwidth
-            size="lg"
-            sx={{
-              border: "1px solid #e7e7e7",
-              height: "50px",
-              paddingLeft: "15px",
-              color: theme.palette.primary.lightGrey,
-              fontSize: "15px",
-              fontWeight: "400",
-              borderRadius: "3px",
-            }}
-            placeholder="What are you looking for?"
-            variant="soft"
-          />
-        </Box> */}
         {/* category type section */}
         <Box className={'select_Box_new'} sx={{ marginBottom: "25px" }}>
           <FormControl fullWidth sx={{ color: theme.palette.primary.lightGrey }}>
