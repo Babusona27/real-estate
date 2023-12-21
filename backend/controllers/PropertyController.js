@@ -150,14 +150,19 @@ exports.getProperties = async (req, res) => {
             reviews_avg: property.reviews.length > 0 ? property.reviews.reduce((acc, curr) => acc + curr.rating, 0) / property.reviews.length : 0
           };
         });
+
+        const propertiesCount = await PropertySchema.countDocuments();
+
         res.json({
           status: true,
           message: "Properties fetched successfully",
           data: propertiesWithFavorites,
-          propertiesCount: propertiesWithFavorites.length,
+          propertiesCount,
         });
       }
     } else {
+      // If the user is not logged in, return properties without the 'isFavorite' field
+      const propertiesCount = await PropertySchema.countDocuments();
       //reviews avg
       const propertiesWithReviews = properties.map(property => {
         return {
@@ -170,7 +175,7 @@ exports.getProperties = async (req, res) => {
         status: true,
         message: "Properties fetched successfully",
         data: propertiesWithReviews,
-        propertiesCount: propertiesWithReviews.length,
+        propertiesCount,
       });
     }
   } catch (error) {
