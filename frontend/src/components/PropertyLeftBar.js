@@ -63,7 +63,9 @@ const PropertyLeftBar = () => {
     setBath(event.target.value);
   };
   const handleCheckboxChange = (event) => {
-    setCheckedAmenities({ ...checkedAmenities, [event.target.name]: event.target.checked });
+    const newCheckedAmenities = { ...checkedAmenities, [event.target.name]: event.target.checked };
+    setCheckedAmenities(newCheckedAmenities);
+    localStorage.setItem('checkedAmenities', JSON.stringify(newCheckedAmenities));
   };
 
   const handleClose = () => {
@@ -121,16 +123,21 @@ const PropertyLeftBar = () => {
       search_params = search_params + '&price_to=' + range[1];
     }
     if (checkedAmenities !== "") {
+      const amenities = [];
       for (const key in checkedAmenities) {
-        if (checkedAmenities.hasOwnProperty(key)) {
-          search_params = search_params + `&${key}=${checkedAmenities[key]}`;
+        if (checkedAmenities.hasOwnProperty(key) && checkedAmenities[key]) {
+          amenities.push(key);
         }
+      }
+      if (amenities.length > 0) {
+        search_params = search_params + '&amenities=' + amenities.join('%');
       }
     }
     console.log('search_params_property_left_bar', search_params);
     navigate('/Properties?' + search_params);
 
   };
+
 
 
 
@@ -213,7 +220,11 @@ const PropertyLeftBar = () => {
     getAmenities();
     getCities();
     getCategories();
-    console.log('checkedAmenities', checkedAmenities);
+    const storedCheckedAmenities = localStorage.getItem('checkedAmenities');
+    if (storedCheckedAmenities) {
+      setCheckedAmenities(JSON.parse(storedCheckedAmenities));
+    }
+    // console.log('checkedAmenities', checkedAmenities);
 
   }, [checkedAmenities])
 

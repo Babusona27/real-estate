@@ -9,8 +9,6 @@ import {
     InputLabel,
     MenuItem,
     Select,
-    Tab,
-    Tabs,
     TextField,
     Typography,
     Radio,
@@ -33,6 +31,7 @@ import axios from 'axios';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import FileBase64 from 'react-file-base64';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -87,14 +86,18 @@ const AddNewProperty = () => {
         bath: "",
         price: "",
         description: "",
-        parking: "",
+        parking: false,
         sqft: "",
         latitude: "",
         longitude: "",
         images_arr: "",
         floor_images: "",
+        seller:{
+            seller_id: userData.userId,
+            seller_name: userData.user_name,
+            user_profile_image: userData.user_image,
+        }
     });
-
     const [errors, setErrors] = useState({
         property_name: "",
         category: "",
@@ -106,7 +109,6 @@ const AddNewProperty = () => {
         bath: "",
         price: "",
         description: "",
-        parking: "",
         sqft: "",
         latitude: "",
         longitude: "",
@@ -137,35 +139,35 @@ const AddNewProperty = () => {
     //     console.log("formData-->", formData);
     // };
 
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormData({ ...formData, [name]: value });
+    //     // Reset the corresponding validation error when the user types
+    //     setErrors({ ...errors, [name]: "" });
+    // };
+
+
     const handleInputChange = (e) => {
-        const { name, type } = e.target;
-        let value;
-      
-        if (type === 'file') {
-          const files = Array.from(e.target.files); // get all files
-          value = files.map(file => IMAGE_BASE_URL + '/' + file.name); // concatenate IMAGE_BASE_URL with the file names
-      
-          if (name === 'images_arr') {
-            setFile(value);
-            setIsUploaded(true);
-          } else if (name === 'floor_images') {
-            setFloorImage(value);
-            setIsUploadedFloorImage(true);
-          }
+        const { name, value } = e.target;
+        let finalValue;
+
+        if (name === 'parking') {
+            finalValue = value === 'Yes' ? true : false;
         } else {
-          value = e.target.value;
+            finalValue = value;
         }
-      
-        setFormData({ ...formData, [name]: value });
+
+        setFormData(prevFormData => ({ ...prevFormData, [name]: finalValue }));
         // Reset the corresponding validation error when the user types
         setErrors({ ...errors, [name]: "" });
         // console.log("formData-->", formData);
-      };
+    };
+
 
     const handleSubmit = () => {
         setIsUploaded(true);
         setIsUploadedFloorImage(true);
-        console.log("formData-->", formData);
+        // console.log("formData-->", formData);
         let isValid = true;
         const newErrors = { ...errors };
         if (!formData.property_name.trim()) {
@@ -209,10 +211,10 @@ const AddNewProperty = () => {
             newErrors.description = "Description is required";
             isValid = false;
         }
-        if (!formData.parking.trim()) {
-            newErrors.parking = "Parking is required";
-            isValid = false;
-        }
+        // if (!formData.parking.trim()) {
+        //     newErrors.parking = "Parking is required";
+        //     isValid = false;
+        // }
         if (!formData.sqft.trim()) {
             newErrors.sqft = "Square Feet is required";
             isValid = false;
@@ -245,7 +247,7 @@ const AddNewProperty = () => {
                 })
                 .then((response) => {
                     if (response.data.status) {
-                        console.log("response-->", response.data.data);
+                        // console.log("response-->", response.data.data);
                         setSuccessMsg(response.data.message);
                         setErrorMsg("");
                         navigate('/userProfile');
@@ -440,8 +442,8 @@ const AddNewProperty = () => {
                                             variant="outlined"
                                             onChange={handleInputChange}
                                         >
-                                            <MenuItem value="Sale">Sale</MenuItem>
-                                            <MenuItem value="Rent">Rent</MenuItem>
+                                            <MenuItem value="sale">sale</MenuItem>
+                                            <MenuItem value="rent">rent</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Box>
@@ -764,18 +766,30 @@ const AddNewProperty = () => {
                                         }}
                                         className="upload_outline"
                                     >
-                                        {isUploaded ? (
-                                            <>
-                                                <CloudDoneIcon sx={{ marginRight: '10px' }} />
-                                                Uploaded
-                                            </>
-                                        ) : (
-                                            <>
-                                                <CloudUploadIcon sx={{ marginRight: '10px' }} />
-                                                Upload file
-                                                <VisuallyHiddenInput type="file" name="images_arr" multiple onChange={handleInputChange} />
-                                            </>
-                                        )}
+                                        {/* <FileBase64
+                                            type="file"
+                                            name="images_arr"
+                                            multiple={true}
+                                            // onDone={handleInputChange}
+                                            onDone={({ base64 }) => setFormData({ ...formData, images_arr: IMAGE_BASE_URL + base64 })}
+                                        /> */}
+                                        <FileBase64
+                                            type="file"
+                                            name="images_arr"
+                                            multiple={true}
+                                            onDone={(files) => {
+                                                const value = files.map(file => file.base64);
+                                                // console.log("value", value);
+                                                // convert array of base64 to file
+                                                // const files = value.map(
+                                                //     (base64, i) => convertBase64ToFile(base64, `image${i}`)
+                                                // );
+                                                // setFile(files);
+                                                // setIsUploaded(true);
+                                                // setFormData({ ...formData, images_arr: IMAGE_BASE_URL + value });
+                                                setFormData(prevFormData => ({ ...prevFormData, images_arr: value }));
+                                            }}
+                                        />
                                     </Button>
                                 </Box>
                                 <FormControl
@@ -812,7 +826,7 @@ const AddNewProperty = () => {
                                     }}
                                 >
                                     <FormLabel id="radio-buttons-group-label">Parking :</FormLabel>
-                                    <RadioGroup
+                                    {/* <RadioGroup
                                         variant="outlined"
                                         id="outlined-basic"
                                         aria-labelledby="demo-radio-buttons-group-label"
@@ -833,6 +847,17 @@ const AddNewProperty = () => {
                                                 xl: "30px",
                                             }
                                         }}
+                                    >
+                                        <FormControlLabel value="Yes" control={<Radio />} label="Yes" className="radio_btn" />
+                                        <FormControlLabel value="No" control={<Radio />} label="No" className="radio_btn" />
+                                    </RadioGroup> */}
+
+                                    <RadioGroup
+                                        
+                                        name="parking"
+                                        value={formData.parking ? 'Yes' : 'No'}
+                                        onChange={handleInputChange}
+                                    
                                     >
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" className="radio_btn" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" className="radio_btn" />
@@ -858,18 +883,24 @@ const AddNewProperty = () => {
                                     }}
                                     className="upload_outline"
                                 >
-                                    {isUploadedFloorImage ? (
-                                        <>
-                                            <CloudDoneIcon sx={{ marginRight: '10px' }} />
-                                            Uploaded floor Image
-                                        </>
-                                    ) : (
-                                        <>
-                                            <CloudUploadIcon sx={{ marginRight: '10px' }} />
-                                            Upload floor Image file
-                                            <VisuallyHiddenInput type="file" name="floor_images" multiple onChange={handleInputChange} />
-                                        </>
-                                    )}
+                                    {/* <FileBase64
+                                        type="file"
+                                        name="floor_images"
+                                        multiple={true}
+                                        // onDone={handleInputChange}
+                                        onDone={({ base64 }) => setFormData({ ...formData, floor_images: IMAGE_BASE_URL + base64 })}
+                                    /> */}
+                                     <FileBase64
+                                            type="file"
+                                            name="floor_images"
+                                            multiple={true}
+                                            onDone={(files) => {
+                                                const value = files.map(file => file.base64);
+                                                // console.log("value", value);
+                                               
+                                                setFormData(prevFormData => ({ ...prevFormData, floor_images: value }));
+                                            }}
+                                        />
                                 </Button>
                                 <Box sx={{
                                     display: 'flex',

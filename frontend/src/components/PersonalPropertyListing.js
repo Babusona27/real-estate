@@ -6,8 +6,9 @@ import SingleBedIcon from "@mui/icons-material/SingleBed";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import BathtubOutlinedIcon from "@mui/icons-material/BathtubOutlined";
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
-
-const PersonalPropertyListing = () => {
+import { IMAGE_BASE_URL } from "../common/urls";
+const PersonalPropertyListing = (property) => {
+  console.log("property", property);
   return (
     <Box
       sx={{
@@ -62,7 +63,12 @@ const PersonalPropertyListing = () => {
           component={"a"}
         >
           <Box
-            src={process.env.PUBLIC_URL + "/assets/images/R3.jpg"}
+            // src={process.env.PUBLIC_URL + "/assets/images/R3.jpg"}
+            // src={property && property.propertyDetails.images.map((item)=>
+            //   item.image_url? IMAGE_BASE_URL+item.image_url:process.env.PUBLIC_URL + "/assets/images/R3.jpg"
+            //   )}
+            src={property && property.propertyDetails.images? IMAGE_BASE_URL+property.propertyDetails.images[0]:process.env.PUBLIC_URL + "/assets/images/R3.jpg"}
+            alt="img"
             component={"img"}
             sx={{
               width: "100%",
@@ -98,7 +104,7 @@ const PersonalPropertyListing = () => {
               }}
               component={"h4"}
             >
-              FOR RENT
+              For {property && property.propertyDetails.type}
             </Typography>
             <Typography
               sx={{
@@ -110,7 +116,7 @@ const PersonalPropertyListing = () => {
               }}
               component={"h4"}
             >
-              $34,900/Month
+              ${property && property.propertyDetails.price}
             </Typography>
           </Box>
           <Box
@@ -136,7 +142,7 @@ const PersonalPropertyListing = () => {
               }}
               component={"a"}
             >
-              New Apartment Nice View
+              {property && property.propertyDetails.property_name}
             </Typography>
             <Box
               sx={{
@@ -151,7 +157,7 @@ const PersonalPropertyListing = () => {
                 },
               }}
             >
-              <RoomOutlinedIcon
+              {/* <RoomOutlinedIcon
                 sx={{
                   fontSize: "18px",
                   color: theme.palette.primary.logoColor,
@@ -162,7 +168,7 @@ const PersonalPropertyListing = () => {
                     lg: "left",
                   },
                 }}
-              />
+              /> */}
               <Typography
                 sx={{
                   color: theme.palette.primary.logoColor,
@@ -176,7 +182,7 @@ const PersonalPropertyListing = () => {
                 variant="body2"
                 component={"p"}
               >
-                1421 San Pedro St, Los Angeles, CA 900015
+               {property && property.propertyDetails.description}
               </Typography>
             </Box>
             <Box
@@ -218,7 +224,7 @@ const PersonalPropertyListing = () => {
                   variant="span"
                   component="h3"
                 >
-                  20
+                  {property && property.propertyDetails.parking ? "Yes" : "No"}
                 </Typography>
               </List>
               <List
@@ -251,7 +257,7 @@ const PersonalPropertyListing = () => {
                   variant="span"
                   component="h3"
                 >
-                  2
+                  {property && property.propertyDetails.bath}
                 </Typography>
               </List>
               <List
@@ -284,7 +290,7 @@ const PersonalPropertyListing = () => {
                   variant="span"
                   component="h3"
                 >
-                  200
+                  {property && property.propertyDetails.sqft} sqft
                 </Typography>
               </List>
             </Box>
@@ -325,7 +331,7 @@ const PersonalPropertyListing = () => {
                   }}
                   component={"h5"}
                 > 
-                  Suraj Bannerjee
+                  {property && property.propertyDetails.seller.seller_name}
                 </Typography>
                 <Typography
                   sx={{

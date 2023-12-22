@@ -45,7 +45,7 @@ const AllProperties = () => {
       const search_params = urlParams.toString();
       if (search_params !== searchParams) {
 
-        console.log('search_params', search_params);
+        // console.log('search_params', search_params);
         navigate('/properties?' + search_params);
         setSearchParams(search_params);
 
@@ -74,6 +74,9 @@ const AllProperties = () => {
         if (params.bath) {
           apiData.bath = params.bath;
         }
+        if (params.amenities) {
+          apiData.amenities = params.amenities;
+        }
 
         // console.log("params==>", apiData);
         await axios
@@ -90,7 +93,7 @@ const AllProperties = () => {
           )
           .then((res) => {
             if (res.data.status) {
-              console.log("add property list", res.data);
+              // console.log("add property list", res.data);
               dispatch(setPropertyList(res.data.data));
               dispatch(setPropertyCount(res.data.propertiesCount));
               setPageCount(res.data.propertiesCount);

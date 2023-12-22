@@ -14,7 +14,12 @@ import theme from "../Theme";
 import Header from "../components/Header";
 import PersonalPropertyListing from "../components/PersonalPropertyListing";
 import { useNavigate } from "react-router-dom";
-const Property = () => {
+import { useSelector } from "react-redux";
+const Property = (sellerProperty) => {
+
+  // const SellerPropertyList = useSelector((state) => state.SellerPropertyListReducer.value);
+  // console.log("SellerPropertyList", SellerPropertyList);
+  console.log("sellerProperty", sellerProperty);
   const navigate = useNavigate();
   return (
     <>
@@ -69,9 +74,13 @@ const Property = () => {
         gap: "15px",
         marginTop: "25px",
       }}>
+        {sellerProperty && sellerProperty.sellerProperty.map((item, key) => (
+          <PersonalPropertyListing propertyDetails={item} key={key} />
+        ))}
+
+        {/* <PersonalPropertyListing />
         <PersonalPropertyListing />
-        <PersonalPropertyListing />
-        <PersonalPropertyListing />
+        <PersonalPropertyListing /> */}
       </Box>
     </>
   );

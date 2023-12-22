@@ -20,7 +20,6 @@ import AgentRegister from "../pages/AgentRegister";
 import AgentLogIn from "../pages/AgentLogIn";
 import UserProfile from "../pages/UserProfile";
 import NoPropertiesAdd from "../pages/NoPropertiesAdd";
-import { Navigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
 import { jwtDecode } from "jwt-decode";

@@ -7,7 +7,7 @@ import PropertyReducer from './reducers/PropertyReducer';
 import PropertyListReducer from './reducers/PropertyListReducer';
 import SearchReducer from './reducers/SearchReducer';
 import FavoritePropertyReducer from './reducers/FavoritePropertyReducer';
-
+import SellerPropertyListReducer from './reducers/SellerPropertyListReducer';
 const persistConfig = {
   key: 'root',
   storage
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   UserReducer: persistReducer(persistConfig, UserReducer),
   PropertyReducer: PropertyReducer,
   PropertyListReducer: PropertyListReducer,
+  SellerPropertyListReducer: SellerPropertyListReducer,
   SearchReducer: SearchReducer,
   FavoritePropertyReducer:  FavoritePropertyReducer ,
 });

@@ -4,8 +4,6 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Typography,
 } from "@mui/material";
 
@@ -14,9 +12,56 @@ import Footer from "../components/Footer";
 import theme from "../Theme";
 import BreadcrumbsBanner from "../components/BreadcrumbsBanner";
 import MyProperty from "../components/MyProperty";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  GET_MY_PROPERTIES_API,
+} from "../common/urls";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { logOut } from "../redux/reducers/UserReducer";
 
 const UserProfile = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.UserReducer.value);
+  const [sellerProperty, setSellerProperty] = useState([]);
+
+  const getSellerProperty = () => {
+    // console.log("userData", userData);
+    if (userData) {
+      axios
+        .get(GET_MY_PROPERTIES_API + `?sellerId=${userData.userId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${userData.token}`,
+            },
+          })
+        .then((res) => {
+          // console.log("res", res);
+          if (res.status === 200) {
+            setSellerProperty(res.data.data);
+            // console.log("res.data.data", res.data.data);
+            // dispatch(setSellerPropertyList(res.data.data));  
+
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    } else {
+      navigate("/Login");
+    }
+
+  }
+
+
+
+  useEffect(() => {
+    getSellerProperty();
+  }, []);
   return (
     <>
       <Box>
@@ -147,6 +192,11 @@ const UserProfile = () => {
                             boxShadow: "inset 0px 0px 12px rgb(0 0 0 / 40%)",
                           },
                         }}
+
+                        onClick={() => {
+                          dispatch(logOut());
+                          navigate("/Login");
+                        }}
                       >
                         <Typography
                           sx={{
@@ -168,7 +218,7 @@ const UserProfile = () => {
                 paddingLeft={{ xs: "0px", md: "15px" }}
                 paddingRight={{ xs: "0px", md: "15px" }}
               >
-                <MyProperty />
+                <MyProperty sellerProperty={sellerProperty} />
               </Box>
             </Box>
           </Box>
