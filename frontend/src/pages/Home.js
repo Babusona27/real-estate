@@ -101,7 +101,7 @@ const Home = () => {
       search_params = search_params + '&property_name=' + propertyName;
     }
 
-    console.log('search_params_property_left_bar', search_params);
+    // console.log('search_params_property_left_bar', search_params);
     navigate('/properties?' + search_params);
 
   };
@@ -134,7 +134,7 @@ const Home = () => {
         )
         .then((res) => {
           if (res.data.status) {
-            console.log("add property list", res.data.data);
+            // console.log("add property list", res.data.data);
             dispatch(setPropertyList(res.data.data));
             // setPropertyNameList(res.data.data)
           }
