@@ -32,7 +32,7 @@ const Property = () => {
   };
 
   // short by filter
-  const [sortOption, setOption] = useState("");
+  const [sortOption, setOption] = useState(localStorage.getItem('sortOption') || 'Oldest to Newest');
 
   const handleSortChange = (event) => {
     // console.log("sorting", event.target.value);
@@ -63,12 +63,11 @@ const Property = () => {
         search_params = search_params + 'sortField=' + sortField + '&sortOrder=' + sortOrder;
         break;
       default:
-        // Handle default case or set default values
         sortField = "posted_on";
         sortOrder = "asc";
         search_params = search_params + 'sortField=' + sortField + '&sortOrder=' + sortOrder;
     }
-    console.log('search_params_property_sorting', search_params);
+    // console.log('search_params_property_sorting', search_params);
     navigate('/properties?' + search_params);
   };
   useEffect(() => {
@@ -76,6 +75,10 @@ const Property = () => {
     const savedSortOption = localStorage.getItem('sortOption');
     if (savedSortOption) {
       setOption(savedSortOption);
+    }
+    return () => {
+      // Reset the sort option when the component unmounts
+      localStorage.removeItem('sortOption');
     }
   }, []);
 
