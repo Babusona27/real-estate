@@ -134,12 +134,9 @@ const PropertyLeftBar = () => {
       }
     }
     console.log('search_params_property_left_bar', search_params);
-    navigate('/Properties?' + search_params);
+    navigate('/properties?' + search_params);
 
   };
-
-
-
 
   const resetFilter = () => {
     setProperty("");
@@ -167,7 +164,7 @@ const PropertyLeftBar = () => {
     // setCheckedAmenities(newCheckedAmenities);
 
     // reset route
-    navigate('/Properties');
+    navigate('/properties');
 
   }
 

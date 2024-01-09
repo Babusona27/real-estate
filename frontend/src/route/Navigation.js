@@ -83,27 +83,27 @@ function Navigation() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/Login" element={<Login />} />
-                <Route path="/Register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="/properties" element={<AllProperties />} />
                 {/* <Route path="/Properties" element={<PrivateRoute><AllProperties /></PrivateRoute>} /> */}
 
                 {/* <Route path="/ProductDetails/:id" element={<ProductDetails />} /> */}
-                <Route path="/ProductDetails/:slug" element={<ProductDetails />} />
+                <Route path="/productdetails/:slug" element={<ProductDetails />} />
 
-                <Route path="/AddNewProperty" element={<AddNewProperty />} />
-                <Route path="/SellerProfile" element={<SellerProfile />} />
-                <Route path="/AboutUs" element={<AboutUs />} />
-                <Route path="/Blog" element={<Blog />} />
-                <Route path="/ContactUs" element={<ContactUs />} />
-                <Route path="/TermsConditions" element={<TermsConditions />} />
-                <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-                <Route path="/AgentRegister" element={<AgentRegister />} />
-                <Route path="/AgentLogIn" element={<AgentLogIn />} />
-                <Route path="/userProfile" element={<UserProfile />} />
-                <Route path="/favoriteProperty" element={<FavoriteProperty />} />
-                <Route path="/NoPropertiesAdd" element={<NoPropertiesAdd />} />
-                <Route path="/PersonalPropertyList" element={<PersonalPropertyList />} />
+                <Route path="/addnewproperty" element={<AddNewProperty />} />
+                <Route path="/sellerprofile" element={<SellerProfile />} />
+                <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/contactus" element={<ContactUs />} />
+                <Route path="/termsconditions" element={<TermsConditions />} />
+                <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+                <Route path="/agentregister" element={<AgentRegister />} />
+                <Route path="/agentlogIn" element={<AgentLogIn />} />
+                <Route path="/userprofile" element={<UserProfile />} />
+                <Route path="/favoriteproperty" element={<FavoriteProperty />} />
+                <Route path="/nopropertiesadd" element={<NoPropertiesAdd />} />
+                <Route path="/personalpropertylist" element={<PersonalPropertyList />} />
 
             </Routes>
         </Router>

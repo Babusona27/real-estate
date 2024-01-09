@@ -30,9 +30,10 @@ import { updatePropertyList } from "../redux/reducers/PropertyListReducer";
 import axios from "axios";
 
 const PropertyPost = ({ propertyDetails }) => {
-  //console.log("propertyDetails", propertyDetails);
+  // console.log("propertyDetails", propertyDetails);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.UserReducer.value);
+  // console.log("userData",userData);
   // const wishlistData = useSelector((state) => state.WishlistReducer.value);
   const favoriteProperty = useSelector((state) => state.FavoritePropertyReducer.value);
   // console.log('favoriteProperty_Property', favoriteProperty);
@@ -78,8 +79,7 @@ const PropertyPost = ({ propertyDetails }) => {
 
   return (
     <Box>
-      {/* <a href="/ProductDetails"> */}
-      <Link to={"/ProductDetails/" + propertyDetails.slug}>
+      <Link to={"/productdetails/" + propertyDetails.slug}>
         <Card className="post_card" sx={{
           width: "100%",
           border: "1px solid #e9e7d",

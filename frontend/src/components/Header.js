@@ -172,7 +172,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li className="menu-item">
-                      <Link to="/AboutUs" className="nav-link">
+                      <Link to="/aboutus" className="nav-link">
                         About Us
                       </Link>
                     </li>
@@ -183,12 +183,12 @@ const Navbar = () => {
                     </li>
 
                     <li className="menu-item">
-                      <Link to="/Blog" className="nav-link">
+                      <Link to="/blog" className="nav-link">
                         Blog
                       </Link>
                     </li>
                     <li className="menu-item">
-                      <Link to="/ContactUs" className="nav-link">
+                      <Link to="/contactus" className="nav-link">
                         Contact us
                       </Link>
                     </li>
@@ -197,14 +197,14 @@ const Navbar = () => {
                         <Link
                           onClick={() => {
                             dispatch(logOut());
-                            navigate("/Login");
+                            navigate("/login");
                           }}
                           className="nav-link"
                         >
                           Logout
                         </Link>
                       ) : (
-                        <Link to="/Login" className="nav-link">
+                        <Link to="/login" className="nav-link">
                           Login
                         </Link>
                       )}
@@ -358,7 +358,7 @@ const Navbar = () => {
                           padding: "0px",
                         }}
                       >
-                        <Link to="/userProfile">
+                        <Link to="/userprofile">
                           <MenuItem
                             sx={{
                               color: theme.palette.primary.dark,
@@ -388,7 +388,7 @@ const Navbar = () => {
                         >
                           My Package
                         </MenuItem> */}
-                        <Link to="/favoriteProperty">
+                        <Link to="/favoriteproperty">
                           <MenuItem
                             sx={{
                               color: theme.palette.primary.dark,
@@ -408,7 +408,7 @@ const Navbar = () => {
                           <Link
                             onClick={() => {
                               dispatch(logOut());
-                              navigate("/Login");
+                              navigate("/login");
                             }}
                             className="nav-link"
                           >
@@ -462,7 +462,7 @@ const Navbar = () => {
                       fontSize: { xs: "20px", lg: "30px" },
                     }}
                     onClick={() => {
-                      { userData ? navigate('/favoriteProperty') : navigate('/Login') }
+                      { userData ? navigate('/favoriteproperty') : navigate('/login') }
                     }}>
                     <StyledBadge badgeContent={favoriteProperty && favoriteProperty.length} color="secondary">
                       {/* <StyledBadge badgeContent={4} color="secondary"> */}
@@ -474,7 +474,7 @@ const Navbar = () => {
                     </StyledBadge>
                   </IconButton>
                 </Tooltip>
-                <Link to="/NoPropertiesAdd">
+                <Link to="/nopropertiesadd">
                   <Button
                     sx={{
                       borderRadius: "30px",

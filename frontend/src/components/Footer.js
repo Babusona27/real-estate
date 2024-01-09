@@ -170,7 +170,7 @@ const Footer = () => {
                   padding: "5px 0px",
                   width: "auto",                  
                 }}>
-              <Link to="/AboutUs">  <Typography variant="p" sx={{
+              <Link to="/aboutus">  <Typography variant="p" sx={{
                     fontFamily: "'Roboto', sans-serif !important",
                     fontSize:"16px",
                     fontWeight:"500",
@@ -187,7 +187,7 @@ const Footer = () => {
                   padding: "5px 0px",
                   width: "auto",         
                 }}>
-               <Link to="/Blog"> <Typography variant="p" sx={{
+               <Link to="/blog"> <Typography variant="p" sx={{
                       fontFamily: "'Roboto', sans-serif !important",
                       fontSize:"16px",
                       fontWeight:"500",
@@ -205,7 +205,7 @@ const Footer = () => {
                   width: "auto",
                  
                 }}>
-              <Link to="/TermsConditions"><Typography variant="p" sx={{
+              <Link to="/termsconditions"><Typography variant="p" sx={{
                     fontFamily: "'Roboto', sans-serif !important",
                     fontSize:"16px",
                     fontWeight:"500",
@@ -222,7 +222,7 @@ const Footer = () => {
                   padding: "5px 0px",
                   width: "auto",
                 }}>
-              <Link to="/PrivacyPolicy"><Typography variant="p" sx={{
+              <Link to="/privacypolicy"><Typography variant="p" sx={{
                    fontFamily: "'Roboto', sans-serif !important",
                    fontSize:"16px",
                    fontWeight:"500",
@@ -240,7 +240,7 @@ const Footer = () => {
                   padding: "5px 0px",
                   width: "auto",
                 }}>
-               <Link to="/ContactUs">  <Typography variant="p" sx={{
+               <Link to="/contactus">  <Typography variant="p" sx={{
                    fontFamily: "'Roboto', sans-serif !important",
                    fontSize:"16px",
                    fontWeight:"500",

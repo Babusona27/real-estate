@@ -93,9 +93,10 @@ const AddNewProperty = () => {
         images_arr: "",
         floor_images: "",
         seller:{
-            seller_id: userData.userId,
-            seller_name: userData.user_name,
-            user_profile_image: userData.user_image,
+            // seller_id: userData.userId,
+            seller_id: userData ? userData.userId || "" : "",
+            seller_name: userData ? userData.user_name || "" : "",
+            user_profile_image: userData ? userData.user_image || "" : "",
         }
     });
     const [errors, setErrors] = useState({

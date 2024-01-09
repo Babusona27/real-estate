@@ -96,7 +96,7 @@ const navigate = useNavigate();
               }} paragraph>
           Please add your properties to get started.
         </Typography>
-        <Button className="customBtnStyle new_btn" onClick={() => navigate("/AddNewProperty")}
+        <Button className="customBtnStyle new_btn" onClick={() => navigate("/addnewproperty")}
             sx={{
               fontFamily: "'Roboto', sans-serif !important",
               backgroundColor: "transparent",

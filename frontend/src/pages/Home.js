@@ -67,7 +67,9 @@ const Home = () => {
   const userData = useSelector(state => state.UserReducer.value);
   // console.log("propertyList", propertyList);
   const dispatch = useDispatch();
-  const [propertyType, setPropertyType] = React.useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [propertyName, setPropertyName] = useState("");
+  // const [propertyNameList, setPropertyNameList] = useState(false);
   // const handleChangeProperType = (event) => {
   //   console.log("event.target.value", event.target.value);
   //   setPropertyType(event.target.value);
@@ -82,8 +84,25 @@ const Home = () => {
 
   const handleChange = (event, newValue) => {
     //console.log("==>",newValue);
-    setPropertyType(newValue == 1 ? "rent" : "sale");
+    // setPropertyType(newValue == 1 ? "rent" : "sale");
+    setPropertyType(event.target.value);
   };
+  const handleChange1 = (event) => {
+    setPropertyName(event.target.value);
+  };
+  // const changeRoute = () => {
+  //   let search_params = "";
+  //   if (propertyType !== "") {
+  //     search_params = search_params + 'propertyType=' + propertyType;
+  //   }
+  //   if (propertyName !== "") {
+  //     // search_params = search_params + '&category=' + selectedCategory;
+  //   }
+
+  //   console.log('search_params_property_left_bar', search_params);
+  //   navigate('/properties?' + search_params);
+
+  // };
   useEffect(() => {
     /* get properties  */
     // const getProperties = async () => {
@@ -113,8 +132,9 @@ const Home = () => {
         )
         .then((res) => {
           if (res.data.status) {
-            // console.log("add property list", res.data.data);
+            console.log("add property list", res.data.data);
             dispatch(setPropertyList(res.data.data));
+            // setPropertyNameList(res.data.data)
           }
         })
         .catch((err) => {
@@ -255,8 +275,10 @@ const Home = () => {
                   className="form_input1"
                   fullWidth
                   id="outlined-basic"
-                  label="Enter keyword..."
+                  label="Enter Property Name"
                   variant="outlined"
+                  value={propertyName}
+                  onChange={handleChange1}
                   sx={{
                     marginBottom: {
                       xs: "20px",
@@ -282,17 +304,17 @@ const Home = () => {
                     sx={{ color: theme.palette.primary.lightGrey }}
                   >
                     <InputLabel id="demo-controlled-open-select-label">
-                      Location
+                      Property Type
                     </InputLabel>
                     <Select
                       labelId="demo-controlled-open-select-label"
                       id="demo-controlled-open-select"
                       value={propertyType}
-                      label="Location"
-                    // onChange={handleChangeProperType}
+                      label="Property Type"
+                      onChange={handleChange}
                     >
                       <MenuItem value={''}>Property Type</MenuItem>
-                      <MenuItem value={'sale'}>Sale</MenuItem>
+                      <MenuItem value={'sell'}>Sell</MenuItem>
                       <MenuItem value={'rent'}>Rent</MenuItem>
                     </Select>
                   </FormControl>

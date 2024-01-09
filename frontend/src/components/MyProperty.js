@@ -41,7 +41,7 @@ const Property = (sellerProperty) => {
         >
           Shipping Address
         </Typography>
-        <Button className="customBtnStyle" onClick={() => { navigate("/AddNewProperty") }}
+        <Button className="customBtnStyle" onClick={() => { navigate("/addnewproperty") }}
           sx={{
             fontFamily: "'Roboto', sans-serif !important",
             backgroundColor: "#dceeea",

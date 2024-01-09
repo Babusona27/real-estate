@@ -21,15 +21,17 @@ import KingBedIcon from "@mui/icons-material/KingBed";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { GET_PRODUCT_DETAILS_PAGE_API, IMAGE_BASE_URL, POST_SUBMIT_REVIEW_API, GET_REVIEW_DETAILS } from "../common/urls";
 import { GetApiFetch, PostApiFetch } from "../common/CommonFunction";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 const PropertyDetailsLeftbar = () => {
+  const navigate = useNavigate();
   const propertyDetails = useSelector((state) => state.PropertyReducer.value);
   const userData = useSelector((state) => state.UserReducer.value);
+  console.log("userData-->", userData);
   // console.log('propertyDetails', propertyDetails);
   // add review popup box 
   const [open, setOpen] = useState(false);
@@ -40,7 +42,6 @@ const PropertyDetailsLeftbar = () => {
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
     // Reset the form fields
@@ -48,12 +49,14 @@ const PropertyDetailsLeftbar = () => {
     // setName('');
     // setComment('');
   }
+
   const [formData, setFormData] = useState({
     rating: "",
     review: "",
-    user_id: userData.userId,
+    user_id: userData ? userData.userId || "" : "",
     user_name: "",
   });
+
   const [errors, setErrors] = useState({
     rating: "",
     review: "",
@@ -133,10 +136,13 @@ const PropertyDetailsLeftbar = () => {
   };
 
   useEffect(() => {
-    if (propertyDetails && propertyDetails.slug) {
+    // if (propertyDetails && propertyDetails.slug) {
+    //     getReviewDetails();
+    // }
+    if (propertyDetails && propertyDetails.slug && userData && userData.userId != null) {
       getReviewDetails();
     }
-  }, [propertyDetails]);
+  }, [propertyDetails, userData]);
 
   // popup massage
   const [active, setActive] = useState(false);
@@ -710,7 +716,36 @@ const PropertyDetailsLeftbar = () => {
           >
             Customer Reviews
           </Typography>
-          <Button
+          {/* {userData.userId != null ? */}
+          {userData ?
+            <Button
+              className="customBtnStyle"
+              sx={{
+                fontFamily: theme.palette.primary.Roboto,
+                backgroundColor: theme.palette.primary.logoColor,
+                height: "40px",
+                padding: {
+                  xs: "8px 10px",
+                  sm: "8px 10px",
+                  md: "8px 22px",
+                  lg: "8px 22px",
+                },
+                fontSize: "14px",
+                lineHeight: "18px",
+                fontWeight: "500",
+                borderRadius: "8px",
+                color: theme.palette.primary.white,
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.Green,
+                },
+              }}
+              variant="contained"
+              onClick={handleOpen}
+            >
+              Add Review
+            </Button>
+            :
+            <Button
             className="customBtnStyle"
             sx={{
               fontFamily: theme.palette.primary.Roboto,
@@ -732,93 +767,103 @@ const PropertyDetailsLeftbar = () => {
               },
             }}
             variant="contained"
-            onClick={handleOpen}
+            onClick={()=>{
+              navigate("/login")
+            }}
           >
             Add Review
           </Button>
+          }
+
+
         </Box>
         {/* fetch reviews */}
         {/* {comment && comment.reviews.map((item) => { */}
-        <Box>
-          {comment && comment.map((item) => {
-            console.log('item', item);
-            return (
-              item.status == "active" ?
-                <Box
-                  sx={{
-                    display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexDirection: {
-                      xs: "column",
-                      sm: "column",
-                      md: "row",
-                      lg: "row",
-                    },
-                    gap: "30px",
-                  }}
-                  mb={1}
-                >
-                  <Avatar
+        {userData ?
+          <Box>
+            {comment && comment.map((item) => {
+              console.log('item', item);
+              return (
+                item.status == "active" ?
+                  <Box
                     sx={{
-                      height: "100px",
-                      width: "100px",
-                      objectFit: "cover",
+                      display: { xs: "flex", sm: "flex", md: "flex", lg: "flex" },
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      flexDirection: {
+                        xs: "column",
+                        sm: "column",
+                        md: "row",
+                        lg: "row",
+                      },
+                      gap: "30px",
                     }}
-                    alt="suraj"
-                    src="./assets/images/R6.jpg"
-                  // src={IMAGE_BASE_URL + item.user_image}
-                  />
-                  <Box>
-                    <Box
+                    mb={1}
+                  >
+                    <Avatar
                       sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                        height: "100px",
+                        width: "100px",
+                        objectFit: "cover",
                       }}
-                    >
-                      <Box>
-                        <Typography
-                          sx={{
-                            fontSize: "20px",
-                            color: "#212121",
-                            lineHeight: "22px",
-                            fontWeight: "600",
-                            marginBottom: "10px",
-                            fontFamily: theme.palette.primary.Roboto,
-                          }}
-                          variant="h6"
-                          component={"h3"}
-                        >
-                          {item.user_name}
-                        </Typography>
-                        <Rating
-                          sx={{
-                            fontSize: "18px",
-                          }}
-                          name="customer-rating"
-                          value={item.rating}
-                          readOnly
-                        />
+                      alt="suraj"
+                      src="./assets/images/R6.jpg"
+                    // src={IMAGE_BASE_URL + item.user_image}
+                    />
+                    <Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Box>
+                          <Typography
+                            sx={{
+                              fontSize: "20px",
+                              color: "#212121",
+                              lineHeight: "22px",
+                              fontWeight: "600",
+                              marginBottom: "10px",
+                              fontFamily: theme.palette.primary.Roboto,
+                            }}
+                            variant="h6"
+                            component={"h3"}
+                          >
+                            {item.user_name}
+                          </Typography>
+                          <Rating
+                            sx={{
+                              fontSize: "18px",
+                            }}
+                            name="customer-rating"
+                            value={item.rating}
+                            readOnly
+                          />
+                        </Box>
                       </Box>
+
+                      <Typography variant="body1" mt={1}>
+                        {item.review}
+                      </Typography>
                     </Box>
-
-                    <Typography variant="body1" mt={1}>
-                      {item.review}
-                    </Typography>
                   </Box>
-                </Box>
 
-                : <></>
-            )
-          })}
+                  : <></>
+              )
+            })}
 
-          <Divider
-            sx={{
-              margin: "20px 0px",
-            }}
-          />
-        </Box>
+            <Divider
+              sx={{
+                margin: "20px 0px",
+              }}
+            />
+          </Box>
+          :
+          <></>
+        }
+
         {/* Add more reviews as needed */}
         <Dialog fullwidth='true' sx={{}} open={open} onClose={handleClose}>
           <DialogTitle
@@ -1067,6 +1112,7 @@ const PropertyDetailsLeftbar = () => {
           </DialogActions>
         </Dialog>
       </Box>
+
     </Box>
   )
 }
