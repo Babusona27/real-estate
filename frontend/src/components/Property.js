@@ -33,7 +33,12 @@ const Property = () => {
   const [sortOption, setOption] = React.useState("");
 
   const handleSortChange = (event) => {
+    console.log("sorting",event.target.value);
     setOption(event.target.value);
+    // let search_params = "";
+    // if (sortOption !== "") {
+    //   search_params = search_params + 'propertyType=' + propertyType;
+    // }
   };
 
   return (
@@ -91,10 +96,10 @@ const Property = () => {
                     label="Sort Option"
                     onChange={handleSortChange}
                   >
-                    <MenuItem value={1}>Oldest to Newest</MenuItem>
-                    <MenuItem value={2}>Newest to Oldest</MenuItem>
-                    <MenuItem value={3}>High to Low</MenuItem>
-                    <MenuItem value={4}>Low to High</MenuItem>
+                    <MenuItem value={"Oldest to Newest"}>Oldest to Newest</MenuItem>
+                    <MenuItem value={"Newest to Oldest"}>Newest to Oldest</MenuItem>
+                    <MenuItem value={"High to Low"}>High to Low</MenuItem>
+                    <MenuItem value={"Low to High"}>Low to High</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

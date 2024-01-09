@@ -35,6 +35,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPropertyList } from "../redux/reducers/PropertyListReducer";
 import { GET_PROPERTIES_API, GET_PROPERTIES_WITHOUT_AUTH_API, IMAGE_BASE_URL } from "../common/urls";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // const TabPanel = ({ children, value, index }) => (
 //   <div className={`tab-panel ${value === index ? "active" : ""}`}>
@@ -63,6 +64,7 @@ const newSlider = {
 };
 
 const Home = () => {
+  const navigate = useNavigate();
   const propertyList = useSelector((state) => state.PropertyListReducer.value);
   const userData = useSelector(state => state.UserReducer.value);
   // console.log("propertyList", propertyList);
@@ -90,19 +92,19 @@ const Home = () => {
   const handleChange1 = (event) => {
     setPropertyName(event.target.value);
   };
-  // const changeRoute = () => {
-  //   let search_params = "";
-  //   if (propertyType !== "") {
-  //     search_params = search_params + 'propertyType=' + propertyType;
-  //   }
-  //   if (propertyName !== "") {
-  //     // search_params = search_params + '&category=' + selectedCategory;
-  //   }
+  const changeRouteFromHome = () => {
+    let search_params = "";
+    if (propertyType !== "") {
+      search_params = search_params + 'propertyType=' + propertyType;
+    }
+    if (propertyName !== "") {
+      search_params = search_params + '&property_name=' + propertyName;
+    }
 
-  //   console.log('search_params_property_left_bar', search_params);
-  //   navigate('/properties?' + search_params);
+    console.log('search_params_property_left_bar', search_params);
+    navigate('/properties?' + search_params);
 
-  // };
+  };
   useEffect(() => {
     /* get properties  */
     // const getProperties = async () => {
@@ -352,6 +354,7 @@ const Home = () => {
                     color: theme.palette.primary.white,
                     "&:hover": { backgroundColor: "#00a376" },
                   }}
+                  onClick={changeRouteFromHome}
                 >
                   Search
                 </Button>
