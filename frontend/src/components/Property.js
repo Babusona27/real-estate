@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import {
   Box,
@@ -9,13 +8,16 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import PropertyPost from "./PropertyPost";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/reducers/UserReducer";
 import theme from "../Theme";
+import { useNavigate } from 'react-router-dom';
 
 const Property = () => {
+  const navigate = useNavigate();
   const propertyList = useSelector((state) => state.PropertyListReducer.value);
   const propertyCount = useSelector((state) => state.PropertyListReducer.count);
   const [p, setP] = useState(1);
@@ -30,16 +32,52 @@ const Property = () => {
   };
 
   // short by filter
-  const [sortOption, setOption] = React.useState("");
+  const [sortOption, setOption] = useState("");
 
   const handleSortChange = (event) => {
-    console.log("sorting",event.target.value);
+    // console.log("sorting", event.target.value);
     setOption(event.target.value);
-    // let search_params = "";
-    // if (sortOption !== "") {
-    //   search_params = search_params + 'propertyType=' + propertyType;
-    // }
+    const selectedOption = event.target.value;
+    localStorage.setItem('sortOption', selectedOption);
+    let search_params = "";
+    let sortField, sortOrder;
+    switch (selectedOption) {
+      case "Oldest to Newest":
+        sortField = "posted_on";
+        sortOrder = "asc";
+        search_params = search_params + 'sortField=' + sortField + '&sortOrder=' + sortOrder;
+        break;
+      case "Newest to Oldest":
+        sortField = "posted_on";
+        sortOrder = "desc";
+        search_params = search_params + 'sortField=' + sortField + '&sortOrder=' + sortOrder;
+        break;
+      case "High to Low":
+        sortField = "price";
+        sortOrder = "desc";
+        search_params = search_params + 'sortField=' + sortField + '&sortOrder=' + sortOrder;
+        break;
+      case "Low to High":
+        sortField = "price";
+        sortOrder = "asc";
+        search_params = search_params + 'sortField=' + sortField + '&sortOrder=' + sortOrder;
+        break;
+      default:
+        // Handle default case or set default values
+        sortField = "posted_on";
+        sortOrder = "asc";
+        search_params = search_params + 'sortField=' + sortField + '&sortOrder=' + sortOrder;
+    }
+    console.log('search_params_property_sorting', search_params);
+    navigate('/properties?' + search_params);
   };
+  useEffect(() => {
+    // Check if there is a saved value in localStorage and set it
+    const savedSortOption = localStorage.getItem('sortOption');
+    if (savedSortOption) {
+      setOption(savedSortOption);
+    }
+  }, []);
 
   return (
     <Box flex={4} p={{ xs: "0px", md: "15px" }} m={0}>

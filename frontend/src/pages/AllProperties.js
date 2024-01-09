@@ -18,6 +18,7 @@ import theme from "../Theme";
 import { useLocation } from "react-router-dom";
 import queryString from 'query-string';
 import { useNavigate } from 'react-router-dom';
+
 const AllProperties = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -76,6 +77,15 @@ const AllProperties = () => {
         }
         if (params.amenities) {
           apiData.amenities = params.amenities;
+        }
+        if(params.sortField){
+          apiData.sortField = params.sortField;
+        }
+        if(params.sortOrder){
+          apiData.sortOrder = params.sortOrder;
+        }
+        if(params.property_name){
+          apiData.property_name = params.property_name;
         }
 
         // console.log("params==>", apiData);
