@@ -417,7 +417,7 @@ const Home = () => {
               {/* need to be chenge property_items  */}
               {propertyList &&
                 propertyList.map((item, key) => (
-                  <div class="property_item">
+                  <div className="property_item" key={key}>
                     {/* {console.log("item", item)} */}
                     {item.features && item.features ?
                       <Box>

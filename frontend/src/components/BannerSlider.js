@@ -22,8 +22,8 @@ const BannerSlider = () => {
     autoplayTimeout: 4000,
     nav: true,
     navText: [
-      '<i class="fa-solid fa-angle-left"></i>',
-      '<i class="fa-solid fa-angle-right"></i>',
+      '<i className="fa-solid fa-angle-left"></i>',
+      '<i className="fa-solid fa-angle-right"></i>',
     ],
     dots: false,
     margin: 0,
@@ -54,7 +54,7 @@ const BannerSlider = () => {
     >
       <OwlCarousel className="owl-theme" {...option}>
         {propertyDetails && propertyDetails.images.map((item, key) => (
-          <div class="item">
+          <div className="item">
             <img src={IMAGE_BASE_URL + item} />
           </div>
         ))}

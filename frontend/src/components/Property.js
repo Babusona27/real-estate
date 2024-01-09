@@ -145,33 +145,39 @@ const Property = () => {
                 </FormControl>
               </Box>
             </Box>
-            <Button
-              className="customBtnStyle"
-              sx={{
-                fontFamily: theme.palette.primary.Roboto,
-                backgroundColor: "#dceeea",
-                color: theme.palette.primary.logoColor,
-                padding: "8px 22px",
-                fontSize: "14px",
-                lineHeight: "18px",
-                fontWeight: "500",
-                border: "none",
-                overflow: "hidden",
-                position: "relative",
-                boxShadow: "none",
-                zIndex: "1",
-                textTransform: "capitalize",
-                "&:hover": {
-                  backgroundColor: theme.palette.primary.logoColor,
-                  color: theme.palette.primary.white,
+            {userData != null ?
+
+              <Button
+                className="customBtnStyle"
+                sx={{
+                  fontFamily: theme.palette.primary.Roboto,
+                  backgroundColor: "#dceeea",
+                  color: theme.palette.primary.logoColor,
+                  padding: "8px 22px",
+                  fontSize: "14px",
+                  lineHeight: "18px",
+                  fontWeight: "500",
+                  border: "none",
+                  overflow: "hidden",
+                  position: "relative",
                   boxShadow: "none",
-                },
-              }}
-              variant="contained"
-              onClick={userData ? handleLogout : undefined}
-            >
-              {userData != null ? <Typography>LogOut</Typography> : <></>}
-            </Button>
+                  zIndex: "1",
+                  textTransform: "capitalize",
+                  "&:hover": {
+                    backgroundColor: theme.palette.primary.logoColor,
+                    color: theme.palette.primary.white,
+                    boxShadow: "none",
+                  },
+                }}
+                variant="contained"
+                onClick={userData ? handleLogout : undefined}
+              >
+                <Typography>LogOut</Typography>
+              </Button>
+              :
+              <></>
+            }
+
           </Box>
 
         </Box>
