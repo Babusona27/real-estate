@@ -81,10 +81,13 @@ exports.getProperties = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 10;
     const offset = parseInt(req.query.offset) || 0;
-
+    const sortField = req.query.sortField || "posted_on";
+    const sortOrder = req.query.sortOrder || "desc";
     // Define an empty filter object to hold the filtering criteria
     const filter = {};
-
+    if (req.query.property_name) {
+      filter.property_name = req.query.property_name;
+    }
     if (req.query.type) {
       filter.type = req.query.type;
     }
@@ -127,9 +130,12 @@ exports.getProperties = async (req, res) => {
       const amenities = req.query.amenities.split("%");
       filter.amenities = { $in: amenities };
     }
+    const sortOptions = {};
+    sortOptions[sortField] = sortOrder === "desc" ? -1 : 1;
     const properties = await PropertySchema.find(filter)
       .skip(offset)
-      .limit(limit);
+      .limit(limit)
+      .sort(sortOptions);
 
 
 
