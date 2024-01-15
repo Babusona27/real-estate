@@ -28,7 +28,6 @@ router.delete("/deletecategory/:id", categoryController.deleteCategory);
 
 // ******************All PROPERTY ROUTE*********************
 
-
 router.get("/getproperties", authenticate, propertyController.getProperties);
 router.get("/getpropertieswithoutAuth", propertyController.getProperties);
 router.get("/propertydetails/:slug", propertyController.getProperty);
